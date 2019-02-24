@@ -1,6 +1,10 @@
 package models;
         import java.util.ArrayList;
 
+
+/**
+ *The Player class is a model which contains player related data.
+  */
 public class Player {
 
     String name;
