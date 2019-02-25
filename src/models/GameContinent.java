@@ -2,7 +2,7 @@ package models;
 public class GameContinent {
 
     String continentName;
-    String continentValue;
+    int continentValue;
     String playerID;
 
     public GameContinent() {
@@ -19,11 +19,11 @@ public class GameContinent {
         this.continentName = continentName;
     }
 
-    public String getContinentValue() {
+    public int getContinentValue() {
         return continentValue;
     }
 
-    public void setContinentValue(String continentValue) {
+    public void setContinentValue(int continentValue) {
         this.continentValue = continentValue;
     }
 

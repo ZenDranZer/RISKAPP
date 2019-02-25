@@ -16,8 +16,8 @@ public class GameCountry {
     */
     String playerId;
     String armiesStationed;
-    String coordinateX;
-    String coordinateY;
+    int coordinateX;
+    int coordinateY;
 
     public String getCountryName() {
         return countryName;
@@ -61,19 +61,19 @@ public class GameCountry {
     public void addNeighbouringCountry(GameCountry neighbouringCountry) {
         this.neighbouringCountries.add(neighbouringCountry);
     }
-    public String getCoordinateX() {
+    public int getCoordinateX() {
         return coordinateX;
     }
 
-    public void setCoordinateX(String coordinateX) {
+    public void setCoordinateX(int coordinateX) {
         this.coordinateX = coordinateX;
     }
 
-    public String getCoordinateY() {
+    public int getCoordinateY() {
         return coordinateY;
     }
 
-    public void setCoordinateY(String coordinateY) {
+    public void setCoordinateY(int coordinateY) {
         this.coordinateY = coordinateY;
     }
 }
