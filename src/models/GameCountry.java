@@ -4,20 +4,20 @@ import java.util.ArrayList;
 public class GameCountry {
 
 
-    String countryName;
+    private String countryName;
 
     /*public GameCountry() {
         this.neighbouringCountries = new ArrayList<>();
     }*/
 
-    ArrayList<GameCountry> neighbouringCountries;
+    private ArrayList<GameCountry> neighbouringCountries;
     /*
         GameContinent continent;
     */
-    String playerId;
-    String armiesStationed;
-    int coordinateX;
-    int coordinateY;
+    private String playerId;
+    private String armiesStationed;
+    private int coordinateX;
+    private int coordinateY;
 
     public String getCountryName() {
         return countryName;
