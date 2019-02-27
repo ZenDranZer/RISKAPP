@@ -19,8 +19,6 @@ public class TestUtil {
         players.add(player);
         player = new Player("Naghmeh","4");
         players.add(player);
-        player = new Player("Parth","5");
-        players.add(player);
         return players;
     }
 

@@ -19,28 +19,24 @@ public class GameEngine {
      *
      * @return: list of player objects
      */
-    //should return list of player objects
-
-
     public List<Player> getInitialPlayers() {
 
         try {
             int i = 0;
             Scanner keyboard = new Scanner(System.in);
             System.out.println("Enter number of players");
-            int no_of_players = keyboard.nextInt();
+            int noOfPlayers = keyboard.nextInt();
 
-            if (no_of_players < 2) {
+            if (noOfPlayers < 2) {
                 System.out.println("Minimum number of players is 2");
-            } else if (no_of_players > 5) {
+            } else if (noOfPlayers > 5) {
                 System.out.println("Maximum number of players is 5");
             } else {
-                for (i = 1; i <= no_of_players; i++) {
+                for (i = 1; i <= noOfPlayers; i++) {
                     Player p = new Player();
                     System.out.println("Enter player name " + i + "\n");
-                    p.setPlayer_id(Integer.toString(i));
-                    p.setPlayer_name(keyboard.next());
-                    p.setPlayer_armies(Integer.toString(1));
+                    p.setPlayerId(Integer.toString(i));
+                    p.setName(keyboard.next());
                     listActivePlayers.add(p);
                 }
             }

@@ -9,53 +9,55 @@ public class Player {
 
     private String name;
     private String id;
-    private String player_armies;
+    private int playerArmies;
     private ArrayList<GameCountry> countries;
     private ArrayList<GameContinent> continents;
-    private String cards_held;
+    private String cardsHeld;
     private String cardExchanged;
 
-    public Player() {}
+    public Player() {
+        countries = new ArrayList<>();
+    }
     public Player(String name,String id) {
         this.name = name;
         this.id = id;
-        player_armies = "";
+        playerArmies = 0;
         countries = new ArrayList<>();
         continents = new ArrayList<>();
-        cards_held = "";
+        cardsHeld = "";
         cardExchanged = "";
 
     }
-    public String getPlayer_name() {
+    public String getName() {
         return name;
     }
 
-    public void setPlayer_name(String player_name) {
+    public void setName(String player_name) {
         this.name = player_name;
     }
 
-    public String getPlayer_id() {
+    public String getPlayerId() {
         return id;
     }
 
-    public void setPlayer_id(String player_id) {
+    public void setPlayerId(String player_id) {
         this.id = player_id;
     }
 
-    public String getPlayer_armies() {
-        return player_armies;
+    public int getPlayerArmies() {
+        return playerArmies;
     }
 
-    public void setPlayer_armies(String player_armies) {
-        this.player_armies = player_armies;
+    public void setPlayerArmies(int player_armies) {
+        this.playerArmies = player_armies;
     }
 
     public ArrayList<GameCountry> getCountries() {
         return countries;
     }
 
-    public void setCountries(ArrayList<GameCountry> countries) {
-        this.countries = countries;
+    public void setCountries(GameCountry country) {
+        this.countries.add(country);
     }
 
     public ArrayList<GameContinent> getContinents() {
@@ -66,12 +68,12 @@ public class Player {
         this.continents = continents;
     }
 
-    public String getCards_held() {
-        return cards_held;
+    public String getCardsHeld() {
+        return cardsHeld;
     }
 
-    public void setCards_held(String cards_held) {
-        this.cards_held = cards_held;
+    public void setCardsHeld(String cards_held) {
+        this.cardsHeld = cards_held;
     }
 
     public String getCardExchanged() {
