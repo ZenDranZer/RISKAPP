@@ -5,12 +5,7 @@ import models.GameCountry;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
-import org.jgrapht.traverse.BreadthFirstIterator;
-import org.jgrapht.traverse.DepthFirstIterator;
-
 import java.util.ArrayList;
-import java.util.Iterator;
-
 
 /**GraphUtil class is used for representing the map in a graph formation
  * and perform graph operations like graph traversal, connectivity, etc.
@@ -26,14 +21,13 @@ public class GraphUtil {
     }
 
     /**Getter method to access the countryGraph
-     * @return Graph<GameCountry> an object which */
+     * @return Graph<GameCountry> an object of */
     public Graph<GameCountry, DefaultEdge> getCountryGraph() {
         return countryGraph;
     }
 
-    /**Setter method for creating a new map graph.
-     *@param countryList an ArrayList containing all the countries.*/
     public void setCountryGraph(ArrayList<GameCountry> countryList) {
+
 
         for (GameCountry gameCountry : countryList) {
             countryGraph.addVertex(gameCountry);
@@ -46,29 +40,4 @@ public class GraphUtil {
             }
         }
     }
-
-
-    /**A method which decide whether given countries are connected with an edge
-     * @param firstCountry source country
-     * @param  secondCountry destination country*/
-    public boolean areConnected(GameCountry firstCountry,GameCountry secondCountry){
-        return countryGraph.containsEdge(firstCountry, secondCountry);
-    }
-
-
-    public Iterator<GameCountry> breadthFirstSearch(GameCountry initialCountry){
-        return new BreadthFirstIterator<>(countryGraph,initialCountry);
-    }
-
-    public Iterator<GameCountry> breadthFirstSearch(){
-        return new BreadthFirstIterator<>(countryGraph);
-    }
-
-    public Iterator<GameCountry> depthFirstSearch(GameCountry initialCountry){
-        return new DepthFirstIterator<>(countryGraph);
-    }
-
-
-
-
 }
