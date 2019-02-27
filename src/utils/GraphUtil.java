@@ -31,6 +31,8 @@ public class GraphUtil {
         return countryGraph;
     }
 
+    /**Setter method for creating a new map graph.
+     *@param countryList an ArrayList containing all the countries.*/
     public void setCountryGraph(ArrayList<GameCountry> countryList) {
 
         for (GameCountry gameCountry : countryList) {
@@ -45,16 +47,28 @@ public class GraphUtil {
         }
     }
 
+
+    /**A method which decide whether given countries are connected with an edge
+     * @param firstCountry source country
+     * @param  secondCountry destination country*/
     public boolean areConnected(GameCountry firstCountry,GameCountry secondCountry){
         return countryGraph.containsEdge(firstCountry, secondCountry);
     }
 
+
     public Iterator<GameCountry> breadthFirstSearch(GameCountry initialCountry){
+        return new BreadthFirstIterator<>(countryGraph,initialCountry);
+    }
+
+    public Iterator<GameCountry> breadthFirstSearch(){
         return new BreadthFirstIterator<>(countryGraph);
     }
 
     public Iterator<GameCountry> depthFirstSearch(GameCountry initialCountry){
         return new DepthFirstIterator<>(countryGraph);
     }
+
+
+
 
 }
