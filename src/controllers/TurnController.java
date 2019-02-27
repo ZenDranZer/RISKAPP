@@ -191,7 +191,7 @@ public class TurnController {
 
     }
 
-    public static void main(String args[]) {
+/*    public static void main(String args[]) {
 
         TurnController m = new TurnController();
 
@@ -201,5 +201,5 @@ public class TurnController {
         m.allocateCountries(p, c);
         m.allocateArmies(p);
 
-    }
+    }*/
 }
