@@ -68,7 +68,6 @@ public class MapGenerator {
         }
         return null;
     }
-
     public String ReadConquestFile(String filePath) throws IOException {
         File inputMap = new File(filePath);
         BufferedReader inputReader = new BufferedReader(new FileReader(inputMap));
@@ -94,7 +93,6 @@ public class MapGenerator {
 
         return null;
     }
-
     public String WriteConquestFile(){
 
         // this class creates a conquest File from existing map - we read contries and continents from global arraylists
@@ -131,11 +129,9 @@ public class MapGenerator {
         return "SUCESSFUL";
 
     }
-
     public String GenerateMap(){
         return null;
     }
-
     public void getCountriesFromUser(){
         for( GameContinent continent : continentList){
             System.out.println("Enter the countries for  "+ continent.getContinentName());
@@ -170,7 +166,6 @@ public class MapGenerator {
 
 
     }
-
     public void getContinentsFromPlayer(){
         int numberOfContinents;
         Scanner in = new Scanner(System.in);
@@ -186,6 +181,8 @@ public class MapGenerator {
         }
 
     }
+
+
 
 
 
