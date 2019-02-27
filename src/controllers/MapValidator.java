@@ -48,8 +48,10 @@ public boolean hasValidNumberOfCountries(ArrayList<GameCountry> countries){
         return true;
 }
 
-public boolean isWholeMapConnected(Graph<GameCountry, DefaultEdge> map){
-
-    return true;
+public boolean isWholeMapConnected(GraphUtil util, ArrayList<GameCountry> countries){
+    if (util.getIteratorSize(util.breadthFirstSearch(countries.get(0))) == countries.size()){
+        return true;
+    }
+    return false;
 }
 }
