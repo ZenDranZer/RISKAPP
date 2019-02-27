@@ -5,11 +5,19 @@ import utils.GraphUtil;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class MapGenerator {
     ArrayList<GameContinent> continentList;
+    HashMap<String,GameCountry> countryHashMap;
+    HashMap<String,GameContinent> continentHashMap;
     ArrayList<GameCountry> countryList;
+
+    public MapGenerator() {
+        this.countryHashMap = new HashMap<>();
+        this.continentHashMap = new HashMap<>();
+    }
 
     public BufferedReader readContinentList(BufferedReader inputReader) throws IOException {
         String inputLine;
@@ -154,6 +162,11 @@ public class MapGenerator {
             getContriesForEachContinent(continent);
         }
     }
+
+    /**
+     * in the GUI the view can directly call this method after appropriate options are selected by the user
+     * @param continent
+     */
     public void getContriesForEachContinent(GameContinent continent){
 
         int numberOfCountries = 0;
