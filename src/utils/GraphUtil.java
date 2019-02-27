@@ -55,16 +55,22 @@ public class GraphUtil {
         return countryGraph.containsEdge(firstCountry, secondCountry);
     }
 
-
-    /***/
+    /**A method which will return the breadth first search result for a graph from a particular source
+     * @param initialCountry the source node
+     * @return Iterator<GameCountry> is an iterator with result of BFS of GameCountry type.*/
     public Iterator<GameCountry> breadthFirstSearch(GameCountry initialCountry){
         return new BreadthFirstIterator<>(countryGraph,initialCountry);
     }
 
+    /**A method which will return the breadth first search result for a graph.
+     * @return Iterator<GameCountry> is an iterator with result of BFS of GameCountry type.*/
     public Iterator<GameCountry> breadthFirstSearch(){
         return new BreadthFirstIterator<>(countryGraph);
     }
 
+    /**getIteratorSize takes an Iterator and returns the size of the iterator.
+     * @param iterator its an Iterator object for which we need to find size
+     * @return int which is the count of iterator.*/
     public int getIteratorSize(Iterator<GameCountry> iterator){
         int count = 0;
         while (iterator.hasNext()){
@@ -74,10 +80,18 @@ public class GraphUtil {
         return count;
     }
 
+    /**A method which will return the depth first search result for a graph from a particular source
+     * @param initialCountry the source node
+     * @return Iterator<GameCountry> is an iterator with result of DFS of GameCountry type.*/
     public Iterator<GameCountry> depthFirstSearch(GameCountry initialCountry){
         return new DepthFirstIterator<>(countryGraph);
     }
 
+    /**A method which will return the depth first search result for a graph.
+     * @return Iterator<GameCountry> is an iterator with result of DFS of GameCountry type.*/
+    public Iterator<GameCountry> depthFirstSearch(){
+        return new DepthFirstIterator<>(countryGraph);
+    }
 
 
 }

@@ -1,10 +1,7 @@
 package controllers;
 import models.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 public class TurnController {
 
@@ -75,52 +72,39 @@ public class TurnController {
 		// user allocates the remaining armies
 	}
 
-	  //initial allocation of countries
-    // preferably in round robin fashion
+	/**
+	 * Initial allocation of countries to the players at the beginning of the game.
+	 * The country allocation happens in a round robin manner
+	 * @param activePlayers List of players
+	 * @param countries List of countries in the map
+	 */
     public void allocateCountries(ArrayList<Player> activePlayers, ArrayList<GameCountry> countries) {
 
 	    int index = 0;
-	    ArrayList<GameCountry> tempCountryList = new ArrayList<>();
-
-		for (GameCountry country : countries) {
-			tempCountryList.add(country);
-		}
-
 		int i=0;
-		while(tempCountryList.isEmpty()){
-			index = getRandomCountryIndex(tempCountryList);
-			if(i==activePlayers.size()){
+		Collections.shuffle(countries);
+
+		for(int k =0;k<countries.size();k++) {
+			if(i==(activePlayers.size())) {
 				i=0;
 			}
-			countries.get(index).setCurrentPlayer(activePlayers.get(i));
+			countries.get(k).setCurrentPlayer(activePlayers.get(i));
 			i++;
-		}
-
-		for (GameCountry country : countries) {
-
-
-			System.out.println(country.getCurrentPlayer());
 		}
     }
     
 	public void gameLoop(){
 
 	}
-
-/*	public static void main(String args[]) {
+/*
+	public static void main(String args[]) {
 
 		TurnController m = new TurnController();
 
 		ArrayList<Player> p =new ArrayList<>();
 		ArrayList<GameCountry> c = new ArrayList<>();
-		for(int i=0;i<10;i++) {
-			Player p1 = new Player("jil",Integer.toString(1));
-			p.add(p1);
-			GameCountry c1 = new GameCountry();
-			c.add(c1);
-		}
 
-		m.allocateCountries(p,c);
+		m.allocateCountries(TestUtil.getPlayerArrayList(),TestUtil.getGameCountryList());
 
 	}*/
 }
