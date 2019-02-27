@@ -19,6 +19,11 @@ public class GameCountry {
     private int coordinateX;
     private int coordinateY;
 
+    public  GameCountry(){}
+    public GameCountry(String countryName){
+        this.countryName = countryName;
+    }
+
     public String getCountryName() {
         return countryName;
     }
