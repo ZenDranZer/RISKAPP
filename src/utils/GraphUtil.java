@@ -65,6 +65,14 @@ public class GraphUtil {
         return new BreadthFirstIterator<>(countryGraph);
     }
 
+    public int getIteratorSize(Iterator<GameCountry> iterator){
+        int count = 0;
+        for(GameCountry country : iterator){
+            count++;
+        }
+        return count;
+    }
+
     public Iterator<GameCountry> depthFirstSearch(GameCountry initialCountry){
         return new DepthFirstIterator<>(countryGraph);
     }
