@@ -18,6 +18,8 @@ public class GameCountry {
     private String armiesStationed;
     private int coordinateX;
     private int coordinateY;
+    GameContinent continent;
+
 
     public String getCountryName() {
         return countryName;
@@ -35,8 +37,17 @@ public class GameCountry {
         this.continent = continent;
     }
 */
+    public GameCountry() {
+        this.neighbouringCountries = new ArrayList<>();
+    }
+    public GameContinent getContinent() {
+        return continent;
+    }
     public String getPlayerId() {
         return playerId;
+    }
+    public void setContinent(GameContinent continent) {
+        this.continent = continent;
     }
 
     public void setPlayerId(String playerId) {

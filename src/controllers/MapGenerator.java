@@ -4,6 +4,7 @@ import models.GameCountry;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class MapGenerator {
     ArrayList<GameContinent> continentList;
@@ -134,6 +135,21 @@ public class MapGenerator {
 
     public String GenerateMap(){
         return null;
+    }
+    public void getContinentsFromPlayer(){
+        int numberOfContinents;
+        Scanner in = new Scanner(System.in);
+        System.out.println("How many continent do you want to add? ");
+        numberOfContinents = (in.nextInt());
+        for(int i = 1;i<=numberOfContinents;i++){
+            System.out.println("Enter "+i+"th continent: ");
+            GameContinent newContinent = new GameContinent();
+            newContinent.setContinentName(in.next());
+            System.out.println("Enter the continent value");
+            newContinent.setContinentValue(in.nextInt());
+            continentList.add(newContinent);
+        }
+
     }
 
 }
