@@ -48,8 +48,19 @@ public boolean hasValidNumberOfCountries(ArrayList<GameCountry> countries){
         return true;
 }
 
-public boolean isWholeMapConnected(Graph<GameCountry, DefaultEdge> map){
+public boolean isWholeMapConnected(GraphUtil util, ArrayList<GameCountry> countries){
+    if (util.getIteratorSize(util.breadthFirstSearch(countries.get(0))) == countries.size()){
+        return true;
+    }
+    return false;
+}
 
-    return true;
+public boolean isWholeContinentsConnected(GameContinent continent){
+        GraphUtil tempGraph = new GraphUtil();
+        tempGraph.setCountryGraph(continent.getCountries());
+        if (tempGraph.getIteratorSize(tempGraph.breadthFirstSearch(continent.getCountries().get(0))) == continent.getCountries().size()){
+            return true;
+        }
+        return false;
 }
 }
