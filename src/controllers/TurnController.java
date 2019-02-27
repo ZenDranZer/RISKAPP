@@ -4,6 +4,7 @@ import models.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public class TurnController {
 
@@ -13,6 +14,14 @@ public class TurnController {
 	public TurnController(){
 		//TODO allocate armies
 		availableArmies =3;
+	}
+
+	public int getRandomCountryIndex(ArrayList<GameCountry> countries) {
+
+		Random rand = new Random();
+		int n = rand.nextInt(countries.size());
+		//System.out.println(n);
+        return n;
 	}
 
 	//calculate armies to add at the beginning of each turn
@@ -61,18 +70,57 @@ public class TurnController {
 
 
 	//allocate initial set of armies
-	public void allocateArmies(ArrayList<Player> activePlayers){
+	public void allocateArmies(ArrayList<Player> activePlayers) {
 		//Allocate atleast one army to each country
 		// user allocates the remaining armies
 	}
 
 	  //initial allocation of countries
     // preferably in round robin fashion
-    public void allocateCountries(ArrayList<Player> activePlayers, ArrayList<GameCountry> countries){
+    public void allocateCountries(ArrayList<Player> activePlayers, ArrayList<GameCountry> countries) {
 
+	    int index = 0;
+	    ArrayList<GameCountry> tempCountryList = new ArrayList<>();
+
+		for (GameCountry country : countries) {
+			tempCountryList.add(country);
+		}
+
+		int i=0;
+		while(tempCountryList.isEmpty()){
+			index = getRandomCountryIndex(tempCountryList);
+			if(i==activePlayers.size()){
+				i=0;
+			}
+			countries.get(index).setCurrentPlayer(activePlayers.get(i));
+			i++;
+		}
+
+		for (GameCountry country : countries) {
+
+
+			System.out.println(country.getCurrentPlayer());
+		}
     }
     
 	public void gameLoop(){
 
 	}
+
+/*	public static void main(String args[]) {
+
+		TurnController m = new TurnController();
+
+		ArrayList<Player> p =new ArrayList<>();
+		ArrayList<GameCountry> c = new ArrayList<>();
+		for(int i=0;i<10;i++) {
+			Player p1 = new Player("jil",Integer.toString(1));
+			p.add(p1);
+			GameCountry c1 = new GameCountry();
+			c.add(c1);
+		}
+
+		m.allocateCountries(p,c);
+
+	}*/
 }

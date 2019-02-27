@@ -14,7 +14,7 @@ public class GameCountry {
     /*
         GameContinent continent;
     */
-    private String playerId;
+    private Player currentPlayer;
     private String armiesStationed;
     private int coordinateX;
     private int coordinateY;
@@ -35,12 +35,13 @@ public class GameCountry {
         this.continent = continent;
     }
 */
-    public String getPlayerId() {
-        return playerId;
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public String getArmiesStationed() {
