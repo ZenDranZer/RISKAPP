@@ -67,7 +67,8 @@ public class GraphUtil {
 
     public int getIteratorSize(Iterator<GameCountry> iterator){
         int count = 0;
-        for(GameCountry country : iterator){
+        while (iterator.hasNext()){
+            iterator.next();
             count++;
         }
         return count;
