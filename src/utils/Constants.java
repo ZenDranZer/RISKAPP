@@ -14,6 +14,7 @@ public class Constants {
      * when a player owns whole continent.*/
     public static final int CONTINENT_VALUE = 7;
 
+
     /**This enumeration gives a predefined colors for players.
      * Max player limit is 6.*/
     public enum PLAYER_COLOR{
@@ -73,4 +74,5 @@ public class Constants {
             return armyStrength;
         }
     }
+
 }
