@@ -14,7 +14,7 @@ public class Test {
     public void testWriteConquestFile() throws IOException {
         MapGenerator mapGenerator = new MapGenerator();
 
-        assertEquals(mapGenerator.writeConquestFile(), "SUCCESS");
+        assertEquals( new MapGenerator().writeConquestFile(), "SUCCESS");
 
     }
 }

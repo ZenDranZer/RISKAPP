@@ -107,7 +107,7 @@ public class MapGenerator {
         return null;
     }
 
-    public String WriteConquestFile(){
+    public String writeConquestFile(){
 
         // this class creates a conquest File from existing map - we read contries and continents from global arraylists
 
