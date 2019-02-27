@@ -156,18 +156,18 @@ public class MapGenerator {
         return null;
     }
 
-    public void getCountriesFromUser(){
+   /* public void getCountriesFromUser(){
         for( GameContinent continent : continentList){
             System.out.println("Enter the countries for  "+ continent.getContinentName());
             getContriesForEachContinent(continent);
         }
-    }
+    }*/
 
     /**
      * in the GUI the view can directly call this method after appropriate options are selected by the user
-     * @param continent
+     *
      */
-    public void getContriesForEachContinent(GameContinent continent){
+ /*   public void getContriesForEachContinent(GameContinent continent){
 
         int numberOfCountries = 0;
         Scanner in = new Scanner(System.in);
@@ -202,7 +202,7 @@ public class MapGenerator {
         }
 
 
-    }
+    }*/
     public GraphUtil buildGraph(){
         GraphUtil graphUtilObject = new GraphUtil();
         graphUtilObject.setCountryGraph(countryList);
@@ -211,7 +211,35 @@ public class MapGenerator {
     public void editMap(){
 
     }
+    public String addContinent(String continentName, int continentValue){
+        if(!continentHashMap.containsKey(continentName)){
+            GameContinent newContinent = new GameContinent();
+            newContinent.setContinentName(continentName);
+            newContinent.setContinentValue(continentValue);
+            return "SUCCESS";
+        }
+        return "THE CONTINENT ALREADY EXISTS";
+    }
+    public String addCountry(String continentname, String countryName, ArrayList<String> neighbours){
+        if(!countryHashMap.containsKey(countryName)){
+            GameCountry newCountry = new GameCountry();
+            newCountry.setContinent(continentHashMap.get(continentname));
+            newCountry.setCountryName(countryName);
+            for(String tempNeighbourName : neighbours){
+                GameCountry newNeighbour;
+                if(countryExists(tempNeighbourName)==null){
+                    newNeighbour = new GameCountry();
+                }
+                else
+                    newNeighbour = countryExists(tempNeighbourName);
+                newNeighbour.setCountryName(tempNeighbourName);
+                newCountry.setNeighbouringCountries(countryHashMap.get(tempNeighbourName));
 
+            }
+            return "SUCCESS";
+        }
+        return "THE COUNTRY ALREADY EXISTS";
+    }
     public ArrayList<String> getListOfContinents(){
         ArrayList<String> continents = new ArrayList<>(continentHashMap.keySet());
         return continents;
@@ -225,11 +253,11 @@ public class MapGenerator {
     public String removeNeighbor(String countryName , String neighborName){
         ArrayList<GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
         for (GameCountry neighbor : neighbors){
-            if (neighbor.getCountryName() == neighborName){
+            if (neighbor.getCountryName().equals(neighborName)){
                 neighbors.remove(neighbor);
             }
         }
-        countryHashMap.get(countryName).setNeighbouringCountries(neighbors);
+      //  countryHashMap.get(countryName).setNeighbouringCountries(neighbors); This is not needed.
         return "SUCCESS";
     }
 
@@ -240,7 +268,9 @@ public class MapGenerator {
         }else {
            return "NEIGHBOR DOES NOT EXIST";
         }
-        countryHashMap.get(neighborName).setNeighbouringCountries(neighbors);
+        /*for(GameCountry neighbor : neighbors){ This should not be needed.
+            countryHashMap.get(neighborName).setNeighbouringCountries(neighbor);
+        }*/
         return "SUCCESS";
     }
 
@@ -270,6 +300,33 @@ public class MapGenerator {
             return "SUCCESS";
         }else{
             return "COUNTRY DOES NOT EXIST";
+        }
+    }
+    public String removeContinent(String continentName){
+        if(continentHashMap.containsKey(continentName)) {
+            continentHashMap.remove(continentName);
+            return "SUCCESS";
+        }
+        else{
+            return "CONTINENT DOES NOT EXIST";
+        }
+    }
+    public String changeContinentName(String continentName, String newContinentName){
+        if(continentHashMap.containsKey(continentName)){
+            continentHashMap.get(continentName).setContinentName(newContinentName);
+            return "SUCCESS";
+        }
+        else{
+            return "CONTINENT DOES NOT EXIST";
+        }
+    }
+    public String changeContinentValue(String continentName, int continentValue){
+        if(continentHashMap.containsKey(continentName)){
+            continentHashMap.get(continentName).setContinentValue(continentValue);
+            return "SUCCESS";
+        }
+        else{
+            return "CONTINENT DOES NOT EXIST";
         }
     }
 

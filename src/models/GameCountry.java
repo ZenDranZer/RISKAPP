@@ -64,8 +64,8 @@ public class GameCountry {
         return neighbouringCountries;
     }
 
-    public void setNeighbouringCountries(ArrayList<GameCountry> neighbouringCountries) {
-        this.neighbouringCountries = neighbouringCountries;
+    public void setNeighbouringCountries(GameCountry neighbouringCountry) {
+        this.neighbouringCountries.add(neighbouringCountry);
     }
     public void addNeighbouringCountry(GameCountry neighbouringCountry) {
         this.neighbouringCountries.add(neighbouringCountry);
