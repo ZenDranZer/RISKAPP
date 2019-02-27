@@ -7,14 +7,25 @@ package models;
   */
 public class Player {
 
-    String name;
-    String id;
-    String player_armies;
-    ArrayList<GameCountry> countries;
-    ArrayList<GameContinent> continents;
-    String cards_held;
-    String cardExchanged;
+    private String name;
+    private String id;
+    private String player_armies;
+    private ArrayList<GameCountry> countries;
+    private ArrayList<GameContinent> continents;
+    private String cards_held;
+    private String cardExchanged;
 
+    public Player() {}
+    public Player(String name,String id) {
+        this.name = name;
+        this.id = id;
+        player_armies = "";
+        countries = new ArrayList<>();
+        continents = new ArrayList<>();
+        cards_held = "";
+        cardExchanged = "";
+
+    }
     public String getPlayer_name() {
         return name;
     }
