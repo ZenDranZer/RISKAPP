@@ -212,4 +212,65 @@ public class MapGenerator {
 
     }
 
+    public ArrayList<String> getListOfContinents(){
+        ArrayList<String> continents = new ArrayList<>(continentHashMap.keySet());
+        return continents;
+    }
+
+    public ArrayList<String> getListOfCountries(){
+        ArrayList<String> countries = new ArrayList<>(countryHashMap.keySet());
+        return countries;
+    }
+
+    public String removeNeighbor(String countryName , String neighborName){
+        ArrayList<GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
+        for (GameCountry neighbor : neighbors){
+            if (neighbor.getCountryName() == neighborName){
+                neighbors.remove(neighbor);
+            }
+        }
+        countryHashMap.get(countryName).setNeighbouringCountries(neighbors);
+        return "SUCCESS";
+    }
+
+    public String addNeighbor(String countryName , String neighborName){
+        ArrayList<GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
+        if (countryHashMap.containsKey(neighborName)){
+            neighbors.add(countryHashMap.get(neighborName));
+        }else {
+           return "NEIGHBOR DOES NOT EXIST";
+        }
+        countryHashMap.get(neighborName).setNeighbouringCountries(neighbors);
+        return "SUCCESS";
+    }
+
+    public String changeCountryContinent(String countryName, String continentName){
+        if (continentHashMap.containsKey(continentName)){
+            countryHashMap.get(countryName).setContinent(continentHashMap.get(continentName));
+        }else {
+           return "CONTINENT DOES NOT EXIST";
+        }
+
+        return "SUCCESS";
+    }
+
+    public String changeCountryName(String oldName , String newName){
+        if (countryHashMap.containsKey(oldName)){
+            countryHashMap.get(oldName).setCountryName(newName);
+        }else {
+            return "COUNTRY DOES NOT EXIST";
+        }
+
+        return "SUCCESS";
+    }
+
+    public String removeCountry(String countryName){
+        if (countryHashMap.containsKey(countryName)){
+            countryHashMap.remove(countryName);
+            return "SUCCESS";
+        }else{
+            return "COUNTRY DOES NOT EXIST";
+        }
+    }
+
 }
