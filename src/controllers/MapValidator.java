@@ -1,5 +1,6 @@
 package controllers;
 
+import models.GameContinent;
 import models.GameCountry;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -21,7 +22,18 @@ public class MapValidator {
         }
         return true;
     }
-
+    public boolean hasNeighbor(GameCountry country){ // see if the neighbour list is initialized in the model constructor and if not, do it.
+        if(country.getNeighbouringCountries().isEmpty()){
+            return false;
+        }
+        return true;
+    }
+    public boolean hasValidNumberOfContinents(ArrayList<GameContinent> listOfContinents){
+        if(listOfContinents.size()!=0 || listOfContinents.size()<=32 ){
+            return true;
+        }
+        return false;
+    }
 public boolean hasValidNumberOfNeighbors(GameCountry country){
     if (country.getNeighbouringCountries().size() > 10){
         return false;
