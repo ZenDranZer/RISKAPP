@@ -55,8 +55,9 @@ public class GraphUtil {
         return countryGraph.containsEdge(firstCountry, secondCountry);
     }
 
-
-    /***/
+    /**A method which will return the breadth first search result for a graph from a particular source
+     * @param initialCountry the source node
+     * @return */
     public Iterator<GameCountry> breadthFirstSearch(GameCountry initialCountry){
         return new BreadthFirstIterator<>(countryGraph,initialCountry);
     }
