@@ -14,12 +14,15 @@ public class GameCountry {
     /*
         GameContinent continent;
     */
+    private GameContinent continent;
     private Player currentPlayer;
     private int armiesStationed;
     private int coordinateX;
     private int coordinateY;
 
-    public  GameCountry(){}
+    public  GameCountry(){
+        continent = new GameContinent();
+    }
     public GameCountry(String countryName){
         this.countryName = countryName;
     }
@@ -32,14 +35,14 @@ public class GameCountry {
         this.countryName = countryName;
     }
 
-    /*public Continent getContinent() {
+    public GameContinent getContinent() {
         return continent;
     }
 
     public void setContinent(GameContinent continent) {
         this.continent = continent;
     }
-*/
+
 
     public Player getCurrentPlayer() {
         return currentPlayer;

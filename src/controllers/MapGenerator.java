@@ -1,6 +1,8 @@
 package controllers;
 import models.GameContinent;
 import models.GameCountry;
+import utils.GraphUtil;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -32,6 +34,8 @@ public class MapGenerator {
 
             String[] inpList = inputLine.split(",");
             GameCountry currentCountry;
+            String continentName;
+
             if(countryExists(inpList[0])==null) {
                 currentCountry = new GameCountry();
                 countryList.add(currentCountry);
@@ -42,7 +46,15 @@ public class MapGenerator {
             currentCountry.setCountryName(inpList[0]);
             currentCountry.setCoordinateX(Integer.parseInt(inpList[1]));
             currentCountry.setCoordinateY(Integer.parseInt(inpList[2]));
-            for(int iterator=3;iterator<inpList.length; iterator++){
+            continentName = inpList[3];
+
+            for(GameContinent continent : continentList){
+                if(continent.getContinentName().equals(continentName)){
+                    currentCountry.setContinent(continent);
+                    continent.setCountries(currentCountry);
+                }
+            }
+            for(int iterator=4;iterator<inpList.length; iterator++){
                 GameCountry neighborCountry;
                 if(countryExists(inpList[iterator])==null){
                     neighborCountry = new GameCountry();
@@ -139,19 +151,27 @@ public class MapGenerator {
     public void getCountriesFromUser(){
         for( GameContinent continent : continentList){
             System.out.println("Enter the countries for  "+ continent.getContinentName());
-            getContriesForEachContinent();
+            getContriesForEachContinent(continent);
         }
     }
-    public void getContriesForEachContinent(){
+    public void getContriesForEachContinent(GameContinent continent){
 
         int numberOfCountries = 0;
         Scanner in = new Scanner(System.in);
         System.out.println("How many countries do you want to add? ");
         numberOfCountries = in.nextInt();
         for(int i = 0 ; i< numberOfCountries ; i++){
-            GameCountry newCountry = new GameCountry();
+            GameCountry newCountry;
             System.out.println("Enter Name of "+i+"th Country: ");
-            newCountry.setCountryName(in.next());
+            String countryName = in.next();
+            if (countryExists(countryName) == null){
+                 newCountry= new GameCountry();
+                newCountry.setCountryName(countryName);
+            }
+            else{
+              newCountry = countryExists(countryName);
+            }
+            newCountry.setContinent(continent);
             System.out.println("Enter Neighbors or enter 0 to exit\n");
             while (!in.next().equals("0")){
                 System.out.println("Enter Name of Neighbor:");
@@ -170,23 +190,13 @@ public class MapGenerator {
 
 
     }
-
-    public void getContinentsFromPlayer(){
-        int numberOfContinents;
-        Scanner in = new Scanner(System.in);
-        System.out.println("How many continent do you want to add? ");
-        numberOfContinents = (in.nextInt());
-        for(int i = 1;i<=numberOfContinents;i++){
-            System.out.println("Enter "+i+"th continent: ");
-            GameContinent newContinent = new GameContinent();
-            newContinent.setContinentName(in.next());
-            System.out.println("Enter the continent value");
-            newContinent.setContinentValue(in.nextInt());
-            continentList.add(newContinent);
-        }
+    public GraphUtil buildGraph(){
+        GraphUtil graphUtilObject = new GraphUtil();
+        graphUtilObject.setCountryGraph(countryList);
+        return graphUtilObject;
+    }
+    public void editMap(){
 
     }
-
-
 
 }
