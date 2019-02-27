@@ -55,7 +55,9 @@ public class GraphUtil {
         return countryGraph.containsEdge(firstCountry, secondCountry);
     }
 
-
+    /**A method which will return the breadth first search result for a graph from a particular source
+     * @param initialCountry the source node
+     * @return */
     public Iterator<GameCountry> breadthFirstSearch(GameCountry initialCountry){
         return new BreadthFirstIterator<>(countryGraph,initialCountry);
     }
@@ -64,10 +66,18 @@ public class GraphUtil {
         return new BreadthFirstIterator<>(countryGraph);
     }
 
+    public int getIteratorSize(Iterator<GameCountry> iterator){
+        int count = 0;
+        while (iterator.hasNext()){
+            iterator.next();
+            count++;
+        }
+        return count;
+    }
+
     public Iterator<GameCountry> depthFirstSearch(GameCountry initialCountry){
         return new DepthFirstIterator<>(countryGraph);
     }
-
 
 
 
