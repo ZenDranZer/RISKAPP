@@ -1,7 +1,6 @@
 package controllers;
 import models.GameContinent;
 import models.GameCountry;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -151,5 +150,58 @@ public class MapGenerator {
         }
 
     }
+
+    public void getCountriesFromUser(){
+        for( GameContinent continent : continentList){
+            System.out.println("Enter the countries for  "+ continent.getContinentName());
+            getContriesForEachContinent();
+        }
+    }
+    public void getContriesForEachContinent(){
+
+        int numberOfCountries = 0;
+        Scanner in = new Scanner(System.in);
+        System.out.println("How many countries do you want to add? ");
+        numberOfCountries = in.nextInt();
+        for(int i = 0 ; i< numberOfCountries ; i++){
+            GameCountry newCountry = new GameCountry();
+            System.out.println("Enter Name of "+i+"th Country: ");
+            newCountry.setCountryName(in.next());
+            System.out.println("Enter Neighbors or enter 0 to exit\n");
+            while (!in.next().equals("0")){
+                System.out.println("Enter Name of Neighbor:");
+                String neighborName = in.next();
+                if (countryExists(neighborName) == null) {
+                    GameCountry newNeighbor = new GameCountry();
+                    newNeighbor.setCountryName(in.next());
+                    newCountry.addNeighbouringCountry(newNeighbor);
+                }else {
+                    newCountry.addNeighbouringCountry(countryExists(neighborName));
+                }
+
+            }
+            countryList.add(newCountry);
+        }
+
+
+    }
+
+    public void getContinentsFromPlayer(){
+        int numberOfContinents;
+        Scanner in = new Scanner(System.in);
+        System.out.println("How many continent do you want to add? ");
+        numberOfContinents = (in.nextInt());
+        for(int i = 1;i<=numberOfContinents;i++){
+            System.out.println("Enter "+i+"th continent: ");
+            GameContinent newContinent = new GameContinent();
+            newContinent.setContinentName(in.next());
+            System.out.println("Enter the continent value");
+            newContinent.setContinentValue(in.nextInt());
+            continentList.add(newContinent);
+        }
+
+    }
+
+
 
 }

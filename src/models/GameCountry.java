@@ -14,12 +14,10 @@ public class GameCountry {
     /*
         GameContinent continent;
     */
-    private String playerId;
+    private Player currentPlayer;
     private String armiesStationed;
     private int coordinateX;
     private int coordinateY;
-    GameContinent continent;
-
 
     public String getCountryName() {
         return countryName;
@@ -37,21 +35,13 @@ public class GameCountry {
         this.continent = continent;
     }
 */
-    public GameCountry() {
-        this.neighbouringCountries = new ArrayList<>();
-    }
-    public GameContinent getContinent() {
-        return continent;
-    }
-    public String getPlayerId() {
-        return playerId;
-    }
-    public void setContinent(GameContinent continent) {
-        this.continent = continent;
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public String getArmiesStationed() {
