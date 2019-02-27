@@ -165,6 +165,7 @@ public class MapGenerator {
                 }
 
             }
+            countryList.add(newCountry);
         }
 
 
