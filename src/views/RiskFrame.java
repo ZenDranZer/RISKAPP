@@ -1,5 +1,7 @@
 package views;
 
+import controllers.GameEngine;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -10,9 +12,12 @@ import javax.swing.border.*;
  */
 public class RiskFrame extends JFrame {
     public RiskFrame() {
+        gameEngine = new GameEngine();
         initComponents();
     }
 
+
+    private GameEngine gameEngine;
     private JPanel dialogPane;
     private JPanel contentPanel;
     private JLabel label1;
@@ -26,7 +31,7 @@ public class RiskFrame extends JFrame {
 
     private void startButtonMouseClicked(MouseEvent e) {
         Container container = getContentPane();
-        StartGamePanel gamePanel = new StartGamePanel();
+        StartGamePanel gamePanel = new StartGamePanel(gameEngine);
         gamePanel.setVisible(true);
         dialogPane.setVisible(false);
         container.add(gamePanel);

@@ -51,6 +51,9 @@ public class GameEngine {
         return listActivePlayers;
     }
 
+    public void setListActivePlayers(ArrayList<Player> listActivePlayers) {
+        this.listActivePlayers = listActivePlayers;
+    }
 
     //should return list of player objects
     //GUI
