@@ -17,11 +17,13 @@ public class MapGenerator {
     public MapGenerator() {
         this.countryHashMap = new HashMap<>();
         this.continentHashMap = new HashMap<>();
+        continentList = new ArrayList<>();
+        countryList = new ArrayList<>();
     }
 
     public BufferedReader readContinentList(BufferedReader inputReader) throws IOException {
         String inputLine;
-        continentList = new ArrayList<>();
+
         inputLine = inputReader.readLine();
         while(!inputLine.equals("[Territories]")){
             GameContinent continent = new GameContinent();
@@ -29,14 +31,15 @@ public class MapGenerator {
             int value = Integer.parseInt(inputLine.substring(inputLine.indexOf("=")+1));
             continent.setContinentName(name);
             continent.setContinentValue(value);
-            continentList.add(continent);
+            continentHashMap.put(name, continent);
+          //  continentList.add(continent);
             inputLine = inputReader.readLine();
         }
         return inputReader;          //Return the current position of reader file so that countries can be loaded.
     }
     public BufferedReader readCountryList(BufferedReader inputReader) throws IOException {
         String inputLine;
-        countryList = new ArrayList<>();
+
         inputLine = inputReader.readLine();
         while(inputLine!=null){
 
@@ -46,7 +49,8 @@ public class MapGenerator {
 
             if(countryExists(inpList[0])==null) {
                 currentCountry = new GameCountry();
-                countryList.add(currentCountry);
+             /*   countryList.add(currentCountry);*/
+                countryHashMap.put(inpList[0],currentCountry);
             }
             else{
                 currentCountry = countryExists(inpList[0]);
@@ -55,19 +59,25 @@ public class MapGenerator {
             currentCountry.setCoordinateX(Integer.parseInt(inpList[1]));
             currentCountry.setCoordinateY(Integer.parseInt(inpList[2]));
             continentName = inpList[3];
-
+/*
             for(GameContinent continent : continentList){
                 if(continent.getContinentName().equals(continentName)){
                     currentCountry.setContinent(continent);
                     continent.setCountries(currentCountry);
                 }
+            }*/
+            if(continentHashMap.containsKey(continentName)){
+                currentCountry.setContinent(continentHashMap.get(continentName));
+                continentHashMap.get(continentName).setCountries(currentCountry);
             }
             for(int iterator=4;iterator<inpList.length; iterator++){
                 GameCountry neighborCountry;
                 if(countryExists(inpList[iterator])==null){
                     neighborCountry = new GameCountry();
-                    countryList.add(neighborCountry);
+                 /*   countryList.add(neighborCountry);*/
+
                     neighborCountry.setCountryName(inpList[iterator]);
+                    countryHashMap.put(inpList[iterator],neighborCountry);
                 }
                 else{
                     neighborCountry = countryExists(inpList[iterator]);
@@ -81,7 +91,7 @@ public class MapGenerator {
     }
     public GameCountry countryExists(String  countryname){
 
-        for(GameCountry tempCountry : countryList){
+        for(GameCountry tempCountry : countryHashMap.values()){
             if(tempCountry.getCountryName().equals(countryname)){
                 return tempCountry;
             }
@@ -129,13 +139,13 @@ public class MapGenerator {
             //here we most add information regarding GUI
             writer.write("[Continents]");
             ((BufferedWriter) writer).newLine();
-            for (GameContinent continent: continentList) {
+            for (GameContinent continent: continentHashMap.values()) { //check if for each works with collections or not
                 writer.write(continent.getContinentName() + "=" + continent.getContinentValue());
             }
             ((BufferedWriter) writer).newLine();
             writer.write("[Territories]");
             ((BufferedWriter) writer).newLine();
-            for (GameCountry country : countryList) {
+            for (GameCountry country : countryHashMap.values()) {
                 String neighbours = "";
                 for (GameCountry neighbour: country.getNeighbouringCountries()) {
                     neighbours += ","+neighbour.getCountryName();
@@ -205,7 +215,7 @@ public class MapGenerator {
     }*/
     public GraphUtil buildGraph(){
         GraphUtil graphUtilObject = new GraphUtil();
-        graphUtilObject.setCountryGraph(countryList);
+        graphUtilObject.setCountryGraph(new ArrayList<>(countryHashMap.values()));
         return graphUtilObject;
     }
     public void editMap(){
