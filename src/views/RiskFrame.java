@@ -5,7 +5,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-
 /**
  *RiskFrame class for initial view
  */
@@ -14,10 +13,16 @@ public class RiskFrame extends JFrame {
         initComponents();
     }
 
+    private JPanel dialogPane;
+    private JPanel contentPanel;
+    private JLabel label1;
+    private JButton startButton;
+    private JButton mapEditorButton;
+    private JButton cancelButton;
+
     private void cancelButtonMouseClicked(MouseEvent e) {
         System.exit(0);
     }
-
 
     private void startButtonMouseClicked(MouseEvent e) {
         Container container = getContentPane();
@@ -39,8 +44,6 @@ public class RiskFrame extends JFrame {
         revalidate();
     }
 
-
-
     private void initComponents() {
         dialogPane = new JPanel();
         contentPanel = new JPanel();
@@ -48,14 +51,11 @@ public class RiskFrame extends JFrame {
         startButton = new JButton();
         mapEditorButton = new JButton();
         cancelButton = new JButton();
-
         
         setResizable(false);
         setTitle("RISK!");
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
-
-        
         {
             dialogPane.setBorder(new EmptyBorder(12, 12, 12, 12));
 
@@ -117,11 +117,4 @@ public class RiskFrame extends JFrame {
         setSize(640, 625);
         setLocationRelativeTo(getOwner());
     }
-
-    private JPanel dialogPane;
-    private JPanel contentPanel;
-    private JLabel label1;
-    private JButton startButton;
-    private JButton mapEditorButton;
-    private JButton cancelButton;
 }
