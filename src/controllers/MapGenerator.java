@@ -8,12 +8,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/** This class hosts the data of countries and contients. It also hosts the method definitions with
+ * which any map related operations are to be performed in the game.
+ *
+ */
 public class MapGenerator {
     ArrayList<GameContinent> continentList;
    static HashMap<String,GameCountry> countryHashMap;
    static HashMap<String,GameContinent> continentHashMap;
     ArrayList<GameCountry> countryList;
 
+    /** Class constructor that initializes the ubiquitious countryHashMap and ContinentHashMap
+     *
+     */
     public MapGenerator() {
         countryHashMap = new HashMap<>();
         continentHashMap = new HashMap<>();
@@ -21,33 +28,53 @@ public class MapGenerator {
         countryList = new ArrayList<>();
     }
 
+    /**Reads continents from a file and store them in required structure.
+     *
+     * @param inputReader
+     * @return object of buffered reader to continue reading after continents are read.
+     * @throws IOException
+     */
     public BufferedReader readContinentList(BufferedReader inputReader) throws IOException {
-        String inputLine;
+        try {
+            String inputLine;
 
-        inputLine = inputReader.readLine();
-        while(!inputLine.equals("[Territories]")||!inputLine.equals("[Countries]")){
-            GameContinent continent = new GameContinent();
-            String name;
-            try {
-                name = inputLine.substring(0, inputLine.indexOf("="));
-            }catch(Exception e){
-                inputReader=null;
-                return inputReader;
-            }
-            int value = Integer.parseInt(inputLine.substring(inputLine.indexOf("=")+1));
-            if(continentHashMap.containsKey(name)){
-                inputReader = null;
-                return inputReader;
-            }
-            continent.setContinentName(name);
-            continent.setContinentValue(value);
-            continentHashMap.put(name, continent);
-          //  continentList.add(continent);
             inputLine = inputReader.readLine();
+            while (!inputLine.equals("[Territories]") || !inputLine.equals("[Countries]")) {
+                GameContinent continent = new GameContinent();
+                String name;
+                try {
+                    name = inputLine.substring(0, inputLine.indexOf("="));
+                } catch (Exception e) {
+                    inputReader = null;
+                    return inputReader;
+                }
+                int value = Integer.parseInt(inputLine.substring(inputLine.indexOf("=") + 1));
+                if (continentHashMap.containsKey(name)) {
+                    inputReader = null;
+                    return inputReader;
+                }
+                continent.setContinentName(name);
+                continent.setContinentValue(value);
+                continentHashMap.put(name, continent);
+                //  continentList.add(continent);
+                inputLine = inputReader.readLine();
+            }
+            return inputReader;          //Return the current position of reader file so that countries can be loaded.
+        }catch (IOException e){
+            return null;
+        }catch (NullPointerException e){
+            return null;
         }
-        return inputReader;          //Return the current position of reader file so that countries can be loaded.
     }
+
+    /**Reads countries from the file and stores them in the required structure.
+     *
+     * @param inputReader
+     * @return object of buffered reader to continue reading after continents are read.
+     * @throws IOException
+     */
     public BufferedReader readCountryList(BufferedReader inputReader) throws IOException {
+        try{
         String inputLine;
 
         inputLine = inputReader.readLine();
@@ -104,52 +131,77 @@ public class MapGenerator {
         }
 
         return inputReader;
+        }catch (IOException e){
+            return null;
+        }catch (NullPointerException e){
+            return null;
+        }
     }
-    public GameCountry countryExists(String  countryname){
 
+    /**Checks if a country already exist using the country name.
+     *
+     * @param countryname
+     * @return null if the country does not exist and the country object if the country already exists.
+     */
+    public GameCountry countryExists(String  countryname){
         if(countryHashMap.containsKey(countryname)){
             return countryHashMap.get(countryname);
         }
         return null;
     }
 
+    /**This method is called when a user wants to load the file from the system.
+     *
+     * @param filePath
+     * @return status of the operation
+     * @throws IOException
+     */
     public String ReadConquestFile(String filePath) throws IOException {
-        File inputMap = new File(filePath);
-        BufferedReader inputReader = new BufferedReader(new FileReader(inputMap));
+        try {
+            File inputMap = new File(filePath);
+            BufferedReader inputReader = new BufferedReader(new FileReader(inputMap));
 
-        String inputLine;
-        int lineCounter=0;
-        while((inputLine=inputReader.readLine())!=null){
+            String inputLine;
+            int lineCounter = 0;
+            while ((inputLine = inputReader.readLine()) != null) {
             /*[Map]  //check if the first line equals [map]
                 image=world.bmp
                 wrap=yes
                 scroll=horizontal           Read the first six lines here, increment the line counter and then continue.
                 author=Your name
                 warn=yes*/
-            if(lineCounter==6 ){
-                if(inputLine=="[Continents]"){
-                inputReader=this.readContinentList(inputReader);//reader is returned as we need to have a single reader reading different parts of the map file.
-                if(inputReader==null){
-                   return "ONE OR MORE DUPLICATE CONTINENTS ENCOUNTERED";
+                if (lineCounter == 6) {
+                    if (inputLine == "[Continents]") {
+                        inputReader = this.readContinentList(inputReader);//reader is returned as we need to have a single reader reading different parts of the map file.
+                        if (inputReader == null) {
+                            return "ONE OR MORE DUPLICATE CONTINENTS ENCOUNTERED";
+                        }
+                    } else {
+                        return "THE MAP FORMAT IS WRONG";
+                    }
                 }
+
+                inputReader = this.readCountryList(inputReader);
+                if (inputReader == null) {
+                    return "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
                 }
-                else{
-                    return "THE MAP FORMAT IS WRONG";
-                }
+
+
+                lineCounter++;
             }
 
-            inputReader = this.readCountryList(inputReader);
-            if(inputReader==null){
-                return "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
-            }
-
-
-            lineCounter++;
+            return "SUCCESS";
+        }catch (FileNotFoundException e){
+            return "THE FILE NOT FOUND";
+        }catch (IOException e){
+            return "ERROR IN READING THE SPECIFIED FILE";
         }
-
-        return "SUCCESS";
     }
 
+    /**Writes the map into a text file following the Conquest File Format.
+     *
+     * @return status of the operation
+     */
     public String writeConquestFile(){
 
         // this class creates a conquest File from existing map - we read contries and continents from global arraylists
@@ -238,145 +290,269 @@ public class MapGenerator {
 
 
     }*/
+
+    /**Method builds a graph from the list of continents and country data acquired.
+     *
+     * @return returns the graph.
+     */
     public GraphUtil buildGraph(){
-        GraphUtil graphUtilObject = new GraphUtil();
-        graphUtilObject.setCountryGraph(new ArrayList<>(countryHashMap.values()));
-        return graphUtilObject;
+        try {
+            GraphUtil graphUtilObject = new GraphUtil();
+            graphUtilObject.setCountryGraph(new ArrayList<>(countryHashMap.values()));
+            return graphUtilObject;
+        }catch(Exception e){
+            return null;
+        }
     }
     public void editMap(){
 
     }
-    public String addContinent(String continentName, int continentValue){
-        if(!continentHashMap.containsKey(continentName)){
-            GameContinent newContinent = new GameContinent();
-            newContinent.setContinentName(continentName);
-            newContinent.setContinentValue(continentValue);
-            return "SUCCESS";
-        }
-        return "THE CONTINENT ALREADY EXISTS";
-    }
-    public String addCountry(String continentname, String countryName, ArrayList<String> neighbours){
-        if(!countryHashMap.containsKey(countryName)){
-            GameCountry newCountry = new GameCountry();
-            newCountry.setContinent(continentHashMap.get(continentname));
-            continentHashMap.get(continentname).setCountries(newCountry);
-            newCountry.setCountryName(countryName);
-            for(String tempNeighbourName : neighbours){
-                GameCountry newNeighbour;
-                if(countryExists(tempNeighbourName)==null){
-                    newNeighbour = new GameCountry();
-                    newNeighbour.setCountryName(tempNeighbourName);
-                }
-                else
-                    newNeighbour = countryExists(tempNeighbourName);
-                newCountry.setNeighbouringCountries(countryHashMap.get(tempNeighbourName));
 
+    /**This method adds a continent in the map.
+     *
+     * @param continentName
+     * @param continentValue
+     * @return returns the status of the method execution
+     */
+    public String addContinent(String continentName, int continentValue){
+        try {
+            if (!continentHashMap.containsKey(continentName)) {
+                GameContinent newContinent = new GameContinent();
+                newContinent.setContinentName(continentName);
+                newContinent.setContinentValue(continentValue);
+                return "SUCCESS";
             }
-            return "SUCCESS";
+            return "THE CONTINENT ALREADY EXISTS";
+        }catch (NullPointerException e){
+            return "EXCEPTION IN ACCESSING CONTINENT DATA";
         }
-        return "THE COUNTRY ALREADY EXISTS";
     }
+
+    /**This method adds a country to the map.
+     *
+     * @param continentname
+     * @param countryName
+     * @param neighbours
+     * @return returns the status of the method execution
+     */
+    public String addCountry(String continentname, String countryName, ArrayList<String> neighbours){
+        try {
+            if (!countryHashMap.containsKey(countryName)) {
+                GameCountry newCountry = new GameCountry();
+                newCountry.setContinent(continentHashMap.get(continentname));
+                continentHashMap.get(continentname).setCountries(newCountry);
+                newCountry.setCountryName(countryName);
+                for (String tempNeighbourName : neighbours) {
+                    GameCountry newNeighbour;
+                    if (countryExists(tempNeighbourName) == null) {
+                        newNeighbour = new GameCountry();
+                        newNeighbour.setCountryName(tempNeighbourName);
+                    } else
+                        newNeighbour = countryExists(tempNeighbourName);
+                    newCountry.setNeighbouringCountries(countryHashMap.get(tempNeighbourName));
+
+                }
+                return "SUCCESS";
+            }
+            return "THE COUNTRY ALREADY EXISTS";
+        }catch(NullPointerException e){
+            return "EXCEPTION IN ACCESSING CONTINENT DATA";
+        }
+    }
+
+    /**Method gives a list of Continents of the map.
+     *
+     * @return arraylist of objects of each continent
+     */
     public static ArrayList<String> getListOfContinents(){
         ArrayList<String> continents = new ArrayList<>(continentHashMap.keySet());
         return continents;
     }
 
+    /**Method gets the list of countries of the map.
+     *
+     * @return arraylist of objects of each country
+     */
     public static ArrayList<String> getListOfCountries(){
         ArrayList<String> countries = new ArrayList<>(countryHashMap.keySet());
         return countries;
     }
 
-    public String removeNeighbor(String countryName , String neighborName){
-        ArrayList<GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
-        for (GameCountry neighbor : neighbors){
-            if (neighbor.getCountryName().equals(neighborName)){
-                neighbors.remove(neighbor);
+    /**This method removes a neighbour as per the player request.
+     *
+     * @param countryName
+     * @param neighborName
+     * @return status of the method execcution
+     */
+    public String removeNeighbor(String countryName , String neighborName) {
+        try {
+            ArrayList<GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
+            for (GameCountry neighbor : neighbors) {
+                if (neighbor.getCountryName().equals(neighborName)) {
+                    neighbors.remove(neighbor);
+                }
             }
+            //  countryHashMap.get(countryName).setNeighbouringCountries(neighbors); This is not needed.
+            return "SUCCESS";
+        }catch (NullPointerException e){
+            return "EXCEPTION IN ACCESSING DATA";
         }
-      //  countryHashMap.get(countryName).setNeighbouringCountries(neighbors); This is not needed.
-        return "SUCCESS";
     }
 
+    /**This method adds a neighbour for a specified country on user demand.
+     *
+     * @param countryName
+     * @param neighborName
+     * @return status of the method execcution
+     */
     public String addNeighbor(String countryName , String neighborName){
-        ArrayList<GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
-        if (countryHashMap.containsKey(neighborName)){
-            neighbors.add(countryHashMap.get(neighborName));
-        }else {
-           return "NEIGHBOR DOES NOT EXIST";
-        }
+        try {
+            ArrayList<GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
+            if (countryHashMap.containsKey(neighborName)) {
+                neighbors.add(countryHashMap.get(neighborName));
+            } else {
+                return "NEIGHBOR DOES NOT EXIST";
+            }
         /*for(GameCountry neighbor : neighbors){ This should not be needed.
             countryHashMap.get(neighborName).setNeighbouringCountries(neighbor);
         }*/
-        return "SUCCESS";
+            return "SUCCESS";
+        }catch (NullPointerException e){
+            return "EXCEPTION IN ACCESSING DATA";
+        }
     }
 
+    /**This method changes the continent of a specified country on user demand.
+     *
+     * @param countryName
+     * @param continentName
+     * @return status of the method execcution
+     */
     public String changeCountryContinent(String countryName, String continentName){
-        String oldContinentName = countryHashMap.get(countryName).getContinent().getContinentName();
-        continentHashMap.get(oldContinentName).getCountries().remove(countryHashMap.get(countryName));
-        if (continentHashMap.containsKey(continentName)){
-            countryHashMap.get(countryName).setContinent(continentHashMap.get(continentName));
-            continentHashMap.get(continentName).setCountries(countryHashMap.get(countryName));
-        }else {
-           return "CONTINENT DOES NOT EXIST";
-        }
-
-        return "SUCCESS";
-    }
-
-    public String changeCountryName(String oldName , String newName){
-        if (countryHashMap.containsKey(oldName)){
-            countryHashMap.get(oldName).setCountryName(newName);
-        }else {
-            return "COUNTRY DOES NOT EXIST";
-        }
-
-        return "SUCCESS";
-    }
-
-    public String removeCountry(String countryName){
-        String returnString;
-        if (countryHashMap.containsKey(countryName)){
-            countryHashMap.get(countryName).getContinent().   //Removes the country from its continent's countrylist.
-                    getCountries().remove(countryHashMap.get(countryName));
-            returnString = validateContinent(countryHashMap.get(countryName).getContinent());
-            if (returnString.equals("EMPTY")){
-                this.removeContinent(countryHashMap.get(countryName).getContinent().getContinentName());
+        try {
+            String oldContinentName = countryHashMap.get(countryName).getContinent().getContinentName();
+            continentHashMap.get(oldContinentName).getCountries().remove(countryHashMap.get(countryName));
+            if (continentHashMap.containsKey(continentName)) {
+                countryHashMap.get(countryName).setContinent(continentHashMap.get(continentName));
+                continentHashMap.get(continentName).setCountries(countryHashMap.get(countryName));
+            } else {
+                return "CONTINENT DOES NOT EXIST";
             }
-            countryHashMap.remove(countryName);
-            returnString = "SUCCESS";
 
-        }else{
-            return "COUNTRY DOES NOT EXIST";
+            return "SUCCESS";
+        }catch (NullPointerException e){
+            return "EXCEPTION IN ACCESSING DATA";
         }
-        return returnString;
     }
+
+    /** This method changes the name of a specified country on user demand.
+     *
+     * @param oldName
+     * @param newName
+     * @return status of the method execcution
+     */
+    public String changeCountryName(String oldName , String newName){
+        try {
+            if (countryHashMap.containsKey(oldName)) {
+                countryHashMap.get(oldName).setCountryName(newName);
+            } else {
+                return "COUNTRY DOES NOT EXIST";
+            }
+
+            return "SUCCESS";
+        }catch (NullPointerException e){
+            return "EXCEPTION IN ACCESSING DATA";
+        }
+    }
+
+    /**This method removes a whole country from the database on user demand.
+     *
+     * @param countryName
+     * @return status of the method execcution
+     */
+    public String removeCountry(String countryName){
+        try {
+            String returnString;
+            if (countryHashMap.containsKey(countryName)) {
+                countryHashMap.get(countryName).getContinent().   //Removes the country from its continent's countrylist.
+                        getCountries().remove(countryHashMap.get(countryName));
+                returnString = validateContinent(countryHashMap.get(countryName).getContinent());
+                if (returnString.equals("EMPTY")) {
+                    this.removeContinent(countryHashMap.get(countryName).getContinent().getContinentName());
+                }
+                countryHashMap.remove(countryName);
+                returnString = "SUCCESS";
+
+            } else {
+                return "COUNTRY DOES NOT EXIST";
+            }
+            return returnString;
+        }catch (NullPointerException e){
+                return "EXCEPTION IN ACCESSING DATA";
+            }
+    }
+
+    /**This method validates if the continent has any country or not.
+     *
+     * @param continent
+     * @return returns the appropriate signal
+     */
     public String validateContinent(GameContinent continent){
-        if(continent.getCountries().size()==0){
-            return "EMPTY";
+        try {
+            if (continent.getCountries().size() == 0) {
+                return "EMPTY";
+            }
+            return "ALL GOOD";
+        }catch (NullPointerException e){
+            return "EXCEPTION IN ACCESSING DATA";
         }
-        return "ALL GOOD";
     }
 
+    /**This method removes a continent from database when all countries from it are deleted by the user.
+     *
+     * @param continentName
+     * @return status of the method execcution
+     */
    public String removeContinent(String continentName){
             continentHashMap.remove(continentName);
             return "SUCCESS";
     }
+
+    /**This method changes the name of the specified continent.
+     *
+     * @param continentName
+     * @param newContinentName
+     * @return status of the method execcution
+     */
     public String changeContinentName(String continentName, String newContinentName){
-        if(continentHashMap.containsKey(continentName)){
-            continentHashMap.get(continentName).setContinentName(newContinentName);
-            return "SUCCESS";
-        }
-        else{
-            return "CONTINENT DOES NOT EXIST";
+        try {
+            if (continentHashMap.containsKey(continentName)) {
+                continentHashMap.get(continentName).setContinentName(newContinentName);
+                return "SUCCESS";
+            } else {
+                return "CONTINENT DOES NOT EXIST";
+            }
+        }catch (NullPointerException e){
+            return "EXCEPTION IN ACCESSING DATA";
         }
     }
+
+    /**This method changes the value of the continent.
+     *
+     * @param continentName
+     * @param continentValue
+     * @return status of the method execcution
+     */
     public String changeContinentValue(String continentName, int continentValue){
-        if(continentHashMap.containsKey(continentName)){
-            continentHashMap.get(continentName).setContinentValue(continentValue);
-            return "SUCCESS";
-        }
-        else{
-            return "CONTINENT DOES NOT EXIST";
+        try {
+            if (continentHashMap.containsKey(continentName)) {
+                continentHashMap.get(continentName).setContinentValue(continentValue);
+                return "SUCCESS";
+            } else {
+                return "CONTINENT DOES NOT EXIST";
+            }
+        }catch (NullPointerException e){
+            return "EXCEPTION IN ACCESSING DATA";
         }
     }
 
