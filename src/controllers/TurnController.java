@@ -140,7 +140,7 @@ public class TurnController {
 
         moveVariables.add(moveToCountry);
         moveVariables.add(moveArmies);
-
+   
         return moveVariables;
 
        // keyboard.close();
@@ -164,33 +164,32 @@ public class TurnController {
         int armiesForeachPlayer = getEachPlayerArmy(activePlayers);
 
         allocateInitialArmy(activePlayers, remainingArmies, armiesForeachPlayer);
-
-        while (x < activePlayers.size()) {
-            if (remainingArmies.get(x) == 0) {
-                x++;
-                if (x == (activePlayers.size())) {
-                    break;
-                } else {
-                    continue;
-                }
-            }
+        int unAllocated = activePlayers.size();
+        while (unAllocated >0) {
 
             tempArmy = remainingArmies.get(x);
             if (tempArmy > 0) {
                 moveVariables = allocateArmiesToCountry(activePlayers, moveToCountry, moveArmies, x, tempArmy);
                 moveToCountry = moveVariables.get(0);
                 moveArmies = moveVariables.get(1);
+
                 activePlayers.get(x).getCountries().get(moveToCountry).setArmies(moveArmies);
                 tempArmy = tempArmy - moveArmies;
                 remainingArmies.set(x, tempArmy);
+                if(tempArmy == 0 )
+                {
+                	unAllocated --;
+                }
             }
             x++;
-            if (x == activePlayers.size()) {
-                x = 0;
+            if(x >=activePlayers.size() )
+            {
+            	x= 0;
             }
         }
     }
-
+   
+    
     /**
      * Initial allocation of countries to the players at the beginning of the game.
      * The country allocation happens in a round robin manner
@@ -225,6 +224,5 @@ public class TurnController {
 
         m.allocateCountries(p, c);
         m.allocateArmies(p);
-
     }
 }
