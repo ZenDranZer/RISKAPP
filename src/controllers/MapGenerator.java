@@ -556,4 +556,30 @@ public class MapGenerator {
         }
     }
 
+    /***
+     * This Method checks for all continents owned by a player
+     * @param playerID
+     * @return ArrayList<GameContinent> continentsOwnedByPlayer
+     */
+    public ArrayList<GameContinent> checkContinentsOwnedByOnePlayer(String playerID){
+        try {
+            ArrayList<GameContinent> continentsOwnedByPlayer = new ArrayList<>();
+            for(String continentName : continentHashMap.keySet()){
+                for (GameCountry country: continentHashMap.get(continentName).getCountries() ) {
+                    if (!country.getCurrentPlayer().equals(playerID)){
+                        break;
+                    }
+                }
+                continentsOwnedByPlayer.add(continentHashMap.get(continentName));
+            }
+
+            if (!continentsOwnedByPlayer.isEmpty()){
+                return continentsOwnedByPlayer;
+            }
+        }catch (Exception e){
+            System.err.println("SOME ERROR IN CONTINENTOWNEDBYPLAYER");
+        }
+        return null;
+    }
+
 }
