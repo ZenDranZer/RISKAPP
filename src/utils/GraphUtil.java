@@ -3,6 +3,7 @@ package utils;
 
 import models.GameCountry;
 import org.jgrapht.Graph;
+import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.traverse.BreadthFirstIterator;
@@ -10,6 +11,7 @@ import org.jgrapht.traverse.DepthFirstIterator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 
@@ -44,6 +46,7 @@ public class GraphUtil {
             ArrayList<GameCountry> neighbours = gameCountry.getNeighbouringCountries();
             for (GameCountry neighbour : neighbours){
                 countryGraph.addEdge(gameCountry,neighbour);
+                countryGraph.addEdge(neighbour,gameCountry);
             }
         }
     }
@@ -94,5 +97,18 @@ public class GraphUtil {
         return new DepthFirstIterator<>(countryGraph);
     }
 
+    /**This method will return whether the graph is connected or not.
+     * @return true if graph is connected otherwise false.*/
+    public boolean isConnected(){
+        ConnectivityInspector<GameCountry,DefaultEdge> inspector = new ConnectivityInspector<>(countryGraph);
+        return inspector.isConnected();
+    }
+
+    /**This method is used to get all the connected components of a graph.
+     * @return it returns a list of subgraphs as a set containing all countries in that subgraph.*/
+    public List<Set<GameCountry>> getConnectedComponentSet(){
+        ConnectivityInspector<GameCountry,DefaultEdge> inspector = new ConnectivityInspector<>(countryGraph);
+        return inspector.connectedSets();
+    }
 
 }
