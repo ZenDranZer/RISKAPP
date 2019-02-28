@@ -14,33 +14,37 @@ public class GameEngine {
     public GameEngine(){
     }
 
+    public void getPlayerInfo(ArrayList<Player> activePlayers) {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Enter number of players");
+        int noOfPlayers = keyboard.nextInt();
+        if (noOfPlayers < 2) {
+            System.out.println("Minimum number of players is 2");
+        } else if (noOfPlayers > 5) {
+            System.out.println("Maximum number of players is 5");
+        } else {
+            for (int i = 1; i <= noOfPlayers; i++) {
+                Player p = new Player();
+                System.out.println("Enter player name " + i + "\n");
+                p.setPlayerId(Integer.toString(i));
+                p.setName(keyboard.next());
+                listActivePlayers.add(p);
+            }
+        }
+
+        keyboard.close();
+    }
+
     /**
      * This method takes in the number of players and their names
      *
      * @return: list of player objects
      */
-    public List<Player> getInitialPlayers() {
+    public ArrayList<Player> getInitialPlayers() {
 
         try {
             int i = 0;
-            Scanner keyboard = new Scanner(System.in);
-            System.out.println("Enter number of players");
-            int noOfPlayers = keyboard.nextInt();
-
-            if (noOfPlayers < 2) {
-                System.out.println("Minimum number of players is 2");
-            } else if (noOfPlayers > 5) {
-                System.out.println("Maximum number of players is 5");
-            } else {
-                for (i = 1; i <= noOfPlayers; i++) {
-                    Player p = new Player();
-                    System.out.println("Enter player name " + i + "\n");
-                    p.setPlayerId(Integer.toString(i));
-                    p.setName(keyboard.next());
-                    listActivePlayers.add(p);
-                }
-            }
-            keyboard.close();
+            getPlayerInfo(listActivePlayers);
         } catch (Exception ex) {
             System.out.println("Error getting player data");
         }
@@ -68,4 +72,14 @@ public class GameEngine {
     public void initialise() {
         getInitialPlayers();
     }
+
+/*    public static void main(String args[]) {
+        GameEngine g = new GameEngine();
+        ArrayList<Player> p = new ArrayList<>();
+        p = g.getInitialPlayers();
+
+        for(int i= 0 ;i<p.size();i++) {
+            System.out.println(p.get(i).getPlayerId() + " " + p.get(i).getName());
+        }
+    }*/
 }
