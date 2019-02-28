@@ -5,8 +5,12 @@ import models.Player;
 
 import java.util.ArrayList;
 
+/**A utility class that provides basic inputs for testing.
+ * They can be used as stubs.*/
 public class TestUtil {
 
+    /**This static method is used to get the array list of players ccontaining name and ID.
+     * @return ArrayList of players with 6 players.*/
     public static ArrayList<Player> getPlayerArrayList(){
         ArrayList<Player> players = new ArrayList<>();
         Player player = new Player("Jil","0");
@@ -22,6 +26,8 @@ public class TestUtil {
         return players;
     }
 
+    /**This static method is used to provide an array list of countries for testing.
+     * @return Array list of countries with 10 countries.*/
     public static ArrayList<GameCountry> getGameCountryList(){
         ArrayList<GameCountry> countries = new ArrayList<>();
         GameCountry country = new GameCountry("India");
