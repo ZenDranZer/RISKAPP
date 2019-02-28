@@ -10,13 +10,13 @@ import java.util.Scanner;
 
 public class MapGenerator {
     ArrayList<GameContinent> continentList;
-    HashMap<String,GameCountry> countryHashMap;
-    HashMap<String,GameContinent> continentHashMap;
+   static HashMap<String,GameCountry> countryHashMap;
+   static HashMap<String,GameContinent> continentHashMap;
     ArrayList<GameCountry> countryList;
 
     public MapGenerator() {
-        this.countryHashMap = new HashMap<>();
-        this.continentHashMap = new HashMap<>();
+        countryHashMap = new HashMap<>();
+        continentHashMap = new HashMap<>();
         continentList = new ArrayList<>();
         countryList = new ArrayList<>();
     }
@@ -25,10 +25,20 @@ public class MapGenerator {
         String inputLine;
 
         inputLine = inputReader.readLine();
-        while(!inputLine.equals("[Territories]")){
+        while(!inputLine.equals("[Territories]")||!inputLine.equals("[Countries]")){
             GameContinent continent = new GameContinent();
-            String name = inputLine.substring(0,inputLine.indexOf("="));
+            String name;
+            try {
+                name = inputLine.substring(0, inputLine.indexOf("="));
+            }catch(Exception e){
+                inputReader=null;
+                return inputReader;
+            }
             int value = Integer.parseInt(inputLine.substring(inputLine.indexOf("=")+1));
+            if(continentHashMap.containsKey(name)){
+                inputReader = null;
+                return inputReader;
+            }
             continent.setContinentName(name);
             continent.setContinentValue(value);
             continentHashMap.put(name, continent);
@@ -54,6 +64,10 @@ public class MapGenerator {
             }
             else{
                 currentCountry = countryExists(inpList[0]);
+                if(currentCountry.getNeighbouringCountries().size()!=0){
+                    inputReader = null;
+                    return inputReader;
+                }
             }
             currentCountry.setCountryName(inpList[0]);
             currentCountry.setCoordinateX(Integer.parseInt(inpList[1]));
@@ -109,14 +123,25 @@ public class MapGenerator {
             /*[Map]  //check if the first line equals [map]
                 image=world.bmp
                 wrap=yes
-                scroll=horizontal           Read the first six lines here and then continue.
+                scroll=horizontal           Read the first six lines here, increment the line counter and then continue.
                 author=Your name
                 warn=yes*/
-            if(lineCounter==6 && (inputLine=="[Continents]")){
-
-                inputReader=this.readContinentList(inputReader);    //reader is returned as we need to have a single reader reading different parts of the map file.
+            if(lineCounter==6 ){
+                if(inputLine=="[Continents]"){
+                inputReader=this.readContinentList(inputReader);//reader is returned as we need to have a single reader reading different parts of the map file.
+                if(inputReader==null){
+                   return "ONE OR MORE DUPLICATE CONTINENTS ENCOUNTERED";
+                }
+                }
+                else{
+                    return "The Map format is wrong";
+                }
             }
+
             inputReader = this.readCountryList(inputReader);
+            if(inputReader==null){
+                return "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
+            }
 
 
             lineCounter++;
@@ -158,7 +183,7 @@ public class MapGenerator {
         } finally {
             try {writer.close();} catch (Exception ex) {/*ignore*/}
         }
-        return "SUCESSFUL";
+        return "SUCCESS";
 
     }
 
@@ -250,12 +275,12 @@ public class MapGenerator {
         }
         return "THE COUNTRY ALREADY EXISTS";
     }
-    public ArrayList<String> getListOfContinents(){
+    public static ArrayList<String> getListOfContinents(){
         ArrayList<String> continents = new ArrayList<>(continentHashMap.keySet());
         return continents;
     }
 
-    public ArrayList<String> getListOfCountries(){
+    public static ArrayList<String> getListOfCountries(){
         ArrayList<String> countries = new ArrayList<>(countryHashMap.keySet());
         return countries;
     }

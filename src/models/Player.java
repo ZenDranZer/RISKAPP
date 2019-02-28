@@ -64,8 +64,8 @@ public class Player {
         return continents;
     }
 
-    public void setContinents(ArrayList<GameContinent> continents) {
-        this.continents = continents;
+    public void setContinents(GameContinent continent) {
+        this.continents.add(continent);
     }
 
     public String getCardsHeld() {

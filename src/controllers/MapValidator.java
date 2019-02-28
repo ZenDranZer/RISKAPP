@@ -7,6 +7,7 @@ import org.jgrapht.graph.DefaultEdge;
 import utils.GraphUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 
 public class MapValidator {
@@ -55,7 +56,7 @@ public boolean isWholeMapConnected(GraphUtil util, ArrayList<GameCountry> countr
     return false;
 }
 
-public boolean isWholeContinentsConnected(GameContinent continent){
+public boolean isWholeContinentConnected(GameContinent continent){
         GraphUtil tempGraph = new GraphUtil();
         tempGraph.setCountryGraph(continent.getCountries());
         if (tempGraph.getIteratorSize(tempGraph.breadthFirstSearch(continent.getCountries().get(0))) == continent.getCountries().size()){
@@ -63,4 +64,5 @@ public boolean isWholeContinentsConnected(GameContinent continent){
         }
         return false;
 }
+
 }
