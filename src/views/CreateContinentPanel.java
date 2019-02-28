@@ -1,5 +1,7 @@
 package views;
 
+import controllers.MapGenerator;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -24,7 +26,8 @@ public class CreateContinentPanel extends JPanel {
     private void addContinentMouseClicked(MouseEvent e) {
         String continentName = nameField.getText();
         int value = Integer.parseInt(valueField.getText());
-        String message = MapGenerator.addContinent(continentName,value);
+        MapGenerator mapGenerator = new MapGenerator();
+        String message = mapGenerator.addContinent(continentName,value);
         JOptionPane.showMessageDialog(this.getParent().getParent(),message);
         nameField.setText("");
         valueField.setText("");

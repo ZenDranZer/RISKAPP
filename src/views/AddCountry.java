@@ -1,5 +1,7 @@
 package views;
 
+import controllers.MapGenerator;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -20,7 +22,8 @@ public class AddCountry extends JPanel {
     private void addCountryButtonMouseClicked(MouseEvent e) {
         String countryName = nameField.getText();
         String continentName = continentField.getText();
-        String message = MapGenerator.addCountry(continentName,countryName,neighbourList);
+        MapGenerator mapGenerator = new MapGenerator();
+        String message = mapGenerator.addCountry(continentName,countryName,neighbourList);
         JOptionPane.showMessageDialog(this.getParent(),message);
         nameField.setText("");
         continentField.setText("");

@@ -1,5 +1,7 @@
 package views;
 
+import controllers.GameEngine;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
@@ -7,7 +9,11 @@ import javax.swing.*;
 
 
 public class StartGamePanel extends JPanel {
-    public StartGamePanel() {
+
+    private GameEngine gameEngine;
+
+    public StartGamePanel(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
         initComponents();
     }
 
