@@ -22,6 +22,7 @@ public class GameCountry {
 
     public  GameCountry(){
         continent = new GameContinent();
+        neighbouringCountries = new ArrayList<>();
     }
     public GameCountry(String countryName){
         this.countryName = countryName;
