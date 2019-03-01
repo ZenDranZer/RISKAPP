@@ -96,6 +96,7 @@ public class MapGenerator {
             String continentName;
 
             if(countryExists(inpList[0])==null) {
+
                 currentCountry = new GameCountry();
              /*   countryList.add(currentCountry);*/
                 currentCountry.setCountryName(inpList[0]);
@@ -540,6 +541,8 @@ public class MapGenerator {
         try {
             if (countryHashMap.containsKey(oldName)) {
                 countryHashMap.get(oldName).setCountryName(newName);
+                countryHashMap.put(newName,countryHashMap.get(oldName));
+                countryHashMap.remove(oldName);
             } else {
                 return "COUNTRY DOES NOT EXIST";
             }
@@ -617,6 +620,9 @@ public class MapGenerator {
         try {
             if (continentHashMap.containsKey(continentName)) {
                 continentHashMap.get(continentName).setContinentName(newContinentName);
+                continentHashMap.put(newContinentName,continentHashMap.get(continentName));
+                continentHashMap.remove(continentName);
+
                 return "SUCCESS";
             } else {
                 return "CONTINENT DOES NOT EXIST";
