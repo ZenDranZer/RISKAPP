@@ -23,7 +23,6 @@ public class RemoveContinentPanel extends JPanel {
         nameField = new JTextField();
         removeButton = new JButton();
         backButton = new JButton();
-
        
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 146, 0, 0};
