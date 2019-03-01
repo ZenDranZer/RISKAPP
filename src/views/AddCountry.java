@@ -37,6 +37,9 @@ public class AddCountry extends JPanel {
     }
 
     private void finishButtonMouseClicked(MouseEvent e) {
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        String message  = mapGenerator.validateMap();
+        JOptionPane.showMessageDialog(this.getParent(),message);
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);

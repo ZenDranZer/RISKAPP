@@ -17,6 +17,15 @@ public class MapOptionPanel extends JPanel {
         initComponents();
     }
 
+    private void loadButtonMouseClicked(MouseEvent e) {
+        this.setVisible(false);
+        LoadMapPanel loadMapPanel = new LoadMapPanel(gameEngine,this);
+        loadMapPanel.setVisible(true);
+        Container container = getParent();
+        container.add(loadMapPanel);
+        container.revalidate();
+    }
+
     private void createbuttonMouseClicked(MouseEvent e) {
         this.setVisible(false);
         CreateContinentPanel createContinentPanel = new CreateContinentPanel(gameEngine,this);
@@ -70,6 +79,12 @@ public class MapOptionPanel extends JPanel {
 
         //---- loadButton ----
         loadButton.setText("Load Map");
+        loadButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loadButtonMouseClicked(e);
+            }
+        });
         add(loadButton, new GridBagConstraints(5, 7, 1, 3, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 5, 5), 0, 0));

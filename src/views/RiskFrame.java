@@ -125,7 +125,7 @@ public class RiskFrame extends JFrame {
             dialogPane.add(contentPanel, BorderLayout.NORTH);
         }
         contentPane.add(dialogPane, BorderLayout.CENTER);
-        setSize(640, 625);
+        setSize(1300, 700);
         setLocationRelativeTo(getOwner());
     }
 }
