@@ -36,7 +36,12 @@ public class EditContinentPanel extends JPanel {
     }
 
     private void editContinentButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        EditContinentValuePanel editContinentValuePanel = new EditContinentValuePanel(gameEngine,this);
+        editContinentValuePanel.setVisible(true);
+        setVisible(false);
+        Container container = this.getParent();
+        container.add(editContinentValuePanel);
+        container.revalidate();
     }
 
     private void backButtonMouseClicked(MouseEvent e) {

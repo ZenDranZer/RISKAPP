@@ -28,8 +28,10 @@ public class AddCountry extends JPanel {
     private void addCountryButtonMouseClicked(MouseEvent e) {
         String countryName = nameField.getText();
         String continentName = continentField.getText();
+        if(countryName == "" || continentName == ""){
+            JOptionPane.showMessageDialog(this,"Value not added properly.");
+        } else {
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
-        System.out.println(neigbourList);
         String message = mapGenerator.addCountry(continentName,countryName,neighbourList);
         JOptionPane.showMessageDialog(this.getParent(),message);
         nameField.setText("");
@@ -37,6 +39,7 @@ public class AddCountry extends JPanel {
         neigbourList.setText("Neighbours:");
         neighbourField.setText("");
         neighbourList.clear();
+        }
     }
 
     private void finishButtonMouseClicked(MouseEvent e) {

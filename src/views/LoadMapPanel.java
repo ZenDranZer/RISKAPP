@@ -5,6 +5,7 @@ import controllers.MapGenerator;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
 
@@ -15,6 +16,7 @@ public class LoadMapPanel extends JPanel {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
+        mapFileChooser.setCurrentDirectory(new File("/home/sarvesh/APP_RISK_6441/src/mapFiles/"));
     }
 
     private void loadButtonMouseClicked(MouseEvent e) {
