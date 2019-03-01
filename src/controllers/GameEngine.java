@@ -10,6 +10,7 @@ public class GameEngine {
 
     ArrayList<Player> listActivePlayers = new ArrayList<Player>();
     ArrayList<Player> listEliminatedPlayers = new ArrayList<Player>();
+    MapGenerator mapGenerator = new MapGenerator();
 
     String mapPath;
     TurnController turn;
@@ -22,11 +23,13 @@ public class GameEngine {
     {
     	if(turn == null)
     	{
-    		turn = new TurnController();  				
+    		turn = new TurnController();
     	}
     	return turn;
     }
-    
+    public MapGenerator getMapGenerator(){
+        return mapGenerator;
+    }
     public void getPlayerInfo(ArrayList<Player> activePlayers) {
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Enter number of players");
