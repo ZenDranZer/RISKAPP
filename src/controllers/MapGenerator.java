@@ -217,8 +217,9 @@ public class MapGenerator {
                 }
                 inputReader = this.readCountryList(inputReader);
 
-                if (inputReader == null) {
-                    return "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
+              if (inputReader == null) {
+                 //   return "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
+                    break;
                 }
 
 
