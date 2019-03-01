@@ -18,6 +18,7 @@ public class MapGenerator {
    static HashMap<String,GameContinent> continentHashMap;
     ArrayList<GameCountry> countryList;
     static HashMap <String,String>guiHashMap;
+    GraphUtil graphUtilObject ;
     /** Class constructor that initializes the ubiquitious countryHashMap and ContinentHashMap
      *
      */
@@ -338,6 +339,9 @@ public class MapGenerator {
             return null;
         }
     }
+    public GraphUtil getGraphUtilObject(){
+        return graphUtilObject;
+    }
     public void editMap(){
 
     }
@@ -390,7 +394,6 @@ public class MapGenerator {
          //       returnString = "SUCCESS";
 
                 returnString = validateMap();
-                GraphUtil graphUtilObject ;
                 graphUtilObject = this.buildGraph();
                 if(!new MapValidator().isWholeMapConnected(graphUtilObject,new ArrayList<>(countryHashMap.values()))){
                     return "The Whole map is not connected.";
@@ -402,6 +405,7 @@ public class MapGenerator {
             return "EXCEPTION IN ACCESSING CONTINENT DATA";
         }
     }
+
     public String validateMap(){
         MapValidator validator = new MapValidator();
         String returnString = "PROBLEM IN VALIDATION OF THE MAP";
