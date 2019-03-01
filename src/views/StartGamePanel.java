@@ -9,6 +9,7 @@ import java.beans.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class StartGamePanel extends JPanel {
@@ -20,6 +21,7 @@ public class StartGamePanel extends JPanel {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
+        mapFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MAP file only", "map"));
     }
 
     private void continueButtonMouseClicked(MouseEvent e) throws IOException {
