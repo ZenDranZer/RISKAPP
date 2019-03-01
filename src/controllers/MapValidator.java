@@ -59,10 +59,7 @@ public boolean isWholeMapConnected(GraphUtil util, ArrayList<GameCountry> countr
 public boolean isWholeContinentConnected(GameContinent continent){
         GraphUtil tempGraph = new GraphUtil();
         tempGraph.setCountryGraph(continent.getCountries());
-        if (tempGraph.getIteratorSize(tempGraph.breadthFirstSearch(continent.getCountries().get(0))) == continent.getCountries().size()){
-            return true;
-        }
-        return false;
+        return tempGraph.isConnected();
 }
 
 }
