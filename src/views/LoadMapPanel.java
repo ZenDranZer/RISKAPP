@@ -24,13 +24,20 @@ public class LoadMapPanel extends JPanel {
             String message = mapGenerator.readConquestFile(mapFilePath);
             gameEngine.setMapPath(mapFilePath);
             JOptionPane.showMessageDialog(this,message);
+            if(message.equals("SUCCESS"))
+                editMapButton.setEnabled(true);
         } catch (IOException e1) {
             JOptionPane.showMessageDialog(this,"IO Exception");
         }
     }
 
     private void editMapButtonMouseClicked(MouseEvent e) {
-
+        EditOptionPanel editOptionPanel = new EditOptionPanel(gameEngine,this);
+        editOptionPanel.setVisible(true);
+        setVisible(false);
+        Container container = this.getParent();
+        container.add(editOptionPanel);
+        container.revalidate();
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
@@ -81,6 +88,7 @@ public class LoadMapPanel extends JPanel {
 
         //---- editMapButton ----
         editMapButton.setText("Edit Map");
+        editMapButton.setEnabled(false);
         editMapButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
