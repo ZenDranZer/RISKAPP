@@ -1,26 +1,72 @@
 package views;
 
 import controllers.GameEngine;
+import controllers.MapGenerator;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.*;
 
 
 public class StartGamePanel extends JPanel {
 
     private GameEngine gameEngine;
+    private JPanel parent;
 
-    public StartGamePanel(GameEngine gameEngine) {
+    public StartGamePanel(GameEngine gameEngine,JPanel parent) {
         this.gameEngine = gameEngine;
+        this.parent = parent;
         initComponents();
     }
 
-    private void continueButtonMouseClicked(MouseEvent e) {
+    private void continueButtonMouseClicked(MouseEvent e) throws IOException {
+        ArrayList<String> playerName = new ArrayList<>();
+        int value = (Integer)numberOfPlayers.getValue();
+        switch (value){
+            case 2:
+                playerName.add(firstNameField.getText());
+                playerName.add(secondNameField.getText());
+                break;
+            case 3:
+                playerName.add(firstNameField.getText());
+                playerName.add(secondNameField.getText());
+                playerName.add(thirdNameField.getText());
+                break;
+            case 4:
+                playerName.add(firstNameField.getText());
+                playerName.add(secondNameField.getText());
+                playerName.add(thirdNameField.getText());
+                playerName.add(forthNameField.getText());
+                break;
+            case 5:
+                playerName.add(firstNameField.getText());
+                playerName.add(secondNameField.getText());
+                playerName.add(thirdNameField.getText());
+                playerName.add(forthNameField.getText());
+                playerName.add(fifthNameField.getText());
+                break;
+        }
+
+        //gameEngine.initialise(playerName,mapFileChooser.getSelectedFile().getAbsolutePath());
+        gameEngine.setListActivePlayers(playerName);
+        gameEngine.setMapPath(mapFileChooser.getSelectedFile().getAbsolutePath());
+        Container container = this.getParent();
+        GamePlay gamePlay = new GamePlay(gameEngine);
+        gamePlay.setVisible(true);
+        this.setVisible(false);
+        container.add(gamePlay);
+        container.revalidate();
 
     }
 
+    private void backButtonMouseClicked(MouseEvent e) {
+        Container container = this.getParent();
+        container.remove(this);
+        parent.setVisible(true);
+    }
     private void doneButtonMouseClicked(MouseEvent e) {
         int value = (Integer)numberOfPlayers.getValue();
         firstNameField.setEditable(true);
@@ -65,6 +111,7 @@ public class StartGamePanel extends JPanel {
         fifthNameLabel = new JLabel();
         fifthNameField = new JTextField();
         mapFileChooser = new JFileChooser();
+        backButton = new JButton();
         continueButton = new JButton();
 
         setLayout(new GridBagLayout());
@@ -170,12 +217,31 @@ public class StartGamePanel extends JPanel {
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 5, 0), 0, 0));
 
+        //---- backButton ----
+        backButton.setText("Back");
+        backButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                backButtonMouseClicked(e);
+            }
+        });
+        add(backButton, new GridBagConstraints(1, 9, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 5), 0, 0));
+
+
+
         //---- continueButton ----
         continueButton.setText("Continue");
         continueButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                continueButtonMouseClicked(e);
+                try {
+					continueButtonMouseClicked(e);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
         add(continueButton, new GridBagConstraints(2, 9, 1, 1, 0.0, 0.0,
@@ -199,4 +265,5 @@ public class StartGamePanel extends JPanel {
     private JTextField fifthNameField;
     private JFileChooser mapFileChooser;
     private JButton continueButton;
+    private JButton backButton;
 }

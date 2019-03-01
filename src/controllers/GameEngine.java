@@ -1,5 +1,6 @@
 package controllers;
- import java.util.ArrayList;
+ import java.io.IOException;
+import java.util.ArrayList;
  import java.util.List;
  import java.util.Scanner;
  import models.*;
@@ -7,11 +8,28 @@ package controllers;
 
 public class GameEngine {
 
-    ArrayList<Player> listActivePlayers = new ArrayList<Player>();
-    ArrayList<Player> listEliminatedPlayers = new ArrayList<Player>();
+    private ArrayList<Player> listActivePlayers = new ArrayList<Player>();
+    private ArrayList<Player> listEliminatedPlayers = new ArrayList<Player>();
+    private static MapGenerator mapGenerator = new MapGenerator();
 
+    private String mapPath;
+    private TurnController turn;
     //object initialization
     public GameEngine(){
+    	turn = new TurnController();
+    }
+
+    public TurnController getTurnComtroller()
+    {
+    	if(turn == null)
+    	{
+    		turn = new TurnController();
+    	}
+    	return turn;
+    }
+
+    public MapGenerator getMapGenerator(){
+        return mapGenerator;
     }
 
     public void getPlayerInfo(ArrayList<Player> activePlayers) {
@@ -26,13 +44,20 @@ public class GameEngine {
             for (int i = 1; i <= noOfPlayers; i++) {
                 Player p = new Player();
                 System.out.println("Enter player name " + i + "\n");
-                p.setPlayerId(Integer.toString(i));
+                p.setId(i);
                 p.setName(keyboard.next());
                 listActivePlayers.add(p);
             }
         }
-
         keyboard.close();
+    }
+
+    public String getMapPath() {
+        return mapPath;
+    }
+
+    public void setMapPath(String mapPath) {
+        this.mapPath = mapPath;
     }
 
     /**
@@ -51,8 +76,13 @@ public class GameEngine {
         return listActivePlayers;
     }
 
-    public void setListActivePlayers(ArrayList<Player> listActivePlayers) {
-        this.listActivePlayers = listActivePlayers;
+    public void setListActivePlayers(ArrayList<String> listActivePlayers) {
+        int i=1;
+        for(String name : listActivePlayers){
+            Player player = new Player(name,i);
+            this.listActivePlayers.add(player);
+            i++;
+        }
     }
 
     //should return list of player objects
@@ -75,14 +105,20 @@ public class GameEngine {
     public void initialise() {
         getInitialPlayers();
     }
+    
+    public void initialise(ArrayList<String> lstPlayerNames, String mapPath) throws IOException
+    {
+    	setListActivePlayers(lstPlayerNames);
+    	MapGenerator mapGenerator = new MapGenerator();
+    	mapGenerator.readConquestFile(mapPath);
+    	turn.allocateCountries(listActivePlayers, new ArrayList<GameCountry>(MapGenerator.countryHashMap.values()));
+    	
+    	//turn.allocateArmies(listActivePlayers);
+    	turn.setActivePlayer(listActivePlayers.get(0));
+    	for(Player pl : listActivePlayers)
+    	{
+    		System.out.println(pl.getCountries().size());
+    	}
+    }
 
-/*    public static void main(String args[]) {
-        GameEngine g = new GameEngine();
-        ArrayList<Player> p = new ArrayList<>();
-        p = g.getInitialPlayers();
-
-        for(int i= 0 ;i<p.size();i++) {
-            System.out.println(p.get(i).getPlayerId() + " " + p.get(i).getName());
-        }
-    }*/
 }

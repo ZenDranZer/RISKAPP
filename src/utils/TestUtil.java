@@ -13,15 +13,15 @@ public class TestUtil {
      * @return ArrayList of players with 6 players.*/
     public static ArrayList<Player> getPlayerArrayList(){
         ArrayList<Player> players = new ArrayList<>();
-        Player player = new Player("Jil","0");
+        Player player = new Player("Jil",1);
         players.add(player);
-        player = new Player("Shivam","1");
+        player = new Player("Shivam",2);
         players.add(player);
-        player = new Player("Sidhant","2");
+        player = new Player("Sidhant",3);
         players.add(player);
-        player = new Player("Sarvesh","3");
+        player = new Player("Sarvesh",4);
         players.add(player);
-        player = new Player("Naghmeh","4");
+        player = new Player("Naghmeh",5);
         players.add(player);
         return players;
     }
