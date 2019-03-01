@@ -1,5 +1,8 @@
 package views;
 
+import controllers.GameEngine;
+import controllers.MapGenerator;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -7,8 +10,13 @@ import javax.swing.*;
 
 public class AddCountry extends JPanel {
     private ArrayList<String> neighbourList;
-    public AddCountry() {
+    private GameEngine gameEngine;
+    private JPanel parent;
+
+    public AddCountry(GameEngine gameEngine,JPanel parent) {
         neighbourList = new ArrayList<>();
+        this.gameEngine = gameEngine;
+        this.parent = parent;
         initComponents();
     }
 
@@ -20,19 +28,25 @@ public class AddCountry extends JPanel {
     private void addCountryButtonMouseClicked(MouseEvent e) {
         String countryName = nameField.getText();
         String continentName = continentField.getText();
-        String message = MapGenerator.addCountry(continentName,countryName,neighbourList);
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        System.out.println(neigbourList);
+        String message = mapGenerator.addCountry(continentName,countryName,neighbourList);
         JOptionPane.showMessageDialog(this.getParent(),message);
         nameField.setText("");
         continentField.setText("");
         neigbourList.setText("Neighbours:");
+        neighbourField.setText("");
+        neighbourList.clear();
     }
 
     private void finishButtonMouseClicked(MouseEvent e) {
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        String message  = mapGenerator.validateMap();
+        JOptionPane.showMessageDialog(this.getParent(),message);
         Container container = this.getParent();
         container.remove(this);
-        container.revalidate();
+        parent.setVisible(true);
     }
-
 
     private void initComponents() {
 
@@ -130,6 +144,7 @@ public class AddCountry extends JPanel {
         add(finishButton, new GridBagConstraints(4, 10, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 5, 5), 0, 0));
+
 
     }
 

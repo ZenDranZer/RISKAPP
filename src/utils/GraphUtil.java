@@ -1,6 +1,7 @@
 package utils;
 
 
+import controllers.MapGenerator;
 import models.GameCountry;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
@@ -9,10 +10,7 @@ import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.traverse.BreadthFirstIterator;
 import org.jgrapht.traverse.DepthFirstIterator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 /**GraphUtil class is used for representing the map in a graph formation
@@ -36,17 +34,20 @@ public class GraphUtil {
 
     /**Setter method for creating a new map graph.
      *@param countryList an ArrayList containing all the countries.*/
-    public void setCountryGraph(ArrayList<GameCountry> countryList) {
-
-        for (GameCountry gameCountry : countryList) {
+    public void setCountryGraph(HashMap<String,GameCountry> countryList) {
+        System.out.println(countryList.keySet());
+        for (GameCountry gameCountry : countryList.values()) {
             countryGraph.addVertex(gameCountry);
-        }
 
-        for (GameCountry gameCountry : countryList) {
-            ArrayList<GameCountry> neighbours = gameCountry.getNeighbouringCountries();
-            for (GameCountry neighbour : neighbours){
-                countryGraph.addEdge(gameCountry,neighbour);
-                countryGraph.addEdge(neighbour,gameCountry);
+        }
+        System.out.println(countryGraph.vertexSet());
+
+        for (GameCountry gameCountry : countryList.values()) {
+            System.out.println("Neighbours of :" + gameCountry.getCountryName()+" are"+"  "+gameCountry.getNeighbouringCountries().values());
+            for (GameCountry neighbour : gameCountry.getNeighbouringCountries().values()){
+                System.out.println("Neighb:  "+neighbour.getCountryName()+"    This:  "+gameCountry.getCountryName());
+                countryGraph.addEdge(gameCountry, MapGenerator.countryHashMap.get(neighbour.getCountryName()));
+
             }
         }
     }

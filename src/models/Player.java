@@ -1,5 +1,5 @@
 package models;
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
 
 /**
@@ -8,7 +8,7 @@ package models;
 public class Player {
 
     private String name;
-    private String id;
+    private int id;
     private int playerArmies;
     private ArrayList<GameCountry> countries;
     private ArrayList<GameContinent> continents;
@@ -17,8 +17,9 @@ public class Player {
 
     public Player() {
         countries = new ArrayList<>();
+        continents = new ArrayList<>();
     }
-    public Player(String name,String id) {
+    public Player(String name,int id) {
         this.name = name;
         this.id = id;
         playerArmies = 0;
@@ -28,6 +29,8 @@ public class Player {
         cardExchanged = "";
 
     }
+
+
     public String getName() {
         return name;
     }
@@ -36,12 +39,12 @@ public class Player {
         this.name = player_name;
     }
 
-    public String getPlayerId() {
+    public int getId() {
         return id;
     }
 
-    public void setPlayerId(String player_id) {
-        this.id = player_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getPlayerArmies() {
@@ -83,6 +86,14 @@ public class Player {
     public void setCardExchanged(String cardExchanged) {
         this.cardExchanged = cardExchanged;
     }
-
-
+    
+    public ArrayList<String> getCountryNames()
+    {
+    	ArrayList<String> names = new ArrayList<String>();
+    	for(GameCountry country : countries)
+    	{
+    		names.add(country.getCountryName());
+    	}
+    	return names;
+    }
 }

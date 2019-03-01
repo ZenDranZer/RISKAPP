@@ -5,6 +5,7 @@ import utils.GraphUtil;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -14,10 +15,11 @@ import java.util.Scanner;
  */
 public class MapGenerator {
     ArrayList<GameContinent> continentList;
-   static HashMap<String,GameCountry> countryHashMap;
-   static HashMap<String,GameContinent> continentHashMap;
+   public static HashMap<String,GameCountry> countryHashMap;
+   public static HashMap<String,GameContinent> continentHashMap;
     ArrayList<GameCountry> countryList;
-
+    static HashMap <String,String>guiHashMap;
+    GraphUtil graphUtilObject ;
     /** Class constructor that initializes the ubiquitious countryHashMap and ContinentHashMap
      *
      */
@@ -26,6 +28,7 @@ public class MapGenerator {
         continentHashMap = new HashMap<>();
         continentList = new ArrayList<>();
         countryList = new ArrayList<>();
+        guiHashMap = new HashMap<>();
     }
 
     /**Reads continents from a file and store them in required structure.
@@ -39,18 +42,23 @@ public class MapGenerator {
             String inputLine;
 
             inputLine = inputReader.readLine();
-            while (!inputLine.equals("[Territories]") || !inputLine.equals("[Countries]")) {
+            while(inputLine.equals("")){
+                inputLine = inputReader.readLine();
+            }
+            while (!inputLine.equals("[Territories]")) {
                 GameContinent continent = new GameContinent();
                 String name;
                 try {
                     name = inputLine.substring(0, inputLine.indexOf("="));
                 } catch (Exception e) {
                     inputReader = null;
+
                     return inputReader;
                 }
                 int value = Integer.parseInt(inputLine.substring(inputLine.indexOf("=") + 1));
                 if (continentHashMap.containsKey(name)) {
                     inputReader = null;
+
                     return inputReader;
                 }
                 continent.setContinentName(name);
@@ -59,6 +67,8 @@ public class MapGenerator {
                 //  continentList.add(continent);
                 inputLine = inputReader.readLine();
             }
+
+
             return inputReader;          //Return the current position of reader file so that countries can be loaded.
         }catch (IOException e){
             return null;
@@ -78,13 +88,15 @@ public class MapGenerator {
         String inputLine;
 
         inputLine = inputReader.readLine();
-        while(inputLine!=null){
+
+        while(!inputLine.equals("")){
 
             String[] inpList = inputLine.split(",");
             GameCountry currentCountry;
             String continentName;
 
             if(countryExists(inpList[0])==null) {
+
                 currentCountry = new GameCountry();
              /*   countryList.add(currentCountry);*/
                 currentCountry.setCountryName(inpList[0]);
@@ -128,8 +140,9 @@ public class MapGenerator {
                 currentCountry.addNeighbouringCountry(neighborCountry);
             }
             inputLine = inputReader.readLine();
-        }
 
+
+        }
         return inputReader;
         }catch (IOException e){
             return null;
@@ -149,20 +162,40 @@ public class MapGenerator {
         }
         return null;
     }
-
+    public BufferedReader getGuiParameters(BufferedReader inputReader){
+        try {
+            String inputLine = inputReader.readLine();
+            inputLine = inputReader.readLine();
+            System.out.println(inputLine);
+            while (!inputLine.equals("")){
+                String[] inpList = inputLine.split("=");
+                guiHashMap.put(inpList[0],inpList[1]);
+                inputLine = inputReader.readLine();
+            }
+                return inputReader;
+        }catch(Exception e){
+            return null;
+        }
+    }
     /**This method is called when a user wants to load the file from the system.
      *
      * @param filePath
      * @return status of the operation
      * @throws IOException
      */
-    public String ReadConquestFile(String filePath) throws IOException {
+    public String readConquestFile(String filePath) throws IOException {
         try {
             File inputMap = new File(filePath);
             BufferedReader inputReader = new BufferedReader(new FileReader(inputMap));
 
+            inputReader=this.getGuiParameters(inputReader);
+            if(inputReader==null){
+                return "WRONG FORMAT OF INITIAL PARAMETERS";
+            }
+
+
             String inputLine;
-            int lineCounter = 0;
+            int lineCounter = 6;
             while ((inputLine = inputReader.readLine()) != null) {
             /*[Map]  //check if the first line equals [map]
                 image=world.bmp
@@ -171,17 +204,19 @@ public class MapGenerator {
                 author=Your name
                 warn=yes*/
                 if (lineCounter == 6) {
-                    if (inputLine == "[Continents]") {
+                    if (inputLine.equals("[Continents]")) {
                         inputReader = this.readContinentList(inputReader);//reader is returned as we need to have a single reader reading different parts of the map file.
                         if (inputReader == null) {
                             return "ONE OR MORE DUPLICATE CONTINENTS ENCOUNTERED";
                         }
                     } else {
+
                         return "THE MAP FORMAT IS WRONG";
                     }
+                    lineCounter++;
                 }
-
                 inputReader = this.readCountryList(inputReader);
+
                 if (inputReader == null) {
                     return "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
                 }
@@ -224,7 +259,7 @@ public class MapGenerator {
             ((BufferedWriter) writer).newLine();
             for (GameCountry country : countryHashMap.values()) {
                 String neighbours = "";
-                for (GameCountry neighbour: country.getNeighbouringCountries()) {
+                for (GameCountry neighbour: country.getNeighbouringCountries().values()) {
                     neighbours += ","+neighbour.getCountryName();
                 }
                 writer.write(country.getCountryName()+","+country.getCoordinateX()+","+country.getCoordinateY()+","
@@ -297,12 +332,17 @@ public class MapGenerator {
      */
     public GraphUtil buildGraph(){
         try {
+
             GraphUtil graphUtilObject = new GraphUtil();
-            graphUtilObject.setCountryGraph(new ArrayList<>(countryHashMap.values()));
+            graphUtilObject.setCountryGraph(countryHashMap);
+
             return graphUtilObject;
         }catch(Exception e){
             return null;
         }
+    }
+    public GraphUtil getGraphUtilObject(){
+        return graphUtilObject;
     }
     public void editMap(){
 
@@ -320,6 +360,7 @@ public class MapGenerator {
                 GameContinent newContinent = new GameContinent();
                 newContinent.setContinentName(continentName);
                 newContinent.setContinentValue(continentValue);
+                continentHashMap.put(continentName,newContinent);
                 return "SUCCESS";
             }
             return "THE CONTINENT ALREADY EXISTS";
@@ -336,28 +377,73 @@ public class MapGenerator {
      * @return returns the status of the method execution
      */
     public String addCountry(String continentname, String countryName, ArrayList<String> neighbours){
+        String returnString;
         try {
-            if (!countryHashMap.containsKey(countryName)) {
+            if ((!countryHashMap.containsKey(countryName)) || (countryHashMap.get(countryName).getNeighbouringCountries().size()==0)) {
                 GameCountry newCountry = new GameCountry();
                 newCountry.setContinent(continentHashMap.get(continentname));
-                continentHashMap.get(continentname).setCountries(newCountry);
                 newCountry.setCountryName(countryName);
+                continentHashMap.get(continentname).setCountries(newCountry);
+
                 for (String tempNeighbourName : neighbours) {
                     GameCountry newNeighbour;
                     if (countryExists(tempNeighbourName) == null) {
                         newNeighbour = new GameCountry();
                         newNeighbour.setCountryName(tempNeighbourName);
+                        countryHashMap.put(tempNeighbourName,newNeighbour);
+                        newCountry.addNeighbouringCountry(newNeighbour);
+
+                        countryHashMap.put(tempNeighbourName,newNeighbour);
+                        System.out.println(countryHashMap.keySet());
                     } else
-                        newNeighbour = countryExists(tempNeighbourName);
-                    newCountry.setNeighbouringCountries(countryHashMap.get(tempNeighbourName));
+
+                    newCountry.setNeighbouringCountries(countryExists(tempNeighbourName));
 
                 }
-                return "SUCCESS";
+                countryHashMap.put(countryName,newCountry);
+                returnString = "SUCCESS";
+
+
+                return returnString;
             }
+
+
             return "THE COUNTRY ALREADY EXISTS";
         }catch(NullPointerException e){
             return "EXCEPTION IN ACCESSING CONTINENT DATA";
         }
+    }
+
+    public String validateMap(){
+        MapValidator validator = new MapValidator();
+        String returnString = "SUCCESS";
+
+        for(GameCountry country : countryHashMap.values()){
+
+            if(!validator.hasNeighbor(country)){
+                returnString = "ONE OF THE COUNTRY HAS NO NEIGHBOURS";
+                break;
+            }
+
+            if(!validator.hasValidNumberOfNeighbors(country)){
+                returnString = "INVALID NUMBER OF NEIGHBOURS";
+                break;
+            }
+        }
+
+        if(!validator.hasValidNumberOfContinents(new ArrayList<>(continentHashMap.values()))){
+            returnString =  "NUMBER OF CONTINENTS IS NOT VALID";
+        }
+        if(!validator.hasValidNumberOfCountries(new ArrayList<>(countryHashMap.values()))){
+            returnString = "INVALID NUMBER OF COUNTRIES";
+        }
+
+        graphUtilObject = this.buildGraph();
+        if(!new MapValidator().isWholeMapConnected(graphUtilObject,new ArrayList<>(countryHashMap.values()))){
+            returnString = "THE WHOLE MAP IS NOT CONNECTED";
+        }
+
+        return returnString;
     }
 
     /**Method gives a list of Continents of the map.
@@ -386,10 +472,10 @@ public class MapGenerator {
      */
     public String removeNeighbor(String countryName , String neighborName) {
         try {
-            ArrayList<GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
-            for (GameCountry neighbor : neighbors) {
+
+            for (GameCountry neighbor :  countryHashMap.get(countryName).getNeighbouringCountries().values()) {
                 if (neighbor.getCountryName().equals(neighborName)) {
-                    neighbors.remove(neighbor);
+                    countryHashMap.get(countryName).getNeighbouringCountries().remove(neighborName);
                 }
             }
             //  countryHashMap.get(countryName).setNeighbouringCountries(neighbors); This is not needed.
@@ -407,9 +493,9 @@ public class MapGenerator {
      */
     public String addNeighbor(String countryName , String neighborName){
         try {
-            ArrayList<GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
+            HashMap <String,GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
             if (countryHashMap.containsKey(neighborName)) {
-                neighbors.add(countryHashMap.get(neighborName));
+                neighbors.put(neighborName,countryHashMap.get(neighborName));
             } else {
                 return "NEIGHBOR DOES NOT EXIST";
             }
@@ -455,6 +541,8 @@ public class MapGenerator {
         try {
             if (countryHashMap.containsKey(oldName)) {
                 countryHashMap.get(oldName).setCountryName(newName);
+                countryHashMap.put(newName,countryHashMap.get(oldName));
+                countryHashMap.remove(oldName);
             } else {
                 return "COUNTRY DOES NOT EXIST";
             }
@@ -514,8 +602,12 @@ public class MapGenerator {
      * @return status of the method execcution
      */
    public String removeContinent(String continentName){
-            continentHashMap.remove(continentName);
-            return "SUCCESS";
+       try {
+           continentHashMap.remove(continentName);
+           return "SUCCESS";
+       }catch(Exception e){
+           return "Continent not found";
+       }
     }
 
     /**This method changes the name of the specified continent.
@@ -528,6 +620,9 @@ public class MapGenerator {
         try {
             if (continentHashMap.containsKey(continentName)) {
                 continentHashMap.get(continentName).setContinentName(newContinentName);
+                continentHashMap.put(newContinentName,continentHashMap.get(continentName));
+                continentHashMap.remove(continentName);
+
                 return "SUCCESS";
             } else {
                 return "CONTINENT DOES NOT EXIST";
@@ -555,6 +650,14 @@ public class MapGenerator {
             return "EXCEPTION IN ACCESSING DATA";
         }
     }
+    /*public static void main(String []args) throws Exception{
+        MapGenerator mp = new MapGenerator();
+        String op = mp.readConquestFile("C:\\Users\\shiva\\Desktop\\ABC_Map.map");
+        System.out.println(op);
+        System.out.println(MapGenerator.continentHashMap.keySet());
+        System.out.println(MapGenerator.countryHashMap.keySet().size());
+
+    }*/
 
     /***
      * This Method checks for all continents owned by a player
@@ -565,7 +668,7 @@ public class MapGenerator {
         try {
             ArrayList<GameContinent> continentsOwnedByPlayer = new ArrayList<>();
             for(String continentName : continentHashMap.keySet()){
-                for (GameCountry country: continentHashMap.get(continentName).getCountries() ) {
+                for (GameCountry country: continentHashMap.get(continentName).getCountries().values() ) {
                     if (!country.getCurrentPlayer().equals(playerID)){
                         break;
                     }

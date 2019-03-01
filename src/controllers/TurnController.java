@@ -16,6 +16,16 @@ public class TurnController {
         availableArmies = 3;
     }
 
+    public Player getActivePlayer()
+    {
+    	return activePlayer;
+    }
+    
+    public void setActivePlayer(Player objPlayer)
+    {
+    	activePlayer = objPlayer;
+    }
+    
     public int getRandomCountryIndex(ArrayList<GameCountry> countries) {
 
         Random rand = new Random();
@@ -60,11 +70,28 @@ public class TurnController {
         // 2. while (newArmies !=0){ 1. ask user to select the country 2. place army }
     }
 
-    public void fortification(List<GameCountry> lstCountries) {  // TODO: Graph object representing the entire map
-        // 1. select player country
-        // 2. check for connected player countries
-        // 3. if available, move as many armies you want
-        // all countries should have atleast one army left
+    /**
+     * This function implements the fortification phase moving player arnies from one country to another
+     * @param Countries List of game countries
+     * @return returns message showing success or failure of fortification
+     */
+    public String fortification(List<GameCountry> Countries) {
+            String moveTo = "";
+            String moveFrom = "";
+            int numOfArmies = 0;
+            String returnMessage = "";
+
+            GameCountry moveToCountry = MapGenerator.countryHashMap.get(moveTo);
+            GameCountry moveFromCountry = MapGenerator.countryHashMap.get(moveFrom);
+
+            if ((moveFromCountry.getArmiesStationed() - numOfArmies) > 1) {
+                moveFromCountry.setArmies(moveFromCountry.getArmiesStationed() - numOfArmies);
+                moveToCountry.setArmies(moveToCountry.getArmiesStationed() + numOfArmies);
+                returnMessage = "Armies Moved !!!";
+            } else {
+                returnMessage = "Atleast one army should remain in the country !!!";
+            }
+            return returnMessage;
     }
 
     /**
@@ -140,7 +167,7 @@ public class TurnController {
 
         moveVariables.add(moveToCountry);
         moveVariables.add(moveArmies);
-
+   
         return moveVariables;
 
        // keyboard.close();
@@ -164,33 +191,32 @@ public class TurnController {
         int armiesForeachPlayer = getEachPlayerArmy(activePlayers);
 
         allocateInitialArmy(activePlayers, remainingArmies, armiesForeachPlayer);
-
-        while (x < activePlayers.size()) {
-            if (remainingArmies.get(x) == 0) {
-                x++;
-                if (x == (activePlayers.size())) {
-                    break;
-                } else {
-                    continue;
-                }
-            }
+        int unAllocated = activePlayers.size();
+        while (unAllocated >0) {
 
             tempArmy = remainingArmies.get(x);
             if (tempArmy > 0) {
                 moveVariables = allocateArmiesToCountry(activePlayers, moveToCountry, moveArmies, x, tempArmy);
                 moveToCountry = moveVariables.get(0);
                 moveArmies = moveVariables.get(1);
+
                 activePlayers.get(x).getCountries().get(moveToCountry).setArmies(moveArmies);
                 tempArmy = tempArmy - moveArmies;
                 remainingArmies.set(x, tempArmy);
+                if(tempArmy == 0 )
+                {
+                	unAllocated --;
+                }
             }
             x++;
-            if (x == activePlayers.size()) {
-                x = 0;
+            if(x >=activePlayers.size() )
+            {
+            	x= 0;
             }
         }
     }
-
+   
+    
     /**
      * Initial allocation of countries to the players at the beginning of the game.
      * The country allocation happens in a round robin manner
@@ -225,6 +251,5 @@ public class TurnController {
 
         m.allocateCountries(p, c);
         m.allocateArmies(p);
-
     }
 }
