@@ -50,9 +50,10 @@ public class StartGamePanel extends JPanel {
                 break;
         }
 
-        //gameEngine.initialise(playerName,mapFileChooser.getSelectedFile().getAbsolutePath());
+        
         gameEngine.setListActivePlayers(playerName);
         gameEngine.setMapPath(mapFileChooser.getSelectedFile().getAbsolutePath());
+        gameEngine.initialiseEngine();
         Container container = this.getParent();
         GamePlay gamePlay = new GamePlay(gameEngine);
         gamePlay.setVisible(true);

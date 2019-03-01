@@ -14,6 +14,7 @@ public class Player {
     private ArrayList<GameContinent> continents;
     private String cardsHeld;
     private String cardExchanged;
+    private int remainingArmies;
 
     public Player() {
         countries = new ArrayList<>();
@@ -30,7 +31,21 @@ public class Player {
 
     }
 
-
+    public int getRemainingArmies()
+    {
+    	return remainingArmies;
+    }
+    
+    public void setRemainingArmies(int armies)
+    {
+    	this.remainingArmies = armies;
+    }
+    
+    public void updateRemainingArmies(int armies)
+    {
+    	this.remainingArmies -=armies;
+    }
+    
     public String getName() {
         return name;
     }
@@ -95,5 +110,10 @@ public class Player {
     		names.add(country.getCountryName());
     	}
     	return names;
+    }
+    
+    public void addPlayerArmy(int armies)
+    {
+    	this.playerArmies += armies;
     }
 }
