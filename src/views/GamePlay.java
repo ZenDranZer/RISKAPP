@@ -50,7 +50,7 @@ public class GamePlay extends JPanel {
 		add(lblTurn);
 
 		JLabel lblLblreinforce = new JLabel("Select country to reinforce");
-		lblLblreinforce.setBounds(64, 33, 134, 14);
+		lblLblreinforce.setBounds(64, 33, 148, 14);
 		add(lblLblreinforce);
 
 		txtReinforce = new JTextField();
@@ -103,6 +103,10 @@ public class GamePlay extends JPanel {
 		});
 		
 		scrollPane.setViewportView(lstPlayerCountries);
+		
+		JLabel lblError = new JLabel("");
+		lblError.setBounds(243, 249, 246, 68);
+		add(lblError);
 		displayRemainingArmies();
 	}
 
@@ -131,6 +135,7 @@ public class GamePlay extends JPanel {
 		activePlayer = objTurnController.getActivePlayer();
 		updatePanel();
 	}
+	
 	public void reinforceCountry() {
 		// add army to country
 		// update remaining army count
