@@ -329,8 +329,10 @@ public class MapGenerator {
      */
     public GraphUtil buildGraph(){
         try {
+
             GraphUtil graphUtilObject = new GraphUtil();
             graphUtilObject.setCountryGraph(new ArrayList<>(countryHashMap.values()));
+
             return graphUtilObject;
         }catch(Exception e){
             return null;
@@ -368,6 +370,7 @@ public class MapGenerator {
      * @return returns the status of the method execution
      */
     public String addCountry(String continentname, String countryName, ArrayList<String> neighbours){
+        String returnString;
         try {
             if (!countryHashMap.containsKey(countryName)) {
                 GameCountry newCountry = new GameCountry();
@@ -381,15 +384,57 @@ public class MapGenerator {
                         newNeighbour.setCountryName(tempNeighbourName);
                     } else
                         newNeighbour = countryExists(tempNeighbourName);
-                    newCountry.setNeighbouringCountries(countryHashMap.get(tempNeighbourName));
+                    newCountry.setNeighbouringCountries(newNeighbour);
 
                 }
-                return "SUCCESS";
+         //       returnString = "SUCCESS";
+
+                returnString = validateMap();
+                GraphUtil graphUtilObject ;
+                graphUtilObject = this.buildGraph();
+                if(!new MapValidator().isWholeMapConnected(graphUtilObject,new ArrayList<>(countryHashMap.values()))){
+                    return "The Whole map is not connected.";
+                }
+                return returnString;
             }
             return "THE COUNTRY ALREADY EXISTS";
         }catch(NullPointerException e){
             return "EXCEPTION IN ACCESSING CONTINENT DATA";
         }
+    }
+    public String validateMap(){
+        MapValidator validator = new MapValidator();
+        String returnString = "PROBLEM IN VALIDATION OF THE MAP";
+
+        for(GameCountry country : countryHashMap.values()){
+            if(validator.hasDuplicateNeighbors(country)){
+                returnString = "COUNTRY HAS DUPLICATE NEIGHBOURS";
+                break;
+            }
+            if(!validator.hasNeighbor(country)){
+                returnString = "ONE OF THE COUNTRY HAS NO NEIGHBOURS";
+                break;
+            }
+
+            if(!validator.hasValidNumberOfNeighbors(country)){
+                returnString = "INVALID NUMBER OF NEIGHBOURS";
+                break;
+            }
+        }
+        for(GameContinent continent : continentHashMap.values()){
+            if(!validator.isWholeContinentConnected(continent)){
+                returnString = "One of the continent is not connected";
+                break;
+            }
+
+        }
+        if(!validator.hasValidNumberOfContinents(new ArrayList<>(continentHashMap.values()))){
+            return  "NUMBER OF CONTINENTS IS NOT VALID";
+        }
+        if(!validator.hasValidNumberOfCountries(new ArrayList<>(countryHashMap.values()))){
+            return "INVALID NUMBER OF COUNTRIES";
+        }
+        return returnString;
     }
 
     /**Method gives a list of Continents of the map.
@@ -587,14 +632,14 @@ public class MapGenerator {
             return "EXCEPTION IN ACCESSING DATA";
         }
     }
-    public static void main(String []args) throws Exception{
+    /*public static void main(String []args) throws Exception{
         MapGenerator mp = new MapGenerator();
         String op = mp.readConquestFile("C:\\Users\\shiva\\Desktop\\ABC_Map.map");
         System.out.println(op);
         System.out.println(MapGenerator.continentHashMap.keySet());
         System.out.println(MapGenerator.countryHashMap.keySet().size());
 
-    }
+    }*/
 
     /***
      * This Method checks for all continents owned by a player
