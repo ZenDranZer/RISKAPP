@@ -4,6 +4,9 @@ import controllers.*;
 import models.*;
 //import Views.*;
 import views.GameView;
+import views.RiskFrame;
+
+import javax.swing.*;
 
 // MAIN Class
 public class StartUp {
@@ -50,6 +53,9 @@ public class StartUp {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					RiskFrame riskFrame = new RiskFrame();
+					riskFrame.setVisible(true);
+					riskFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 				//	GameView frame = new GameView();
 					//frame.setVisible(true);
 				} catch (Exception e) {
@@ -62,7 +68,7 @@ public class StartUp {
 	public static void main(String[] args) throws Exception {
 
 		StartUp objRiskGame = new StartUp();
-		objRiskGame.CUI();
-//		objRiskGame.GUI();
+		//objRiskGame.CUI();
+		objRiskGame.GUI();
 	}
 }

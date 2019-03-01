@@ -26,7 +26,7 @@ public class GameEngine {
             for (int i = 1; i <= noOfPlayers; i++) {
                 Player p = new Player();
                 System.out.println("Enter player name " + i + "\n");
-                p.setPlayerId(Integer.toString(i));
+                p.setId(i);
                 p.setName(keyboard.next());
                 listActivePlayers.add(p);
             }
@@ -51,6 +51,14 @@ public class GameEngine {
         return listActivePlayers;
     }
 
+    public void setListActivePlayers(ArrayList<String> listActivePlayers) {
+        int i=1;
+        for(String name : listActivePlayers){
+            Player player = new Player(name,i);
+            this.listActivePlayers.add(player);
+            i++;
+        }
+    }
 
     //should return list of player objects
     //GUI
