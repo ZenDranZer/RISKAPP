@@ -9,11 +9,14 @@ public class GameEngine {
 
     ArrayList<Player> listActivePlayers = new ArrayList<Player>();
     ArrayList<Player> listEliminatedPlayers = new ArrayList<Player>();
+    MapGenerator mapGenerator = new MapGenerator();
 
     //object initialization
     public GameEngine(){
     }
-
+    public MapGenerator getMapGenerator(){
+        return mapGenerator;
+    }
     public void getPlayerInfo(ArrayList<Player> activePlayers) {
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Enter number of players");
