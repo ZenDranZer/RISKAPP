@@ -358,6 +358,7 @@ public class MapGenerator {
                 GameContinent newContinent = new GameContinent();
                 newContinent.setContinentName(continentName);
                 newContinent.setContinentValue(continentValue);
+                continentHashMap.put(continentName,newContinent);
                 return "SUCCESS";
             }
             return "THE CONTINENT ALREADY EXISTS";
