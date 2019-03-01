@@ -16,7 +16,6 @@ public class RiskFrame extends JFrame {
         initComponents();
     }
 
-
     private GameEngine gameEngine;
     private JPanel dialogPane;
     private JPanel contentPanel;
