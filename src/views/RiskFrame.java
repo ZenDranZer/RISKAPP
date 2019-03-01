@@ -24,13 +24,17 @@ public class RiskFrame extends JFrame {
     private JButton mapEditorButton;
     private JButton cancelButton;
 
+    /**A listener function for mouse click event on cancelButton
+     * @param e is a mouse event object for event details.*/
     private void cancelButtonMouseClicked(MouseEvent e) {
         System.exit(0);
     }
 
+    /**A listener function for mouse click event on startButton
+     * @param e is a mouse event object for event details.*/
     private void startButtonMouseClicked(MouseEvent e) {
         Container container = getContentPane();
-        StartGamePanel gamePanel = new StartGamePanel(gameEngine);
+        StartGamePanel gamePanel = new StartGamePanel(gameEngine,dialogPane);
         gamePanel.setVisible(true);
         dialogPane.setVisible(false);
         container.add(gamePanel);
@@ -38,6 +42,8 @@ public class RiskFrame extends JFrame {
         revalidate();
     }
 
+    /**A listener function for mouse click event on mapEditorButton
+     * @param e is a mouse event object for event details.*/
     private void mapEditorButtonMouseClicked(MouseEvent e) {
         Container container = getContentPane();
         MapOptionPanel mapOptionPanel = new MapOptionPanel();
@@ -48,6 +54,7 @@ public class RiskFrame extends JFrame {
         revalidate();
     }
 
+    /**this method will initialize all the components on the frame*/
     private void initComponents() {
         dialogPane = new JPanel();
         contentPanel = new JPanel();
