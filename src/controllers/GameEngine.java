@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 public class GameEngine {
 
-    ArrayList<Player> listActivePlayers = new ArrayList<Player>();
-    ArrayList<Player> listEliminatedPlayers = new ArrayList<Player>();
-    MapGenerator mapGenerator = new MapGenerator();
+    private ArrayList<Player> listActivePlayers = new ArrayList<Player>();
+    private ArrayList<Player> listEliminatedPlayers = new ArrayList<Player>();
+    private MapGenerator mapGenerator = new MapGenerator();
 
-    String mapPath;
-    TurnController turn;
+    private String mapPath;
+    private TurnController turn;
     //object initialization
     public GameEngine(){
     	turn = new TurnController();
@@ -48,6 +48,14 @@ public class GameEngine {
             }
         }
         keyboard.close();
+    }
+
+    public String getMapPath() {
+        return mapPath;
+    }
+
+    public void setMapPath(String mapPath) {
+        this.mapPath = mapPath;
     }
 
     /**

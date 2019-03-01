@@ -46,7 +46,7 @@ public class RiskFrame extends JFrame {
      * @param e is a mouse event object for event details.*/
     private void mapEditorButtonMouseClicked(MouseEvent e) {
         Container container = getContentPane();
-        MapOptionPanel mapOptionPanel = new MapOptionPanel();
+        MapOptionPanel mapOptionPanel = new MapOptionPanel(gameEngine,dialogPane);
         mapOptionPanel.setVisible(true);
         dialogPane.setVisible(false);
         container.add(mapOptionPanel);
