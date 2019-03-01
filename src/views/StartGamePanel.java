@@ -1,10 +1,12 @@
 package views;
 
 import controllers.GameEngine;
+import controllers.MapGenerator;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -18,7 +20,7 @@ public class StartGamePanel extends JPanel {
         initComponents();
     }
 
-    private void continueButtonMouseClicked(MouseEvent e) {
+    private void continueButtonMouseClicked(MouseEvent e) throws IOException {
         ArrayList<String> playerName = new ArrayList<>();
         int value = (Integer)numberOfPlayers.getValue();
         switch (value){
@@ -45,8 +47,11 @@ public class StartGamePanel extends JPanel {
                 playerName.add(fifthNameField.getText());
                 break;
         }
-        gameEngine.setListActivePlayers(playerName);
 
+        gameEngine.initialise(playerName,mapFileChooser.getSelectedFile().getAbsolutePath() );
+
+        
+        
         Container container = this.getParent();
         GamePlay gamePlay = new GamePlay(gameEngine);
         gamePlay.setVisible(true);
@@ -210,7 +215,12 @@ public class StartGamePanel extends JPanel {
         continueButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                continueButtonMouseClicked(e);
+                try {
+					continueButtonMouseClicked(e);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
         add(continueButton, new GridBagConstraints(2, 9, 1, 1, 0.0, 0.0,

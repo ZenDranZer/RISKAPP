@@ -16,6 +16,16 @@ public class TurnController {
         availableArmies = 3;
     }
 
+    public Player getActivePlayer()
+    {
+    	return activePlayer;
+    }
+    
+    public void setActivePlayer(Player objPlayer)
+    {
+    	activePlayer = objPlayer;
+    }
+    
     public int getRandomCountryIndex(ArrayList<GameCountry> countries) {
 
         Random rand = new Random();
