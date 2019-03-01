@@ -5,6 +5,7 @@ import utils.GraphUtil;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -14,8 +15,8 @@ import java.util.Scanner;
  */
 public class MapGenerator {
     ArrayList<GameContinent> continentList;
-   static HashMap<String,GameCountry> countryHashMap;
-   static HashMap<String,GameContinent> continentHashMap;
+   public static HashMap<String,GameCountry> countryHashMap;
+   public static HashMap<String,GameContinent> continentHashMap;
     ArrayList<GameCountry> countryList;
     static HashMap <String,String>guiHashMap;
     GraphUtil graphUtilObject ;
@@ -257,7 +258,7 @@ public class MapGenerator {
             ((BufferedWriter) writer).newLine();
             for (GameCountry country : countryHashMap.values()) {
                 String neighbours = "";
-                for (GameCountry neighbour: country.getNeighbouringCountries()) {
+                for (GameCountry neighbour: country.getNeighbouringCountries().values()) {
                     neighbours += ","+neighbour.getCountryName();
                 }
                 writer.write(country.getCountryName()+","+country.getCoordinateX()+","+country.getCoordinateY()+","
@@ -332,7 +333,7 @@ public class MapGenerator {
         try {
 
             GraphUtil graphUtilObject = new GraphUtil();
-            graphUtilObject.setCountryGraph(new ArrayList<>(countryHashMap.values()));
+            graphUtilObject.setCountryGraph(countryHashMap);
 
             return graphUtilObject;
         }catch(Exception e){
@@ -377,26 +378,35 @@ public class MapGenerator {
     public String addCountry(String continentname, String countryName, ArrayList<String> neighbours){
         String returnString;
         try {
-            if (!countryHashMap.containsKey(countryName)) {
+            if ((!countryHashMap.containsKey(countryName)) || (countryHashMap.get(countryName).getNeighbouringCountries().size()==0)) {
                 GameCountry newCountry = new GameCountry();
                 newCountry.setContinent(continentHashMap.get(continentname));
-                continentHashMap.get(continentname).setCountries(newCountry);
                 newCountry.setCountryName(countryName);
+                continentHashMap.get(continentname).setCountries(newCountry);
+
                 for (String tempNeighbourName : neighbours) {
                     GameCountry newNeighbour;
                     if (countryExists(tempNeighbourName) == null) {
                         newNeighbour = new GameCountry();
                         newNeighbour.setCountryName(tempNeighbourName);
                         countryHashMap.put(tempNeighbourName,newNeighbour);
-                    } else
-                        newNeighbour = countryExists(tempNeighbourName);
-                    newCountry.setNeighbouringCountries(newNeighbour);
+                        newCountry.addNeighbouringCountry(newNeighbour);
 
-                }returnString = "SUCCESS";
+                        countryHashMap.put(tempNeighbourName,newNeighbour);
+                        System.out.println(countryHashMap.keySet());
+                    } else
+
+                    newCountry.setNeighbouringCountries(countryExists(tempNeighbourName));
+
+                }
+                countryHashMap.put(countryName,newCountry);
+                returnString = "SUCCESS";
 
 
                 return returnString;
             }
+
+
             return "THE COUNTRY ALREADY EXISTS";
         }catch(NullPointerException e){
             return "EXCEPTION IN ACCESSING CONTINENT DATA";
@@ -405,13 +415,10 @@ public class MapGenerator {
 
     public String validateMap(){
         MapValidator validator = new MapValidator();
-        String returnString = "PROBLEM IN VALIDATION OF THE MAP";
+        String returnString = "SUCCESS";
 
         for(GameCountry country : countryHashMap.values()){
-            if(validator.hasDuplicateNeighbors(country)){
-                returnString = "COUNTRY HAS DUPLICATE NEIGHBOURS";
-                break;
-            }
+
             if(!validator.hasNeighbor(country)){
                 returnString = "ONE OF THE COUNTRY HAS NO NEIGHBOURS";
                 break;
@@ -422,24 +429,19 @@ public class MapGenerator {
                 break;
             }
         }
-        for(GameContinent continent : continentHashMap.values()){
-            if(!validator.isWholeContinentConnected(continent)){
-                returnString = "One of the continent is not connected";
-                break;
-            }
 
-        }
         if(!validator.hasValidNumberOfContinents(new ArrayList<>(continentHashMap.values()))){
-            return  "NUMBER OF CONTINENTS IS NOT VALID";
+            returnString =  "NUMBER OF CONTINENTS IS NOT VALID";
         }
         if(!validator.hasValidNumberOfCountries(new ArrayList<>(countryHashMap.values()))){
-            return "INVALID NUMBER OF COUNTRIES";
+            returnString = "INVALID NUMBER OF COUNTRIES";
         }
-        returnString = validateMap();
+
         graphUtilObject = this.buildGraph();
         if(!new MapValidator().isWholeMapConnected(graphUtilObject,new ArrayList<>(countryHashMap.values()))){
-            return "The Whole map is not connected.";
+            returnString = "THE WHOLE MAP IS NOT CONNECTED";
         }
+
         return returnString;
     }
 
@@ -469,10 +471,10 @@ public class MapGenerator {
      */
     public String removeNeighbor(String countryName , String neighborName) {
         try {
-            ArrayList<GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
-            for (GameCountry neighbor : neighbors) {
+
+            for (GameCountry neighbor :  countryHashMap.get(countryName).getNeighbouringCountries().values()) {
                 if (neighbor.getCountryName().equals(neighborName)) {
-                    neighbors.remove(neighbor);
+                    countryHashMap.get(countryName).getNeighbouringCountries().remove(neighborName);
                 }
             }
             //  countryHashMap.get(countryName).setNeighbouringCountries(neighbors); This is not needed.
@@ -490,9 +492,9 @@ public class MapGenerator {
      */
     public String addNeighbor(String countryName , String neighborName){
         try {
-            ArrayList<GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
+            HashMap <String,GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
             if (countryHashMap.containsKey(neighborName)) {
-                neighbors.add(countryHashMap.get(neighborName));
+                neighbors.put(neighborName,countryHashMap.get(neighborName));
             } else {
                 return "NEIGHBOR DOES NOT EXIST";
             }
@@ -597,8 +599,12 @@ public class MapGenerator {
      * @return status of the method execcution
      */
    public String removeContinent(String continentName){
-            continentHashMap.remove(continentName);
-            return "SUCCESS";
+       try {
+           continentHashMap.remove(continentName);
+           return "SUCCESS";
+       }catch(Exception e){
+           return "Continent not found";
+       }
     }
 
     /**This method changes the name of the specified continent.
@@ -656,7 +662,7 @@ public class MapGenerator {
         try {
             ArrayList<GameContinent> continentsOwnedByPlayer = new ArrayList<>();
             for(String continentName : continentHashMap.keySet()){
-                for (GameCountry country: continentHashMap.get(continentName).getCountries() ) {
+                for (GameCountry country: continentHashMap.get(continentName).getCountries().values() ) {
                     if (!country.getCurrentPlayer().equals(playerID)){
                         break;
                     }

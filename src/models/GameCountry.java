@@ -1,5 +1,6 @@
 package models;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameCountry {
 
@@ -10,7 +11,7 @@ public class GameCountry {
         this.neighbouringCountries = new ArrayList<>();
     }*/
 
-    private ArrayList<GameCountry> neighbouringCountries;
+    private HashMap<String,GameCountry> neighbouringCountries;
     /*
         GameContinent continent;
     */
@@ -22,7 +23,7 @@ public class GameCountry {
 
     public  GameCountry(){
         continent = new GameContinent();
-        neighbouringCountries = new ArrayList<>();
+        neighbouringCountries = new HashMap<>();
     }
     public GameCountry(String countryName){
         this.countryName = countryName;
@@ -61,15 +62,15 @@ public class GameCountry {
         this.armiesStationed = armiesStationed;
     }
 
-    public ArrayList<GameCountry> getNeighbouringCountries() {
+    public HashMap<String,GameCountry> getNeighbouringCountries() {
         return neighbouringCountries;
     }
 
     public void setNeighbouringCountries(GameCountry neighbouringCountry) {
-        this.neighbouringCountries.add(neighbouringCountry);
+        this.neighbouringCountries.put(neighbouringCountry.getCountryName(),neighbouringCountry);
     }
     public void addNeighbouringCountry(GameCountry neighbouringCountry) {
-        this.neighbouringCountries.add(neighbouringCountry);
+        this.neighbouringCountries.put(neighbouringCountry.getCountryName(),neighbouringCountry);
     }
     public int getCoordinateX() {
         return coordinateX;

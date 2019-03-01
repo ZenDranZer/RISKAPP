@@ -29,11 +29,14 @@ public class AddCountry extends JPanel {
         String countryName = nameField.getText();
         String continentName = continentField.getText();
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        System.out.println(neigbourList);
         String message = mapGenerator.addCountry(continentName,countryName,neighbourList);
         JOptionPane.showMessageDialog(this.getParent(),message);
         nameField.setText("");
         continentField.setText("");
         neigbourList.setText("Neighbours:");
+        neighbourField.setText("");
+        neighbourList.clear();
     }
 
     private void finishButtonMouseClicked(MouseEvent e) {

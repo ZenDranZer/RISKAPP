@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class MapValidator {
-    public boolean hasDuplicateNeighbors(GameCountry country) {
+ /*   public boolean hasDuplicateNeighbors(GameCountry country) {
         for (int i = 0; i < country.getNeighbouringCountries().size(); i++) {
             for (int j = 0; j < country.getNeighbouringCountries().size(); j++) {
                 if (j != i) {
@@ -22,7 +22,7 @@ public class MapValidator {
             }
         }
         return true;
-    }
+    }*/
     public boolean hasNeighbor(GameCountry country){ // see if the neighbour list is initialized in the model constructor and if not, do it.
         if(country.getNeighbouringCountries().isEmpty()){
             return false;
@@ -56,10 +56,10 @@ public boolean isWholeMapConnected(GraphUtil util, ArrayList<GameCountry> countr
     return false;
 }
 
-public boolean isWholeContinentConnected(GameContinent continent){
+/*public boolean isWholeContinentConnected(GameContinent continent){
         GraphUtil tempGraph = new GraphUtil();
         tempGraph.setCountryGraph(continent.getCountries());
         return tempGraph.isConnected();
-}
+}*/
 
 }

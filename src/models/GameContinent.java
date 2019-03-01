@@ -1,19 +1,20 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameContinent {
 
     String continentName;
     int continentValue;
     String playerID;
-    ArrayList<GameCountry> countries;
+    HashMap<String,GameCountry> countries;
 
     public GameContinent() {
         /*this.continentName = continentName;
         this.continentValue = continentValue;
         this.playerID = playerID;*/
-        countries = new ArrayList<>();
+        countries = new HashMap<>();
     }
 
     public String getContinentName() {
@@ -40,12 +41,12 @@ public class GameContinent {
         this.playerID = playerID;
     }
 
-    public ArrayList<GameCountry> getCountries() {
+    public HashMap<String, GameCountry> getCountries() {
         return countries;
     }
 
     public void setCountries(GameCountry inCountry) {
-        this.countries.add(inCountry);
+        this.countries.put(inCountry.getCountryName(),inCountry);
     }
 }
 
