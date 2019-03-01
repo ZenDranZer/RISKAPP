@@ -387,18 +387,14 @@ public class MapGenerator {
                     if (countryExists(tempNeighbourName) == null) {
                         newNeighbour = new GameCountry();
                         newNeighbour.setCountryName(tempNeighbourName);
+                        countryHashMap.put(tempNeighbourName,newNeighbour);
                     } else
                         newNeighbour = countryExists(tempNeighbourName);
                     newCountry.setNeighbouringCountries(newNeighbour);
 
-                }
-         //       returnString = "SUCCESS";
+                }returnString = "SUCCESS";
 
-                returnString = validateMap();
-                graphUtilObject = this.buildGraph();
-                if(!new MapValidator().isWholeMapConnected(graphUtilObject,new ArrayList<>(countryHashMap.values()))){
-                    return "The Whole map is not connected.";
-                }
+
                 return returnString;
             }
             return "THE COUNTRY ALREADY EXISTS";
@@ -438,6 +434,11 @@ public class MapGenerator {
         }
         if(!validator.hasValidNumberOfCountries(new ArrayList<>(countryHashMap.values()))){
             return "INVALID NUMBER OF COUNTRIES";
+        }
+        returnString = validateMap();
+        graphUtilObject = this.buildGraph();
+        if(!new MapValidator().isWholeMapConnected(graphUtilObject,new ArrayList<>(countryHashMap.values()))){
+            return "The Whole map is not connected.";
         }
         return returnString;
     }
