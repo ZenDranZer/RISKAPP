@@ -5,6 +5,7 @@ import controllers.GameEngine;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 
@@ -18,6 +19,40 @@ public class StartGamePanel extends JPanel {
     }
 
     private void continueButtonMouseClicked(MouseEvent e) {
+        ArrayList<String> playerName = new ArrayList<>();
+        int value = (Integer)numberOfPlayers.getValue();
+        switch (value){
+            case 2:
+                playerName.add(firstNameField.getText());
+                playerName.add(secondNameField.getText());
+                break;
+            case 3:
+                playerName.add(firstNameField.getText());
+                playerName.add(secondNameField.getText());
+                playerName.add(thirdNameField.getText());
+                break;
+            case 4:
+                playerName.add(firstNameField.getText());
+                playerName.add(secondNameField.getText());
+                playerName.add(thirdNameField.getText());
+                playerName.add(forthNameField.getText());
+                break;
+            case 5:
+                playerName.add(firstNameField.getText());
+                playerName.add(secondNameField.getText());
+                playerName.add(thirdNameField.getText());
+                playerName.add(forthNameField.getText());
+                playerName.add(fifthNameField.getText());
+                break;
+        }
+        gameEngine.setListActivePlayers(playerName);
+
+        Container container = this.getParent();
+        GamePlay gamePlay = new GamePlay(gameEngine);
+        gamePlay.setVisible(true);
+        this.setVisible(false);
+        container.add(gamePlay);
+        container.revalidate();
 
     }
 
