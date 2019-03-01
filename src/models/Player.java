@@ -86,6 +86,14 @@ public class Player {
     public void setCardExchanged(String cardExchanged) {
         this.cardExchanged = cardExchanged;
     }
-
-
+    
+    public ArrayList<String> getCountryNames()
+    {
+    	ArrayList<String> names = new ArrayList<String>();
+    	for(GameCountry country : countries)
+    	{
+    		names.add(country.getCountryName());
+    	}
+    	return names;
+    }
 }

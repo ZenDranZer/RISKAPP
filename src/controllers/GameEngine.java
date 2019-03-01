@@ -1,5 +1,6 @@
 package controllers;
- import java.util.ArrayList;
+ import java.io.IOException;
+import java.util.ArrayList;
  import java.util.List;
  import java.util.Scanner;
  import models.*;
@@ -9,14 +10,23 @@ public class GameEngine {
 
     ArrayList<Player> listActivePlayers = new ArrayList<Player>();
     ArrayList<Player> listEliminatedPlayers = new ArrayList<Player>();
-    MapGenerator mapGenerator = new MapGenerator();
 
+    String mapPath;
+    TurnController turn;
     //object initialization
     public GameEngine(){
+    	turn = new TurnController();
     }
-    public MapGenerator getMapGenerator(){
-        return mapGenerator;
+
+    public TurnController getTurnComtroller()
+    {
+    	if(turn == null)
+    	{
+    		turn = new TurnController();  				
+    	}
+    	return turn;
     }
+    
     public void getPlayerInfo(ArrayList<Player> activePlayers) {
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Enter number of players");
@@ -34,7 +44,6 @@ public class GameEngine {
                 listActivePlayers.add(p);
             }
         }
-
         keyboard.close();
     }
 
@@ -83,14 +92,20 @@ public class GameEngine {
     public void initialise() {
         getInitialPlayers();
     }
+    
+    public void initialise(ArrayList<String> lstPlayerNames, String mapPath) throws IOException
+    {
+    	setListActivePlayers(lstPlayerNames);
+    	MapGenerator mapGenerator = new MapGenerator();
+    	mapGenerator.readConquestFile(mapPath);
+    	turn.allocateCountries(listActivePlayers, new ArrayList<GameCountry>(MapGenerator.countryHashMap.values()));
+    	
+    	//turn.allocateArmies(listActivePlayers);
+    	turn.setActivePlayer(listActivePlayers.get(0));
+    	for(Player pl : listActivePlayers)
+    	{
+    		System.out.println(pl.getCountries().size());
+    	}
+    }
 
-/*    public static void main(String args[]) {
-        GameEngine g = new GameEngine();
-        ArrayList<Player> p = new ArrayList<>();
-        p = g.getInitialPlayers();
-
-        for(int i= 0 ;i<p.size();i++) {
-            System.out.println(p.get(i).getPlayerId() + " " + p.get(i).getName());
-        }
-    }*/
 }
