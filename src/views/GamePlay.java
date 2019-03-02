@@ -31,6 +31,7 @@ public class GamePlay extends JPanel {
 	Player activePlayer;
 	JLabel lblError;
 
+	JScrollPane scrollPane;
 	String phase= "initial";
 	
 	/**
@@ -51,7 +52,7 @@ public class GamePlay extends JPanel {
 		add(lblTurn);
 
 		JLabel lblLblreinforce = new JLabel("Select country to reinforce");
-		lblLblreinforce.setBounds(64, 33, 134, 14);
+		lblLblreinforce.setBounds(64, 33, 148, 14);
 		add(lblLblreinforce);
 
 		lblError = new JLabel("");
@@ -97,7 +98,7 @@ public class GamePlay extends JPanel {
 		lblRemainingArmies.setBounds(405, 369, 134, 14);
 		add(lblRemainingArmies);
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(74, 58, 124, 259);
 		add(scrollPane);
 
@@ -114,6 +115,10 @@ public class GamePlay extends JPanel {
 		});
 		
 		scrollPane.setViewportView(lstPlayerCountries);
+		
+		JLabel lblError = new JLabel("");
+		lblError.setBounds(243, 249, 246, 68);
+		add(lblError);
 		displayRemainingArmies();
 	}
 
@@ -130,7 +135,7 @@ public class GamePlay extends JPanel {
 		txtReinforce.setVisible(false);
 		btnAdd.setVisible(false);
 		String selectedCountry = lstPlayerCountries.getSelectedValue().toString();
-		
+
 		txtReinforce.setText("0");
 		txtReinforce.setVisible(false);
 		btnAdd.setVisible(false);
@@ -138,10 +143,32 @@ public class GamePlay extends JPanel {
 		activePlayer.addPlayerArmy(army);
 		activePlayer.updateRemainingArmies(army);
 		displayRemainingArmies();
-		objGameEngine.setNextPlayer(activePlayer);
-		activePlayer = objTurnController.getActivePlayer();
-		updatePanel();
+		
+		int allocatedPlayers =0;
+		
+		do {
+			objGameEngine.setNextPlayer(activePlayer);
+			activePlayer = objTurnController.getActivePlayer();
+			if (activePlayer.getRemainingArmies() == 0) {
+				allocatedPlayers++;
+			} else {
+				System.out.println("Before Break :"+activePlayer.getName());
+				break;
+			}
+
+		}while(allocatedPlayers < objGameEngine.getNumberOfPlayers());
+		
+		if(allocatedPlayers == objGameEngine.getNumberOfPlayers())
+		{
+			updateReinforcementPanel();
+		}
+		else
+		{
+			allocatedPlayers=0;
+			updateInitialPanel();
+		}
 	}
+	
 	public void reinforceCountry() {
 		// add army to country
 		// update remaining army count
@@ -161,12 +188,18 @@ public class GamePlay extends JPanel {
 		btnAdd.setVisible(false);
 	}
 	
-	public void updatePanel()
-	{
+	public void updateInitialPanel() {
 		updateListElements();
-		lblPlayerName.setText("Player Name : "+activePlayer.getName());
+		lblPlayerName.setText("Player Name : " + activePlayer.getName());
 		displayRemainingArmies();
-		//lstPlayerCountries = new JList(activePlayer.getCountryNames().toArray());
+		// lstPlayerCountries = new
+		// JList(activePlayer.getCountryNames().toArray());
+	}
+	
+	public void updateReinforcementPanel()
+	{
+		scrollPane.setVisible(false);
+		lstPlayerCountries.setVisible(false);
 	}
 	
 	public void updateListElements()
@@ -190,7 +223,5 @@ public class GamePlay extends JPanel {
 		lblPlayerName.setText(active.getName());
 	}
 
-	public void getCountryNames() {
-
-	}
+	
 }

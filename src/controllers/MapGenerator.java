@@ -360,7 +360,7 @@ public class MapGenerator {
                 newContinent.setContinentName(continentName);
                 newContinent.setContinentValue(continentValue);
                 continentHashMap.put(continentName,newContinent);
-                return "SUCCESS";
+                return "CONTINENT ADDED SUCCESSFULLY";
             }
             return "THE CONTINENT ALREADY EXISTS";
         }catch (NullPointerException e){
@@ -602,10 +602,14 @@ public class MapGenerator {
      */
    public String removeContinent(String continentName){
        try {
-           continentHashMap.remove(continentName);
-           return "SUCCESS";
+           if (continentHashMap.containsKey(continentName)) {
+               continentHashMap.remove(continentName);
+               return "SUCCESS";
+           } else {
+               return "NO SUCH CONTINENT";
+           }
        }catch(Exception e){
-           return "Continent not found";
+           return "CONTINENT NOT FOUND";
        }
     }
 

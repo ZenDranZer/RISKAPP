@@ -15,6 +15,8 @@ public class GameEngine {
 	private String mapPath;
 	private TurnController turn;
 
+
+	private int numberOfPlayers;
 	// object initialization
 	public GameEngine() {
 		turn = new TurnController();
@@ -107,6 +109,7 @@ public class GameEngine {
 	public void initialiseEngine() throws IOException {
 		// setListActivePlayers(lstPlayerNames);
 		//mapGenerator.readConquestFile(mapPath);
+		setNumberOfPlayers(listActivePlayers.size());
 		turn.allocateCountries(listActivePlayers, new ArrayList<GameCountry>(MapGenerator.countryHashMap.values()));
 		allocateInitialArmies();
 		// turn.allocateArmies(listActivePlayers);
@@ -140,5 +143,14 @@ public class GameEngine {
 		}
 		Player nextPlayer = listActivePlayers.get(currentIndex);
 		turn.setActivePlayer(nextPlayer);
+	}
+	
+	public void setNumberOfPlayers(int noOfPlayers)
+	{
+		this.numberOfPlayers = noOfPlayers;
+	}
+	public int getNumberOfPlayers()
+	{
+		return this.numberOfPlayers;
 	}
 }
