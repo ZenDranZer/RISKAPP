@@ -128,7 +128,7 @@ public class GamePlay extends JPanel {
 		txtReinforce.setVisible(false);
 		btnAdd.setVisible(false);
 		String selectedCountry = lstPlayerCountries.getSelectedValue().toString();
-		
+
 		txtReinforce.setText("0");
 		txtReinforce.setVisible(false);
 		btnAdd.setVisible(false);
@@ -136,9 +136,32 @@ public class GamePlay extends JPanel {
 		activePlayer.addPlayerArmy(army);
 		activePlayer.updateRemainingArmies(army);
 		displayRemainingArmies();
-		objGameEngine.setNextPlayer(activePlayer);
-		activePlayer = objTurnController.getActivePlayer();
-		updatePanel();
+		
+		int allocatedPlayers =0;
+		
+		do {
+			objGameEngine.setNextPlayer(activePlayer);
+			activePlayer = objTurnController.getActivePlayer();
+
+			if (activePlayer.getRemainingArmies() == 0) {
+				objGameEngine.setNextPlayer(activePlayer);
+				activePlayer = objTurnController.getActivePlayer();
+				allocatedPlayers++;
+			} else {
+				break;
+			}
+
+		}while(allocatedPlayers < objGameEngine.getNumberOfPlayers());
+		
+		if(allocatedPlayers == objGameEngine.getNumberOfPlayers())
+		{
+			updateReinforcementPanel();
+		}
+		else
+		{
+			allocatedPlayers=0;
+			updateInitialPanel();
+		}
 	}
 	
 	public void reinforceCountry() {
@@ -160,12 +183,17 @@ public class GamePlay extends JPanel {
 		btnAdd.setVisible(false);
 	}
 	
-	public void updatePanel()
-	{
+	public void updateInitialPanel() {
 		updateListElements();
-		lblPlayerName.setText("Player Name : "+activePlayer.getName());
+		lblPlayerName.setText("Player Name : " + activePlayer.getName());
 		displayRemainingArmies();
-		//lstPlayerCountries = new JList(activePlayer.getCountryNames().toArray());
+		// lstPlayerCountries = new
+		// JList(activePlayer.getCountryNames().toArray());
+	}
+	
+	public void updateReinforcementPanel()
+	{
+		lstPlayerCountries.setVisible(false);
 	}
 	
 	public void updateListElements()
@@ -189,7 +217,5 @@ public class GamePlay extends JPanel {
 		lblPlayerName.setText(active.getName());
 	}
 
-	public void getCountryNames() {
-
-	}
+	
 }

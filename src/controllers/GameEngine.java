@@ -15,6 +15,8 @@ public class GameEngine {
 	private String mapPath;
 	private TurnController turn;
 
+
+	private int numberOfPlayers;
 	// object initialization
 	public GameEngine() {
 		turn = new TurnController();
@@ -140,5 +142,14 @@ public class GameEngine {
 		}
 		Player nextPlayer = listActivePlayers.get(currentIndex);
 		turn.setActivePlayer(nextPlayer);
+	}
+	
+	public void setNumberOfPlayers(int noOfPlayers)
+	{
+		this.numberOfPlayers = noOfPlayers;
+	}
+	public int getNumberOfPlayers()
+	{
+		return this.numberOfPlayers;
 	}
 }
