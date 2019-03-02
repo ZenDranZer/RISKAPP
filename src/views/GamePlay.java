@@ -72,7 +72,13 @@ public class GamePlay extends JPanel {
 				
 				if(phase.equals("initial"))
 				{
-					initialAllocation();
+					lblError.setText("");
+
+					if (!txtReinforce.getText().isEmpty() && !txtReinforce.getText().equals("0") && txtReinforce.getText().matches("[0-9]+") && lstPlayerCountries.getSelectedValue() != null) {
+						initialAllocation();
+					}else {
+						lblError.setText("Error!\n check selected country and number of armies");
+					}
 				}
 				else
 				{
