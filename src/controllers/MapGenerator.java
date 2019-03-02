@@ -686,4 +686,20 @@ public class MapGenerator {
         return null;
     }
 
+
+    public String reSetAllocations(){
+        try {
+            graphUtilObject.clearGraph();
+            for (String country: countryHashMap.keySet()) {
+                countryHashMap.remove(country);
+            }
+            for (String continent:continentHashMap.keySet()) {
+                continentHashMap.remove(continent);
+            }
+            return "SUCCESS";
+        }catch (Exception e){
+            return "SOME ERROR IN RESETTING ALLOCATIONS";
+        }
+    }
+
 }

@@ -29,6 +29,7 @@ public class GamePlay extends JPanel {
 	GameEngine objGameEngine;
 	TurnController objTurnController;
 	Player activePlayer;
+	JLabel lblError;
 
 	String phase= "initial";
 	
@@ -52,6 +53,10 @@ public class GamePlay extends JPanel {
 		JLabel lblLblreinforce = new JLabel("Select country to reinforce");
 		lblLblreinforce.setBounds(64, 33, 134, 14);
 		add(lblLblreinforce);
+
+		lblError = new JLabel("");
+		lblError.setBounds(242,249,246,68);
+		add(lblError);
 
 		txtReinforce = new JTextField();
 		txtReinforce.setBounds(243, 60, 86, 20);

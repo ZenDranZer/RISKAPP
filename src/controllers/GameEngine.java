@@ -112,7 +112,7 @@ public class GameEngine {
 		// turn.allocateArmies(listActivePlayers);
 		turn.setActivePlayer(listActivePlayers.get(0));
 		for (Player pl : listActivePlayers) {
-			System.out.println(pl.getCountries().size());
+			System.out.println("player country :" +pl.getCountries().size());
 		}
 	}
 
