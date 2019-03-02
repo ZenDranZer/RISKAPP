@@ -216,11 +216,12 @@ public class MapGenerator {
                     lineCounter++;
                 }
                 inputReader = this.readCountryList(inputReader);
+                System.out.println(countryHashMap.keySet().size());
 
-                if (inputReader == null) {
-                    return "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
+              if (inputReader == null) {
+                 //   return "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
+                    break;
                 }
-
 
                 lineCounter++;
             }
@@ -683,6 +684,22 @@ public class MapGenerator {
             System.err.println("SOME ERROR IN CONTINENTOWNEDBYPLAYER");
         }
         return null;
+    }
+
+
+    public String reSetAllocations(){
+        try {
+            graphUtilObject.clearGraph();
+            for (String country: countryHashMap.keySet()) {
+                countryHashMap.remove(country);
+            }
+            for (String continent:continentHashMap.keySet()) {
+                continentHashMap.remove(continent);
+            }
+            return "SUCCESS";
+        }catch (Exception e){
+            return "SOME ERROR IN RESETTING ALLOCATIONS";
+        }
     }
 
 }

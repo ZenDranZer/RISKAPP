@@ -1,19 +1,28 @@
 package views;
 
+import controllers.GameEngine;
+import controllers.MapGenerator;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
 
 public class EditContinentValuePanel extends JPanel {
     private ArrayList<String> continentsName;
     private GameEngine gameEngine;
+    private JPanel parent;
+    private MapGenerator mapGenerator;
+
     public EditContinentValuePanel(GameEngine gameEngine, JPanel parent) {
         this.gameEngine = gameEngine;
-        MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        this.parent = parent;
+        mapGenerator = gameEngine.getMapGenerator();
         continentsName = mapGenerator.getListOfContinents();
         initComponents();
         continentList.setListData(continentsName.toArray());
+        valueField.setText("1");
     }
 
     private void featureBoxActionPerformed(ActionEvent e) {
@@ -21,24 +30,53 @@ public class EditContinentValuePanel extends JPanel {
         switch (index){
             case 0:
                 nameField.setEditable(true);
+                valueField.setEditable(false);
                 break;
             case 1:
+                nameField.setEditable(false);
                 valueField.setEditable(true);
                 break;
             case 2:
                 nameField.setEditable(true);
                 valueField.setEditable(true);
                 break;
-
         }
     }
 
+    private void continentListValueChanged(ListSelectionEvent e) {
+        fixedNameField.setText((String)continentList.getSelectedValue());
+    }
+
     private void backButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        Container container = this.getParent();
+        container.remove(this);
+        parent.setVisible(true);
     }
 
     private void editButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        String continentName = nameField.getText();
+        int value = Integer.parseInt(valueField.getText());
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        String message = "";
+        int index = featureBox.getSelectedIndex();
+        switch (index){
+            case 0:
+                message += mapGenerator.changeContinentName((String)continentList.getSelectedValue(),continentName);
+                break;
+            case 1:
+                message += mapGenerator.changeContinentValue((String)continentList.getSelectedValue(),value);
+                break;
+            case 2:
+                message += mapGenerator.changeContinentName((String)continentList.getSelectedValue(),continentName);
+                message += mapGenerator.changeContinentValue((String)continentList.getSelectedValue(),value);
+                break;
+        }
+        JOptionPane.showMessageDialog(this,message);
+        nameField.setText("");
+        valueField.setText("1");
+        continentsName = mapGenerator.getListOfContinents();
+        continentList.setListData(continentsName.toArray());
+        continentList.revalidate();
     }
 
 
@@ -74,6 +112,7 @@ public class EditContinentValuePanel extends JPanel {
 
         //======== scrollPane1 ========
         {
+            continentList.addListSelectionListener(e -> continentListValueChanged(e));
             scrollPane1.setViewportView(continentList);
         }
         add(scrollPane1, new GridBagConstraints(1, 1, 1, 7, 0.0, 0.0,

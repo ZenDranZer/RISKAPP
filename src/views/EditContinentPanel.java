@@ -18,7 +18,7 @@ public class EditContinentPanel extends JPanel {
     }
 
     private void addContinentButtonMouseClicked(MouseEvent e) {
-        AddContinentPanel addContinent = new AddContinentPanel();
+        AddContinentPanel addContinent = new AddContinentPanel(gameEngine,this);
         addContinent.setVisible(true);
         setVisible(false);
         Container container = this.getParent();
@@ -27,7 +27,7 @@ public class EditContinentPanel extends JPanel {
     }
 
     private void removeContinentButtonMouseClicked(MouseEvent e) {
-        RemoveContinentPanel removeContinentPanel = new RemoveContinentPanel();
+        RemoveContinentPanel removeContinentPanel = new RemoveContinentPanel(gameEngine,this);
         removeContinentPanel.setVisible(true);
         setVisible(false);
         Container container = this.getParent();
@@ -36,7 +36,12 @@ public class EditContinentPanel extends JPanel {
     }
 
     private void editContinentButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        EditContinentValuePanel editContinentValuePanel = new EditContinentValuePanel(gameEngine,this);
+        editContinentValuePanel.setVisible(true);
+        setVisible(false);
+        Container container = this.getParent();
+        container.add(editContinentValuePanel);
+        container.revalidate();
     }
 
     private void backButtonMouseClicked(MouseEvent e) {

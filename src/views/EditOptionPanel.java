@@ -1,6 +1,7 @@
 package views;
 
 import controllers.GameEngine;
+import controllers.MapGenerator;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -37,11 +38,17 @@ public class EditOptionPanel extends JPanel {
         container.remove(this);
         parent.setVisible(true);
     }
+    private void finishButtonMouseClicked(MouseEvent e) {
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        String message = mapGenerator.validateMap();
+        JOptionPane.showMessageDialog(this,message);
+    }
 
     private void initComponents() {
         editContinentButton = new JButton();
         editCountryButton = new JButton();
         backButton = new JButton();
+        finishButton = new JButton();
 
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0, 0, 0, 0};
@@ -69,9 +76,21 @@ public class EditOptionPanel extends JPanel {
                 editCountryButtonMouseClicked(e);
             }
         });
-        add(editCountryButton, new GridBagConstraints(4, 6, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 0), 0, 0));
+        add(editCountryButton, new GridBagConstraints(4, 5, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 0), 0, 0));
+
+        //---- finishButton ----
+        finishButton.setText("Finish");
+        finishButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                finishButtonMouseClicked(e);
+            }
+        });
+        add(finishButton, new GridBagConstraints(4, 7, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 0), 0, 0));
 
         //---- backButton ----
         backButton.setText("Back");
@@ -89,4 +108,5 @@ public class EditOptionPanel extends JPanel {
     private JButton editContinentButton;
     private JButton editCountryButton;
     private JButton backButton;
+    private JButton finishButton;
 }

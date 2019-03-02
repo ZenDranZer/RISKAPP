@@ -9,6 +9,7 @@ import java.beans.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class StartGamePanel extends JPanel {
@@ -20,6 +21,7 @@ public class StartGamePanel extends JPanel {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
+        mapFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MAP file only", "map"));
     }
 
     private void continueButtonMouseClicked(MouseEvent e) throws IOException {
@@ -53,13 +55,22 @@ public class StartGamePanel extends JPanel {
         
         gameEngine.setListActivePlayers(playerName);
         gameEngine.setMapPath(mapFileChooser.getSelectedFile().getAbsolutePath());
-        gameEngine.initialiseEngine();
+
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        String message = mapGenerator.readConquestFile(gameEngine.getMapPath());
+        if(message.equals("SUCCESS")){
+            gameEngine.initialiseEngine();
+            JOptionPane.showMessageDialog(this,message);
         Container container = this.getParent();
         GamePlay gamePlay = new GamePlay(gameEngine);
         gamePlay.setVisible(true);
         this.setVisible(false);
         container.add(gamePlay);
         container.revalidate();
+
+        }else{
+            JOptionPane.showMessageDialog(this,message);
+        }
 
     }
 

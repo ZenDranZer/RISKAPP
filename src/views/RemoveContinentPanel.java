@@ -1,11 +1,17 @@
 package views;
 
+import controllers.GameEngine;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class RemoveContinentPanel extends JPanel {
-    public RemoveContinentPanel() {
+    private GameEngine gameEngine;
+    private JPanel parent;
+    public RemoveContinentPanel(GameEngine gameEngine,JPanel parent) {
+        this.gameEngine = gameEngine;
+        this.parent = parent;
         initComponents();
     }
 
@@ -14,7 +20,9 @@ public class RemoveContinentPanel extends JPanel {
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        Container container = this.getParent();
+        container.remove(this);
+        parent.setVisible(true);
     }
 
     private void initComponents() {
