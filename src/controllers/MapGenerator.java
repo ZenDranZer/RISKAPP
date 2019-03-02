@@ -105,7 +105,8 @@ public class MapGenerator {
             else{
                 currentCountry = countryExists(inpList[0]);
                 if(currentCountry.getNeighbouringCountries().size()!=0){
-                    return "ONE OR MORE COUNTRIES ARE DUPLICATE";
+                    String returnString =  "ONE OR MORE COUNTRIES ARE DUPLICATE";
+                    return returnString;
                 }
             }
 
@@ -219,7 +220,7 @@ public class MapGenerator {
                 returnString = this.readCountryList(inputReader);
 
               if (!returnString.equals("SUCCESS")){
-                   return "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
+                   return returnString;
                  }
                 lineCounter++;
             }
@@ -453,10 +454,7 @@ public class MapGenerator {
         return  new ArrayList<>(continentHashMap.keySet());
 
     }
-    public static ArrayList<String> getListOfConuntries(){
 
-        return new ArrayList<>(countryHashMap.keySet());
-    }
 
 
     /**Method gets the list of countries of the map.
