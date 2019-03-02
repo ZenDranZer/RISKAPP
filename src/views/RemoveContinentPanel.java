@@ -1,6 +1,7 @@
 package views;
 
 import controllers.GameEngine;
+import controllers.MapGenerator;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -17,6 +18,13 @@ public class RemoveContinentPanel extends JPanel {
 
     private void removeButtonMouseClicked(MouseEvent e) {
         String continentName = nameField.getText();
+        if(continentName == "" ){
+            JOptionPane.showMessageDialog(this,"Invalid argument");
+        }else{
+            MapGenerator mapGenerator = gameEngine.getMapGenerator();
+            String message = mapGenerator.removeContinent(continentName);
+            JOptionPane.showMessageDialog(this,message);
+        }
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
