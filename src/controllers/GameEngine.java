@@ -109,6 +109,7 @@ public class GameEngine {
 	public void initialiseEngine() throws IOException {
 		// setListActivePlayers(lstPlayerNames);
 		//mapGenerator.readConquestFile(mapPath);
+		setNumberOfPlayers(listActivePlayers.size());
 		turn.allocateCountries(listActivePlayers, new ArrayList<GameCountry>(MapGenerator.countryHashMap.values()));
 		allocateInitialArmies();
 		// turn.allocateArmies(listActivePlayers);
