@@ -1,28 +1,51 @@
 package views;
 
+import controllers.GameEngine;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class EditCountryPanel extends JPanel {
-    public EditCountryPanel() {
+    private JPanel parent;
+    private GameEngine gameEngine;
+    public EditCountryPanel(GameEngine gameEngine,JPanel parent) {
+        this.gameEngine = gameEngine;
+        this.parent = parent;
         initComponents();
     }
 
     private void addBoutonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        AddNewCountryPanel addNewCountryPanel = new AddNewCountryPanel(gameEngine,this);
+        addNewCountryPanel.setVisible(true);
+        setVisible(false);
+        Container container = this.getParent();
+        container.add(addNewCountryPanel);
+        container.revalidate();
     }
 
     private void removeButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        RemoveCountryPanel removeCountryPanel = new RemoveCountryPanel(gameEngine,this);
+        removeCountryPanel.setVisible(true);
+        setVisible(false);
+        Container container = this.getParent();
+        container.add(removeCountryPanel);
+        container.revalidate();
     }
 
     private void editButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        EditCountryValuePanel editCountryValuePanel = new EditCountryValuePanel(gameEngine,this);
+        editCountryValuePanel.setVisible(true);
+        setVisible(false);
+        Container container = this.getParent();
+        container.add(editCountryValuePanel);
+        container.revalidate();
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        Container container = this.getParent();
+        container.remove(this);
+        parent.setVisible(true);
     }
 
     private void initComponents() {

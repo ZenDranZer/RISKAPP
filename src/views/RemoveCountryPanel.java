@@ -1,27 +1,44 @@
 package views;
 
+import controllers.GameEngine;
+import controllers.MapGenerator;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class RemoveCountryPanel extends JPanel {
-    public RemoveCountryPanel() {
+    private JPanel parent;
+    private GameEngine gameEngine;
+
+    public RemoveCountryPanel(GameEngine gameEngine,JPanel parent) {
+        this.gameEngine = gameEngine;
+        this.parent = parent;
         initComponents();
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        Container container = this.getParent();
+        container.remove(this);
+        parent.setVisible(true);
     }
 
     private void removeButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        String country = countryName.getText();
+        if(country == ""){
+            JOptionPane.showMessageDialog(this,"Wrong input");
+        }else{
+            MapGenerator mapGenerator = gameEngine.getMapGenerator();
+            String message = mapGenerator.removeCountry(country);
+            JOptionPane.showMessageDialog(this,message);
+        }
     }
 
     private void initComponents() {
        
         label1 = new JLabel();
         label2 = new JLabel();
-        textField1 = new JTextField();
+        countryName = new JTextField();
         backButton = new JButton();
         removeButton = new JButton();
 
@@ -44,7 +61,7 @@ public class RemoveCountryPanel extends JPanel {
         add(label2, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 5, 5), 0, 0));
-        add(textField1, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
+        add(countryName, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 5, 5), 0, 0));
 
@@ -75,7 +92,7 @@ public class RemoveCountryPanel extends JPanel {
 
     private JLabel label1;
     private JLabel label2;
-    private JTextField textField1;
+    private JTextField countryName;
     private JButton backButton;
     private JButton removeButton;
 }
