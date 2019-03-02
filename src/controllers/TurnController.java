@@ -10,12 +10,22 @@ import static utils.Constants.ARMY_DISTRIBUTION.*;
 public class TurnController {
 
     Player activePlayer;
-    int availableArmies;
+    private int availableArmies;
     public TurnController() {
         //TODO allocate armies
         availableArmies = 3;
     }
 
+    public void setAvailableArmies(int armies)
+    {
+    	this.availableArmies = armies;
+    }
+    
+    public int getAvailableArmies()
+    {
+    	return this.availableArmies;
+    }
+    
     public Player getActivePlayer()
     {
     	return activePlayer;
@@ -53,6 +63,7 @@ public class TurnController {
         for (GameContinent continent : activePlayer.getContinents()) {
             availableArmies = continent.getContinentValue();
         }
+        activePlayer.setRemainingArmies(availableArmies);
         return availableArmies;
     }
 
