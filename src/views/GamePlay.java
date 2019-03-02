@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import controllers.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.JTextArea;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 public class GamePlay extends JPanel {
 
@@ -29,10 +32,10 @@ public class GamePlay extends JPanel {
 	GameEngine objGameEngine;
 	TurnController objTurnController;
 	Player activePlayer;
-	JLabel lblError;
 
 	JScrollPane scrollPane;
 	String phase = "initial";
+	JTextArea txtError;
 	int flag = 0;
 
 	/**
@@ -45,20 +48,26 @@ public class GamePlay extends JPanel {
 		setLayout(null);
 		this.setBounds(10, 10, 650, 410);
 		lblPlayerName = new JLabel("Player Name :" + activePlayer.getName());
-		lblPlayerName.setBounds(10, 360, 104, 32);
+		lblPlayerName.setBounds(10, 360, 188, 32);
 		add(lblPlayerName);
 
+
+		txtError = new JTextArea();
+		txtError.setBackground(SystemColor.control);
+		txtError.setWrapStyleWord(true);
+		txtError.setLineWrap(true);
+		txtError.setBounds(222, 234, 267, 83);
+		txtError.setEditable(false);
+		txtError.setFocusable(false);
+		add(txtError);
+		
 		lblTurn = new JLabel("Turn");
 		lblTurn.setBounds(10, 326, 55, 23);
 		add(lblTurn);
 
 		JLabel lblLblreinforce = new JLabel("Select country to reinforce");
-		lblLblreinforce.setBounds(64, 33, 148, 14);
+		lblLblreinforce.setBounds(64, 33, 198, 14);
 		add(lblLblreinforce);
-
-		lblError = new JLabel("");
-		lblError.setBounds(242, 249, 246, 68);
-		add(lblError);
 
 		txtReinforce = new JTextField();
 		txtReinforce.setBounds(243, 60, 86, 20);
@@ -72,7 +81,8 @@ public class GamePlay extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 
-				lblError.setText("");
+				txtError.setText("");
+			
 				if (validateInput()) {
 					if (phase.equals("initial")) {
 						initialAllocation();
@@ -91,14 +101,14 @@ public class GamePlay extends JPanel {
 
 		});
 
-		btnAdd.setBounds(340, 59, 89, 23);
+		btnAdd.setBounds(340, 60, 104, 41);
 		btnAdd.setVisible(false);
 		add(btnAdd);
 
 		dlstPlayerCountries = new DefaultListModel<String>();
 
 		lblRemainingArmies = new JLabel("Remaining Amries :");
-		lblRemainingArmies.setBounds(405, 369, 134, 14);
+		lblRemainingArmies.setBounds(405, 369, 188, 14);
 		add(lblRemainingArmies);
 
 		scrollPane = new JScrollPane();
@@ -121,6 +131,7 @@ public class GamePlay extends JPanel {
 		JLabel lblError = new JLabel("");
 		lblError.setBounds(243, 249, 246, 68);
 		add(lblError);
+		
 		displayRemainingArmies();
 	}
 
@@ -227,23 +238,26 @@ public class GamePlay extends JPanel {
 
 		if (txtReinforce.getText().isEmpty() && txtReinforce.getText().equals("0")) {
 			isValid = false;
-			lblError.setText(lblError.getText() + "\n" + "Enter some value");
+
+			txtError.setText(txtError.getText() + "\n" + "Enter some value");
 		}
 
 		if (!txtReinforce.getText().matches("[0-9]+")) {
 			isValid = false;
-			lblError.setText(lblError.getText() + "\n" + "Inavlid number");
+	
+			txtError.setText(txtError.getText() + "\n" + "Inavlid number");
 		}
 		if (lstPlayerCountries.getSelectedValue() == null) {
 			isValid = false;
-			lblError.setText(lblError.getText() + "\n" + "No country selected");
+			txtError.setText(txtError.getText() + "\n" + "No country selected");
 		}
-		if (Integer.parseInt(txtReinforce.getText()) > activePlayer.getRemainingArmies()) {
+		
+		if (  Integer.parseInt(txtReinforce.getText()) > activePlayer.getRemainingArmies()) {
 			isValid = false;
-			lblError.setText(lblError.getText() + "\n" + "select number less than or equal to remaining armies");
+			
+			txtError.setText(txtError.getText() + "\n" + "select number less than or equal to remaining armies");
 		}
 
 		return isValid;
 	}
-
 }
