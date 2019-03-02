@@ -1,4 +1,5 @@
 import java.awt.EventQueue;
+import java.io.IOException;
 
 import controllers.*;
 import models.*;
@@ -27,7 +28,7 @@ public class StartUp {
 	 * players b. Initial number of armies c. Country and army distribution 3.
 	 * Render UI
 	 */
-	public void gameSetup() {
+	public void gameSetup() throws IOException {
 		// TODO
 		objGameEngine.initialise();
 	}
@@ -35,7 +36,7 @@ public class StartUp {
 	/*
 	 * Game Loop
 	 */
-	public void startGame() {
+	public void startGame() throws IOException {
 		initialization();
 		gameSetup();
 		// TODO : Start Game Engine
@@ -44,7 +45,7 @@ public class StartUp {
 		// 2. Render changes
 	}
 
-	public void CUI() {
+	public void CUI() throws IOException {
 		System.out.println("RISK GAME :");
 		startGame();
 	}

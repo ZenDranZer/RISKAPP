@@ -26,6 +26,11 @@ public class TurnController {
     	activePlayer = objPlayer;
     }
     
+    public void nextPlayer()
+    {
+    	
+    }
+    
     public int getRandomCountryIndex(ArrayList<GameCountry> countries) {
 
         Random rand = new Random();
@@ -52,13 +57,13 @@ public class TurnController {
     }
 
     //add army to a country
-    public void placeArmy(Player activePlayer, GameCountry country, int armies) {
+    public void placeArmy(Player activePlayer, String country, int armies) {
 
         ArrayList<GameCountry> lstPlayerArmies = activePlayer.getCountries();
 
         //get object from list where name matches the given object
-        GameCountry res = lstPlayerArmies.stream().filter(cntry -> cntry.getCountryName().equals(country.getCountryName())).findFirst().get();
-        res.setArmies(res.getArmiesStationed() + armies);
+        GameCountry matchedCountry = lstPlayerArmies.stream().filter(cntry -> cntry.getCountryName().equals(country)).findFirst().get();
+        matchedCountry.setArmies(matchedCountry.getArmiesStationed() + armies);
 
         this.availableArmies = this.availableArmies - armies;
 
@@ -126,8 +131,11 @@ public class TurnController {
      * @param remainingArmies Arraylist containing the remaining number of armies with player after initial allocation of armies
      * @param armiesForeachPlayer Number of armies assigned to the player
      */
-    public void allocateInitialArmy(ArrayList<Player> activePlayers, ArrayList<Integer> remainingArmies , int armiesForeachPlayer) {
-        for (int i = 0; i < activePlayers.size(); i++) {
+    public ArrayList<Integer> allocateInitialArmy(ArrayList<Player> activePlayers, int armiesForeachPlayer) {
+        
+    	ArrayList<Integer> remainingArmies = new ArrayList<Integer>();
+    	
+    	for (int i = 0; i < activePlayers.size(); i++) {
             activePlayers.get(i).setPlayerArmies(armiesForeachPlayer);
             remainingArmies.add(i, armiesForeachPlayer);
             int tempRemainingArmies = remainingArmies.get(i);
@@ -139,6 +147,7 @@ public class TurnController {
             }
             remainingArmies.set(i, tempRemainingArmies);
         }
+        return remainingArmies;
     }
 
     public ArrayList<Integer> allocateArmiesToCountry(ArrayList<Player> activePlayers, int moveToCountry, int moveArmies, int x, int tempArmy) {
@@ -187,10 +196,9 @@ public class TurnController {
         int moveToCountry = 0;
         int moveArmies = 0;
         ArrayList<Integer> moveVariables = new ArrayList<>();
-        ArrayList<Integer> remainingArmies = new ArrayList<Integer>();
         int armiesForeachPlayer = getEachPlayerArmy(activePlayers);
 
-        allocateInitialArmy(activePlayers, remainingArmies, armiesForeachPlayer);
+        ArrayList<Integer> remainingArmies = allocateInitialArmy(activePlayers, armiesForeachPlayer);
         int unAllocated = activePlayers.size();
         while (unAllocated >0) {
 

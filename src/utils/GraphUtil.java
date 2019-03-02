@@ -112,4 +112,10 @@ public class GraphUtil {
         return inspector.connectedSets();
     }
 
+    /**This method will remove all the edges and vertices from the graph.
+     * @return it will return boolean whether graph cleared or not.*/
+    public boolean clearGraph(){
+        return countryGraph.removeAllEdges(countryGraph.edgeSet()) &&  countryGraph.removeAllVertices(countryGraph.vertexSet());
+    }
+
 }
