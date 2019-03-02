@@ -216,12 +216,12 @@ public class MapGenerator {
                     lineCounter++;
                 }
                 inputReader = this.readCountryList(inputReader);
+                System.out.println(countryHashMap.keySet().size());
 
               if (inputReader == null) {
                  //   return "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
                     break;
                 }
-
 
                 lineCounter++;
             }

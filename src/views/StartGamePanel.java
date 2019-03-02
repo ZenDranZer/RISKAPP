@@ -56,12 +56,18 @@ public class StartGamePanel extends JPanel {
         gameEngine.setListActivePlayers(playerName);
         gameEngine.setMapPath(mapFileChooser.getSelectedFile().getAbsolutePath());
         gameEngine.initialiseEngine();
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        String message = mapGenerator.readConquestFile(gameEngine.getMapPath());
+        if(message.equals("SUCCESS")){
         Container container = this.getParent();
         GamePlay gamePlay = new GamePlay(gameEngine);
         gamePlay.setVisible(true);
         this.setVisible(false);
         container.add(gamePlay);
         container.revalidate();
+        }else{
+            JOptionPane.showMessageDialog(this,message);
+        }
 
     }
 

@@ -1,22 +1,38 @@
 package views;
 
+import controllers.GameEngine;
+import controllers.MapGenerator;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class AddContinentPanel extends JPanel {
-    public AddContinentPanel() {
+    private GameEngine gameEngine;
+    private JPanel parent;
+    public AddContinentPanel(GameEngine gameEngine,JPanel parent) {
+        this.gameEngine = gameEngine;
+        this.parent = parent;
         initComponents();
     }
 
     private void addContinentMouseClicked(MouseEvent e) {
         String continentName = nameField.getText();
         int value = Integer.parseInt(valueField.getText());
+        if(continentName == "" ){
+            JOptionPane.showMessageDialog(this,"Invalid argument");
+        }else{
+            MapGenerator mapGenerator = gameEngine.getMapGenerator();
+            String message = mapGenerator.addContinent(continentName,value);
+            JOptionPane.showMessageDialog(this,message);
+        }
 
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        Container container = this.getParent();
+        container.remove(this);
+        parent.setVisible(true);
     }
 
     private void initComponents() {
