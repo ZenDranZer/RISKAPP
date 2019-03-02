@@ -31,6 +31,7 @@ public class GamePlay extends JPanel {
 	Player activePlayer;
 	JLabel lblError;
 
+	JScrollPane scrollPane;
 	String phase= "initial";
 	
 	/**
@@ -97,7 +98,7 @@ public class GamePlay extends JPanel {
 		lblRemainingArmies.setBounds(405, 369, 134, 14);
 		add(lblRemainingArmies);
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(74, 58, 124, 259);
 		add(scrollPane);
 
@@ -148,12 +149,10 @@ public class GamePlay extends JPanel {
 		do {
 			objGameEngine.setNextPlayer(activePlayer);
 			activePlayer = objTurnController.getActivePlayer();
-
 			if (activePlayer.getRemainingArmies() == 0) {
-				objGameEngine.setNextPlayer(activePlayer);
-				activePlayer = objTurnController.getActivePlayer();
 				allocatedPlayers++;
 			} else {
+				System.out.println("Before Break :"+activePlayer.getName());
 				break;
 			}
 
@@ -199,6 +198,7 @@ public class GamePlay extends JPanel {
 	
 	public void updateReinforcementPanel()
 	{
+		scrollPane.setVisible(false);
 		lstPlayerCountries.setVisible(false);
 	}
 	
