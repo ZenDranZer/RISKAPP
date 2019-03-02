@@ -1,4 +1,4 @@
-package views;
+package views.optionView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;

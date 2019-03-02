@@ -1,4 +1,4 @@
-package views;
+package views.countryView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;

@@ -1,6 +1,7 @@
 package views;
 
 import controllers.GameEngine;
+import views.optionView.MapOptionPanel;
 
 import java.awt.*;
 import java.awt.event.*;

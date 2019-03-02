@@ -1,6 +1,7 @@
-package views;
+package views.optionView;
 
 import controllers.GameEngine;
+import views.continentView.CreateContinentPanel;
 
 import java.awt.*;
 import java.awt.event.*;

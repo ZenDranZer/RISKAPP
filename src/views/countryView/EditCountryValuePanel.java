@@ -1,4 +1,4 @@
-package views;
+package views.countryView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
@@ -28,36 +28,44 @@ public class EditCountryValuePanel extends JPanel {
         fixedCountryName.setText((String)countryList.getSelectedValue());
     }
 
-    private void featureBoxMouseClicked(MouseEvent e) {
+    private void featureBoxActionPerformed(ActionEvent e) {
         int index = featureBox.getSelectedIndex();
         switch (index){
             case 0:
+                //--True--
                 countryName.setEditable(true);
                 editButton.setEnabled(true);
+                //--false--
                 continentName.setEditable(false);
                 neighboutName.setEditable(false);
                 addNeighbourButton.setEnabled(false);
                 removeNegihbourButton.setEnabled(false);
                 break;
             case 1:
-                countryName.setEditable(false);
+                //--True--
                 editButton.setEnabled(true);
                 continentName.setEditable(true);
+                //--false--
+                countryName.setEditable(false);
                 neighboutName.setEditable(false);
                 addNeighbourButton.setEnabled(false);
                 removeNegihbourButton.setEnabled(false);
                 break;
             case 2:
+                //--True--
                 neighboutName.setEditable(true);
                 addNeighbourButton.setEnabled(true);
+                //--False--
                 countryName.setEditable(false);
                 editButton.setEnabled(false);
                 continentName.setEditable(false);
                 removeNegihbourButton.setEnabled(false);
                 break;
             case 3:
+                //--True--
                 neighboutName.setEditable(true);
                 removeNegihbourButton.setEnabled(true);
+                //--False--
                 countryName.setEditable(false);
                 editButton.setEnabled(false);
                 continentName.setEditable(false);
@@ -190,12 +198,7 @@ public class EditCountryValuePanel extends JPanel {
             "Add Neighbour",
             "Remove Neighbour"
         }));
-        featureBox.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                featureBoxMouseClicked(e);
-            }
-        });
+        featureBox.addActionListener(e -> featureBoxActionPerformed(e));
         add(featureBox, new GridBagConstraints(4, 3, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 5, 5), 0, 0));

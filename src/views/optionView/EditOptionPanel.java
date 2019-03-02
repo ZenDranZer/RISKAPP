@@ -1,7 +1,9 @@
-package views;
+package views.optionView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
+import views.continentView.EditContinentPanel;
+import views.countryView.EditCountryPanel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -30,7 +32,12 @@ public class EditOptionPanel extends JPanel {
     }
 
     private void editCountryButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        EditCountryPanel editCountryPanel = new EditCountryPanel(gameEngine,this);
+        editCountryPanel.setVisible(true);
+        setVisible(false);
+        Container container = this.getParent();
+        container.add(editCountryPanel);
+        container.revalidate();
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
