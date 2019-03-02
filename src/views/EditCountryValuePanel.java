@@ -19,7 +19,7 @@ public class EditCountryValuePanel extends JPanel {
         this.gameEngine = gameEngine;
         this.parent = parent;
         mapGenerator = gameEngine.getMapGenerator();
-        countryArrayList = mapGenerator.getListOfCountry();
+        countryArrayList = mapGenerator.getListOfCountries();
         initComponents();
         countryList.setListData(countryArrayList.toArray());
     }

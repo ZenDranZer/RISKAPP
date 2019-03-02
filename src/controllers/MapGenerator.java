@@ -450,9 +450,14 @@ public class MapGenerator {
      * @return arraylist of objects of each continent
      */
     public static ArrayList<String> getListOfContinents(){
-        ArrayList<String> continents = new ArrayList<>(continentHashMap.keySet());
-        return continents;
+        return  new ArrayList<>(continentHashMap.keySet());
+
     }
+    public static ArrayList<String> getListOfConuntries(){
+
+        return new ArrayList<>(countryHashMap.keySet());
+    }
+
 
     /**Method gets the list of countries of the map.
      *
