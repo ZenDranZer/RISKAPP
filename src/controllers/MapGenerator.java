@@ -20,6 +20,8 @@ public class MapGenerator {
     ArrayList<GameCountry> countryList;
     static HashMap <String,String>guiHashMap;
     GraphUtil graphUtilObject ;
+    BufferedReader inputReader;
+
     /** Class constructor that initializes the ubiquitious countryHashMap and ContinentHashMap
      *
      */
@@ -37,7 +39,7 @@ public class MapGenerator {
      * @return object of buffered reader to continue reading after continents are read.
      * @throws IOException
      */
-    public BufferedReader readContinentList(BufferedReader inputReader) throws IOException {
+    public String readContinentList(BufferedReader inputReader) throws IOException {
         try {
             String inputLine;
 
@@ -51,15 +53,13 @@ public class MapGenerator {
                 try {
                     name = inputLine.substring(0, inputLine.indexOf("="));
                 } catch (Exception e) {
-                    inputReader = null;
-
-                    return inputReader;
+                    return "INVALID MAP FORMAT";
                 }
                 int value = Integer.parseInt(inputLine.substring(inputLine.indexOf("=") + 1));
                 if (continentHashMap.containsKey(name)) {
-                    inputReader = null;
 
-                    return inputReader;
+
+                    return "ONE OR MORE DUPLICATE CONTINENTS ENCOUNTERED.";
                 }
                 continent.setContinentName(name);
                 continent.setContinentValue(value);
@@ -69,7 +69,7 @@ public class MapGenerator {
             }
 
 
-            return inputReader;          //Return the current position of reader file so that countries can be loaded.
+            return "SUCCESS";          //Return the current position of reader file so that countries can be loaded.
         }catch (IOException e){
             return null;
         }catch (NullPointerException e){
@@ -83,7 +83,7 @@ public class MapGenerator {
      * @return object of buffered reader to continue reading after continents are read.
      * @throws IOException
      */
-    public BufferedReader readCountryList(BufferedReader inputReader) throws IOException {
+    public String readCountryList(BufferedReader inputReader) throws IOException {
         try{
         String inputLine;
 
@@ -105,8 +105,7 @@ public class MapGenerator {
             else{
                 currentCountry = countryExists(inpList[0]);
                 if(currentCountry.getNeighbouringCountries().size()!=0){
-                    inputReader = null;
-                    return inputReader;
+                    return "ONE OR MORE COUNTRIES ARE DUPLICATE";
                 }
             }
 
@@ -143,11 +142,11 @@ public class MapGenerator {
 
 
         }
-        return inputReader;
+        return "SUCCESS";
         }catch (IOException e){
-            return null;
+            return "IOException";
         }catch (NullPointerException e){
-            return null;
+            return "NullPointerException";
         }
     }
 
@@ -162,19 +161,20 @@ public class MapGenerator {
         }
         return null;
     }
-    public BufferedReader getGuiParameters(BufferedReader inputReader){
+    public String getGuiParameters(BufferedReader inputReader){
         try {
             String inputLine = inputReader.readLine();
             inputLine = inputReader.readLine();
+
             System.out.println(inputLine);
             while (!inputLine.equals("")){
                 String[] inpList = inputLine.split("=");
                 guiHashMap.put(inpList[0],inpList[1]);
                 inputLine = inputReader.readLine();
             }
-                return inputReader;
+            return "SUCCESS";
         }catch(Exception e){
-            return null;
+            return "THE INITIAL PARAMETERS HAVE WRONG FORMAT";
         }
     }
     /**This method is called when a user wants to load the file from the system.
@@ -186,11 +186,12 @@ public class MapGenerator {
     public String readConquestFile(String filePath) throws IOException {
         try {
             File inputMap = new File(filePath);
-            BufferedReader inputReader = new BufferedReader(new FileReader(inputMap));
+            String returnString;
+            inputReader = new BufferedReader(new FileReader(inputMap));
 
-            inputReader=this.getGuiParameters(inputReader);
-            if(inputReader==null){
-                return "WRONG FORMAT OF INITIAL PARAMETERS";
+            returnString=this.getGuiParameters(inputReader);
+            if(!returnString.equals("SUCCESS")){
+                return returnString;
             }
 
 
@@ -205,8 +206,8 @@ public class MapGenerator {
                 warn=yes*/
                 if (lineCounter == 6) {
                     if (inputLine.equals("[Continents]")) {
-                        inputReader = this.readContinentList(inputReader);//reader is returned as we need to have a single reader reading different parts of the map file.
-                        if (inputReader == null) {
+                        returnString= this.readContinentList(inputReader);//reader is returned as we need to have a single reader reading different parts of the map file.
+                        if (!returnString.equals("SUCCESS")) {
                             return "ONE OR MORE DUPLICATE CONTINENTS ENCOUNTERED";
                         }
                     } else {
@@ -215,14 +216,11 @@ public class MapGenerator {
                     }
                     lineCounter++;
                 }
-                inputReader = this.readCountryList(inputReader);
-                System.out.println(countryHashMap.keySet().size());
+                returnString = this.readCountryList(inputReader);
 
-              if (inputReader == null) {
-                 //   return "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
-                    break;
-                }
-
+              if (!returnString.equals("SUCCESS")){
+                   return "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
+                 }
                 lineCounter++;
             }
 
