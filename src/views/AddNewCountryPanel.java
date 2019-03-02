@@ -17,6 +17,7 @@ public class AddNewCountryPanel extends JPanel {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
+
     }
 
     private void addNeighbourButtonMouseClicked(MouseEvent e) {
