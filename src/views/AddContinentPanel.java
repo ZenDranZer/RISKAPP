@@ -18,12 +18,12 @@ public class AddContinentPanel extends JPanel {
 
     private void addContinentMouseClicked(MouseEvent e) {
         String continentName = nameField.getText();
-        int value = Integer.parseInt(valueField.getText());
+        int noOfArmies = Integer.parseInt(valueField.getText());
         if(continentName == "" ){
             JOptionPane.showMessageDialog(this,"Invalid argument");
         }else{
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
-            String message = mapGenerator.addContinent(continentName,value);
+            String message = mapGenerator.addContinent(continentName,noOfArmies);
             JOptionPane.showMessageDialog(this,message);
         }
 

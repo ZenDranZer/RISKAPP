@@ -1,5 +1,8 @@
 package views;
 
+import controllers.GameEngine;
+import controllers.MapGenerator;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ public class AddNewCountryPanel extends JPanel {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
+
     }
 
     private void addNeighbourButtonMouseClicked(MouseEvent e) {
