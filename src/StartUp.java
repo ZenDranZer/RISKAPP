@@ -69,7 +69,6 @@ public class StartUp {
 	public static void main(String[] args) throws Exception {
 
 		StartUp objRiskGame = new StartUp();
-		//objRiskGame.CUI();
-		objRiskGame.GUI();
+		objRiskGame.GUI();		
 	}
 }

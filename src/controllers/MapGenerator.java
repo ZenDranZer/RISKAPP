@@ -140,8 +140,6 @@ public class MapGenerator {
                 currentCountry.addNeighbouringCountry(neighborCountry);
             }
             inputLine = inputReader.readLine();
-
-
         }
         return "SUCCESS";
         }catch (IOException e){

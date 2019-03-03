@@ -70,12 +70,12 @@ public class TurnController {
     //add army to a country
     public void placeArmy(Player activePlayer, String country, int armies) {
 
-        ArrayList<GameCountry> lstPlayerArmies = activePlayer.getCountries();
+        ArrayList<GameCountry> lstPlayerCountries = activePlayer.getCountries();
 
         //get object from list where name matches the given object
-        GameCountry matchedCountry = lstPlayerArmies.stream().filter(cntry -> cntry.getCountryName().equals(country)).findFirst().get();
+        GameCountry matchedCountry = lstPlayerCountries.stream().filter(cntry -> cntry.getCountryName().equals(country)).findFirst().get();
         matchedCountry.setArmies(matchedCountry.getArmiesStationed() + armies);
-
+        System.out.println("Reinforced Country : " + matchedCountry.getArmiesStationed() );
         this.availableArmies = this.availableArmies - armies;
 
     }
