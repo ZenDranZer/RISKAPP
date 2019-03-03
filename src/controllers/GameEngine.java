@@ -1,11 +1,14 @@
 package controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import models.*;
 
+/**
+ * Controller class to maintain the game state and handle object allocation for the game
+ * @author Sidhant Gupta
+ *
+ */
 public class GameEngine {
 
 	private ArrayList<Player> listActivePlayers = new ArrayList<Player>();
@@ -15,9 +18,8 @@ public class GameEngine {
 	private String mapPath;
 	private TurnController turn;
 
-
 	private int numberOfPlayers;
-	// object initialization
+
 	public GameEngine() {
 		turn = new TurnController();
 	}
@@ -33,6 +35,7 @@ public class GameEngine {
 		return mapGenerator;
 	}
 
+	// CUI
 	public void getPlayerInfo(ArrayList<Player> activePlayers) {
 		Scanner keyboard = new Scanner(System.in);
 		System.out.println("Enter number of players");
@@ -61,6 +64,7 @@ public class GameEngine {
 		this.mapPath = mapPath;
 	}
 
+	// cui
 	/**
 	 * This method takes in the number of players and their names
 	 *
@@ -69,7 +73,6 @@ public class GameEngine {
 	public ArrayList<Player> getInitialPlayers() {
 
 		try {
-			int i = 0;
 			getPlayerInfo(listActivePlayers);
 		} catch (Exception ex) {
 			System.out.println("Error getting player data");
@@ -77,6 +80,12 @@ public class GameEngine {
 		return listActivePlayers;
 	}
 
+	/**
+	 * function to initialize the and set the initial players for the game
+	 * 
+	 * @param listActivePlayers
+	 *            list of player objects
+	 */
 	public void setListActivePlayers(ArrayList<String> listActivePlayers) {
 		int i = 1;
 		for (String name : listActivePlayers) {
@@ -85,72 +94,68 @@ public class GameEngine {
 			i++;
 		}
 	}
-
-	// should return list of player objects
-	// GUI
-	// public List<Player> getInitialPlayers(int numberOfplayers){
-	// return new ArrayList<Player>();
-	// }
-
-	// initial allocation of countries
-	// preferably in round robin fashion
-	public void allocateCountries(ArrayList<Player> activePlayers, ArrayList<GameCountry> countries) {
-
-	}
-
-	public void selectMap() {
-
-	}
-
+	
+	//CUI
 	public void initialise() {
 		getInitialPlayers();
 	}
 
-	public void initialiseEngine() throws IOException {
-		// setListActivePlayers(lstPlayerNames);
-		//mapGenerator.readConquestFile(mapPath);
-		setNumberOfPlayers(listActivePlayers.size());
-		turn.allocateCountries(listActivePlayers, new ArrayList<GameCountry>(MapGenerator.countryHashMap.values()));
-		allocateInitialArmies();
-		// turn.allocateArmies(listActivePlayers);
-		turn.setActivePlayer(listActivePlayers.get(0));
-		for (Player pl : listActivePlayers) {
-			System.out.println("player country :" +pl.getCountries().size());
+	/**
+	 * Initialize the game engine with the initial set of players, randomly
+	 * allocate countries and assign initial set of armies
+	 */
+	public void initialiseEngine() {
+
+		try {
+			setNumberOfPlayers(listActivePlayers.size());
+			turn.allocateCountries(listActivePlayers, new ArrayList<GameCountry>(MapGenerator.countryHashMap.values()));
+			allocateInitialArmies();
+
+			turn.setActivePlayer(listActivePlayers.get(0));
+		} catch (NullPointerException nullEx) {
+			System.out.println("Objects not initialized properly");
+		} catch (Exception ex) {
+			System.out.println("Something went wrong during initialization");
 		}
 	}
 
+	/**
+	 * allocate initial army to each country. Every allocated country should
+	 * have at least 1 army at the beginning
+	 */
 	public void allocateInitialArmies() {
 		int initialArmies = turn.getEachPlayerArmy(listActivePlayers);
-		
-		for(GameCountry country : MapGenerator.countryHashMap.values())
-		{
+
+		for (GameCountry country : MapGenerator.countryHashMap.values()) {
 			country.setArmies(1);
 		}
-
 		for (Player player : listActivePlayers) {
-			int countryCount = player.getCountries().size(); 
+			int countryCount = player.getCountries().size();
 			player.setPlayerArmies(countryCount);
-			player.setRemainingArmies(initialArmies- countryCount);
+			player.setRemainingArmies(initialArmies - countryCount);
 		}
 	}
 
+	/**
+	 * function to change the current player to the next player 
+	 * @param activePlayer current player
+	 */
 	public void setNextPlayer(Player activePlayer) {
 		int currentIndex = listActivePlayers.indexOf(activePlayer);
 		currentIndex = currentIndex + 1;
-		System.out.println("::::::" +currentIndex);
+		System.out.println("::::::" + currentIndex);
 		if (currentIndex >= listActivePlayers.size()) {
 			currentIndex = 0;
 		}
 		Player nextPlayer = listActivePlayers.get(currentIndex);
 		turn.setActivePlayer(nextPlayer);
 	}
-	
-	public void setNumberOfPlayers(int noOfPlayers)
-	{
+
+	public void setNumberOfPlayers(int noOfPlayers) {
 		this.numberOfPlayers = noOfPlayers;
 	}
-	public int getNumberOfPlayers()
-	{
+
+	public int getNumberOfPlayers() {
 		return this.numberOfPlayers;
 	}
 }
