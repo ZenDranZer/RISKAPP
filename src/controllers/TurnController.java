@@ -7,49 +7,75 @@ import java.util.*;
 
 import static utils.Constants.ARMY_DISTRIBUTION.*;
 
+/**
+ * 
+ * @author Sidhant Gupta, Jil Mehta
+ *
+ * Controller for handling turn based game logic
+ */
 public class TurnController {
 
     Player activePlayer;
     private int availableArmies;
+   
     public TurnController() {
-        //TODO allocate armies
         availableArmies = 3;
     }
 
+    /**
+     * Set available armies 
+     * @param armies amount of armies to allocate
+     */
     public void setAvailableArmies(int armies)
     {
     	this.availableArmies = armies;
     }
     
+    /**
+     * function to return available armies in the current turn
+     * @return available armies
+     */
     public int getAvailableArmies()
     {
     	return this.availableArmies;
     }
     
+    /**
+     * function to get the current player
+     * @return current player
+     */
     public Player getActivePlayer()
     {
     	return activePlayer;
     }
     
+    /**
+     * Function to allocate the active player for the next turn
+     * @param objPlayer
+     */
     public void setActivePlayer(Player objPlayer)
     {
     	activePlayer = objPlayer;
     }
     
-    public void nextPlayer()
-    {
-    	
-    }
+//    public void nextPlayer()
+//    {
+//    	
+//    }
     
-    public int getRandomCountryIndex(ArrayList<GameCountry> countries) {
+//    public int getRandomCountryIndex(ArrayList<GameCountry> countries) {
+//
+//        Random rand = new Random();
+//        int n = rand.nextInt(countries.size());
+//        //System.out.println(n);
+//        return n;
+//    }
 
-        Random rand = new Random();
-        int n = rand.nextInt(countries.size());
-        //System.out.println(n);
-        return n;
-    }
-
-    //calculate armies to add at the beginning of each turn
+   /**
+    * function to calculate the new army allocation for the player. Minimum 3 armies are allocated at each turn
+    * @param activePlayer current player
+    * @return number of new armies to allocate
+    */
     public int calculateNewArmies(Player activePlayer) {
         //3 is the minimum of number of armies each turn
 
@@ -67,7 +93,12 @@ public class TurnController {
         return availableArmies;
     }
 
-    //add army to a country
+    /**
+     * function to reinforce a country with the given armies
+     * @param activePlayer current player who decides the country and armies
+     * @param country country to reinforce
+     * @param armies amount of armies to add to a country
+     */
     public void placeArmy(Player activePlayer, String country, int armies) {
 
         ArrayList<GameCountry> lstPlayerCountries = activePlayer.getCountries();
@@ -78,12 +109,6 @@ public class TurnController {
         System.out.println("Reinforced Country : " + matchedCountry.getArmiesStationed() );
         this.availableArmies = this.availableArmies - armies;
 
-    }
-
-    //reinforcement phase
-    public void reinforcement() {
-        // 1. number of new armies available
-        // 2. while (newArmies !=0){ 1. ask user to select the country 2. place army }
     }
 
     /**
@@ -138,8 +163,8 @@ public class TurnController {
 
     /**
      * Assigns 1 army to each country possessed by the players
-     * @param activePlayers Arraylist containing player data
-     * @param remainingArmies Arraylist containing the remaining number of armies with player after initial allocation of armies
+     * @param activePlayers ArrayList containing player data
+     * @param remainingArmies ArrayList containing the remaining number of armies with player after initial allocation of armies
      * @param armiesForeachPlayer Number of armies assigned to the player
      */
     public ArrayList<Integer> allocateInitialArmy(ArrayList<Player> activePlayers, int armiesForeachPlayer) {
@@ -161,37 +186,37 @@ public class TurnController {
         return remainingArmies;
     }
 
-    public ArrayList<Integer> allocateArmiesToCountry(ArrayList<Player> activePlayers, int moveToCountry, int moveArmies, int x, int tempArmy) {
-
-        Scanner keyboard = new Scanner(System.in);
-        ArrayList<Integer> moveVariables = new ArrayList<>();
-        System.out.println("Which country would you like to move your army to ? Please enter the index");
-        for (int k = 0; k < activePlayers.get(x).getCountries().size(); k++) {
-            System.out.println(activePlayers.get(x).getCountries().indexOf(activePlayers.get(x).getCountries().get(k)) +
-                    " " + activePlayers.get(x).getCountries().get(k).getCountryName());
-        }
-        moveToCountry = keyboard.nextInt();
-
-        if (moveToCountry >= activePlayers.get(x).getCountries().size()) {
-            System.out.println("Enter country index between 0 and " + (activePlayers.get(x).getCountries().size()-1));
-            moveToCountry = keyboard.nextInt();
-        }
-
-        System.out.println("You have " + tempArmy + " armies. How many armies do u want to move?");
-        moveArmies = keyboard.nextInt();
-
-        if (moveArmies > tempArmy) {
-            System.out.println("You dont have that many armies. Enter a valid no of armies");
-            moveArmies = keyboard.nextInt();
-        }
-
-        moveVariables.add(moveToCountry);
-        moveVariables.add(moveArmies);
-   
-        return moveVariables;
-
-       // keyboard.close();
-    }
+//    public ArrayList<Integer> allocateArmiesToCountry(ArrayList<Player> activePlayers, int moveToCountry, int moveArmies, int x, int tempArmy) {
+//
+//        Scanner keyboard = new Scanner(System.in);
+//        ArrayList<Integer> moveVariables = new ArrayList<>();
+//        System.out.println("Which country would you like to move your army to ? Please enter the index");
+//        for (int k = 0; k < activePlayers.get(x).getCountries().size(); k++) {
+//            System.out.println(activePlayers.get(x).getCountries().indexOf(activePlayers.get(x).getCountries().get(k)) +
+//                    " " + activePlayers.get(x).getCountries().get(k).getCountryName());
+//        }
+//        moveToCountry = keyboard.nextInt();
+//
+//        if (moveToCountry >= activePlayers.get(x).getCountries().size()) {
+//            System.out.println("Enter country index between 0 and " + (activePlayers.get(x).getCountries().size()-1));
+//            moveToCountry = keyboard.nextInt();
+//        }
+//
+//        System.out.println("You have " + tempArmy + " armies. How many armies do u want to move?");
+//        moveArmies = keyboard.nextInt();
+//
+//        if (moveArmies > tempArmy) {
+//            System.out.println("You dont have that many armies. Enter a valid no of armies");
+//            moveArmies = keyboard.nextInt();
+//        }
+//
+//        moveVariables.add(moveToCountry);
+//        moveVariables.add(moveArmies);
+//   
+//        return moveVariables;
+//
+//       // keyboard.close();
+//    }
 
     /**
      * Allocates armies to countries. Initially 1 army is assigned to each country and then in a round robin fashion,
@@ -199,41 +224,41 @@ public class TurnController {
      *
      * @param activePlayers List containing the Player object
      */
-    public void allocateArmies(ArrayList<Player> activePlayers) {
-
-        int i = 0;
-        int x = 0;
-        int tempArmy = 0;
-        int moveToCountry = 0;
-        int moveArmies = 0;
-        ArrayList<Integer> moveVariables = new ArrayList<>();
-        int armiesForeachPlayer = getEachPlayerArmy(activePlayers);
-
-        ArrayList<Integer> remainingArmies = allocateInitialArmy(activePlayers, armiesForeachPlayer);
-        int unAllocated = activePlayers.size();
-        while (unAllocated >0) {
-
-            tempArmy = remainingArmies.get(x);
-            if (tempArmy > 0) {
-                moveVariables = allocateArmiesToCountry(activePlayers, moveToCountry, moveArmies, x, tempArmy);
-                moveToCountry = moveVariables.get(0);
-                moveArmies = moveVariables.get(1);
-
-                activePlayers.get(x).getCountries().get(moveToCountry).setArmies(moveArmies);
-                tempArmy = tempArmy - moveArmies;
-                remainingArmies.set(x, tempArmy);
-                if(tempArmy == 0 )
-                {
-                	unAllocated --;
-                }
-            }
-            x++;
-            if(x >=activePlayers.size() )
-            {
-            	x= 0;
-            }
-        }
-    }
+//    public void allocateArmies(ArrayList<Player> activePlayers) {
+//
+//        int i = 0;
+//        int x = 0;
+//        int tempArmy = 0;
+//        int moveToCountry = 0;
+//        int moveArmies = 0;
+//        ArrayList<Integer> moveVariables = new ArrayList<>();
+//        int armiesForeachPlayer = getEachPlayerArmy(activePlayers);
+//
+//        ArrayList<Integer> remainingArmies = allocateInitialArmy(activePlayers, armiesForeachPlayer);
+//        int unAllocated = activePlayers.size();
+//        while (unAllocated >0) {
+//
+//            tempArmy = remainingArmies.get(x);
+//            if (tempArmy > 0) {
+//                moveVariables = allocateArmiesToCountry(activePlayers, moveToCountry, moveArmies, x, tempArmy);
+//                moveToCountry = moveVariables.get(0);
+//                moveArmies = moveVariables.get(1);
+//
+//                activePlayers.get(x).getCountries().get(moveToCountry).setArmies(moveArmies);
+//                tempArmy = tempArmy - moveArmies;
+//                remainingArmies.set(x, tempArmy);
+//                if(tempArmy == 0 )
+//                {
+//                	unAllocated --;
+//                }
+//            }
+//            x++;
+//            if(x >=activePlayers.size() )
+//            {
+//            	x= 0;
+//            }
+//        }
+//    }
    
     
     /**
@@ -257,18 +282,4 @@ public class TurnController {
         }
     }
 
-    public void gameLoop() {
-
-    }
-
-    public static void main(String args[]) {
-
-        TurnController m = new TurnController();
-
-        ArrayList<Player> p = TestUtil.getPlayerArrayList();
-        ArrayList<GameCountry> c = TestUtil.getGameCountryList();
-
-        m.allocateCountries(p, c);
-        m.allocateArmies(p);
-    }
 }

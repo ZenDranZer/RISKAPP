@@ -57,8 +57,6 @@ public class StartUp {
 					RiskFrame riskFrame = new RiskFrame();
 					riskFrame.setVisible(true);
 					riskFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-				//	GameView frame = new GameView();
-					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -196,10 +196,10 @@ public class GamePlay extends JPanel {
 	}
 
 	// call function on selected changed of JList
-	public void selectCountry() {
-		txtReinforce.setVisible(true);
-		btnAdd.setVisible(true);
-	}
+//	public void selectCountry() {
+//		txtReinforce.setVisible(true);
+//		btnAdd.setVisible(true);
+//	}
 
 	public void initialAllocation() {
 		int army = Integer.parseInt(txtReinforce.getText());
