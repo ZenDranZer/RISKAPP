@@ -155,7 +155,7 @@ public class MapGenerator {
      * @return null if the country does not exist and the country object if the country already exists.
      */
     public GameCountry countryExists(String  countryname){
-        if(countryHashMap.containsKey(countryname)){
+        if(countryHashMap.containsKey(countryname.toUpperCase()) ){
             return countryHashMap.get(countryname);
         }
         return null;
