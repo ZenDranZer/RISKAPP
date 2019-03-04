@@ -69,10 +69,10 @@ public class StartUp {
 	StartUp objRiskGame = new StartUp();
 		objRiskGame.GUI();
 
-	//MapGenerator map = new MapGenerator();
-	//String returnString = map.readConquestFile("C:\\Users\\shiva\\Desktop\\Africa.map");
-		//System.out.println(returnString);
-		/*for (GameCountry country : MapGenerator.countryHashMap.values()){
+	/*MapGenerator map = new MapGenerator();
+	String returnString = map.readConquestFile("C:\\Users\\shiva\\Desktop\\Africa.map");
+		System.out.println(returnString);
+		for (GameCountry country : MapGenerator.countryHashMap.values()){
 			System.out.println(country.getCountryName()+" "+country.getContinent().getContinentName()+" "+country.getNeighbouringCountries().size());
 		}*/
 	}

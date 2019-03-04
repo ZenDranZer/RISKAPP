@@ -25,7 +25,7 @@ public class ValidMapFormatTest {
     @Test
     public void testValidMapFormat() throws IOException {
 
-        String output = mapGenerator.readConquestFile("/home/naghmeh/IdeaProjects/RISKAPP_new/src/mapFiles/Africa.map");
+        String output = mapGenerator.readConquestFile("C:\\Users\\shiva\\Desktop\\Africa.map");
         assertEquals(output,"SUCCESS");
     }
 
