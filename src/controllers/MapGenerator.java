@@ -4,6 +4,7 @@ import models.GameCountry;
 import utils.GraphUtil;
 
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -259,16 +260,19 @@ public class MapGenerator {
 
         try {
             writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream("ConquestMap.txt"), "utf-8"));
+                    new FileOutputStream("ConquestMap.map"), "utf-8"));
             writer.write("[map]");
             ((BufferedWriter) writer).newLine();
-            //here we most add information regarding GUI
+                for (String s : guiHashMap.keySet()){
+                    writer.write(s+"="+guiHashMap.get(s)+"\n");
+                }
+                writer.write("\n");
             writer.write("[Continents]");
             ((BufferedWriter) writer).newLine();
             for (GameContinent continent: continentHashMap.values()) { //check if for each works with collections or not
-                writer.write(continent.getContinentName() + "=" + continent.getContinentValue());
+                writer.write(continent.getContinentName() + "=" + continent.getContinentValue()+"\n");
             }
-            ((BufferedWriter) writer).newLine();
+
             writer.write("[Territories]");
             ((BufferedWriter) writer).newLine();
             for (GameCountry country : countryHashMap.values()) {
@@ -277,7 +281,7 @@ public class MapGenerator {
                     neighbours += ","+neighbour.getCountryName();
                 }
                 writer.write(country.getCountryName()+","+country.getCoordinateX()+","+country.getCoordinateY()+","
-                        + neighbours);
+                        + country.getContinent().getContinentName()+neighbours + "\n");
             }
         } catch (IOException ex) {
             // Report
@@ -670,14 +674,6 @@ public class MapGenerator {
             return "EXCEPTION IN ACCESSING DATA";
         }
     }
-    /*public static void main(String []args) throws Exception{
-        MapGenerator mp = new MapGenerator();
-        String op = mp.readConquestFile("C:\\Users\\shiva\\Desktop\\ABC_Map.map");
-        System.out.println(op);
-        System.out.println(MapGenerator.continentHashMap.keySet());
-        System.out.println(MapGenerator.countryHashMap.keySet().size());
-
-    }*/
 
     /***
      * This Method checks for all continents owned by a player
