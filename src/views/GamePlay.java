@@ -116,7 +116,7 @@ public class GamePlay extends JPanel {
 				} else if (phase.equals("fortify")) {
 
 					// update army allocation
-					if (fortify()){
+					if (fortify()) {
 
 						// set next player and phase
 						phase = "reinforce";
@@ -196,10 +196,10 @@ public class GamePlay extends JPanel {
 	}
 
 	// call function on selected changed of JList
-//	public void selectCountry() {
-//		txtReinforce.setVisible(true);
-//		btnAdd.setVisible(true);
-//	}
+	// public void selectCountry() {
+	// txtReinforce.setVisible(true);
+	// btnAdd.setVisible(true);
+	// }
 
 	public void initialAllocation() {
 		int army = Integer.parseInt(txtReinforce.getText());
@@ -258,7 +258,7 @@ public class GamePlay extends JPanel {
 		lstPlayerCountries.setSelectedIndex(-1);
 
 		txtReinforce.setText("");
-		
+
 		objTurnController.placeArmy(activePlayer, selectedCountry, reinforcements);
 		activePlayer.addPlayerArmy(reinforcements);
 		activePlayer.updateRemainingArmies(reinforcements);
@@ -311,7 +311,7 @@ public class GamePlay extends JPanel {
 		GameCountry countryToFortify = MapGenerator.countryHashMap
 				.get(lstPlayerCountries.getSelectedValue().toString());
 		GameCountry fortifyFrom = MapGenerator.countryHashMap.get(lstActionCountry.getSelectedValue().toString());
-		
+
 		int armiesToMove = Integer.parseInt(txtReinforce.getText());
 
 		if (armiesToMove > fortifyFrom.getArmiesStationed() - 1) {
@@ -380,6 +380,9 @@ public class GamePlay extends JPanel {
 		if (txtReinforce.getText().isEmpty() && txtReinforce.getText().equals("0")) {
 			isValid = false;
 			txtError.setText(txtError.getText() + "\n" + "Enter some value");
+		} else if (Integer.parseInt(txtReinforce.getText()) > activePlayer.getRemainingArmies()) {
+			isValid = false;
+			txtError.setText(txtError.getText() + "\n" + "select number less than or equal to remaining armies");
 		}
 
 		if (!txtReinforce.getText().matches("[0-9]+")) {
@@ -391,8 +394,8 @@ public class GamePlay extends JPanel {
 			txtError.setText(txtError.getText() + "\n" + "No country selected");
 		}
 
-		if (activePlayer.getCountries().get(lstPlayerCountries.getSelectedIndex()).getArmiesStationed() +
-				Integer.parseInt(txtReinforce.getText()) > 12 ) {
+		if (activePlayer.getCountries().get(lstPlayerCountries.getSelectedIndex()).getArmiesStationed()
+				+ Integer.parseInt(txtReinforce.getText()) > 12) {
 			isValid = false;
 			txtError.setText(txtError.getText() + "\n" + "Max number of armies allocated to a country is 12");
 		}
