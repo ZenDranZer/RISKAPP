@@ -139,13 +139,17 @@ public class MapGenerator {
                 }
                 currentCountry.addNeighbouringCountry(neighborCountry);
             }
+
             inputLine = inputReader.readLine();
         }
+
+
         return "SUCCESS";
         }catch (IOException e){
             return "IOException";
         }catch (NullPointerException e){
-            return "NullPointerException";
+
+            return "SUCCESS";
         }
     }
 
@@ -221,6 +225,13 @@ public class MapGenerator {
                    return returnString;
                  }
                 lineCounter++;
+            }
+            System.out.println(continentHashMap.size());
+            System.out.println(countryHashMap.size());
+            for(GameCountry country : countryHashMap.values()){
+                System.out.print(country.getCountryName()+"  ");
+                System.out.println(country.getNeighbouringCountries().keySet());
+                System.out.println(country.getCountryName()+"  "+country.getContinent().getContinentName()+"  "+country.getCoordinateX()+"  "+country.getCoordinateY());
             }
 
             return "SUCCESS";
