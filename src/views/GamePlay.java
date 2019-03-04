@@ -373,6 +373,10 @@ public class GamePlay extends JPanel {
 		lblPlayerName.setText(active.getName());
 	}
 
+	/**
+	 * Validate user inputs for army allocation and country selection
+	 * @return true is all inputs are correct otherwise false
+	 */
 	public boolean validateInput() {
 
 		boolean isValid = true;

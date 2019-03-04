@@ -245,6 +245,10 @@ public class StartGamePanel extends JPanel {
 				GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 	}
 
+	/**
+	 * validate if names have been entered
+	 * @return true if names have been entered otherwise false
+	 */
 	private boolean validateNames() {
 		boolean isValid = true;
 		if (firstNameField.isEditable() && !validateEmptyTextField(firstNameField)) {
@@ -266,6 +270,7 @@ public class StartGamePanel extends JPanel {
 		if (!isValid) {
 			JOptionPane.showMessageDialog(null, "Please Enter Names");
 		}
+		
 		return isValid;
 	}
 
