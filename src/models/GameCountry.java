@@ -34,7 +34,7 @@ public class GameCountry {
     }
 
     public void setCountryName(String countryName) {
-        this.countryName = countryName;
+        this.countryName = countryName.toUpperCase();
     }
 
     public GameContinent getContinent() {
