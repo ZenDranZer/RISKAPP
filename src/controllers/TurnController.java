@@ -1,10 +1,7 @@
 package controllers;
 
 import models.*;
-import utils.TestUtil;
-
 import java.util.*;
-
 import static utils.Constants.ARMY_DISTRIBUTION.*;
 
 /**
@@ -78,10 +75,10 @@ public class TurnController {
 	 * 
 	 * @param activePlayer
 	 *            current player
-	 * @return number of new armies to allocate
+	 * @return availableArmies
+     *            number of new armies to allocate
 	 */
 	public int calculateNewArmies(Player activePlayer) {
-		// 3 is the minimum of number of armies each turn
 
 		int countryCount = activePlayer.getCountries().size();
 
@@ -89,7 +86,6 @@ public class TurnController {
 		if (countryCount / 3 > 3)
 			availableArmies = countryCount / 3;
 
-		// continent logic
 		for (GameContinent continent : activePlayer.getContinents()) {
 			availableArmies = continent.getContinentValue();
 		}
@@ -130,7 +126,8 @@ public class TurnController {
 	 * 
 	 * @param Countries
 	 *            List of game countries
-	 * @return returns message showing success or failure of fortification
+	 * @return returns
+     *            message showing success or failure of fortification
 	 */
 	public String fortification(List<GameCountry> Countries) {
 		String moveTo = "";
@@ -157,7 +154,8 @@ public class TurnController {
 	 * 
 	 * @param activePlayers
 	 *            Player arraylist containing player data
-	 * @return
+	 * @return armiesForeachPlayer
+     *          Armies that are assigned to each player based on game rules
 	 */
 	public int getEachPlayerArmy(ArrayList<Player> activePlayers) {
 		int numOfPlayers = activePlayers.size();
@@ -177,7 +175,6 @@ public class TurnController {
 			break;
 		}
 		return armiesForeachPlayer;
-
 	}
 
 	/**
@@ -190,6 +187,8 @@ public class TurnController {
 	 *            player after initial allocation of armies
 	 * @param armiesForeachPlayer
 	 *            Number of armies assigned to the player
+     * @return remainingArmies
+     *            Armies left with the player after initial allocation of armies
 	 */
 	public ArrayList<Integer> allocateInitialArmy(ArrayList<Player> activePlayers, int armiesForeachPlayer) {
 
