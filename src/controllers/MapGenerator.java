@@ -147,7 +147,12 @@ public class MapGenerator {
         return "SUCCESS";
         }catch (IOException e){
             return "IOException";
-        }catch (NullPointerException e){
+        }catch (NumberFormatException e){
+            return "The file is incomplete + "+e.toString();
+        }catch (ArrayIndexOutOfBoundsException e){
+            return "The file is incomplete + "+e.toString();
+        }
+        catch (NullPointerException e){
 
             return "SUCCESS";
         }

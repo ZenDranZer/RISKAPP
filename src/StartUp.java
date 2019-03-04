@@ -66,14 +66,14 @@ public class StartUp {
 
 	public static void main(String[] args) throws Exception {
 
-	//	StartUp objRiskGame = new StartUp();
-	//	objRiskGame.GUI();
+	/*	StartUp objRiskGame = new StartUp();
+		objRiskGame.GUI();*/
 
 	MapGenerator map = new MapGenerator();
 	String returnString = map.readConquestFile("C:\\Users\\shiva\\Desktop\\Africa.map");
 		System.out.println(returnString);
-		for (GameCountry country : MapGenerator.countryHashMap.values()){
+		/*for (GameCountry country : MapGenerator.countryHashMap.values()){
 			System.out.println(country.getCountryName()+" "+country.getContinent().getContinentName()+" "+country.getNeighbouringCountries().size());
-		}
+		}*/
 	}
 }
