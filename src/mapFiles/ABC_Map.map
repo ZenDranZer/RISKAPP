@@ -5,10 +5,6 @@ image=ABC_Map.bmp
 wrap=no
 scroll=horizontal,vertical
 
-
-
-
-
 [Continents]
 ABCDE=6
 FGHIJ=5
@@ -141,40 +137,6 @@ E22,588,570,UVWXY,E18,E20,E21
 F1,429,165,Zzzzz,A24,B2,F2
 F2,427,197,Zzzzz,F1,F3
 F3,428,226,Zzzzz,C19,E1,E20,D1,F2
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
