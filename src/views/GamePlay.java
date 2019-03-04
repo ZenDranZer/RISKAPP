@@ -34,6 +34,8 @@ public class GamePlay extends JPanel {
 	JList lstPlayerCountries;
 	JList lstActionCountry;
 	JLabel lblReinforce;
+	JLabel lblArmiesPresent;
+	JLabel lblactionArmiesPresent;
 	private JTextField txtReinforce;
 	JButton btnAdd;
 	private JLabel lblRemainingArmies;
@@ -62,6 +64,14 @@ public class GamePlay extends JPanel {
 		lblPlayerName = new JLabel("Player Name :" + activePlayer.getName());
 		lblPlayerName.setBounds(10, 360, 188, 32);
 		add(lblPlayerName);
+		
+		lblArmiesPresent = new JLabel("");
+		lblArmiesPresent.setBounds(243, 121, 201, 32);
+		add(lblArmiesPresent);
+		
+		lblactionArmiesPresent = new JLabel("");
+		lblactionArmiesPresent.setBounds(243, 164, 201, 32);
+		add(lblactionArmiesPresent);
 
 		txtError = new JTextArea();
 		txtError.setBackground(SystemColor.control);
@@ -152,6 +162,7 @@ public class GamePlay extends JPanel {
 				// branch between initialization and reinforcement
 				txtReinforce.setVisible(true);
 				btnAdd.setVisible(true);
+				lblArmiesPresent.setText("Armies present : " +getArmiesPresent( lstPlayerCountries.getSelectedValue().toString()));
 				if (phase.equals("fortify")) {
 					txtReinforce.setVisible(false);
 					btnAdd.setVisible(false);
@@ -175,6 +186,8 @@ public class GamePlay extends JPanel {
 		lstActionCountry = new JList(dlstActionCountries);
 		lstActionCountry.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
+				
+				lblactionArmiesPresent.setText("Fortifying Country armies  : " + getArmiesPresent(lstActionCountry.getSelectedValue().toString()));
 				txtReinforce.setVisible(true);
 				txtReinforce.setText("");
 				btnAdd.setVisible(true);
@@ -188,6 +201,8 @@ public class GamePlay extends JPanel {
 		lblAction = new JLabel("Action");
 		lblAction.setBounds(499, 33, 66, 17);
 		add(lblAction);
+		
+
 
 		scrollPane_1.setVisible(false);
 		lstActionCountry.setVisible(false);
@@ -409,5 +424,21 @@ public class GamePlay extends JPanel {
 			txtError.setText(txtError.getText() + "\n" + "select number less than or equal to remaining armies");
 		}
 		return isValid;
+	}
+	
+	/**
+	 * Get armies present in a country based on country name
+	 * @param countryName String name of the country
+	 * @return number of armies present 
+	 */
+	public String getArmiesPresent(String countryName)
+	{
+
+		if(countryName != null && countryName != "" )
+		{
+		GameCountry country = MapGenerator.countryHashMap.get(countryName);
+		return country.getArmiesStationed()+"";
+		}
+		return "";
 	}
 }
