@@ -64,11 +64,11 @@ public class GamePlay extends JPanel {
 		lblPlayerName = new JLabel("Player Name :" + activePlayer.getName());
 		lblPlayerName.setBounds(10, 360, 188, 32);
 		add(lblPlayerName);
-		
+
 		lblArmiesPresent = new JLabel("");
 		lblArmiesPresent.setBounds(243, 121, 201, 32);
 		add(lblArmiesPresent);
-		
+
 		lblactionArmiesPresent = new JLabel("");
 		lblactionArmiesPresent.setBounds(243, 164, 201, 32);
 		add(lblactionArmiesPresent);
@@ -162,7 +162,13 @@ public class GamePlay extends JPanel {
 				// branch between initialization and reinforcement
 				txtReinforce.setVisible(true);
 				btnAdd.setVisible(true);
-				lblArmiesPresent.setText("Armies present : " +getArmiesPresent( lstPlayerCountries.getSelectedValue().toString()));
+				lblArmiesPresent.setText("");
+				if (lstPlayerCountries.getSelectedIndex() != -1) {
+					lblArmiesPresent.setText(
+							"Armies present : " + getArmiesPresent(lstPlayerCountries.getSelectedValue().toString()));
+				}
+				
+					
 				if (phase.equals("fortify")) {
 					txtReinforce.setVisible(false);
 					btnAdd.setVisible(false);
@@ -186,23 +192,23 @@ public class GamePlay extends JPanel {
 		lstActionCountry = new JList(dlstActionCountries);
 		lstActionCountry.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				
-				lblactionArmiesPresent.setText("Fortifying Country armies  : " + getArmiesPresent(lstActionCountry.getSelectedValue().toString()));
+				lblactionArmiesPresent.setText("");
+				if (lstActionCountry.getSelectedIndex() != -1) {
+					lblactionArmiesPresent.setText("Fortifying Country armies  : "
+							+ getArmiesPresent(lstActionCountry.getSelectedValue().toString()));
+				}
 				txtReinforce.setVisible(true);
 				txtReinforce.setText("");
 				btnAdd.setVisible(true);
 			}
 		});
 		lstActionCountry.setBounds(490, 59, 124, 258);
-		// add(lstActionCountry);
 
 		scrollPane_1.setViewportView(lstActionCountry);
 
 		lblAction = new JLabel("Action");
 		lblAction.setBounds(499, 33, 66, 17);
 		add(lblAction);
-		
-
 
 		scrollPane_1.setVisible(false);
 		lstActionCountry.setVisible(false);
@@ -262,8 +268,6 @@ public class GamePlay extends JPanel {
 		updateListElements();
 		lblPlayerName.setText("Player Name : " + activePlayer.getName());
 		displayRemainingArmies();
-		// lstPlayerCountries = new
-		// JList(activePlayer.getCountryNames().toArray());
 	}
 
 	public void reinforceCountry() {
@@ -311,14 +315,8 @@ public class GamePlay extends JPanel {
 		txtReinforce.setVisible(false);
 		btnAdd.setVisible(true);
 		lblReinforce.setVisible(false);
-
-		// fortify();
-		// objGameEngine.setNextPlayer(activePlayer);
-		// activePlayer = objTurnController.getActivePlayer();
-		// objTurnController.calculateNewArmies(activePlayer);
-
-		// updateReinforcementPanel();
-		// TODO on complete initiate fortification
+		lblactionArmiesPresent.setText("");
+		lblArmiesPresent.setText("");
 	}
 
 	public boolean fortify() {
@@ -390,6 +388,7 @@ public class GamePlay extends JPanel {
 
 	/**
 	 * Validate user inputs for army allocation and country selection
+	 * 
 	 * @return true is all inputs are correct otherwise false
 	 */
 	public boolean validateInput() {
@@ -425,19 +424,20 @@ public class GamePlay extends JPanel {
 		}
 		return isValid;
 	}
-	
+
 	/**
 	 * Get armies present in a country based on country name
-	 * @param countryName String name of the country
-	 * @return number of armies present 
+	 * 
+	 * @param countryName
+	 *            String name of the country
+	 * @return number of armies present
 	 */
-	public String getArmiesPresent(String countryName)
-	{
+	public String getArmiesPresent(String countryName) {
 
-		if(countryName != null && countryName != "" )
-		{
-		GameCountry country = MapGenerator.countryHashMap.get(countryName);
-		return country.getArmiesStationed()+"";
+		if (countryName != null && countryName != "") {
+			System.out.println("***" + countryName);
+			GameCountry country = MapGenerator.countryHashMap.get(countryName);
+			return country.getArmiesStationed() + "";
 		}
 		return "";
 	}
