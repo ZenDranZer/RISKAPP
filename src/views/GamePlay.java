@@ -426,6 +426,11 @@ public class GamePlay extends JPanel {
 		return isValid;
 	}
 	
+	/**
+	 * Get armies present in a country based on country name
+	 * @param countryName String name of the country
+	 * @return number of armies present 
+	 */
 	public String getArmiesPresent(String countryName)
 	{
 
