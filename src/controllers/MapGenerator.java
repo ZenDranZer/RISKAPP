@@ -239,7 +239,7 @@ public class MapGenerator {
                 System.out.println(country.getCountryName()+"  "+country.getContinent().getContinentName()+"  "+country.getCoordinateX()+"  "+country.getCoordinateY());
             }
 
-            return "SUCCESS";
+            return validateMap();
         }catch (FileNotFoundException e){
             return "THE FILE NOT FOUND";
         }catch (IOException e){

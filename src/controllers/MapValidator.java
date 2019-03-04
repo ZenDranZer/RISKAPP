@@ -50,10 +50,13 @@ public boolean hasValidNumberOfCountries(ArrayList<GameCountry> countries){
 }
 
 public boolean isWholeMapConnected(GraphUtil util, ArrayList<GameCountry> countries){
-    if (util.getIteratorSize(util.breadthFirstSearch(countries.get(0))) == countries.size()){
+        for(GameCountry country : countries) {
+            if (util.getIteratorSize(util.breadthFirstSearch(country)) == countries.size()) {
+                continue;
+            }
+            return false;
+        }
         return true;
-    }
-    return false;
 }
 
 /*public boolean isWholeContinentConnected(GameContinent continent){
