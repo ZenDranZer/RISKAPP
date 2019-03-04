@@ -136,7 +136,7 @@ public class GamePlay extends JPanel {
 
 		dlstPlayerCountries = new DefaultListModel<String>();
 
-		lblRemainingArmies = new JLabel("Remaining Amries :");
+		lblRemainingArmies = new JLabel("Remaining Armies :");
 		lblRemainingArmies.setBounds(405, 360, 188, 23);
 		add(lblRemainingArmies);
 
@@ -389,6 +389,12 @@ public class GamePlay extends JPanel {
 		if (lstPlayerCountries.getSelectedValue() == null) {
 			isValid = false;
 			txtError.setText(txtError.getText() + "\n" + "No country selected");
+		}
+
+		if (activePlayer.getCountries().get(lstPlayerCountries.getSelectedIndex()).getArmiesStationed() +
+				Integer.parseInt(txtReinforce.getText()) > 12 ) {
+			isValid = false;
+			txtError.setText(txtError.getText() + "\n" + "Max number of armies allocated to a country is 12");
 		}
 
 		if (Integer.parseInt(txtReinforce.getText()) > activePlayer.getRemainingArmies()) {

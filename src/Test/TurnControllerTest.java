@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
 public class TurnControllerTest {
     private ArrayList<Player> players;
 
-
     @Before
     public void setUp() throws Exception {
         players = new ArrayList<Player>();
