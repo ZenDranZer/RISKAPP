@@ -9,9 +9,9 @@ import utils.GraphUtil;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
-public class MapValidatorTest {
+public class MapValidatorCountryHasValidNumberOfNeighbours {
     MapValidator validator;
     MapGenerator mapGenerator;
     GraphUtil graphUtil;
@@ -33,14 +33,10 @@ public class MapValidatorTest {
     @Test
     public void mapValidationTest(){
 
-        assertTrue(validator.hasValidNumberOfContinents(new ArrayList<>(MapGenerator.continentHashMap.values())));
-        assertTrue(validator.hasValidNumberOfCountries(new ArrayList<>(MapGenerator.countryHashMap.values())));
         for (String s : MapGenerator.countryHashMap.keySet()){
-            assertTrue(validator.hasNeighbor(MapGenerator.countryHashMap.get(s)));
             assertTrue(validator.hasValidNumberOfNeighbors(MapGenerator.countryHashMap.get(s)));
         }
 
-        assertTrue(validator.isWholeMapConnected(graphUtil, new ArrayList<>(MapGenerator.countryHashMap.values()) ));
     }
 
 }
