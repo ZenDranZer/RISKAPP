@@ -48,12 +48,25 @@ public class AddCountry extends JPanel {
         if(finishButton.isEnabled()){
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
         String message  = mapGenerator.validateMap();
-        JOptionPane.showMessageDialog(this.getParent(),message);
-        message = mapGenerator.writeConquestFile();
-        JOptionPane.showMessageDialog(this.getParent(),message);
-        Container container = this.getParent();
-        container.remove(this);
-        parent.setVisible(true);
+
+        if(message.equals("SUCCESS")){
+            message = mapGenerator.writeConquestFile();
+            if(message.equals("SUCCESS")) {
+                message = "Map loaded and written successfully";
+                JOptionPane.showMessageDialog(this.getParent(),message);
+
+                Container container = this.getParent();
+                container.remove(this);
+                parent.setVisible(true);
+            }
+            else{
+                message="Map loaded correctly. Problems faced in writing the map";
+                JOptionPane.showMessageDialog(this.getParent(),message);
+
+            }
+        }else
+            JOptionPane.showMessageDialog(this.getParent(),message);
+
         }
     }
 
