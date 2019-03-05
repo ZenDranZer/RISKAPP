@@ -459,6 +459,10 @@ public class GamePlay extends JPanel {
 	}
 
 	
+	/**
+	 * Check whether all countries have maximum possible armies allocated
+	 * @return
+	 */
 	public boolean isAllocationComplete()
 	{
 		for(GameCountry country : activePlayer.getCountries())
