@@ -72,7 +72,7 @@ public class MapValidator {
         return true;
     }
 
-    public boolean isWholeMapConnected(GraphUtil util, Collection<GameCountry> countries){
+    public boolean isWholeMapConnected(GraphUtil util){
         return util.isConnected();
     }
 

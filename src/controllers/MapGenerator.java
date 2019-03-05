@@ -16,8 +16,8 @@ import java.util.Scanner;
  */
 public class MapGenerator {
     ArrayList<GameContinent> continentList;
-    public static HashMap<String,GameCountry> countryHashMap;
-    public static HashMap<String,GameContinent> continentHashMap;
+    public static HashMap<String,GameCountry> countryHashMap = new HashMap<>();
+    public static HashMap<String,GameContinent> continentHashMap = new HashMap<>();
     ArrayList<GameCountry> countryList;
     static HashMap <String,String>guiHashMap;
     GraphUtil graphUtilObject ;
@@ -28,8 +28,7 @@ public class MapGenerator {
      *
      */
     public MapGenerator() {
-        countryHashMap = new HashMap<>();
-        continentHashMap = new HashMap<>();
+
         continentList = new ArrayList<>();
         countryList = new ArrayList<>();
         guiHashMap = new HashMap<>();
@@ -424,7 +423,7 @@ public class MapGenerator {
         }
 
         graphUtilObject = this.buildGraph();
-        if(!validator.isWholeMapConnected(graphUtilObject,(countryHashMap.values()))){
+        if(!validator.isWholeMapConnected(graphUtilObject)){
             returnString = "THE WHOLE MAP IS NOT CONNECTED";
         }
 
@@ -649,14 +648,15 @@ public class MapGenerator {
      */
     public ArrayList<GameContinent> checkContinentsOwnedByOnePlayer(int playerID){
         try {
-            ArrayList<GameContinent> continentsOwnedByPlayer = new ArrayList<>();
+            ArrayList<GameContinent> continentsOwnedByPlayer = new ArrayList<>(continentHashMap.values());
             for(String continentName : continentHashMap.keySet()){
                 for (GameCountry country: continentHashMap.get(continentName).getCountries().values() ) {
                     if (country.getCurrentPlayer().getId()!=playerID){
+                        continentsOwnedByPlayer.remove(continentHashMap.get(continentName));
                         break;
                     }
                 }
-                continentsOwnedByPlayer.add(continentHashMap.get(continentName));
+
             }
 
             return continentsOwnedByPlayer;
