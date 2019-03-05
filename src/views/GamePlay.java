@@ -371,6 +371,9 @@ public class GamePlay extends JPanel {
 		lstPlayerCountries.setSelectedIndex(-1);
 	}
 
+	/**
+	 * Update UI list for active player
+	 */
 	public void updateListElements() {
 		if (dlstPlayerCountries.size() != 0) {
 			dlstPlayerCountries.removeAllElements();
