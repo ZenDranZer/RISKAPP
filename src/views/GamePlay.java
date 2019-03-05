@@ -18,38 +18,37 @@ import java.util.stream.Collectors;
 /**
  * View for main game play 
  * includes the reinforcement , attack and fortification phases for the game
- * @author Sidhant Gupta
  *
  */
 public class GamePlay extends JPanel {
 
-	JLabel lblPlayerName;
-	JLabel lblTurn;
-	JLabel lblAction;
-	JList lstPlayerCountries;
-	JList lstActionCountry;
-	JLabel lblReinforce;
-	JLabel lblArmiesPresent;
-	JLabel lblactionArmiesPresent;
+	private JLabel lblPlayerName;
+	private JLabel lblTurn;
+	private JLabel lblAction;
+	private JList lstPlayerCountries;
+	private JList lstActionCountry;
+	private JLabel lblReinforce;
+	private JLabel lblArmiesPresent;
+	private JLabel lblactionArmiesPresent;
 	private JTextField txtReinforce;
-	JButton btnAdd;
+	private JButton btnAdd;
 	private JLabel lblRemainingArmies;
 
-	DefaultListModel<String> dlstPlayerCountries;
-	DefaultListModel<String> dlstActionCountries;
-	GameEngine objGameEngine;
-	TurnController objTurnController;
-	Player activePlayer;
+	private DefaultListModel<String> dlstPlayerCountries;
+	private DefaultListModel<String> dlstActionCountries;
+	private  GameEngine objGameEngine;
+	private TurnController objTurnController;
+	private Player activePlayer;
 
-	JScrollPane scrollPane;
-	String phase = "initial";
-	JTextArea txtError;
-	int flag = 0;
+	private JScrollPane scrollPane;
+	private String phase = "initial";
+	private JTextArea txtError;
+	private int flag = 0;
 	private JScrollPane scrollPane_1;
-	JLabel lblPhase;
+	private JLabel lblPhase;
 
 	/**
-	 * Create the panel.
+	 * Renders the initial view of the panel
 	 */
 	public GamePlay(GameEngine engine) {
 		objGameEngine = engine;
@@ -260,12 +259,18 @@ public class GamePlay extends JPanel {
 		}
 	}
 
+	/**
+	 * Updates the panel for initial allocation of next player
+	 */
 	public void updateInitialPanel() {
 		updateListElements();
 		lblPlayerName.setText("Player Name : " + activePlayer.getName());
 		displayRemainingArmies();
 	}
 
+	/**
+	 * Adds reinforcement armies to a country based on the values selected in the UI
+	 */
 	public void reinforceCountry() {
 
 		int reinforcements = Integer.parseInt(txtReinforce.getText());
@@ -284,6 +289,9 @@ public class GamePlay extends JPanel {
 		}
 	}
 
+	/**
+	 * Updates the panel for reinforcement phase of the intended player
+	 */
 	public void updateReinforcementPanel() {
 		scrollPane.setVisible(true);
 		lstPlayerCountries.setVisible(true);
@@ -299,6 +307,9 @@ public class GamePlay extends JPanel {
 		displayRemainingArmies();
 	}
 
+	/**
+	 * current player attacks the chosen player based on the value selection in UI
+	 */
 	public void attack() {
 		phase = "attack";
 		flag = 1;
@@ -315,6 +326,10 @@ public class GamePlay extends JPanel {
 		lblArmiesPresent.setText("");
 	}
 
+	/**
+	 * Fortifies a given country based on user selection
+	 * @return true if all values are correct
+	 */
 	public boolean fortify() {
 
 		GameCountry countryToFortify = MapGenerator.countryHashMap
@@ -335,6 +350,9 @@ public class GamePlay extends JPanel {
 		return true;
 	}
 
+	/**
+	 * updates panel for fortification phase of the 
+	 */
 	public void updateFortificationPanel() {
 		phase = "fortify";
 		lblPhase.setText("Fortify");
@@ -379,12 +397,19 @@ public class GamePlay extends JPanel {
 		}
 	}
 
+	/**
+	 * Updates the view to display the remaining armies of the current player
+	 */
 	public void displayRemainingArmies() {
 		lblRemainingArmies.setText("Remaining Armies " + " : " + activePlayer.getRemainingArmies());
 	}
 
-	public void setActivePlayerName(Player active) {
-		lblPlayerName.setText(active.getName());
+	/**
+	 * updates the view to display the name of the current player
+	 * @param activePlayer Player which represents the current active player
+	 */
+	public void setActivePlayerName(Player activePlayer) {
+		lblPlayerName.setText(activePlayer.getName());
 	}
 
 	/**
