@@ -53,7 +53,23 @@ public class LoadMapPanel extends JPanel {
         if(loadButton.isEnabled()){
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
             String message = mapGenerator.validateMap();
-            JOptionPane.showMessageDialog(this,message);
+            if(message.equals("SUCCESS")){
+                message = mapGenerator.writeConquestFile();
+                if(message.equals("SUCCESS")) {
+                    message = "Map loaded and written to file correctly";
+                    JOptionPane.showMessageDialog(this,message);
+
+                    Container container = this.getParent();
+                    container.remove(this);
+                    parent.setVisible(true);
+                }
+                else{
+                    message="Map loaded correctly. Problems faced in writing the map";
+                    JOptionPane.showMessageDialog(this,message);
+
+                }
+            }else
+                JOptionPane.showMessageDialog(this,message);
         }
     }
 

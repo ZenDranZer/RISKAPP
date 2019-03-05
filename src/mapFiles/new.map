@@ -1,0 +1,16 @@
+[Map]
+author=Sean O'Connor
+warn=yes
+image=Africa.bmp
+wrap=no
+scroll=horizontal
+
+[Continents]
+Asia=4
+Europe=3
+[Territories]
+India,127,46,Asia,China
+China,252,33,Asia,England
+England,193,85,Europe,Russia
+Russia,314,94,Europe,England
+

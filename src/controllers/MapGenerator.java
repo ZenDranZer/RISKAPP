@@ -32,7 +32,16 @@ public class MapGenerator {
         continentList = new ArrayList<>();
         countryList = new ArrayList<>();
         guiHashMap = new HashMap<>();
+        setGuiHashMap();
         firstCountryFlag=true;
+    }
+
+    public static void setGuiHashMap() {
+        guiHashMap.put("author","Default authorName");
+        guiHashMap.put("warn","Default warning");
+        guiHashMap.put("image","Default image");
+        guiHashMap.put("wrap","Default wrapping");
+        guiHashMap.put("scroll","Default scrolling");
     }
 
     /**Reads continents from a file and store them in required structure.
@@ -725,7 +734,8 @@ public class MapGenerator {
                 continentHashMap.remove(continent);
             }
             return "SUCCESS";
-        }catch (Exception e){
+        }
+        catch (Exception e){
             return "SOME ERROR IN RESETTING ALLOCATIONS";
         }
     }
