@@ -110,7 +110,6 @@ public class GameEngine {
 			setNumberOfPlayers(listActivePlayers.size());
 			turn.allocateCountries(listActivePlayers, new ArrayList<GameCountry>(MapGenerator.countryHashMap.values()));
 			allocateInitialArmies();
-
 			turn.setActivePlayer(listActivePlayers.get(0));
 		} catch (NullPointerException nullEx) {
 			System.out.println("Objects not initialized properly");

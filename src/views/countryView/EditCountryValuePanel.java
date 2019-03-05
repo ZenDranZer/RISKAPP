@@ -2,7 +2,6 @@ package views.countryView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;

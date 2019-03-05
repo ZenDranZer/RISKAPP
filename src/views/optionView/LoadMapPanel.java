@@ -21,27 +21,40 @@ public class LoadMapPanel extends JPanel {
         mapFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MAP file only", "map"));
     }
 
-    private void loadButtonMouseClicked(MouseEvent e) {
+    private void readButtonMouseClicked(MouseEvent e) {
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
         String mapFilePath = mapFileChooser.getSelectedFile().getAbsolutePath();
         try {
             String message = mapGenerator.readConquestFile(mapFilePath);
             gameEngine.setMapPath(mapFilePath);
             JOptionPane.showMessageDialog(this,message);
-            if(message.equals("SUCCESS"))
+            if(message.equals("SUCCESS")){
                 editMapButton.setEnabled(true);
+                resetButton.setEnabled(true);
+                loadButton.setEnabled(true);
+            }
         } catch (IOException e1) {
             JOptionPane.showMessageDialog(this,"IO Exception");
         }
     }
 
     private void editMapButtonMouseClicked(MouseEvent e) {
-        EditOptionPanel editOptionPanel = new EditOptionPanel(gameEngine,this);
-        editOptionPanel.setVisible(true);
-        setVisible(false);
-        Container container = this.getParent();
-        container.add(editOptionPanel);
-        container.revalidate();
+        if(editMapButton.isEnabled()){
+            EditOptionPanel editOptionPanel = new EditOptionPanel(gameEngine,this);
+            editOptionPanel.setVisible(true);
+            setVisible(false);
+            Container container = this.getParent();
+            container.add(editOptionPanel);
+            container.revalidate();
+        }
+    }
+
+    private void loadButtonMouseClicked(MouseEvent e) {
+        if(loadButton.isEnabled()){
+            MapGenerator mapGenerator = gameEngine.getMapGenerator();
+            String message = mapGenerator.validateMap();
+            JOptionPane.showMessageDialog(this,message);
+        }
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
@@ -50,45 +63,57 @@ public class LoadMapPanel extends JPanel {
         parent.setVisible(true);
     }
 
+    private void resetButtonMouseClicked(MouseEvent e) {
+        if(resetButton.isEnabled()){
+            MapGenerator mapGenerator = gameEngine.getMapGenerator();
+            if(mapGenerator.reSetAllocations().equals("Success")){
+                JOptionPane.showMessageDialog(this,"Map is being reset.");
+            }
+            else{
+                JOptionPane.showMessageDialog(this,"Some error in resetting map.");
+            }
+        }
+    }
+
     private void initComponents() {
         label1 = new JLabel();
         mapFileChooser = new JFileChooser();
-        loadButton = new JButton();
+        readButton = new JButton();
         editMapButton = new JButton();
+        loadButton = new JButton();
+        resetButton = new JButton();
         backButton = new JButton();
 
-        //======== this ========
-
         setLayout(new GridBagLayout());
-        ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0, 0, 0};
+        ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0, 0, 0, 0};
         ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
-        ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
+        ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
         ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
         //---- label1 ----
         label1.setText("Load Map:");
         add(label1, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- mapFileChooser ----
         mapFileChooser.setAcceptAllFileFilterUsed(false);
         mapFileChooser.setControlButtonsAreShown(false);
         add(mapFileChooser, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
-        //---- loadButton ----
-        loadButton.setText("Load");
-        loadButton.addMouseListener(new MouseAdapter() {
+        //---- readButton ----
+        readButton.setText("Read");
+        readButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                loadButtonMouseClicked(e);
+                readButtonMouseClicked(e);
             }
         });
-        add(loadButton, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 0, 5), 0, 0));
+        add(readButton, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- editMapButton ----
         editMapButton.setText("Edit Map");
@@ -101,8 +126,33 @@ public class LoadMapPanel extends JPanel {
         });
         add(editMapButton, new GridBagConstraints(3, 3, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
+
+        //---- resetButton ----
+        resetButton.setText("Reset");
+        resetButton.setEnabled(false);
+        resetButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                resetButtonMouseClicked(e);
+            }
+        });
+        add(resetButton, new GridBagConstraints(4, 3, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 0), 0, 0));
 
+        //---- loadButton ----
+        loadButton.setText("Load");
+        loadButton.setEnabled(false);
+        loadButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loadButtonMouseClicked(e);
+            }
+        });
+        add(loadButton, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 5), 0, 0));
 
         //---- backButton ----
         backButton.setText("Back");
@@ -114,12 +164,15 @@ public class LoadMapPanel extends JPanel {
         });
         add(backButton, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(0, 0, 0, 0), 0, 0));
+                new Insets(0, 0, 0, 5), 0, 0));
+
       }
 
    private JLabel label1;
     private JFileChooser mapFileChooser;
-    private JButton loadButton;
+    private JButton readButton;
     private JButton editMapButton;
+    private JButton resetButton;
+    private JButton loadButton;
     private JButton backButton;
    }
