@@ -196,7 +196,7 @@ public class TurnController {
 		return remainingArmies;
 	}
 
-
+	
 	/**
 	 * Initial allocation of countries to the players at the beginning of the
 	 * game. The country allocation happens in a round robin manner
@@ -219,4 +219,5 @@ public class TurnController {
 			i++;
 		}
 	}
+
 }

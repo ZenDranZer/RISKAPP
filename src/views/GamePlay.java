@@ -27,6 +27,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
+/**
+ * View for main game play 
+ * includes the reinforcement , attack and fortification phases for the game
+ * @author Sidhant Gupta
+ *
+ */
 public class GamePlay extends JPanel {
 
 	JLabel lblPlayerName;
@@ -222,6 +228,9 @@ public class GamePlay extends JPanel {
 		lblAction.setVisible(false);
 	}
 
+	/**
+	 * function for turn based initial allocation of armies for the players
+	 */
 	public void initialAllocation() {
 		int army = Integer.parseInt(txtReinforce.getText());
 		txtReinforce.setText("");
@@ -247,7 +256,6 @@ public class GamePlay extends JPanel {
 			} else {
 				break;
 			}
-
 		} while (allocatedPlayers < objGameEngine.getNumberOfPlayers());
 
 		if (allocatedPlayers == objGameEngine.getNumberOfPlayers()) {
@@ -441,7 +449,6 @@ public class GamePlay extends JPanel {
 	public String getArmiesPresent(String countryName) {
 
 		if (countryName != null && countryName != "") {
-			System.out.println("***" + countryName);
 			GameCountry country = MapGenerator.countryHashMap.get(countryName);
 			return country.getArmiesStationed() + "";
 		}

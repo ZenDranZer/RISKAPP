@@ -24,6 +24,10 @@ public class GameEngine {
 		turn = new TurnController();
 	}
 
+	/**
+	 * Gets the TurnController object
+	 * @return TurnController object representing the current turn
+	 */
 	public TurnController getTurnComtroller() {
 		if (turn == null) {
 			turn = new TurnController();
@@ -31,6 +35,10 @@ public class GameEngine {
 		return turn;
 	}
 
+	/**
+	 * Gets the Map Generator
+	 * @return MapGenerator object representing the Map Generator
+	 */
 	public MapGenerator getMapGenerator() {
 		return mapGenerator;
 	}
@@ -56,10 +64,18 @@ public class GameEngine {
 		keyboard.close();
 	}
 
+	/**
+	 * Gets the file path of the current map
+	 * @return String absolute path of the map file
+	 */
 	public String getMapPath() {
 		return mapPath;
 	}
 
+	/**
+	 * Sets the current map path
+	 * @param mapPath String absolute path of the map file
+	 */
 	public void setMapPath(String mapPath) {
 		this.mapPath = mapPath;
 	}
@@ -150,10 +166,18 @@ public class GameEngine {
 		turn.setActivePlayer(nextPlayer);
 	}
 
+	/**
+	 * Sets the number of players in the game
+	 * @param noOfPlayers integer number of players
+	 */
 	public void setNumberOfPlayers(int noOfPlayers) {
 		this.numberOfPlayers = noOfPlayers;
 	}
 
+	/**
+	 * Gets the number of players in the game
+	 * @return integer number of players
+	 */
 	public int getNumberOfPlayers() {
 		return this.numberOfPlayers;
 	}
