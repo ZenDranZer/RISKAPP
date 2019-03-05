@@ -59,11 +59,9 @@ public class TurnController {
 	/**
 	 * function to calculate the new army allocation for the player. Minimum 3
 	 * armies are allocated at each turn
-	 * 
-	 * @param activePlayer
-	 *            current player
-	 * @return availableArmies
-     *            number of new armies to allocate
+	 * @param activePlayer current player
+	 * @param mapGenerator MapGenerator object
+	 * @return integer number of new armies
 	 */
 	public int calculateNewArmies(Player activePlayer, MapGenerator mapGenerator) {
 
@@ -74,11 +72,9 @@ public class TurnController {
 			availableArmies = countryCount / 3;
 
 		ArrayList<GameContinent> playerContinents = mapGenerator.checkContinentsOwnedByOnePlayer(activePlayer.getId());
-		
-		if(playerContinents != null && playerContinents.size() >0)
-		{
-			for(GameContinent continent : playerContinents)
-			{
+
+		if (playerContinents != null && playerContinents.size() > 0) {
+			for (GameContinent continent : playerContinents) {
 				activePlayer.setContinents(continent);
 				availableArmies += continent.getContinentValue();
 			}
@@ -108,7 +104,7 @@ public class TurnController {
 			System.out.println("Reinforced Country : " + matchedCountry.getArmiesStationed());
 			this.availableArmies = this.availableArmies - armies;
 		} catch (Exception ex) {
-			
+
 		}
 	}
 
@@ -118,8 +114,7 @@ public class TurnController {
 	 * 
 	 * @param Countries
 	 *            List of game countries
-	 * @return returns
-     *            message showing success or failure of fortification
+	 * @return returns message showing success or failure of fortification
 	 */
 	public String fortification(List<GameCountry> Countries) {
 		String moveTo = "";
@@ -146,8 +141,8 @@ public class TurnController {
 	 * 
 	 * @param activePlayers
 	 *            Player arraylist containing player data
-	 * @return armiesForeachPlayer
-     *          Armies that are assigned to each player based on game rules
+	 * @return armiesForeachPlayer Armies that are assigned to each player based
+	 *         on game rules
 	 */
 	public int getEachPlayerArmy(ArrayList<Player> activePlayers) {
 		int numOfPlayers = activePlayers.size();
