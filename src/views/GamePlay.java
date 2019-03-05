@@ -25,6 +25,7 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class GamePlay extends JPanel {
 
@@ -51,6 +52,7 @@ public class GamePlay extends JPanel {
 	JTextArea txtError;
 	int flag = 0;
 	private JScrollPane scrollPane_1;
+	JLabel lblPhase;
 
 	/**
 	 * Create the panel.
@@ -86,7 +88,7 @@ public class GamePlay extends JPanel {
 		lblTurn.setBounds(10, 326, 55, 23);
 		add(lblTurn);
 
-		lblReinforce = new JLabel("Select country to reinforce");
+		lblReinforce = new JLabel("Add army to country");
 		lblReinforce.setBounds(64, 33, 198, 14);
 		add(lblReinforce);
 
@@ -147,8 +149,13 @@ public class GamePlay extends JPanel {
 		dlstPlayerCountries = new DefaultListModel<String>();
 
 		lblRemainingArmies = new JLabel("Remaining Armies :");
-		lblRemainingArmies.setBounds(405, 360, 188, 23);
+		lblRemainingArmies.setBounds(434, 365, 188, 23);
 		add(lblRemainingArmies);
+
+		lblPhase = new JLabel("Initial Allocation");
+		lblPhase.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblPhase.setBounds(222, 318, 267, 32);
+		add(lblPhase);
 
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(74, 58, 124, 259);
@@ -167,8 +174,7 @@ public class GamePlay extends JPanel {
 					lblArmiesPresent.setText(
 							"Armies present : " + getArmiesPresent(lstPlayerCountries.getSelectedValue().toString()));
 				}
-				
-					
+
 				if (phase.equals("fortify")) {
 					txtReinforce.setVisible(false);
 					btnAdd.setVisible(false);
@@ -246,6 +252,7 @@ public class GamePlay extends JPanel {
 
 		if (allocatedPlayers == objGameEngine.getNumberOfPlayers()) {
 			phase = "reinforce";
+			lblPhase.setText("Reinforcement");
 			objGameEngine.setNextPlayer(activePlayer);
 			activePlayer = objTurnController.getActivePlayer();
 			objTurnController.calculateNewArmies(activePlayer);
@@ -291,6 +298,8 @@ public class GamePlay extends JPanel {
 		lstActionCountry.setVisible(false);
 		lblAction.setVisible(false);
 
+		lblPhase.setText("Reinforcement");
+		lblReinforce.setText("Select country to reinforce");
 		txtError.setText("");
 		objTurnController.calculateNewArmies(activePlayer);
 		updateListElements();
@@ -301,7 +310,9 @@ public class GamePlay extends JPanel {
 	public void attack() {
 		phase = "attack";
 		flag = 1;
-
+		
+		lblPhase.setText("Attack");
+		
 		scrollPane.setVisible(false);
 		lstPlayerCountries.setVisible(false);
 		txtError.setText("attack phase");
@@ -335,7 +346,8 @@ public class GamePlay extends JPanel {
 
 	public void updateFortificationPanel() {
 		phase = "fortify";
-
+		lblPhase.setText("Fortify");
+		lblReinforce.setText("Select country to forify : ");
 		lblAction.setVisible(true);
 		scrollPane.setVisible(true);
 		lstPlayerCountries.setVisible(true);
