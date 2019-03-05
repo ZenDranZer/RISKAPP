@@ -34,6 +34,7 @@ public class AddCountry extends JPanel {
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
         String message = mapGenerator.addCountry(continentName,countryName,neighbourList);
         JOptionPane.showMessageDialog(this.getParent(),message);
+        countryListLabel.setListData(mapGenerator.getListOfCountries().toArray());
         finishButton.setEnabled(true);
         nameField.setText("");
         continentField.setText("");
@@ -62,7 +63,7 @@ public class AddCountry extends JPanel {
         neigbourList = new JLabel();
         label5 = new JLabel();
         scrollPaneList = new JScrollPane();
-        countryListLabel = new JList<>();
+        countryListLabel = new JList();
         label2 = new JLabel();
         nameField = new JTextField();
         label4 = new JLabel();
@@ -101,17 +102,6 @@ public class AddCountry extends JPanel {
 
         //======== scrollPaneList ========
         {
-
-            //---- countryListLabel ----
-            countryListLabel.setModel(new AbstractListModel<String>() {
-                String[] values = {
-                        "Countries:"
-                };
-                @Override
-                public int getSize() { return values.length; }
-                @Override
-                public String getElementAt(int i) { return values[i]; }
-            });
             scrollPaneList.setViewportView(countryListLabel);
         }
         add(scrollPaneList, new GridBagConstraints(13, 1, 1, 12, 0.0, 0.0,
@@ -189,7 +179,7 @@ public class AddCountry extends JPanel {
     private JLabel label5;
     private JTextField nameField;
     private JScrollPane scrollPaneList;
-    private JList<String> countryListLabel;
+    private JList countryListLabel;
     private JLabel label4;
     private JTextField continentField;
     private JLabel label3;
