@@ -348,6 +348,9 @@ public class GamePlay extends JPanel {
 		lstPlayerCountries.setSelectedIndex(-1);
 	}
 
+	/**
+	 * Update UI list for active player
+	 */
 	public void updateListElements() {
 		if (dlstPlayerCountries.size() != 0) {
 			dlstPlayerCountries.removeAllElements();
@@ -357,6 +360,9 @@ public class GamePlay extends JPanel {
 		}
 	}
 
+	/**
+	 * Updates list of action countries
+	 */
 	public void updateActionCountries() {
 		String seletedCountry = lstPlayerCountries.getSelectedValue().toString();
 		GameCountry cntry = MapGenerator.countryHashMap.get(seletedCountry);
@@ -390,7 +396,7 @@ public class GamePlay extends JPanel {
 
 		boolean isValid = true;
 
-		if (txtReinforce.getText().isEmpty() && txtReinforce.getText().equals("0")) {
+		if (txtReinforce.getText().isEmpty() || txtReinforce.getText().equals("0")) {
 			isValid = false;
 			txtError.setText(txtError.getText() + "\n" + "Enter some value");
 		} else if (Integer.parseInt(txtReinforce.getText()) > activePlayer.getRemainingArmies()) {
