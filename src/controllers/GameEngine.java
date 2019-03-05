@@ -28,7 +28,7 @@ public class GameEngine {
 	 * Gets the TurnController object
 	 * @return TurnController object representing the current turn
 	 */
-	public TurnController getTurnComtroller() {
+	public TurnController getTurmController() {
 		if (turn == null) {
 			turn = new TurnController();
 		}
@@ -112,9 +112,9 @@ public class GameEngine {
 	}
 	
 	//CUI
-	public void initialise() {
+/*	public void initialise() {
 		getInitialPlayers();
-	}
+	}*/
 
 	/**
 	 * Initialize the game engine with the initial set of players, randomly

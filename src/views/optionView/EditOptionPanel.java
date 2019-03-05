@@ -15,8 +15,7 @@ public class EditOptionPanel extends JPanel {
     private JPanel parent;
     private GameEngine gameEngine;
 
-    public EditOptionPanel(GameEngine gameEngine,JPanel parent)
-    {
+    public EditOptionPanel(GameEngine gameEngine,JPanel parent) {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
