@@ -28,8 +28,8 @@ public class AddNewCountryPanel extends JPanel {
     private void addCountryButtonMouseClicked(MouseEvent e) {
         String countryName = nameField.getText();
         String continentName = continentField.getText();
-        if(countryName == "" || continentName == ""){
-            JOptionPane.showMessageDialog(this,"Value not added properly.");
+        if(countryName.equals("") || continentName.equals("")){
+            JOptionPane.showMessageDialog(this,"Valu    e not added properly.");
         } else {
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
             String message = mapGenerator.addCountry(continentName,countryName,neighbourList);

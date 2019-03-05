@@ -76,7 +76,7 @@ public class EditCountryValuePanel extends JPanel {
 
     private void addNeighbourButtonMouseClicked(MouseEvent e) {
         String neighbourName = neighboutName.getText();
-        if(neighbourName == ""){
+        if(neighbourName.equals("")){
             JOptionPane.showMessageDialog(this,"Invalid argument");
         }else{
             String message = mapGenerator.addNeighbor((String) countryList.getSelectedValue(),neighbourName);
@@ -86,7 +86,7 @@ public class EditCountryValuePanel extends JPanel {
 
     private void removeNegihbourButtonMouseClicked(MouseEvent e) {
         String neighbourName = neighboutName.getText();
-        if(neighbourName == ""){
+        if(neighbourName.equals("")){
             JOptionPane.showMessageDialog(this,"Invalid argument");
         }else{
             String message = mapGenerator.removeNeighbor((String) countryList.getSelectedValue(),neighbourName);
@@ -100,14 +100,14 @@ public class EditCountryValuePanel extends JPanel {
         switch (index){
             case 0:
                 String name = countryName.getText();
-                if(name == "")
+                if(name.equals(""))
                     message = "Invalid name";
                 else
                     message = mapGenerator.changeCountryName((String) countryList.getSelectedValue(),name);
                 break;
             case 1:
                 String newContinentName = continentName.getText();
-                if(newContinentName == "")
+                if(newContinentName.equals(""))
                     message = "Invalid name";
                 else
                     message = mapGenerator.changeCountryContinent((String) countryList.getSelectedValue(),newContinentName);

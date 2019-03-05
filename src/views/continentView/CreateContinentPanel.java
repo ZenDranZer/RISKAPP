@@ -19,20 +19,27 @@ public class CreateContinentPanel extends JPanel {
     }
 
     private void finishButtonMouseClicked(MouseEvent e) {
+        if(finishButton.isEnabled()){
         AddCountry addCountry = new AddCountry(gameEngine , this);
         addCountry.setVisible(true);
         setVisible(false);
         Container container = this.getParent();
         container.add(addCountry);
         container.revalidate();
+        }
     }
 
     private void addContinentMouseClicked(MouseEvent e) {
         String continentName = nameField.getText();
         int value = Integer.parseInt(valueField.getText());
-        MapGenerator mapGenerator = gameEngine.getMapGenerator();
-        String message = mapGenerator.addContinent(continentName,value);
-        JOptionPane.showMessageDialog(this.getParent().getParent(),message);
+        if(continentName.equals("")){
+            JOptionPane.showMessageDialog(this,"Wrong Input.");
+        }else {
+            MapGenerator mapGenerator = gameEngine.getMapGenerator();
+            String message = mapGenerator.addContinent(continentName, value);
+            JOptionPane.showMessageDialog(this.getParent().getParent(), message);
+            finishButton.setEnabled(true);
+        }
         nameField.setText("");
         valueField.setText("1");
     }
@@ -100,6 +107,7 @@ public class CreateContinentPanel extends JPanel {
 
         //---- finishButton ----
         finishButton.setText("Finish");
+        finishButton.setEnabled(false);
         finishButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

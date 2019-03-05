@@ -468,7 +468,7 @@ public class MapGenerator {
      *
      * @return arraylist of objects of each continent
      */
-    public static ArrayList<String> getListOfContinents(){
+    public ArrayList<String> getListOfContinents(){
         return  new ArrayList<>(continentHashMap.keySet());
 
     }
@@ -479,7 +479,7 @@ public class MapGenerator {
      *
      * @return arraylist of objects of each country
      */
-    public static ArrayList<String> getListOfCountries(){
+    public ArrayList<String> getListOfCountries(){
         ArrayList<String> countries = new ArrayList<>(countryHashMap.keySet());
         return countries;
     }

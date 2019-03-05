@@ -18,7 +18,7 @@ public class RemoveContinentPanel extends JPanel {
 
     private void removeButtonMouseClicked(MouseEvent e) {
         String continentName = nameField.getText();
-        if(continentName == "" ){
+        if(continentName.equals("")){
             JOptionPane.showMessageDialog(this,"Invalid argument");
         }else{
             MapGenerator mapGenerator = gameEngine.getMapGenerator();

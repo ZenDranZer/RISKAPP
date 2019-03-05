@@ -55,23 +55,31 @@ public class EditContinentValuePanel extends JPanel {
 
     private void editButtonMouseClicked(MouseEvent e) {
         String continentName = nameField.getText();
-        int value = Integer.parseInt(valueField.getText());
-        MapGenerator mapGenerator = gameEngine.getMapGenerator();
-        String message = "";
-        int index = featureBox.getSelectedIndex();
-        switch (index){
-            case 0:
-                message += mapGenerator.changeContinentName((String)continentList.getSelectedValue(),continentName);
-                break;
-            case 1:
-                message += mapGenerator.changeContinentValue((String)continentList.getSelectedValue(),value);
-                break;
-            case 2:
-                message += mapGenerator.changeContinentName((String)continentList.getSelectedValue(),continentName);
-                message += mapGenerator.changeContinentValue((String)continentList.getSelectedValue(),value);
-                break;
+        int value = 1;
+        try {
+            value = Integer.parseInt(valueField.getText());
+        }catch(NumberFormatException nfe){
+            JOptionPane.showMessageDialog(this,"Number format is wrong");
         }
-        JOptionPane.showMessageDialog(this,message);
+        if(continentName.equals("")){
+            JOptionPane.showMessageDialog(this,"Invalid Name.");
+        }else {
+            String message = "";
+            int index = featureBox.getSelectedIndex();
+            switch (index) {
+                case 0:
+                    message += mapGenerator.changeContinentName((String) continentList.getSelectedValue(), continentName);
+                    break;
+                case 1:
+                    message += mapGenerator.changeContinentValue((String) continentList.getSelectedValue(), value);
+                    break;
+                case 2:
+                    message += mapGenerator.changeContinentName((String) continentList.getSelectedValue(), continentName);
+                    message += mapGenerator.changeContinentValue((String) continentList.getSelectedValue(), value);
+                    break;
+            }
+            JOptionPane.showMessageDialog(this, message);
+        }
         nameField.setText("");
         valueField.setText("1");
         continentsName = mapGenerator.getListOfContinents();

@@ -28,12 +28,13 @@ public class AddCountry extends JPanel {
     private void addCountryButtonMouseClicked(MouseEvent e) {
         String countryName = nameField.getText();
         String continentName = continentField.getText();
-        if(countryName == "" || continentName == ""){
+        if(countryName.equals("") || continentName.equals("")){
             JOptionPane.showMessageDialog(this,"Value not added properly.");
         } else {
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
         String message = mapGenerator.addCountry(continentName,countryName,neighbourList);
         JOptionPane.showMessageDialog(this.getParent(),message);
+        finishButton.setEnabled(true);
         nameField.setText("");
         continentField.setText("");
         neigbourList.setText("Neighbours:");
@@ -43,12 +44,16 @@ public class AddCountry extends JPanel {
     }
 
     private void finishButtonMouseClicked(MouseEvent e) {
+        if(finishButton.isEnabled()){
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
         String message  = mapGenerator.validateMap();
+        JOptionPane.showMessageDialog(this.getParent(),message);
+        message = mapGenerator.writeConquestFile();
         JOptionPane.showMessageDialog(this.getParent(),message);
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);
+        }
     }
 
     private void initComponents() {
@@ -138,6 +143,7 @@ public class AddCountry extends JPanel {
 
         //---- finishButton ----
         finishButton.setText("Finish");
+        finishButton.setEnabled(false);
         finishButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
