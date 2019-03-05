@@ -2,7 +2,6 @@ package views.continentView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -14,16 +13,20 @@ public class RemoveContinentPanel extends JPanel {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        continentList.setListData(mapGenerator.getListOfContinents().toArray());
+        continentList.setSelectedIndex(0);
     }
 
     private void removeButtonMouseClicked(MouseEvent e) {
-        String continentName = nameField.getText();
+        String continentName = (String)continentList.getSelectedValue();
         if(continentName.equals("")){
             JOptionPane.showMessageDialog(this,"Invalid argument");
         }else{
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
             String message = mapGenerator.removeContinent(continentName);
             JOptionPane.showMessageDialog(this,message);
+            continentList.setListData(mapGenerator.getListOfContinents().toArray());
         }
     }
 
@@ -36,10 +39,11 @@ public class RemoveContinentPanel extends JPanel {
     private void initComponents() {
         label1 = new JLabel();
         label2 = new JLabel();
-        nameField = new JTextField();
+        scrollPane = new JScrollPane();
+        continentList = new JList();
         removeButton = new JButton();
         backButton = new JButton();
-       
+
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 146, 0, 0};
         ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0};
@@ -49,17 +53,22 @@ public class RemoveContinentPanel extends JPanel {
         //---- label1 ----
         label1.setText("Remove Continent:");
         add(label1, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- label2 ----
         label2.setText("Enter Continent Name :");
         add(label2, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
-        add(nameField, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
+
+        //======== scrollPane ========
+        {
+            scrollPane.setViewportView(continentList);
+        }
+        add(scrollPane, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- removeButton ----
         removeButton.setText("Remove");
@@ -70,8 +79,8 @@ public class RemoveContinentPanel extends JPanel {
             }
         });
         add(removeButton, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 0), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 0), 0, 0));
 
         //---- backButton ----
         backButton.setText("Back");
@@ -82,13 +91,14 @@ public class RemoveContinentPanel extends JPanel {
             }
         });
         add(backButton, new GridBagConstraints(3, 5, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 0, 0), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 0), 0, 0));
        }
 
     private JLabel label1;
     private JLabel label2;
-    private JTextField nameField;
+    private JScrollPane scrollPane;
+    private JList continentList;
     private JButton removeButton;
     private JButton backButton;
 }
