@@ -14,10 +14,8 @@ public class GameEngine {
 	private ArrayList<Player> listActivePlayers = new ArrayList<Player>();
 	private ArrayList<Player> listEliminatedPlayers = new ArrayList<Player>();
 	private static MapGenerator mapGenerator = new MapGenerator();
-
 	private String mapPath;
 	private TurnController turn;
-
 	private int numberOfPlayers;
 
 	public GameEngine() {

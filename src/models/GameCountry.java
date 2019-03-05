@@ -16,7 +16,6 @@ public class GameCountry {
     private int coordinateY;
 
     public  GameCountry(){
-        /*continent = new GameContinent();*/
         neighbouringCountries = new HashMap<>();
     }
     
@@ -101,14 +100,6 @@ public class GameCountry {
         return neighbouringCountries;
     }
 
-    /**
-     * Sets the neighboring countries
-     * @param neighbouringCountry GameCountry that has to be added to neighboring countries
-     */
-    /*public void setNeighbouringCountries(GameCountry neighbouringCountry) {
-        this.neighbouringCountries.put(neighbouringCountry.getCountryName(),neighbouringCountry);
-    }*/
-    
     /**
      * Adds the neighboring countries
      * @param neighbouringCountry GameCountry that has to be added to neighboring countries

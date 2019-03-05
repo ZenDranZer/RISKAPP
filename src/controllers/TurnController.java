@@ -73,16 +73,6 @@ public class TurnController {
 		if (countryCount / 3 > 3)
 			availableArmies = countryCount / 3;
 
-		//ArrayList<GameContinent> playerContinents = MapGenerator.checkContinentsOwnedByOnePlayer(1);
-		
-		//if(playerContinents != null || playerContinents.size() >0)
-		//{
-//			for(GameContinent continent : playerContinents)
-//			{
-//				activePlayer.setContinents(continent);
-//				availableArmies += continent.getContinentValue();
-//			}
-		//}
 		for (GameContinent continent : activePlayer.getContinents()) {
 			availableArmies = continent.getContinentValue();
 		}
@@ -104,8 +94,6 @@ public class TurnController {
 
 		try {
 			ArrayList<GameCountry> lstPlayerCountries = activePlayer.getCountries();
-
-			// get object from list where name matches the given object
 			GameCountry matchedCountry = lstPlayerCountries.stream()
 					.filter(cntry -> cntry.getCountryName().equals(country)).findFirst().get();
 			matchedCountry.setArmies(matchedCountry.getArmiesStationed() + armies);
@@ -114,7 +102,6 @@ public class TurnController {
 		} catch (Exception ex) {
 			
 		}
-
 	}
 
 	/**
@@ -174,39 +161,6 @@ public class TurnController {
 		return armiesForeachPlayer;
 	}
 
-	/**
-	 * Assigns 1 army to each country possessed by the players
-	 * 
-	 * @param activePlayers
-	 *            ArrayList containing player data
-	 * @param remainingArmies
-	 *            ArrayList containing the remaining number of armies with
-	 *            player after initial allocation of armies
-	 * @param armiesForeachPlayer
-	 *            Number of armies assigned to the player
-     * @return remainingArmies
-     *            Armies left with the player after initial allocation of armies
-	 */
-	public ArrayList<Integer> allocateInitialArmy(ArrayList<Player> activePlayers, int armiesForeachPlayer) {
-
-		ArrayList<Integer> remainingArmies = new ArrayList<Integer>();
-
-		for (int i = 0; i < activePlayers.size(); i++) {
-			activePlayers.get(i).setPlayerArmies(armiesForeachPlayer);
-			remainingArmies.add(i, armiesForeachPlayer);
-			int tempRemainingArmies = remainingArmies.get(i);
-			for (int j = 0; j < activePlayers.get(i).getCountries().size(); j++) {
-				if (tempRemainingArmies > 0) {
-					activePlayers.get(i).getCountries().get(j).setArmies(1);
-					tempRemainingArmies--;
-				}
-			}
-			remainingArmies.set(i, tempRemainingArmies);
-		}
-		return remainingArmies;
-	}
-
-	
 	/**
 	 * Initial allocation of countries to the players at the beginning of the
 	 * game. The country allocation happens in a round robin manner

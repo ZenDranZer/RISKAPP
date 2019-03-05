@@ -4,16 +4,26 @@ import controllers.GameEngine;
 import controllers.MapGenerator;
 import views.StartGamePanel;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 
 public class LoadMapPanel extends JPanel {
     private GameEngine gameEngine;
     private JPanel parent;
+    private JLabel label1;
+    private JFileChooser mapFileChooser;
+    private JButton readButton;
+    private JButton editMapButton;
+    private JButton resetButton;
+    private JButton loadButton;
+    private JButton startGameButton;
+    private JButton backButton;
+
     public LoadMapPanel(GameEngine gameEngine,JPanel parent) {
         this.gameEngine = gameEngine;
         this.parent = parent;
@@ -218,12 +228,5 @@ public class LoadMapPanel extends JPanel {
 
       }
 
-    private JLabel label1;
-    private JFileChooser mapFileChooser;
-    private JButton readButton;
-    private JButton editMapButton;
-    private JButton resetButton;
-    private JButton loadButton;
-    private JButton startGameButton;
-    private JButton backButton;
-   }
+
+}

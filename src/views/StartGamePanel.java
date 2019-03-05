@@ -3,19 +3,37 @@ package views;
 import controllers.GameEngine;
 import controllers.MapGenerator;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.io.IOException;
-import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class StartGamePanel extends JPanel {
 
 	private GameEngine gameEngine;
 	private JPanel parent;
 	private boolean isSet;
+	private JLabel label1;
+	private JLabel label2;
+	private JSpinner numberOfPlayers;
+	private JButton doneButton;
+	private JLabel firstNameLabel;
+	private JTextField firstNameField;
+	private JLabel secondNameLabel;
+	private JTextField secondNameField;
+	private JLabel thirdNameLabel;
+	private JTextField thirdNameField;
+	private JLabel forthNameLabel;
+	private JTextField forthNameField;
+	private JLabel fifthNameLabel;
+	private JTextField fifthNameField;
+	private JFileChooser mapFileChooser;
+	private JButton continueButton;
+	private JButton backButton;
+
 	public StartGamePanel(GameEngine gameEngine, JPanel parent, boolean isSet) {
 		this.gameEngine = gameEngine;
 		this.parent = parent;
@@ -79,9 +97,8 @@ public class StartGamePanel extends JPanel {
 						JOptionPane.showMessageDialog(this, message);
 						mapGenerator.reSetAllocations();
 
-					} //else close
-				}//if isSetClose
-				else{
+					}
+				} else {
 					gameEngine.initialiseEngine();
 					Container container = this.getParent();
 					GamePlay gamePlay = new GamePlay(gameEngine);
@@ -90,9 +107,9 @@ public class StartGamePanel extends JPanel {
 					container.add(gamePlay);
 					container.revalidate();
 				}
-			}// if validate names close
-		}// if continue button is enable close
-	}//function close
+			}
+		}
+	}
 
 	private void backButtonMouseClicked(MouseEvent e) {
 		Container container = this.getParent();
@@ -131,6 +148,7 @@ public class StartGamePanel extends JPanel {
 	}
 
 	private void initComponents() {
+
 		label1 = new JLabel();
 		label2 = new JLabel();
 		numberOfPlayers = new JSpinner();
@@ -302,22 +320,4 @@ public class StartGamePanel extends JPanel {
 		}
 		return true;
 	}
-
-	private JLabel label1;
-	private JLabel label2;
-	private JSpinner numberOfPlayers;
-	private JButton doneButton;
-	private JLabel firstNameLabel;
-	private JTextField firstNameField;
-	private JLabel secondNameLabel;
-	private JTextField secondNameField;
-	private JLabel thirdNameLabel;
-	private JTextField thirdNameField;
-	private JLabel forthNameLabel;
-	private JTextField forthNameField;
-	private JLabel fifthNameLabel;
-	private JTextField fifthNameField;
-	private JFileChooser mapFileChooser;
-	private JButton continueButton;
-	private JButton backButton;
 }

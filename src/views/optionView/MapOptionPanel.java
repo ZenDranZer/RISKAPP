@@ -3,14 +3,18 @@ package views.optionView;
 import controllers.GameEngine;
 import views.continentView.CreateContinentPanel;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MapOptionPanel extends JPanel {
 
     GameEngine gameEngine;
     JPanel parent;
+    private JButton createbutton;
+    private JButton loadButton;
+    private JButton backButton;
 
     public MapOptionPanel(GameEngine gameEngine,JPanel parent) {
         this.gameEngine = gameEngine;
@@ -90,9 +94,4 @@ public class MapOptionPanel extends JPanel {
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 5, 5), 0, 0));
     }
-
-
-    private JButton createbutton;
-    private JButton loadButton;
-    private JButton backButton;
 }
