@@ -380,6 +380,9 @@ public class GamePlay extends JPanel {
 		}
 	}
 
+	/**
+	 * Updates list of action countries
+	 */
 	public void updateActionCountries() {
 		String seletedCountry = lstPlayerCountries.getSelectedValue().toString();
 
