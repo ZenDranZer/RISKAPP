@@ -8,15 +8,31 @@ import javax.swing.*;
 
 public class EditContinentPanel extends JPanel {
 
+    /**A JPanel object for tracking the parent panel.*/
     private JPanel parent;
+    /**GameEngine object to preserve the state of the game.*/
     private GameEngine gameEngine;
+    /**A button to redirect to new panel for adding new continent*/
+    private JButton addContinentButton;
+    /**A button to redirect to new panel for removing a continent*/
+    private JButton removeContinentButton;
+    /**A button to redirect to new panel for editing an existing continent*/
+    private JButton editContinentButton;
+    /**A button for going to back button.*/
+    private JButton backButton;
 
+    /**A public constructor to initialize the whole panel with different controls
+     * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
+     * @param parent a previous panel which is being used to redirect back to the previous Panel.
+     * */
     public EditContinentPanel(GameEngine gameEngine,JPanel parent) {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
     }
 
+    /**An mouse click event on the addContinent Button for invoking new panel for adding new continent.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void addContinentButtonMouseClicked(MouseEvent e) {
         AddContinentPanel addContinent = new AddContinentPanel(gameEngine,this);
         addContinent.setVisible(true);
@@ -26,6 +42,8 @@ public class EditContinentPanel extends JPanel {
         container.revalidate();
     }
 
+    /**An mouse click event on the addContinent Button for invoking new panel for removing continent.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void removeContinentButtonMouseClicked(MouseEvent e) {
         RemoveContinentPanel removeContinentPanel = new RemoveContinentPanel(gameEngine,this);
         removeContinentPanel.setVisible(true);
@@ -35,6 +53,8 @@ public class EditContinentPanel extends JPanel {
         container.revalidate();
     }
 
+    /**An mouse click event on the addContinent Button for invoking new panel for editing existing continent.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void editContinentButtonMouseClicked(MouseEvent e) {
         EditContinentValuePanel editContinentValuePanel = new EditContinentValuePanel(gameEngine,this);
         editContinentValuePanel.setVisible(true);
@@ -44,12 +64,15 @@ public class EditContinentPanel extends JPanel {
         container.revalidate();
     }
 
+    /**An mouse click event on the back Button used for going back to the previous panel.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);
     }
 
+    /**Initialize all the control components with their positions and panel layout.*/
     private void initComponents() {
    
         addContinentButton = new JButton();
@@ -114,8 +137,4 @@ public class EditContinentPanel extends JPanel {
 
     }
 
-    private JButton addContinentButton;
-    private JButton removeContinentButton;
-    private JButton editContinentButton;
-    private JButton backButton;
 }

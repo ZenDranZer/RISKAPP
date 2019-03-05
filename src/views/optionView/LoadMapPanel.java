@@ -97,6 +97,7 @@ public class LoadMapPanel extends JPanel {
             else{
                 JOptionPane.showMessageDialog(this,"Some error in resetting map.");
             }
+            startGameButton.setEnabled(false);
         }
     }
 
