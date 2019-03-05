@@ -28,10 +28,22 @@ public class LoadMapPanel extends JPanel {
         try {
             String message = mapGenerator.readConquestFile(mapFilePath);
             gameEngine.setMapPath(mapFilePath);
+            resetButton.setEnabled(true);
             JOptionPane.showMessageDialog(this,message);
+
             if(message.equals("SUCCESS")){
                 editMapButton.setEnabled(true);
                 loadButton.setEnabled(true);
+            }
+            else{
+
+                if(mapGenerator.reSetAllocations().equals("SUCCESS")){
+                    JOptionPane.showMessageDialog(this,"Map is being reset.");
+                }
+                else{
+                    JOptionPane.showMessageDialog(this,"Some error in resetting map.");
+                }
+
             }
         } catch (IOException e1) {
             JOptionPane.showMessageDialog(this,"IO Exception");
@@ -79,7 +91,7 @@ public class LoadMapPanel extends JPanel {
     private void resetButtonMouseClicked(MouseEvent e) {
         if(resetButton.isEnabled()){
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
-            if(mapGenerator.reSetAllocations().equals("Success")){
+            if(mapGenerator.reSetAllocations().equals("SUCCESS")){
                 JOptionPane.showMessageDialog(this,"Map is being reset.");
             }
             else{
