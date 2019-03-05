@@ -3,8 +3,6 @@ import views.RiskFrame;
 import javax.swing.*;
 import java.awt.*;
 
-//import Views.*;
-
 public class StartUp {
 
 	public void GUI() {
