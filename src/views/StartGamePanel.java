@@ -72,9 +72,13 @@ public class StartGamePanel extends JPanel {
 							container.revalidate();
 						} else {
 							JOptionPane.showMessageDialog(this, message);
+							mapGenerator.reSetAllocations();
+
 						}
 					} else {
 						JOptionPane.showMessageDialog(this, message);
+						mapGenerator.reSetAllocations();
+
 					} //else close
 				}//if isSetClose
 				else{
