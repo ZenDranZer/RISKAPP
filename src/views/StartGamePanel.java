@@ -15,67 +15,80 @@ public class StartGamePanel extends JPanel {
 
 	private GameEngine gameEngine;
 	private JPanel parent;
-
-	public StartGamePanel(GameEngine gameEngine, JPanel parent) {
+	private boolean isSet;
+	public StartGamePanel(GameEngine gameEngine, JPanel parent, boolean isSet) {
 		this.gameEngine = gameEngine;
 		this.parent = parent;
+		this.isSet = isSet;
 		initComponents();
 		mapFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MAP file only", "map"));
 	}
 
 	private void continueButtonMouseClicked(MouseEvent e) throws IOException {
-		ArrayList<String> playerName = new ArrayList<>();
-		int value = (Integer) numberOfPlayers.getValue();
-		if (validateNames()) {
-			switch (value) {
-			case 2:
-				playerName.add(firstNameField.getText());
-				playerName.add(secondNameField.getText());
-				break;
-			case 3:
-				playerName.add(firstNameField.getText());
-				playerName.add(secondNameField.getText());
-				playerName.add(thirdNameField.getText());
-				break;
-			case 4:
-				playerName.add(firstNameField.getText());
-				playerName.add(secondNameField.getText());
-				playerName.add(thirdNameField.getText());
-				playerName.add(forthNameField.getText());
-				break;
-			case 5:
-				playerName.add(firstNameField.getText());
-				playerName.add(secondNameField.getText());
-				playerName.add(thirdNameField.getText());
-				playerName.add(forthNameField.getText());
-				playerName.add(fifthNameField.getText());
-				break;
-			}
-
-			gameEngine.setListActivePlayers(playerName);
-			gameEngine.setMapPath(mapFileChooser.getSelectedFile().getAbsolutePath());
-			MapGenerator mapGenerator = gameEngine.getMapGenerator();
-			String message = mapGenerator.readConquestFile(gameEngine.getMapPath());
-			if (message.equals("SUCCESS")) {
-				message = mapGenerator.validateMap();
-				if (message.equals("SUCCESS")) {
-				gameEngine.initialiseEngine();
-				JOptionPane.showMessageDialog(this, message);
-				Container container = this.getParent();
-				GamePlay gamePlay = new GamePlay(gameEngine);
-				gamePlay.setVisible(true);
-				this.setVisible(false);
-				container.add(gamePlay);
-				container.revalidate();
-				} else {
-					JOptionPane.showMessageDialog(this, message);
+		if (continueButton.isEnabled()) {
+			ArrayList<String> playerName = new ArrayList<>();
+			int value = (Integer) numberOfPlayers.getValue();
+			if (validateNames()) {
+				switch (value) {
+					case 2:
+						playerName.add(firstNameField.getText());
+						playerName.add(secondNameField.getText());
+						break;
+					case 3:
+						playerName.add(firstNameField.getText());
+						playerName.add(secondNameField.getText());
+						playerName.add(thirdNameField.getText());
+						break;
+					case 4:
+						playerName.add(firstNameField.getText());
+						playerName.add(secondNameField.getText());
+						playerName.add(thirdNameField.getText());
+						playerName.add(forthNameField.getText());
+						break;
+					case 5:
+						playerName.add(firstNameField.getText());
+						playerName.add(secondNameField.getText());
+						playerName.add(thirdNameField.getText());
+						playerName.add(forthNameField.getText());
+						playerName.add(fifthNameField.getText());
+						break;
 				}
-			} else {
-				JOptionPane.showMessageDialog(this, message);
-			}
-		}
 
-	}
+				gameEngine.setListActivePlayers(playerName);
+				if(!isSet) {
+					gameEngine.setMapPath(mapFileChooser.getSelectedFile().getAbsolutePath());
+					MapGenerator mapGenerator = gameEngine.getMapGenerator();
+					String message = mapGenerator.readConquestFile(gameEngine.getMapPath());
+					if (message.equals("SUCCESS")) {
+						message = mapGenerator.validateMap();
+						if (message.equals("SUCCESS")) {
+							gameEngine.initialiseEngine();
+							JOptionPane.showMessageDialog(this, message);
+							Container container = this.getParent();
+							GamePlay gamePlay = new GamePlay(gameEngine);
+							gamePlay.setVisible(true);
+							this.setVisible(false);
+							container.add(gamePlay);
+							container.revalidate();
+						} else {
+							JOptionPane.showMessageDialog(this, message);
+						}
+					} else {
+						JOptionPane.showMessageDialog(this, message);
+					} //else close
+				}//if isSetClose
+				else{
+					gameEngine.initialiseEngine();
+					Container container = this.getParent();
+					GamePlay gamePlay = new GamePlay(gameEngine);
+					gamePlay.setVisible(true);
+					this.setVisible(false);
+					container.add(gamePlay);
+					container.revalidate();
+				}
+			}// if validate names close
+		}// if continue button is enable close
+	}//function close
 
 	private void backButtonMouseClicked(MouseEvent e) {
 		Container container = this.getParent();
@@ -110,6 +123,7 @@ public class StartGamePanel extends JPanel {
 			fifthNameField.setEditable(true);
 			break;
 		}
+		continueButton.setEnabled(true);
 	}
 
 	private void initComponents() {
@@ -233,6 +247,7 @@ public class StartGamePanel extends JPanel {
 
 		// ---- continueButton ----
 		continueButton.setText("Continue");
+		continueButton.setEnabled(false);
 		continueButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

@@ -35,7 +35,7 @@ public class RiskFrame extends JFrame {
      * @param e is a mouse event object for event details.*/
     private void startButtonMouseClicked(MouseEvent e) {
         Container container = getContentPane();
-        StartGamePanel gamePanel = new StartGamePanel(gameEngine,dialogPane);
+        StartGamePanel gamePanel = new StartGamePanel(gameEngine,dialogPane,false);
         gamePanel.setVisible(true);
         dialogPane.setVisible(false);
         container.add(gamePanel);

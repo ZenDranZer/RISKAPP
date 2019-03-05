@@ -2,6 +2,7 @@ package views.optionView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
+import views.StartGamePanel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -30,7 +31,6 @@ public class LoadMapPanel extends JPanel {
             JOptionPane.showMessageDialog(this,message);
             if(message.equals("SUCCESS")){
                 editMapButton.setEnabled(true);
-                resetButton.setEnabled(true);
                 loadButton.setEnabled(true);
             }
         } catch (IOException e1) {
@@ -55,18 +55,15 @@ public class LoadMapPanel extends JPanel {
             String message = mapGenerator.validateMap();
             if(message.equals("SUCCESS")){
                 message = mapGenerator.writeConquestFile();
+                resetButton.setEnabled(true);
+                startGameButton.setEnabled(true);
                 if(message.equals("SUCCESS")) {
                     message = "Map loaded and written to file correctly";
                     JOptionPane.showMessageDialog(this,message);
-
-                    Container container = this.getParent();
-                    container.remove(this);
-                    parent.setVisible(true);
                 }
                 else{
                     message="Map loaded correctly. Problems faced in writing the map";
                     JOptionPane.showMessageDialog(this,message);
-
                 }
             }else
                 JOptionPane.showMessageDialog(this,message);
@@ -91,6 +88,17 @@ public class LoadMapPanel extends JPanel {
         }
     }
 
+    private void startGameButtonMouseClicked(MouseEvent e) {
+        if(startGameButton.isEnabled()){
+            Container container = this.getParent();
+            StartGamePanel gamePanel = new StartGamePanel(gameEngine,this,true);
+            gamePanel.setVisible(true);
+            this.setVisible(false);
+            container.add(gamePanel);
+            container.revalidate();
+        }
+    }
+
     private void initComponents() {
         label1 = new JLabel();
         mapFileChooser = new JFileChooser();
@@ -98,6 +106,7 @@ public class LoadMapPanel extends JPanel {
         editMapButton = new JButton();
         loadButton = new JButton();
         resetButton = new JButton();
+        startGameButton = new JButton();
         backButton = new JButton();
 
         setLayout(new GridBagLayout());
@@ -182,6 +191,19 @@ public class LoadMapPanel extends JPanel {
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 5), 0, 0));
 
+        //---- startGameButton ----
+        startGameButton.setText("Start Game!");
+        startGameButton.setEnabled(false);
+        startGameButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                startGameButtonMouseClicked(e);
+            }
+        });
+        add(startGameButton, new GridBagConstraints(4, 4, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 0), 0, 0));
+
       }
 
    private JLabel label1;
@@ -190,5 +212,6 @@ public class LoadMapPanel extends JPanel {
     private JButton editMapButton;
     private JButton resetButton;
     private JButton loadButton;
+    private JButton startGameButton;
     private JButton backButton;
    }
