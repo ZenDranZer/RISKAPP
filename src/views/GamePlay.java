@@ -429,9 +429,7 @@ public class GamePlay extends JPanel {
 		if (lstPlayerCountries.getSelectedValue() == null) {
 			isValid = false;
 			txtError.setText(txtError.getText() + "\n" + "No country selected");
-		}
-
-		if (activePlayer.getCountries().get(lstPlayerCountries.getSelectedIndex()).getArmiesStationed()
+		}else if (activePlayer.getCountries().get(lstPlayerCountries.getSelectedIndex()).getArmiesStationed()
 				+ Integer.parseInt(txtReinforce.getText()) > 12) {
 			isValid = false;
 			txtError.setText(txtError.getText() + "\n" + "Max number of armies allocated to a country is 12");
@@ -460,6 +458,11 @@ public class GamePlay extends JPanel {
 		return "";
 	}
 
+	
+	/**
+	 * Check whether all countries have maximum possible armies allocated
+	 * @return
+	 */
 	public boolean isAllocationComplete()
 	{
 		for(GameCountry country : activePlayer.getCountries())
