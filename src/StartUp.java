@@ -3,6 +3,11 @@ import views.RiskFrame;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Drive for the project
+ * Responsible for the initializing the Main view
+ *
+ */
 public class StartUp {
 
 	public void GUI() {
