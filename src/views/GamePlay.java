@@ -434,11 +434,6 @@ public class GamePlay extends JPanel {
 			isValid = false;
 			txtError.setText(txtError.getText() + "\n" + "Max number of armies allocated to a country is 12");
 		}
-
-		if (Integer.parseInt(txtReinforce.getText()) > activePlayer.getRemainingArmies()) {
-			isValid = false;
-			txtError.setText(txtError.getText() + "\n" + "select number less than or equal to remaining armies");
-		}
 		return isValid;
 	}
 

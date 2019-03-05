@@ -56,8 +56,9 @@ public class TurnControllerTest {
 	/**
 	 * Checks if all the countries have been allocated
 	 */
+	@Test
 	public void testAllocateCountriesAll() {
-		ArrayList<GameCountry> lstCountries = (ArrayList<GameCountry>) testData.testCountryHashMap.values();
+		ArrayList<GameCountry> lstCountries = new ArrayList( testData.testCountryHashMap.values());
 
 		ArrayList<Player> tempPlayers = new ArrayList<Player>();
 
@@ -82,8 +83,9 @@ public class TurnControllerTest {
 	/**
 	 * checks whether all the allocated countries are uniquely allocated
 	 */
+	@Test
 	public void testAllocateCountriesUnique() {
-		ArrayList<GameCountry> lstCountries = (ArrayList<GameCountry>) testData.testCountryHashMap.values();
+		ArrayList<GameCountry> lstCountries = new ArrayList<GameCountry>( testData.testCountryHashMap.values());
 
 		ArrayList<Player> tempPlayers = new ArrayList<Player>();
 
