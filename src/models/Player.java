@@ -13,13 +13,21 @@ public class Player {
     private ArrayList<GameCountry> countries;
     private ArrayList<GameContinent> continents;
     private String cardsHeld;
-    private String cardExchanged;
     private int remainingArmies;
 
+    /**
+     * Initializes the Player
+     */
     public Player() {
         countries = new ArrayList<>();
         continents = new ArrayList<>();
     }
+    
+    /**
+     * Creates a player with the given name and Id
+     * @param name Player Name
+     * @param id Player Id
+     */
     public Player(String name,int id) {
         this.name = name;
         this.id = id;
@@ -27,81 +35,135 @@ public class Player {
         countries = new ArrayList<>();
         continents = new ArrayList<>();
         cardsHeld = "";
-        cardExchanged = "";
-
     }
 
+    /**
+     * Gets the number of unallocated armies
+     * @return number of unallocated armies
+     */
     public int getRemainingArmies()
     {
     	return remainingArmies;
     }
     
+    /**
+     * sets the number of unallocated armies
+     * @param armies number of unallocated armies
+     */
     public void setRemainingArmies(int armies)
     {
     	this.remainingArmies = armies;
     }
     
+    /**
+     * updates the number of unallocated armies
+     * @param armies number of armies to subtract from 
+     */
     public void updateRemainingArmies(int armies)
     {
     	this.remainingArmies -=armies;
     }
     
+    /**
+     * gets the player name
+     * @return a string that represents name of the player
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * sets the name of the player
+     * @param player_name string that represents the name of the player
+     */
     public void setName(String player_name) {
         this.name = player_name;
     }
 
+    /**
+     * gets the Id of the player
+     * @return integer that represents the player id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Set the Id of the player
+     * @param id integer that represents the player Id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * gets the number armies allocated to the player
+     * @return integer that represents the number of armies allocated to the player
+     */
     public int getPlayerArmies() {
         return playerArmies;
     }
 
+    /**
+     * sets the number of armies allocated to the player
+     * @param player_armies integer that represents the number of armies allocated to the player
+     */
     public void setPlayerArmies(int player_armies) {
         this.playerArmies = player_armies;
     }
 
+    /**
+     * Gets the list of countries owned by the player
+     * @return ArrayList that represents the countries owned by the player
+     */
     public ArrayList<GameCountry> getCountries() {
         return countries;
     }
 
+    /**
+     * Sets the list of countries owned by the player
+     * @param country GameCountry that represents the country to be added to the player
+     */
     public void setCountries(GameCountry country) {
         this.countries.add(country);
     }
 
+    /**
+     * Gets the list of continents owned by the player
+     * @return ArrayList that represents the List of continents owned by the player
+     */
     public ArrayList<GameContinent> getContinents() {
         return continents;
     }
 
+    /**
+     * Updates the list of continents owned by the player
+     * @param continent GameContinent that has to be added to the list of continents owned by the player
+     */
     public void setContinents(GameContinent continent) {
         this.continents.add(continent);
     }
 
+    /**
+     * Gets the RISK cards held by the player
+     * @return String that represents the RISK Cards held by the player
+     */
     public String getCardsHeld() {
         return cardsHeld;
     }
-
+    
+    /**
+     * Sets the RISK Cards held by the player
+     * @param cards_held String that represents RISK cards to be allocated to the player
+     */
     public void setCardsHeld(String cards_held) {
         this.cardsHeld = cards_held;
     }
-
-    public String getCardExchanged() {
-        return cardExchanged;
-    }
-
-    public void setCardExchanged(String cardExchanged) {
-        this.cardExchanged = cardExchanged;
-    }
     
+    /**
+     *  Gets the list of country name owned by the player
+     * @return ArrayList of strings that represents the Country names owned by the player
+     */
     public ArrayList<String> getCountryNames()
     {
     	ArrayList<String> names = new ArrayList<String>();
@@ -112,6 +174,10 @@ public class Player {
     	return names;
     }
     
+    /**
+     * Adds armies to the player allocated armies by the intended amount
+     * @param armies integer that represents the number of armies to add
+     */
     public void addPlayerArmy(int armies)
     {
     	this.playerArmies += armies;
