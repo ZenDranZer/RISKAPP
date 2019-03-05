@@ -61,7 +61,7 @@ public class TurnControllerTest {
     @Test
     public void testCalculateNewArmies()
     {
-    	int expectedArmies = 0;
+    	int expectedArmies = 3;
     	
     	int actualArmies = objTurnController.calculateNewArmies(testData.lstPlayers.get(0));
     	assertEquals(expectedArmies, actualArmies);
