@@ -68,38 +68,41 @@ public class GamePlay extends JPanel {
 		objTurnController = objGameEngine.getTurmController();
 		activePlayer = objTurnController.getActivePlayer();
 		setLayout(null);
-		this.setBounds(10, 10, 671, 431);
+		this.setBounds(10, 10, 814, 503);
 		lblPlayerName = new JLabel("Player Name :" + activePlayer.getName());
-		lblPlayerName.setBounds(10, 360, 188, 32);
+		lblPlayerName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPlayerName.setBounds(10, 442, 267, 32);
 		add(lblPlayerName);
 
 		lblArmiesPresent = new JLabel("");
-		lblArmiesPresent.setBounds(243, 121, 201, 32);
+		lblArmiesPresent.setBounds(288, 125, 201, 32);
 		add(lblArmiesPresent);
 
 		lblactionArmiesPresent = new JLabel("");
-		lblactionArmiesPresent.setBounds(243, 164, 201, 32);
+		lblactionArmiesPresent.setBounds(288, 182, 201, 32);
 		add(lblactionArmiesPresent);
 
 		txtError = new JTextArea();
 		txtError.setBackground(SystemColor.control);
 		txtError.setWrapStyleWord(true);
 		txtError.setLineWrap(true);
-		txtError.setBounds(222, 234, 267, 83);
+		txtError.setBounds(238, 249, 353, 108);
 		txtError.setEditable(false);
 		txtError.setFocusable(false);
 		add(txtError);
 
 		lblTurn = new JLabel("Turn");
-		lblTurn.setBounds(10, 326, 55, 23);
+		lblTurn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTurn.setBounds(10, 411, 92, 23);
 		add(lblTurn);
 
 		lblReinforce = new JLabel("Add army to country");
-		lblReinforce.setBounds(64, 33, 198, 14);
+		lblReinforce.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblReinforce.setBounds(64, 11, 254, 36);
 		add(lblReinforce);
 
 		txtReinforce = new JTextField();
-		txtReinforce.setBounds(243, 60, 86, 20);
+		txtReinforce.setBounds(268, 58, 113, 20);
 		add(txtReinforce);
 		txtReinforce.setColumns(10);
 		txtReinforce.setVisible(false);
@@ -148,23 +151,24 @@ public class GamePlay extends JPanel {
 			}
 		});
 
-		btnAdd.setBounds(340, 60, 104, 41);
+		btnAdd.setBounds(417, 58, 104, 41);
 		btnAdd.setVisible(false);
 		add(btnAdd);
 
 		dlstPlayerCountries = new DefaultListModel<String>();
 
 		lblRemainingArmies = new JLabel("Remaining Armies :");
-		lblRemainingArmies.setBounds(434, 365, 188, 23);
+		lblRemainingArmies.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblRemainingArmies.setBounds(578, 411, 211, 23);
 		add(lblRemainingArmies);
 
 		lblPhase = new JLabel("Initial Allocation");
 		lblPhase.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblPhase.setBounds(222, 318, 267, 32);
+		lblPhase.setBounds(254, 399, 267, 32);
 		add(lblPhase);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(74, 58, 124, 259);
+		scrollPane.setBounds(64, 58, 148, 299);
 		add(scrollPane);
 
 		updateListElements();
@@ -196,7 +200,7 @@ public class GamePlay extends JPanel {
 		add(lblError);
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(499, 61, 124, 259);
+		scrollPane_1.setBounds(618, 61, 148, 296);
 		add(scrollPane_1);
 
 		dlstActionCountries = new DefaultListModel<String>();
@@ -219,7 +223,8 @@ public class GamePlay extends JPanel {
 		scrollPane_1.setViewportView(lstActionCountry);
 
 		lblAction = new JLabel("Action");
-		lblAction.setBounds(499, 33, 66, 17);
+		lblAction.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAction.setBounds(618, 23, 148, 24);
 		add(lblAction);
 
 		scrollPane_1.setVisible(false);
@@ -245,7 +250,7 @@ public class GamePlay extends JPanel {
 		activePlayer.addPlayerArmy(army);
 		activePlayer.updateRemainingArmies(army);
 		displayRemainingArmies();
-
+		isAllocationComplete();
 		int allocatedPlayers = 0;
 
 		do {
@@ -291,7 +296,7 @@ public class GamePlay extends JPanel {
 		activePlayer.addPlayerArmy(reinforcements);
 		activePlayer.updateRemainingArmies(reinforcements);
 		displayRemainingArmies();
-
+		isAllocationComplete();
 		if (activePlayer.getRemainingArmies() == 0) {
 			// TODO on complete initiate attack phase
 			attack();
@@ -453,5 +458,19 @@ public class GamePlay extends JPanel {
 			return country.getArmiesStationed() + "";
 		}
 		return "";
+	}
+
+	public boolean isAllocationComplete()
+	{
+		for(GameCountry country : activePlayer.getCountries())
+		{
+			if( country.getArmiesStationed() < 12)
+			{
+				return false;
+			}
+		}
+		activePlayer.setRemainingArmies(0);
+		
+		return true;
 	}
 }
