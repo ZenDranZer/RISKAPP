@@ -73,6 +73,16 @@ public class TurnController {
 		if (countryCount / 3 > 3)
 			availableArmies = countryCount / 3;
 
+		//ArrayList<GameContinent> playerContinents = MapGenerator.checkContinentsOwnedByOnePlayer(1);
+		
+		//if(playerContinents != null || playerContinents.size() >0)
+		//{
+//			for(GameContinent continent : playerContinents)
+//			{
+//				activePlayer.setContinents(continent);
+//				availableArmies += continent.getContinentValue();
+//			}
+		//}
 		for (GameContinent continent : activePlayer.getContinents()) {
 			availableArmies = continent.getContinentValue();
 		}

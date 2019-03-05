@@ -26,6 +26,7 @@ public class GameCountry {
      */
     public GameCountry(String countryName){
         this.countryName = countryName;
+        neighbouringCountries = new HashMap<>();
     }
 
     /**

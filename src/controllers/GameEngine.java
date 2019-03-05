@@ -75,6 +75,15 @@ public class GameEngine {
 	}
 
 	/**
+	 * Assigns List of players to Active players 
+	 * @param lstPlayers ArrayList of player objects
+	 */
+	public void setActivePlayers(ArrayList<Player> lstPlayers)
+	{
+		this.listActivePlayers = lstPlayers;
+	}
+	
+	/**
 	 * Initialize the game engine with the initial set of players, randomly
 	 * allocate countries and assign initial set of armies
 	 */
