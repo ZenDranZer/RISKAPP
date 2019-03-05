@@ -8,16 +8,46 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**CreateContinentPanel is a panel which is used to add a new continent in the map in creating new map.*/
 public class CreateContinentPanel extends JPanel {
 
+    /**GameEngine object to preserve the state of the game.*/
     private GameEngine gameEngine;
+    /**A JPanel object for tracking the parent panel.*/
     private JPanel parent;
+    /**A label to display "Create Continent" string.*/
+    private JLabel label1;
+    /**A label to display "Enter Continent Name:" string.*/
+    private JLabel label2;
+    /**A text field used to get the user input for continent name.*/
+    private JTextField nameField;
+    /**A label to display "Enter Value:" string.*/
+    private JLabel label3;
+    /**A text field for asking user for value of a continent */
+    private JTextField valueField;
+    /**A button to perform addition of a continent*/
+    private JButton addContinent;
+    /**A list which maintains the current state of the continent list*/
+    private JList continentList;
+    /**A button for finidhing the adding continent process.*/
+    private JButton finishButton;
+    /**A scroll pane for providing the list a scrollable*/
+    private JScrollPane scrollPane;
+    /**A button for going to back button.*/
+    private JButton backButton;
+
+    /**A public constructor to initialize the whole panel with different controls
+     * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
+     * @param parent a previous panel which is being used to redirect back to the previous Panel.
+     * */
     public CreateContinentPanel(GameEngine gameEngine , JPanel parent) {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
     }
 
+    /**An mouse click event on the finish Button for going to next panel.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void finishButtonMouseClicked(MouseEvent e) {
         if(finishButton.isEnabled()){
         AddCountry addCountry = new AddCountry(gameEngine , this);
@@ -29,6 +59,8 @@ public class CreateContinentPanel extends JPanel {
         }
     }
 
+    /**An mouse click event on the addContinent button used for performing addition operation of continent.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void addContinentMouseClicked(MouseEvent e) {
         String continentName = nameField.getText();
         int value = Integer.parseInt(valueField.getText());
@@ -45,12 +77,15 @@ public class CreateContinentPanel extends JPanel {
         valueField.setText("1");
     }
 
+    /**An mouse click event on the back Button used for going back to the previous panel.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);
     }
 
+    /**Initialize all the control components with their positions and panel layout.*/
     private void initComponents() {
     
         label1 = new JLabel();
@@ -121,7 +156,7 @@ public class CreateContinentPanel extends JPanel {
                 new Insets(0, 0, 5, 5), 0, 0));
 
         //---- finishButton ----
-        finishButton.setText("Finish");
+        finishButton.setText("Next");
         finishButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -144,16 +179,4 @@ public class CreateContinentPanel extends JPanel {
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 5), 0, 0));
     }
-
-   
-    private JLabel label1;
-    private JLabel label2;
-    private JTextField nameField;
-    private JLabel label3;
-    private JTextField valueField;
-    private JButton addContinent;
-    private JList continentList;
-    private JButton finishButton;
-    private JScrollPane scrollPane;
-    private JButton backButton;
 }

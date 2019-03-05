@@ -7,34 +7,61 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**AddContinentPanel is a panel which is used to add a new continent into the map after reading map.*/
 public class AddContinentPanel extends JPanel {
+
+    /**GameEngine object to preserve the state of the game.*/
     private GameEngine gameEngine;
+    /**A JPanel object for tracking the parent panel.*/
     private JPanel parent;
+    /**A label to display "Create Continent" string.*/
+    private JLabel label1;
+    /**A label to display "Enter Continent Name:" string*/
+    private JLabel label2;
+    /**A text field used to get the user input for continent name.*/
+    private JTextField nameField;
+    /**A lable to display "Enter Value:" string*/
+    private JLabel label3;
+    /**A text field for asking user for value of a continent */
+    private JTextField valueField;
+    /**A button to perform addition of a continent*/
+    private JButton addContinent;
+    /**A button for going to back button.*/
+    private JButton backButton;
+
+    /**A public constructor to initialize the whole panel with different controls
+     * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
+     * @param parent a previous panel which is being used to redirect back to the previous Panel.
+     * */
     public AddContinentPanel(GameEngine gameEngine,JPanel parent) {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
     }
 
+    /**An mouse click event on the addContinent button used for performing addition operation of continent.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void addContinentMouseClicked(MouseEvent e) {
         String continentName = nameField.getText();
         int noOfArmies = Integer.parseInt(valueField.getText());
-        if(continentName == "" ){
+        if(continentName.equals("")){
             JOptionPane.showMessageDialog(this,"Invalid argument");
         }else{
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
             String message = mapGenerator.addContinent(continentName,noOfArmies);
             JOptionPane.showMessageDialog(this,message);
         }
-
     }
 
+    /**An mouse click event on the back Button used for going back to the previous panel.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);
     }
 
+    /**Initialize all the control components with their positions and panel layout.*/
     private void initComponents() {
         label1 = new JLabel();
         label2 = new JLabel();
@@ -103,12 +130,4 @@ public class AddContinentPanel extends JPanel {
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 5, 5), 0, 0));
     }
-
-    private JLabel label1;
-    private JLabel label2;
-    private JTextField nameField;
-    private JLabel label3;
-    private JTextField valueField;
-    private JButton addContinent;
-    private JButton backButton;
 }

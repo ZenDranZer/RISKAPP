@@ -6,8 +6,6 @@ import models.GameCountry;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultUndirectedGraph;
-import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.traverse.BreadthFirstIterator;
 import org.jgrapht.traverse.DepthFirstIterator;
@@ -37,25 +35,12 @@ public class GraphUtil {
     /**Setter method for creating a new map graph.
      *@param countryList an ArrayList containing all the countries.*/
     public void setCountryGraph(HashMap<String,GameCountry> countryList) {
-/*
-        System.out.println(countryList.keySet());
-*/
         for (GameCountry gameCountry : countryList.values()) {
             countryGraph.addVertex(gameCountry);
-
         }
-
-
         for (GameCountry gameCountry : countryList.values()) {
-/*
-            System.out.println("Neighbours of :" + gameCountry.getCountryName()+" are"+"  "+gameCountry.getNeighbouringCountries().values());
-*/
             for (GameCountry neighbour : gameCountry.getNeighbouringCountries().values()){
-/*
-                System.out.println("Neighb:  "+neighbour.getCountryName()+"    This:  "+gameCountry.getCountryName());
-*/
                 countryGraph.addEdge(gameCountry, MapGenerator.countryHashMap.get(neighbour.getCountryName()));
-              /*  countryGraph.addEdge(gameCountry, MapGenerator.countryHashMap.get(neighbour.getCountryName()));*/
             }
         }
     }
@@ -122,8 +107,8 @@ public class GraphUtil {
 
     /**This method will remove all the edges and vertices from the graph.
      * @return it will return boolean whether graph cleared or not.*/
-    public boolean clearGraph(){
-        return countryGraph.removeAllEdges(countryGraph.edgeSet()) &&  countryGraph.removeAllVertices(countryGraph.vertexSet());
+    public void clearGraph(){
+        countryGraph = new SimpleGraph<>(DefaultEdge.class);
     }
 
 }

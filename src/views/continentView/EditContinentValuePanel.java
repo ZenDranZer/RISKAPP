@@ -10,10 +10,40 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 
 public class EditContinentValuePanel extends JPanel {
+
     private ArrayList<String> continentsName;
+    /**GameEngine object to preserve the state of the game.*/
     private GameEngine gameEngine;
+    /**A JPanel object for tracking the parent panel.*/
     private JPanel parent;
+    /**A MapGenerator object for using various map control event.*/
     private MapGenerator mapGenerator;
+    /**A label to display "Edit Continent Values:" string.*/
+    private JLabel label1;
+    /**A scroll pane for JList to make it scrollable.*/
+    private JScrollPane scrollPane1;
+    /**A list containing all the continent names.*/
+    private JList continentList;
+    /**A label to display "Name :" string.*/
+    private JLabel label2;
+    /**A fisex text field for current name of the continent*/
+    private JTextField fixedNameField;
+    /**A label to display "Field to Change :" string.*/
+    private JLabel label3;
+    private JComboBox<String> featureBox;
+    /**A label to display "Name :" string.*/
+    private JLabel label4;
+    /**A text field used to get the user input for continent name.*/
+    private JTextField nameField;
+    /**A label to display "Value :" string.*/
+    private JLabel label5;
+    /**A text field for asking user for value of a continent */
+    private JTextField valueField;
+    /**A button for going to back button.*/
+    private JButton backButton;
+    /**A button for editing the continent.*/
+    private JButton editButton;
+
 
     public EditContinentValuePanel(GameEngine gameEngine, JPanel parent) {
         this.gameEngine = gameEngine;
@@ -205,17 +235,5 @@ public class EditContinentValuePanel extends JPanel {
             new Insets(0, 0, 0, 5), 0, 0));
     }
 
-    private JLabel label1;
-    private JScrollPane scrollPane1;
-    private JList continentList;
-    private JLabel label2;
-    private JTextField fixedNameField;
-    private JLabel label3;
-    private JComboBox<String> featureBox;
-    private JLabel label4;
-    private JTextField nameField;
-    private JLabel label5;
-    private JTextField valueField;
-    private JButton backButton;
-    private JButton editButton;
+
 }
