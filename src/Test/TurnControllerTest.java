@@ -17,10 +17,11 @@ public class TurnControllerTest {
 
 	TestUtil testData;
 	TurnController objTurnController;
-
+	MapGenerator mapGenerator ;
 	@Before
 	public void setUp() throws Exception {
 		testData = new TestUtil();
+		mapGenerator = new MapGenerator();
 		objTurnController = new TurnController();
 		MapGenerator.continentHashMap = testData.testContinentHashMap;
 		MapGenerator.countryHashMap = testData.testCountryHashMap;
@@ -37,9 +38,9 @@ public class TurnControllerTest {
 	 */
 	@Test
 	public void testCalculateNewArmies() {
-		int expectedArmies = 3;
+		int expectedArmies = 8;
 
-		int actualArmies = objTurnController.calculateNewArmies(testData.lstPlayers.get(0));
+		int actualArmies = objTurnController.calculateNewArmies(testData.lstPlayers.get(0),mapGenerator);
 		assertEquals(expectedArmies, actualArmies);
 	}
 
@@ -73,8 +74,6 @@ public class TurnControllerTest {
 		for (Player pl : tempPlayers) {
 			countryCount += pl.getCountries().size();
 		}
-		
-		System.out.println("Test : " + countryCount);
 		// Checks if all countries have been allocated
 		assertEquals(testData.testCountryHashMap.values().size(), countryCount);
 
@@ -110,8 +109,8 @@ public class TurnControllerTest {
 	@Test
 	public void testPlaceArmy()
 	{
-		
-		
+		objTurnController.placeArmy(testData.lstPlayers.get(0), "India", 3);
+		assertEquals(3, testData.testCountryHashMap.get("India").getArmiesStationed());
 	}
 	
 }

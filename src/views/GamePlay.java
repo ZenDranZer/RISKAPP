@@ -113,7 +113,7 @@ public class GamePlay extends JPanel {
 								flag = 1;
 								objGameEngine.setNextPlayer(activePlayer);
 								activePlayer = objTurnController.getActivePlayer();
-								objTurnController.calculateNewArmies(activePlayer);
+								objTurnController.calculateNewArmies(activePlayer, objGameEngine.getMapGenerator());
 								updateReinforcementPanel();
 							}
 							reinforceCountry();
@@ -250,7 +250,7 @@ public class GamePlay extends JPanel {
 			lblPhase.setText("Reinforcement");
 			objGameEngine.setNextPlayer(activePlayer);
 			activePlayer = objTurnController.getActivePlayer();
-			objTurnController.calculateNewArmies(activePlayer);
+			objTurnController.calculateNewArmies(activePlayer, objGameEngine.getMapGenerator());
 			updateReinforcementPanel();
 			flag = 1;
 			System.out.println("Reinforcement");
@@ -293,7 +293,7 @@ public class GamePlay extends JPanel {
 		lblPhase.setText("Reinforcement");
 		lblReinforce.setText("Select country to reinforce");
 		txtError.setText("");
-		objTurnController.calculateNewArmies(activePlayer);
+		objTurnController.calculateNewArmies(activePlayer, objGameEngine.getMapGenerator());
 		updateListElements();
 		lblPlayerName.setText("Player Name : " + activePlayer.getName());
 		displayRemainingArmies();

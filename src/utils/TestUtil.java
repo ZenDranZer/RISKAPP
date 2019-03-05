@@ -167,12 +167,4 @@ public class TestUtil {
 
     }
     
-//    public static void main(String[] args) throws Exception
-//    {
-//    	TestUtil obj = new TestUtil();
-//    	System.out.println(MapGenerator.continentHashMap.get("Asia").getContinentName());
-//    	
-//    	ArrayList<GameContinent> c =  obj.mapGenerator.checkContinentsOwnedByOnePlayer(1);
-//    	System.out.println(c.size());
-//    }
 }

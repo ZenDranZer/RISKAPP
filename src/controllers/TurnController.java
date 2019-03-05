@@ -65,7 +65,7 @@ public class TurnController {
 	 * @return availableArmies
      *            number of new armies to allocate
 	 */
-	public int calculateNewArmies(Player activePlayer) {
+	public int calculateNewArmies(Player activePlayer, MapGenerator mapGenerator) {
 
 		int countryCount = activePlayer.getCountries().size();
 
@@ -73,9 +73,17 @@ public class TurnController {
 		if (countryCount / 3 > 3)
 			availableArmies = countryCount / 3;
 
-		for (GameContinent continent : activePlayer.getContinents()) {
-			availableArmies = continent.getContinentValue();
+		ArrayList<GameContinent> playerContinents = mapGenerator.checkContinentsOwnedByOnePlayer(activePlayer.getId());
+		
+		if(playerContinents != null && playerContinents.size() >0)
+		{
+			for(GameContinent continent : playerContinents)
+			{
+				activePlayer.setContinents(continent);
+				availableArmies += continent.getContinentValue();
+			}
 		}
+
 		activePlayer.setRemainingArmies(availableArmies);
 		return availableArmies;
 	}
