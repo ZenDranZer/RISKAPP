@@ -414,7 +414,7 @@ public class GamePlay extends JPanel {
 
 		boolean isValid = true;
 
-		if (txtReinforce.getText().isEmpty() && txtReinforce.getText().equals("0")) {
+		if (txtReinforce.getText().isEmpty() || txtReinforce.getText().equals("0")) {
 			isValid = false;
 			txtError.setText(txtError.getText() + "\n" + "Enter some value");
 		} else if (Integer.parseInt(txtReinforce.getText()) > activePlayer.getRemainingArmies()) {
