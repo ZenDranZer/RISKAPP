@@ -22,7 +22,7 @@ public class MapGenerator {
     static HashMap <String,String>guiHashMap;
     GraphUtil graphUtilObject ;
     BufferedReader inputReader;
-
+    boolean firstCountryFlag;
     /** Class constructor that initializes the ubiquitious countryHashMap and ContinentHashMap
      *
      */
@@ -32,6 +32,7 @@ public class MapGenerator {
         continentList = new ArrayList<>();
         countryList = new ArrayList<>();
         guiHashMap = new HashMap<>();
+        firstCountryFlag=true;
     }
 
     /**Reads continents from a file and store them in required structure.
@@ -175,7 +176,6 @@ public class MapGenerator {
             String inputLine = inputReader.readLine();
             inputLine = inputReader.readLine();
 
-            System.out.println(inputLine);
             while (!inputLine.equals("")){
                 String[] inpList = inputLine.split("=");
                 guiHashMap.put(inpList[0],inpList[1]);
@@ -232,15 +232,17 @@ public class MapGenerator {
                  }
                 lineCounter++;
             }
-            System.out.println(continentHashMap.size());
-            System.out.println(countryHashMap.size());
-            for(GameCountry country : countryHashMap.values()){
-                System.out.print(country.getCountryName()+"  ");
-                System.out.println(country.getNeighbouringCountries().keySet());
-                System.out.println(country.getCountryName()+"  "+country.getContinent().getContinentName()+"  "+country.getCoordinateX()+"  "+country.getCoordinateY());
+            MapValidator validator = new MapValidator();
+            if(validator.isFullyLinked()){
+                returnString = "SUCCESS";
             }
+            else{
+                returnString = "The Countries are not properly linked to each other";
+            }
+            GraphUtil tempGraph = new GraphUtil();
+            tempGraph.setCountryGraph(countryHashMap);
 
-            return validateMap();
+            return returnString;
         }catch (FileNotFoundException e){
             return "THE FILE NOT FOUND";
         }catch (IOException e){
@@ -374,6 +376,7 @@ public class MapGenerator {
      */
     public String addContinent(String continentName, int continentValue){
         try {
+
             if (!continentHashMap.containsKey(continentName)) {
                 GameContinent newContinent = new GameContinent();
                 newContinent.setContinentName(continentName);
@@ -397,25 +400,35 @@ public class MapGenerator {
     public String addCountry(String continentname, String countryName, ArrayList<String> neighbours){
         String returnString;
         try {
-            if ((!countryHashMap.containsKey(countryName)) || (countryHashMap.get(countryName).getNeighbouringCountries().size()==0)) {
-                GameCountry newCountry = new GameCountry();
+
+
+
+            if  ((firstCountryFlag|| ((countryHashMap.containsKey(countryName))&&countryHashMap.get(countryName).getContinent()==null))) {
+                firstCountryFlag=false;
+                GameCountry newCountry;
+                if(countryExists(countryName)==null) {
+                     newCountry = new GameCountry();
+                }else{
+                    newCountry=countryExists(countryName);
+                }
                 newCountry.setContinent(continentHashMap.get(continentname));
                 newCountry.setCountryName(countryName);
                 continentHashMap.get(continentname).setCountries(newCountry);
 
                 for (String tempNeighbourName : neighbours) {
                     GameCountry newNeighbour;
-                    if (countryExists(tempNeighbourName) == null) {
+                    if (countryExists(tempNeighbourName)==null) {
                         newNeighbour = new GameCountry();
                         newNeighbour.setCountryName(tempNeighbourName);
                         countryHashMap.put(tempNeighbourName,newNeighbour);
                         newCountry.addNeighbouringCountry(newNeighbour);
+                        newNeighbour.addNeighbouringCountry(newCountry);
 
-                        countryHashMap.put(tempNeighbourName,newNeighbour);
-                        System.out.println(countryHashMap.keySet());
-                    } else
+                    } else{
+                        newCountry.addNeighbouringCountry(countryExists(tempNeighbourName));
+                        countryExists(tempNeighbourName).addNeighbouringCountry(newCountry);
+                    }
 
-                    newCountry.setNeighbouringCountries(countryExists(tempNeighbourName));
 
                 }
                 countryHashMap.put(countryName,newCountry);
@@ -439,7 +452,7 @@ public class MapGenerator {
         for(GameCountry country : countryHashMap.values()){
 
             if(!validator.hasNeighbor(country)){
-                returnString = "ONE OF THE COUNTRY HAS NO NEIGHBOURS";
+                returnString = "ONE OR MORE COUNTRIES HAVE NO NEIGHBOURS";
                 break;
             }
 
@@ -457,7 +470,7 @@ public class MapGenerator {
         }
 
         graphUtilObject = this.buildGraph();
-        if(!new MapValidator().isWholeMapConnected(graphUtilObject,new ArrayList<>(countryHashMap.values()))){
+        if(!validator.isWholeMapConnected(graphUtilObject,(countryHashMap.values()))){
             returnString = "THE WHOLE MAP IS NOT CONNECTED";
         }
 

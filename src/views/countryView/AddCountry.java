@@ -21,8 +21,8 @@ public class AddCountry extends JPanel {
     }
 
     private void addNeighbourButtonMouseClicked(MouseEvent e) {
-        neigbourList.setText(neigbourList.getText() + "\n" + neighbourField.getText() + " ");
-        neighbourList.add(neighbourField.getText() + " ");
+        neigbourList.setText(neigbourList.getText() + neighbourField.getText());
+        neighbourList.add(neighbourField.getText());
     }
 
     private void addCountryButtonMouseClicked(MouseEvent e) {

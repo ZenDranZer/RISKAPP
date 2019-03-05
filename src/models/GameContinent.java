@@ -15,6 +15,7 @@ public class GameContinent {
         this.continentValue = continentValue;
         this.playerID = playerID;*/
         countries = new HashMap<>();
+        continentValue=0;
     }
 
     public String getContinentName() {

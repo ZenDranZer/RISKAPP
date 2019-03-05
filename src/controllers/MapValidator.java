@@ -25,6 +25,7 @@ public class MapValidator {
     }*/
     public boolean hasNeighbor(GameCountry country){ // see if the neighbour list is initialized in the model constructor and if not, do it.
         if(country.getNeighbouringCountries().isEmpty()){
+            System.out.println(country.getCountryName());
             return false;
         }
         return true;
@@ -48,16 +49,22 @@ public boolean hasValidNumberOfCountries(ArrayList<GameCountry> countries){
         }
         return true;
 }
-
-public boolean isWholeMapConnected(GraphUtil util, ArrayList<GameCountry> countries){
-        for(GameCountry country : countries) {
-            if (util.getIteratorSize(util.breadthFirstSearch(country)) == countries.size()) {
-                continue;
-            }
-            return false;
+public boolean isFullyLinked() {
+    for(String country : MapGenerator.countryHashMap.keySet()){
+        for(String neighbor : MapGenerator.countryHashMap.get(country).getNeighbouringCountries().keySet()){
+            if(!(MapGenerator.countryHashMap.get(neighbor).getNeighbouringCountries().containsKey(country))){
+                System.out.println(country+"    "+neighbor);
+                return false;}
         }
-        return true;
+    }
+    System.out.println("something");
+    return true;
+    }
+
+public boolean isWholeMapConnected(GraphUtil util, Collection<GameCountry> countries){
+        return util.isConnected();
 }
+
 
 /*public boolean isWholeContinentConnected(GameContinent continent){
         GraphUtil tempGraph = new GraphUtil();
