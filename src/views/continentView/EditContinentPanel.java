@@ -31,7 +31,7 @@ public class EditContinentPanel extends JPanel {
         initComponents();
     }
 
-    /**An mouse click event on the addContinent Button for invoking new panel for adding new continent.
+    /**A mouse click event on the addContinent Button for invoking new panel for adding new continent.
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void addContinentButtonMouseClicked(MouseEvent e) {
         AddContinentPanel addContinent = new AddContinentPanel(gameEngine,this);
@@ -42,7 +42,7 @@ public class EditContinentPanel extends JPanel {
         container.revalidate();
     }
 
-    /**An mouse click event on the addContinent Button for invoking new panel for removing continent.
+    /**A mouse click event on the addContinent Button for invoking new panel for removing continent.
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void removeContinentButtonMouseClicked(MouseEvent e) {
         RemoveContinentPanel removeContinentPanel = new RemoveContinentPanel(gameEngine,this);
@@ -53,7 +53,7 @@ public class EditContinentPanel extends JPanel {
         container.revalidate();
     }
 
-    /**An mouse click event on the addContinent Button for invoking new panel for editing existing continent.
+    /**A mouse click event on the addContinent Button for invoking new panel for editing existing continent.
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void editContinentButtonMouseClicked(MouseEvent e) {
         EditContinentValuePanel editContinentValuePanel = new EditContinentValuePanel(gameEngine,this);
@@ -64,7 +64,7 @@ public class EditContinentPanel extends JPanel {
         container.revalidate();
     }
 
-    /**An mouse click event on the back Button used for going back to the previous panel.
+    /**A mouse click event on the back Button used for going back to the previous panel.
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();

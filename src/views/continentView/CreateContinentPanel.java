@@ -46,7 +46,7 @@ public class CreateContinentPanel extends JPanel {
         initComponents();
     }
 
-    /**An mouse click event on the finish Button for going to next panel.
+    /**A mouse click event on the finish Button for going to next panel.
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void finishButtonMouseClicked(MouseEvent e) {
         if(finishButton.isEnabled()){
@@ -59,7 +59,7 @@ public class CreateContinentPanel extends JPanel {
         }
     }
 
-    /**An mouse click event on the addContinent button used for performing addition operation of continent.
+    /**A mouse click event on the addContinent button used for performing addition operation of continent.
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void addContinentMouseClicked(MouseEvent e) {
         String continentName = nameField.getText();
@@ -77,7 +77,7 @@ public class CreateContinentPanel extends JPanel {
         valueField.setText("1");
     }
 
-    /**An mouse click event on the back Button used for going back to the previous panel.
+    /**A mouse click event on the back Button used for going back to the previous panel.
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();

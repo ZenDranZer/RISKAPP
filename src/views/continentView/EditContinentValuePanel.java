@@ -44,7 +44,10 @@ public class EditContinentValuePanel extends JPanel {
     /**A button for editing the continent.*/
     private JButton editButton;
 
-
+    /**A public constructor to initialize the whole panel with different controls
+     * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
+     * @param parent a previous panel which is being used to redirect back to the previous Panel.
+     * */
     public EditContinentValuePanel(GameEngine gameEngine, JPanel parent) {
         this.gameEngine = gameEngine;
         this.parent = parent;
@@ -55,6 +58,8 @@ public class EditContinentValuePanel extends JPanel {
         valueField.setText("1");
     }
 
+    /**An Action performed event on the finish Button for going to next panel.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void featureBoxActionPerformed(ActionEvent e) {
         int index = featureBox.getSelectedIndex();
         switch (index){
@@ -73,16 +78,22 @@ public class EditContinentValuePanel extends JPanel {
         }
     }
 
+    /**An value changed event on the finish Button for going to next panel.
+     * @param e is a ListSelectionEvent object to get all the details regarding the event.*/
     private void continentListValueChanged(ListSelectionEvent e) {
         fixedNameField.setText((String)continentList.getSelectedValue());
     }
 
+    /**A mouse click event on the back Button used for going back to the previous panel.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);
     }
 
+    /**A mouse click event on the edit Button for editing the continents properties.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void editButtonMouseClicked(MouseEvent e) {
         String continentName = nameField.getText();
         int value = 1;
@@ -117,8 +128,7 @@ public class EditContinentValuePanel extends JPanel {
         continentList.revalidate();
     }
 
-
-
+    /**Initialize all the control components with their positions and panel layout.*/
     private void initComponents() {
         label1 = new JLabel();
         scrollPane1 = new JScrollPane();

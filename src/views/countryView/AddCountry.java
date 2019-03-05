@@ -9,10 +9,40 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class AddCountry extends JPanel {
-    private ArrayList<String> neighbourList;
-    private GameEngine gameEngine;
-    private JPanel parent;
 
+    /**An arrayList maintaining the current state of the neighbour list of a country.*/
+    private ArrayList<String> neighbourList;
+    /**GameEngine object to preserve the state of the game.*/
+    private GameEngine gameEngine;
+    /**A JPanel object for tracking the parent panel.*/
+    private JPanel parent;
+    /**A label to display "Add Country:" string.*/
+    private JLabel label1;
+    /**A label to maintain neighbour list.*/
+    private JLabel neigbourList;
+    /**A label to display "Enter Name :" string.*/
+    private JLabel label2;
+    /**A text field used to get the user input for country name.*/
+    private JTextField nameField;
+    /**A label to display "Enter Continent Name:" string.*/
+    private JLabel label4;
+    /**A text field used to get the user input for continent name.*/
+    private JTextField continentField;
+    /**A label to display "Enter Neighbour:" string.*/
+    private JLabel label3;
+    /**A text field used to get the user input for neighbour name.*/
+    private JTextField neighbourField;
+    /**A button to perform addition of a neighbour*/
+    private JButton addNeighbourButton;
+    /**A button to perform addition of a country*/
+    private JButton addCountryButton;
+    /**A button to validate the map and write it to the .map file.*/
+    private JButton finishButton;
+
+    /**A public constructor to initialize the whole panel with different controls
+     * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
+     * @param parent a previous panel which is being used to redirect back to the previous Panel.
+     * */
     public AddCountry(GameEngine gameEngine,JPanel parent) {
         neighbourList = new ArrayList<>();
         this.gameEngine = gameEngine;
@@ -20,15 +50,19 @@ public class AddCountry extends JPanel {
         initComponents();
     }
 
+    /**A mouse click event on the add neighbour Button for adding a neighbour.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void addNeighbourButtonMouseClicked(MouseEvent e) {
         neigbourList.setText(neigbourList.getText() + "\n" + neighbourField.getText() + " ");
         neighbourList.add(neighbourField.getText() + " ");
     }
 
+    /**A mouse click event on the add country Button for adding a country.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void addCountryButtonMouseClicked(MouseEvent e) {
         String countryName = nameField.getText();
         String continentName = continentField.getText();
-        if(countryName == "" || continentName == ""){
+        if(countryName.equals("") || continentName.equals("")){
             JOptionPane.showMessageDialog(this,"Value not added properly.");
         } else {
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
@@ -42,6 +76,8 @@ public class AddCountry extends JPanel {
         }
     }
 
+    /**A mouse click event on the add finish Button for writing and validating the map file.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void finishButtonMouseClicked(MouseEvent e) {
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
         String message  = mapGenerator.validateMap();
@@ -51,6 +87,7 @@ public class AddCountry extends JPanel {
         parent.setVisible(true);
     }
 
+    /**Initialize all the control components with their positions and panel layout.*/
     private void initComponents() {
 
         label1 = new JLabel();
@@ -150,17 +187,5 @@ public class AddCountry extends JPanel {
 
 
     }
-
-    private JLabel label1;
-    private JLabel neigbourList;
-    private JLabel label2;
-    private JTextField nameField;
-    private JLabel label4;
-    private JTextField continentField;
-    private JLabel label3;
-    private JTextField neighbourField;
-    private JButton addNeighbourButton;
-    private JButton addCountryButton;
-    private JButton finishButton;
 
 }

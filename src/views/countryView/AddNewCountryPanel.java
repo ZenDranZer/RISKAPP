@@ -9,9 +9,40 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class AddNewCountryPanel extends JPanel {
+
+    /**An arrayList maintaining the current state of the neighbour list of a country.*/
     private ArrayList<String> neighbourList;
+    /**GameEngine object to preserve the state of the game.*/
     private GameEngine gameEngine;
+    /**A JPanel object for tracking the parent panel.*/
     private JPanel parent;
+    /**A label to display "Add Country:" string.*/
+    private JLabel label1;
+    /**A label to display "Enter Name :" string.*/
+    private JLabel label2;
+    /**A text field used to get the user input for country name.*/
+    private JTextField nameField;
+    /**A label to display "Enter Continent Name:" string.*/
+    private JLabel label4;
+    /**A text field used to get the user input for continent name.*/
+    private JTextField continentField;
+    /**A label to display "Enter Neighbour:" string.*/
+    private JLabel label3;
+    /**A text field used to get the user input for neighbour name.*/
+    private JTextField neighbourField;
+    /**A button to perform addition of a neighbour*/
+    private JButton addNeighbourButton;
+    /**A button to perform addition of a country*/
+    private JButton addCountryButton;
+    /**A label to maintain neighbour list.*/
+    private JLabel neigbourList;
+    /**A button for going to back button.*/
+    private JButton backButton;
+
+    /**A public constructor to initialize the whole panel with different controls
+     * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
+     * @param parent a previous panel which is being used to redirect back to the previous Panel.
+     * */
     public AddNewCountryPanel(GameEngine gameEngine,JPanel parent) {
         neighbourList = new ArrayList<>();
         this.gameEngine = gameEngine;
@@ -19,11 +50,15 @@ public class AddNewCountryPanel extends JPanel {
         initComponents();
     }
 
+    /**A mouse click event on the add neighbour Button for adding a neighbour.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void addNeighbourButtonMouseClicked(MouseEvent e) {
         neigbourList.setText(neigbourList.getText() + "\n" + neighbourField.getText());
         neighbourList.add(neighbourField.getText());
     }
 
+    /**A mouse click event on the add country Button for adding a country.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void addCountryButtonMouseClicked(MouseEvent e) {
         String countryName = nameField.getText();
         String continentName = continentField.getText();
@@ -41,12 +76,15 @@ public class AddNewCountryPanel extends JPanel {
         }
     }
 
+    /**A mouse click event on the back Button used for going back to the previous panel.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);
     }
 
+    /**Initialize all the control components with their positions and panel layout.*/
     private void initComponents() {
         label1 = new JLabel();
         label2 = new JLabel();
@@ -143,16 +181,4 @@ public class AddNewCountryPanel extends JPanel {
             new Insets(0, 0, 0, 5), 0, 0));
         }
 
-    private JLabel label1;
-    private JLabel label2;
-    private JTextField nameField;
-    private JLabel label4;
-    private JTextField continentField;
-    private JLabel label3;
-    private JTextField neighbourField;
-    private JButton addNeighbourButton;
-    private JButton addCountryButton;
-    private JLabel neigbourList;
-    private JButton backButton;
-  
 }
