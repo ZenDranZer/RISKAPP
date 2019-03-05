@@ -65,7 +65,7 @@ public class GamePlay extends JPanel {
 	 */
 	public GamePlay(GameEngine engine) {
 		objGameEngine = engine;
-		objTurnController = objGameEngine.getTurnComtroller();
+		objTurnController = objGameEngine.getTurmController();
 		activePlayer = objTurnController.getActivePlayer();
 		setLayout(null);
 		this.setBounds(10, 10, 814, 503);

@@ -206,7 +206,7 @@ public class LoadMapPanel extends JPanel {
 
       }
 
-   private JLabel label1;
+    private JLabel label1;
     private JFileChooser mapFileChooser;
     private JButton readButton;
     private JButton editMapButton;

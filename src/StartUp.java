@@ -14,7 +14,7 @@ public class StartUp {
 
 	GameEngine objGameEngine;
 
-	/*
+	/**
 	 * Initial setup 1. Render UI (CUI or GUI) and initial options a. Initial
 	 * menus b. Game Start button /option
 	 */
@@ -23,19 +23,20 @@ public class StartUp {
 		objGameEngine = new GameEngine();
 	}
 
-	/*
+	/**
 	 * Game Setup 1. Map setup / map editor 2. Initial allocation a. No of
 	 * players b. Initial number of armies c. Country and army distribution 3.
 	 * Render UI
 	 */
-	public void gameSetup() throws IOException {
+/*	public void gameSetup() throws IOException {
 		// TODO
 		objGameEngine.initialise();
-	}
+	}*/
 
-	/*
+	/**
 	 * Game Loop
 	 */
+/*
 	public void startGame() throws IOException {
 		initialization();
 		gameSetup();
@@ -44,11 +45,7 @@ public class StartUp {
 		// 1. update state
 		// 2. Render changes
 	}
-
-	public void CUI() throws IOException {
-		System.out.println("RISK GAME :");
-		startGame();
-	}
+*/
 
 	public void GUI() {
 		EventQueue.invokeLater(new Runnable() {
@@ -65,15 +62,7 @@ public class StartUp {
 	}
 
 	public static void main(String[] args) throws Exception {
-
-	StartUp objRiskGame = new StartUp();
+		StartUp objRiskGame = new StartUp();
 		objRiskGame.GUI();
-
-	/*MapGenerator map = new MapGenerator();
-	String returnString = map.readConquestFile("C:\\Users\\shiva\\Desktop\\Africa.map");
-		System.out.println(returnString);
-		for (GameCountry country : MapGenerator.countryHashMap.values()){
-			System.out.println(country.getCountryName()+" "+country.getContinent().getContinentName()+" "+country.getNeighbouringCountries().size());
-		}*/
 	}
 }
