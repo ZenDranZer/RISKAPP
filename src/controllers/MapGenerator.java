@@ -1,35 +1,33 @@
 package controllers;
+
 import models.GameContinent;
 import models.GameCountry;
 import utils.GraphUtil;
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Scanner;
 
 /** This class hosts the data of countries and contients. It also hosts the method definitions with
  * which any map related operations are to be performed in the game.
  *
  */
 public class MapGenerator {
+    public static HashMap<String,GameCountry> countryHashMap = new HashMap<>();
+    public static HashMap<String,GameContinent> continentHashMap = new HashMap<>();
     ArrayList<GameContinent> continentList;
-    public static HashMap<String,GameCountry> countryHashMap;
-    public static HashMap<String,GameContinent> continentHashMap;
     ArrayList<GameCountry> countryList;
     static HashMap <String,String>guiHashMap;
     GraphUtil graphUtilObject ;
     BufferedReader inputReader;
     boolean firstCountryFlag;
     MapValidator validator;
+
     /** Class constructor that initializes the ubiquitious countryHashMap and ContinentHashMap
      *
      */
     public MapGenerator() {
-        countryHashMap = new HashMap<>();
-        continentHashMap = new HashMap<>();
+
         continentList = new ArrayList<>();
         countryList = new ArrayList<>();
         guiHashMap = new HashMap<>();
@@ -424,7 +422,7 @@ public class MapGenerator {
         }
 
         graphUtilObject = this.buildGraph();
-        if(!validator.isWholeMapConnected(graphUtilObject,(countryHashMap.values()))){
+        if(!validator.isWholeMapConnected(graphUtilObject)){
             returnString = "THE WHOLE MAP IS NOT CONNECTED";
         }
 
@@ -649,14 +647,15 @@ public class MapGenerator {
      */
     public ArrayList<GameContinent> checkContinentsOwnedByOnePlayer(int playerID){
         try {
-            ArrayList<GameContinent> continentsOwnedByPlayer = new ArrayList<>();
+            ArrayList<GameContinent> continentsOwnedByPlayer = new ArrayList<>(continentHashMap.values());
             for(String continentName : continentHashMap.keySet()){
                 for (GameCountry country: continentHashMap.get(continentName).getCountries().values() ) {
                     if (country.getCurrentPlayer().getId()!=playerID){
+                        continentsOwnedByPlayer.remove(continentHashMap.get(continentName));
                         break;
                     }
                 }
-                continentsOwnedByPlayer.add(continentHashMap.get(continentName));
+
             }
 
             return continentsOwnedByPlayer;

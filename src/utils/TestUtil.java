@@ -5,6 +5,8 @@ import models.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import controllers.MapGenerator;
+
 /**A utility class that provides basic inputs for testing.
  * They can be used as stubs.*/
 public class TestUtil {
@@ -13,13 +15,18 @@ public class TestUtil {
 	
 	public HashMap<String,GameCountry> testCountryHashMap;
 	public HashMap<String,GameContinent> testContinentHashMap;
-	
+	public MapGenerator mapGenerator;
 	public TestUtil()
 	{
+		mapGenerator = new MapGenerator();
+		lstPlayers = new ArrayList<Player>();
+		testCountryHashMap = new HashMap<String,GameCountry>();
+		testContinentHashMap = new HashMap<String,GameContinent>();
 		makeContinentList();
 		makeCountryList();
 		addCountriesToContinents();
 		makePlayerList();
+		updateGlobals();
 	}
 	
 	
@@ -72,22 +79,32 @@ public class TestUtil {
     {
     	Player objPlayer1 = new Player("Player 1",1);
     	objPlayer1.setCountries(testCountryHashMap.get("India"));
-    	objPlayer1.setCountries(testCountryHashMap.get("England"));
+    	objPlayer1.setCountries(testCountryHashMap.get("China"));
+    	
+    	testCountryHashMap.get("India").setCurrentPlayer(objPlayer1);
+    	testCountryHashMap.get("China").setCurrentPlayer(objPlayer1);
+    	
     	
     	Player objPlayer2 = new Player("Player 2",2);
-    	objPlayer2.setCountries(testCountryHashMap.get("China"));
+    	objPlayer2.setCountries(testCountryHashMap.get("England"));
     	objPlayer2.setCountries(testCountryHashMap.get("Russia"));
+    	
+    	testCountryHashMap.get("England").setCurrentPlayer(objPlayer2);
+    	testCountryHashMap.get("Russia").setCurrentPlayer(objPlayer2);
+    	
+    	lstPlayers.add(objPlayer1);
+    	lstPlayers.add(objPlayer2);
     }
     
     public void makeContinentList()
     {
     	GameContinent continent1 = new GameContinent();
     	continent1.setContinentName("Asia");
-    	continent1.setContinentValue(4);
+    	continent1.setContinentValue(5);
     	
     	GameContinent continent2 = new GameContinent();
     	continent2.setContinentName("Europe");
-    	continent2.setContinentValue(3); 	
+    	continent2.setContinentValue(5); 	
     	
     	testContinentHashMap.put("Asia", continent1);
     	testContinentHashMap.put("Europe", continent2);
@@ -117,6 +134,11 @@ public class TestUtil {
     	country3.addNeighbouringCountry(country2);
     	
     	country4.addNeighbouringCountry(country3);
+    	
+    	testCountryHashMap.put(country1.getCountryName(),country1);
+    	testCountryHashMap.put(country2.getCountryName(),country2);
+    	testCountryHashMap.put(country3.getCountryName(),country3);
+    	testCountryHashMap.put(country4.getCountryName(),country4);
     }
     
     public void addCountriesToContinents()
@@ -128,6 +150,29 @@ public class TestUtil {
     	continent = testContinentHashMap.get("Europe");
     	continent.setCountries(testCountryHashMap.get("England"));
     	continent.setCountries(testCountryHashMap.get("Russia"));
-    	
     }
+    
+    public void updateGlobals()
+    {
+
+    	for(GameContinent c : testContinentHashMap.values())
+    	{
+    		MapGenerator.continentHashMap.put(c.getContinentName(), c);
+    	}
+    	
+    	for(GameCountry cntry : testCountryHashMap.values())
+    	{
+    		MapGenerator.countryHashMap.put(cntry.getCountryName(), cntry);
+    	}
+
+    }
+    
+//    public static void main(String[] args) throws Exception
+//    {
+//    	TestUtil obj = new TestUtil();
+//    	System.out.println(MapGenerator.continentHashMap.get("Asia").getContinentName());
+//    	
+//    	ArrayList<GameContinent> c =  obj.mapGenerator.checkContinentsOwnedByOnePlayer(1);
+//    	System.out.println(c.size());
+//    }
 }

@@ -1,19 +1,22 @@
 package views.optionView;
 
 import controllers.GameEngine;
-import controllers.MapGenerator;
 import views.continentView.EditContinentPanel;
 import views.countryView.EditCountryPanel;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class EditOptionPanel extends JPanel {
 
     private JPanel parent;
     private GameEngine gameEngine;
+    private JButton editContinentButton;
+    private JButton editCountryButton;
+    private JButton backButton;
 
     public EditOptionPanel(GameEngine gameEngine,JPanel parent) {
         this.gameEngine = gameEngine;
@@ -93,7 +96,5 @@ public class EditOptionPanel extends JPanel {
             new Insets(0, 0, 0, 0), 0, 0));
     }
 
-    private JButton editContinentButton;
-    private JButton editCountryButton;
-    private JButton backButton;
+
 }

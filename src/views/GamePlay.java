@@ -1,31 +1,19 @@
 package views;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
-import models.*;
-import javax.swing.JList;
-import javax.swing.JTextField;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
+import controllers.GameEngine;
+import controllers.MapGenerator;
+import controllers.TurnController;
+import models.GameCountry;
+import models.Player;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.stream.Collector;
+import java.util.List;
 import java.util.stream.Collectors;
-
-import controllers.*;
-import javax.swing.event.ListSelectionListener;
-
-import java.util.*;
-
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.JTextArea;
-import java.awt.Color;
-import java.awt.SystemColor;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
 
 /**
  * View for main game play 
@@ -135,17 +123,11 @@ public class GamePlay extends JPanel {
 					updateFortificationPanel();
 
 				} else if (phase.equals("fortify")) {
-
-					// update army allocation
 					if (fortify()) {
-
-						// set next player and phase
 						phase = "reinforce";
 						objGameEngine.setNextPlayer(activePlayer);
 						activePlayer = objTurnController.getActivePlayer();
-						// objTurnController.calculateNewArmies(activePlayer);
 						updateReinforcementPanel();
-						// update panels
 					}
 				}
 			}
@@ -288,10 +270,9 @@ public class GamePlay extends JPanel {
 
 		int reinforcements = Integer.parseInt(txtReinforce.getText());
 		String selectedCountry = lstPlayerCountries.getSelectedValue().toString();
+
 		lstPlayerCountries.setSelectedIndex(-1);
-
 		txtReinforce.setText("");
-
 		objTurnController.placeArmy(activePlayer, selectedCountry, reinforcements);
 		activePlayer.addPlayerArmy(reinforcements);
 		activePlayer.updateRemainingArmies(reinforcements);
@@ -306,11 +287,9 @@ public class GamePlay extends JPanel {
 	public void updateReinforcementPanel() {
 		scrollPane.setVisible(true);
 		lstPlayerCountries.setVisible(true);
-
 		scrollPane_1.setVisible(false);
 		lstActionCountry.setVisible(false);
 		lblAction.setVisible(false);
-
 		lblPhase.setText("Reinforcement");
 		lblReinforce.setText("Select country to reinforce");
 		txtError.setText("");
@@ -325,7 +304,6 @@ public class GamePlay extends JPanel {
 		flag = 1;
 		
 		lblPhase.setText("Attack");
-		
 		scrollPane.setVisible(false);
 		lstPlayerCountries.setVisible(false);
 		txtError.setText("attack phase");
@@ -365,12 +343,14 @@ public class GamePlay extends JPanel {
 		scrollPane.setVisible(true);
 		lstPlayerCountries.setVisible(true);
 		lstPlayerCountries.setSelectedIndex(-1);
-
 		scrollPane_1.setVisible(true);
 		lstActionCountry.setVisible(true);
 		lstPlayerCountries.setSelectedIndex(-1);
 	}
 
+	/**
+	 * Update UI list for active player
+	 */
 	public void updateListElements() {
 		if (dlstPlayerCountries.size() != 0) {
 			dlstPlayerCountries.removeAllElements();
@@ -380,14 +360,16 @@ public class GamePlay extends JPanel {
 		}
 	}
 
+	/**
+	 * Updates list of action countries
+	 */
 	public void updateActionCountries() {
 		String seletedCountry = lstPlayerCountries.getSelectedValue().toString();
+		GameCountry cntry = MapGenerator.countryHashMap.get(seletedCountry);
 
 		if (dlstActionCountries.size() != 0) {
 			dlstActionCountries.removeAllElements();
 		}
-
-		GameCountry cntry = MapGenerator.countryHashMap.get(seletedCountry);
 
 		List<GameCountry> lstPlayerNeighbors = (List) cntry.getNeighbouringCountries().values().stream()
 				.filter(neighbor -> neighbor.getCurrentPlayer().equals(activePlayer)).collect(Collectors.toList());
@@ -414,7 +396,7 @@ public class GamePlay extends JPanel {
 
 		boolean isValid = true;
 
-		if (txtReinforce.getText().isEmpty() && txtReinforce.getText().equals("0")) {
+		if (txtReinforce.getText().isEmpty() || txtReinforce.getText().equals("0")) {
 			isValid = false;
 			txtError.setText(txtError.getText() + "\n" + "Enter some value");
 		} else if (Integer.parseInt(txtReinforce.getText()) > activePlayer.getRemainingArmies()) {
@@ -434,11 +416,6 @@ public class GamePlay extends JPanel {
 			isValid = false;
 			txtError.setText(txtError.getText() + "\n" + "Max number of armies allocated to a country is 12");
 		}
-
-		if (Integer.parseInt(txtReinforce.getText()) > activePlayer.getRemainingArmies()) {
-			isValid = false;
-			txtError.setText(txtError.getText() + "\n" + "select number less than or equal to remaining armies");
-		}
 		return isValid;
 	}
 
@@ -457,23 +434,19 @@ public class GamePlay extends JPanel {
 		}
 		return "";
 	}
-
 	
 	/**
 	 * Check whether all countries have maximum possible armies allocated
-	 * @return
+	 * @return true if allocation is successful
+	 * 		   false if allocation fails
 	 */
-	public boolean isAllocationComplete()
-	{
-		for(GameCountry country : activePlayer.getCountries())
-		{
-			if( country.getArmiesStationed() < 12)
-			{
+	public boolean isAllocationComplete() {
+		for (GameCountry country : activePlayer.getCountries()) {
+			if (country.getArmiesStationed() < 12) {
 				return false;
 			}
 		}
 		activePlayer.setRemainingArmies(0);
-		
 		return true;
 	}
 }

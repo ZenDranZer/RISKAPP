@@ -14,10 +14,8 @@ public class GameEngine {
 	private ArrayList<Player> listActivePlayers = new ArrayList<Player>();
 	private ArrayList<Player> listEliminatedPlayers = new ArrayList<Player>();
 	private static MapGenerator mapGenerator = new MapGenerator();
-
 	private String mapPath;
 	private TurnController turn;
-
 	private int numberOfPlayers;
 
 	public GameEngine() {
@@ -74,6 +72,15 @@ public class GameEngine {
 		}
 	}
 
+	/**
+	 * Assigns List of players to Active players 
+	 * @param lstPlayers ArrayList of player objects
+	 */
+	public void setActivePlayers(ArrayList<Player> lstPlayers)
+	{
+		this.listActivePlayers = lstPlayers;
+	}
+	
 	/**
 	 * Initialize the game engine with the initial set of players, randomly
 	 * allocate countries and assign initial set of armies

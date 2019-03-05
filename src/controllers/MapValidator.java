@@ -34,7 +34,7 @@ public class MapValidator {
         return false;
     }
 
-    public boolean hasNeighbor(GameCountry country){ // see if the neighbour list is initialized in the model constructor and if not, do it.
+    public boolean hasNeighbor(GameCountry country) {
         if(country.getNeighbouringCountries().isEmpty()){
             System.out.println(country.getCountryName());
             return false;
@@ -72,15 +72,7 @@ public class MapValidator {
         return true;
     }
 
-    public boolean isWholeMapConnected(GraphUtil util, Collection<GameCountry> countries){
+    public boolean isWholeMapConnected(GraphUtil util){
         return util.isConnected();
     }
-
-
-/*public boolean isWholeContinentConnected(GameContinent continent){
-        GraphUtil tempGraph = new GraphUtil();
-        tempGraph.setCountryGraph(continent.getCountries());
-        return tempGraph.isConnected();
-}*/
-
 }
