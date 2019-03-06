@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**This is a  option panel for redirection to create, remove or edit the continent.*/
 public class EditContinentPanel extends JPanel {
 
     /**A JPanel object for tracking the parent panel.*/

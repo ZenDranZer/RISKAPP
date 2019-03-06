@@ -357,7 +357,7 @@ public class MapGenerator {
 
 
 
-            if  ((firstCountryFlag|| ((countryHashMap.containsKey(countryName))&&countryHashMap.get(countryName).getContinent()==null))) {
+            if  ((firstCountryFlag||(!countryHashMap.containsKey(countryName))||((countryHashMap.containsKey(countryName))&&countryHashMap.get(countryName).getContinent()==null))) {
                 firstCountryFlag=false;
                 GameCountry newCountry;
                 if(countryExists(countryName)==null) {

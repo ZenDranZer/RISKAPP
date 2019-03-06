@@ -8,6 +8,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
+/**This panel is used to show the interface for adding a new country in creating new map.*/
 public class AddCountry extends JPanel {
 
     /**An arrayList maintaining the current state of the neighbour list of a country.*/
@@ -38,6 +39,10 @@ public class AddCountry extends JPanel {
     private JButton addCountryButton;
     /**A button to validate the map and write it to the .map file.*/
     private JButton finishButton;
+    private JScrollPane scrollPaneList;
+    private JList countryListLabel;
+    private JLabel label5;
+    private JButton backButton;
 
     /**A public constructor to initialize the whole panel with different controls
      * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
@@ -48,13 +53,15 @@ public class AddCountry extends JPanel {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        countryListLabel.setListData(mapGenerator.getListOfCountries().toArray());
     }
 
     /**A mouse click event on the add neighbour Button for adding a neighbour.
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void addNeighbourButtonMouseClicked(MouseEvent e) {
         neigbourList.setText(neigbourList.getText() + "\n" + neighbourField.getText() + " ");
-        neighbourList.add(neighbourField.getText() + " ");
+        neighbourList.add(neighbourField.getText());
     }
 
     /**A mouse click event on the add country Button for adding a country.
@@ -73,6 +80,7 @@ public class AddCountry extends JPanel {
             neigbourList.setText("Neighbours:");
             neighbourField.setText("");
             neighbourList.clear();
+            countryListLabel.setListData(mapGenerator.getListOfCountries().toArray());
         }
     }
 
@@ -82,6 +90,12 @@ public class AddCountry extends JPanel {
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
         String message  = mapGenerator.validateMap();
         JOptionPane.showMessageDialog(this.getParent(),message);
+        Container container = this.getParent();
+        container.remove(this);
+        parent.setVisible(true);
+    }
+
+    private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);
@@ -97,57 +111,86 @@ public class AddCountry extends JPanel {
         label4 = new JLabel();
         continentField = new JTextField();
         label3 = new JLabel();
+        label5 = new JLabel();
         neighbourField = new JTextField();
+        scrollPaneList = new JScrollPane();
+        countryListLabel = new JList();
         addNeighbourButton = new JButton();
         addCountryButton = new JButton();
         finishButton = new JButton();
+        backButton = new JButton();
 
         //======== this ========
 
         setLayout(new GridBagLayout());
-        ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 169, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 169, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 152, 0};
         ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+        ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
         ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
         //---- label1 ----
         label1.setText("Add Country:");
         add(label1, new GridBagConstraints(2, 0, 4, 3, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
+
+        //---- label5 ----
+        label5.setText("Countries:");
+        add(label5, new GridBagConstraints(13, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 0), 0, 0));
 
         //---- neigbourList ----
         neigbourList.setText("Neighbour:");
         add(neigbourList, new GridBagConstraints(6, 1, 7, 12, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 0, 0), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 5), 0, 0));
+
+        //======== scrollPaneList ========
+        {
+
+            //---- countryListLabel ----
+            countryListLabel.setModel(new AbstractListModel<String>() {
+                String[] values = {
+                        "Countries:"
+                };
+                @Override
+                public int getSize() { return values.length; }
+                @Override
+                public String getElementAt(int i) { return values[i]; }
+            });
+            scrollPaneList.setViewportView(countryListLabel);
+        }
+        add(scrollPaneList, new GridBagConstraints(13, 1, 1, 12, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 0), 0, 0));
 
         //---- label2 ----
         label2.setText("Enter Name :");
         add(label2, new GridBagConstraints(1, 3, 2, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
         add(nameField, new GridBagConstraints(3, 3, 2, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- label4 ----
         label4.setText("Enter Continent Name:");
         add(label4, new GridBagConstraints(1, 4, 2, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
         add(continentField, new GridBagConstraints(3, 4, 2, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- label3 ----
         label3.setText("Enter Neighbour:");
         add(label3, new GridBagConstraints(1, 5, 2, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
         add(neighbourField, new GridBagConstraints(3, 5, 2, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- addNeighbourButton ----
         addNeighbourButton.setText("Add Neighbour");
@@ -158,8 +201,8 @@ public class AddCountry extends JPanel {
             }
         });
         add(addNeighbourButton, new GridBagConstraints(3, 7, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- addCountryButton ----
         addCountryButton.setText("Add Country");
@@ -170,8 +213,20 @@ public class AddCountry extends JPanel {
             }
         });
         add(addCountryButton, new GridBagConstraints(4, 7, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
+
+        //---- backButton ----
+        backButton.setText("Back");
+        backButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                backButtonMouseClicked(e);
+            }
+        });
+        add(backButton, new GridBagConstraints(3, 10, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- finishButton ----
         finishButton.setText("Finish");
@@ -182,9 +237,8 @@ public class AddCountry extends JPanel {
             }
         });
         add(finishButton, new GridBagConstraints(4, 10, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
-
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
     }
 

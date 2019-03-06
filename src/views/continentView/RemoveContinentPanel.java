@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**This panel shows the removal procedures for the continent.*/
 public class RemoveContinentPanel extends JPanel {
 
     /**GameEngine object to preserve the state of the game.*/

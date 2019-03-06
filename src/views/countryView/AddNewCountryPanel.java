@@ -8,6 +8,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
+/**This panel is used to add the country to an existing map.*/
 public class AddNewCountryPanel extends JPanel {
 
     /**An arrayList maintaining the current state of the neighbour list of a country.*/

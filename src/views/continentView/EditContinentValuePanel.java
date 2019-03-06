@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 
+/**This view panel is used to show the edit functionality for the existing
+ * continent.*/
 public class EditContinentValuePanel extends JPanel {
 
     /**An arrayList for keeping the list of the continents a particular point*/

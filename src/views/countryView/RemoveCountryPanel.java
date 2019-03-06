@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**This panel is used to remove country from an existing map.*/
 public class RemoveCountryPanel extends JPanel {
 
     /**A JPanel object for tracking the parent panel.*/

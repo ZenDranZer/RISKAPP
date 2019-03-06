@@ -7,6 +7,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
+/**This panel is used to edit an existing country in an existing map*/
 public class EditCountryValuePanel extends JPanel {
 
     /**An arrayList for keeping the list of the country a particular point*/

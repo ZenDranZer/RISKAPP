@@ -13,16 +13,28 @@ import java.io.File;
 import java.io.IOException;
 
 public class LoadMapPanel extends JPanel {
+
+    /**GameEngine object to preserve the state of the game.*/
     private GameEngine gameEngine;
+    /**A JPanel object for tracking the parent panel.*/
     private JPanel parent;
+    /**A lable to show "Load Map:" string*/
     private JLabel label1;
+    /**A file chooser for loading a new map file*/
     private JFileChooser mapFileChooser;
+    /**A button for reading a file.*/
     private JButton readButton;
+    /**A button for redirecting the flow to edit the map details.*/
     private JButton editMapButton;
+    /**A button to reset all the data sets.*/
     private JButton resetButton;
+    /**A button to validate and create map file.*/
     private JButton loadButton;
+    /**A button to start the game after loading the file.*/
     private JButton startGameButton;
+
     private JButton backButton;
+
 
     public LoadMapPanel(GameEngine gameEngine,JPanel parent) {
         this.gameEngine = gameEngine;

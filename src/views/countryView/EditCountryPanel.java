@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**This class is used to  show all the options for manipulating country information.*/
 public class EditCountryPanel extends JPanel {
 
     /**A JPanel object for tracking the parent panel.*/
