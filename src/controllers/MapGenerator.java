@@ -262,14 +262,14 @@ public class MapGenerator {
      *
      * @return status of the operation
      */
-    public String writeConquestFile(){
+    public String writeConquestFile(String fileName){
 
 
         Writer writer = null;
 
         try {
             writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream("ConquestMap.map"), "utf-8"));
+                    new FileOutputStream(fileName+".map"), "utf-8"));
             writer.write("[map]");
             ((BufferedWriter) writer).newLine();
             for (String s : guiHashMap.keySet()){
@@ -665,9 +665,7 @@ public class MapGenerator {
                         break;
                     }
                 }
-
             }
-
             return continentsOwnedByPlayer;
         }catch (Exception e){
             return null;
