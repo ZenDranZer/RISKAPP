@@ -5,10 +5,7 @@ import java.util.*;
 import static utils.Constants.ARMY_DISTRIBUTION.*;
 
 /**
- * 
- * @author Sidhant Gupta, Jil Mehta
- *
- *         Controller for handling turn based game logic
+ * Controller for handling turn based game logic
  */
 public class TurnController {
 
