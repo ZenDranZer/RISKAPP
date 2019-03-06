@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-public class ValidMapFormatTest {
+public class TestValidMapFormat {
 
     MapGenerator mapGenerator;
     @Before
@@ -26,7 +26,15 @@ public class ValidMapFormatTest {
     public void testValidMapFormat() throws IOException {
 
         String output = mapGenerator.readConquestFile("C:\\Users\\shiva\\Desktop\\Africa.map");
-        assertEquals(output,"SUCCESS");
+        assertEquals("SUCCESS",output);
+
+    }
+    @Test
+    public void testInvalidMapFormat() throws IOException {
+
+        String output = mapGenerator.readConquestFile("C:\\Users\\shiva\\Desktop\\new.map");
+        assertNotEquals("SUCCESS",output);
+
     }
 
 

@@ -1,5 +1,4 @@
 package controllers;
-
 import models.GameContinent;
 import models.GameCountry;
 import utils.GraphUtil;
@@ -13,23 +12,20 @@ import java.util.HashMap;
  *
  */
 public class MapGenerator {
+
     public static HashMap<String,GameCountry> countryHashMap = new HashMap<>();
     public static HashMap<String,GameContinent> continentHashMap = new HashMap<>();
-    ArrayList<GameContinent> continentList;
-    ArrayList<GameCountry> countryList;
     static HashMap <String,String>guiHashMap;
     GraphUtil graphUtilObject ;
     BufferedReader inputReader;
     boolean firstCountryFlag;
     MapValidator validator;
-
     /** Class constructor that initializes the ubiquitious countryHashMap and ContinentHashMap
      *
      */
     public MapGenerator() {
 
-        continentList = new ArrayList<>();
-        countryList = new ArrayList<>();
+
         guiHashMap = new HashMap<>();
         setGuiHashMap();
         firstCountryFlag=true;
@@ -243,8 +239,7 @@ public class MapGenerator {
                 returnString = "The Countries are not properly linked to each other";
             }
 
-            GraphUtil tempGraph = new GraphUtil();
-            tempGraph.setCountryGraph(countryHashMap);
+
 
             return returnString;
         }catch (FileNotFoundException e){
@@ -401,7 +396,12 @@ public class MapGenerator {
     public String validateMap(){
 
         String returnString = "SUCCESS";
-
+        if(validator.hasSingleCountryContinent(new ArrayList<>(continentHashMap.values()))){
+            return "One of the continents have only one country";
+        }
+        if(validator.containsLoop(new ArrayList<>(countryHashMap.values()))){
+            return "One of the country is connected to itself";
+        }
         for(GameCountry country : countryHashMap.values()){
 
             if(!validator.hasNeighbor(country)){
@@ -425,7 +425,6 @@ public class MapGenerator {
         if(!validator.isWholeMapConnected(graphUtilObject)){
             returnString = "THE WHOLE MAP IS NOT CONNECTED";
         }
-
         return returnString;
     }
 

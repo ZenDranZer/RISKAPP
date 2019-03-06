@@ -25,7 +25,7 @@ public class MapValidator {
         }
         return false;
     }
-    public boolean containsloop(ArrayList<GameCountry> countries){
+    public boolean containsLoop(ArrayList<GameCountry> countries){
         for(GameCountry country:countries){
             if(country.getNeighbouringCountries().containsKey(country.getCountryName())){
                 return true;
@@ -34,9 +34,8 @@ public class MapValidator {
         return false;
     }
 
-    public boolean hasNeighbor(GameCountry country) {
+    public boolean hasNeighbor(GameCountry country){ // see if the neighbour list is initialized in the model constructor and if not, do it.
         if(country.getNeighbouringCountries().isEmpty()){
-            System.out.println(country.getCountryName());
             return false;
         }
         return true;
@@ -64,11 +63,10 @@ public class MapValidator {
         for(String country : MapGenerator.countryHashMap.keySet()){
             for(String neighbor : MapGenerator.countryHashMap.get(country).getNeighbouringCountries().keySet()){
                 if(!(MapGenerator.countryHashMap.get(neighbor).getNeighbouringCountries().containsKey(country))){
-                    System.out.println(country+"    "+neighbor);
-                    return false;}
+                    return false;
+                }
             }
         }
-        System.out.println("something");
         return true;
     }
 
