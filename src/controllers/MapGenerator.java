@@ -128,6 +128,9 @@ public class MapGenerator {
                     currentCountry.setContinent(continentHashMap.get(continentName));
                     continentHashMap.get(continentName).setCountries(currentCountry);
                 }
+                else{
+                    return "One or more continents not present in the list.";
+                }
                 ArrayList<String> neighbours = new ArrayList<>();
                 for(int iterator=4;iterator<inpList.length; iterator++){
                     neighbours.add(inpList[iterator]);
@@ -366,29 +369,32 @@ public class MapGenerator {
                 GameCountry newCountry;
                 if(countryExists(countryName)==null) {
                     newCountry = new GameCountry();
+                    newCountry.setContinent(continentHashMap.get(continentname));
+                    newCountry.setCountryName(countryName);
+                    countryHashMap.put(countryName,newCountry);
                 }else{
                     newCountry=countryExists(countryName);
-                }
-                newCountry.setContinent(continentHashMap.get(continentname));
-                newCountry.setCountryName(countryName);
-                continentHashMap.get(continentname).setCountries(newCountry);
+                    newCountry.setContinent(continentHashMap.get(continentname));
 
+                }
+                continentHashMap.get(continentname).setCountries(newCountry);
                 for (String tempNeighbourName : neighbours) {
                     GameCountry newNeighbour;
                     if (countryExists(tempNeighbourName)==null) {
                         newNeighbour = new GameCountry();
                         newNeighbour.setCountryName(tempNeighbourName);
                         countryHashMap.put(tempNeighbourName,newNeighbour);
+
+                        newCountry.addNeighbouringCountry(newNeighbour);
                         newNeighbour.addNeighbouringCountry(newCountry);
+
 
                     } else{
                         newCountry.addNeighbouringCountry(countryExists(tempNeighbourName));
                         countryExists(tempNeighbourName).addNeighbouringCountry(newCountry);
                     }
-
-
                 }
-                countryHashMap.put(countryName,newCountry);
+
                 returnString = "SUCCESS";
 
 
@@ -438,6 +444,7 @@ public class MapGenerator {
         if(!validator.isWholeMapConnected(graphUtilObject)){
             returnString = "THE WHOLE MAP IS NOT CONNECTED";
         }
+
         return returnString;
     }
 

@@ -96,7 +96,8 @@ public class AddCountry extends JPanel {
         if(message.equals("SUCCESS")) {
             message = "Writing the file...";
             JOptionPane.showMessageDialog(this.getParent(),message);
-            message = mapGenerator.writeConquestFile();
+            String fileName = (String)JOptionPane.showInputDialog(this,"Enter File Name :","File name",JOptionPane.YES_OPTION,null,null,null);
+            message = mapGenerator.writeConquestFile(fileName);
             if(message.equals("SUCCESS")){
                 JOptionPane.showMessageDialog(this.getParent(),message);
             }else {

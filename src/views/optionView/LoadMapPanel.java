@@ -98,7 +98,8 @@ public class LoadMapPanel extends JPanel {
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
             String message = mapGenerator.validateMap();
             if(message.equals("SUCCESS")){
-                message = mapGenerator.writeConquestFile();
+                String fileName = (String)JOptionPane.showInputDialog(this,"Enter File Name :","File name",JOptionPane.YES_OPTION,null,null,null);
+                message = mapGenerator.writeConquestFile(fileName);
                 resetButton.setEnabled(true);
                 startGameButton.setEnabled(true);
                 if(message.equals("SUCCESS")) {
