@@ -94,14 +94,12 @@ public class StartGamePanel extends JPanel {
 							container.add(gamePlay);
 							container.revalidate();
 						} else {
-							JOptionPane.showMessageDialog(this, message);
 							mapGenerator.reSetAllocations();
-
+							JOptionPane.showMessageDialog(this, message);
 						}
 					} else {
 						JOptionPane.showMessageDialog(this, message);
 						mapGenerator.reSetAllocations();
-
 					}
 				} else {
 					gameEngine.initialiseEngine();
