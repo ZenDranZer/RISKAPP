@@ -39,9 +39,13 @@ public class AddCountry extends JPanel {
     private JButton addCountryButton;
     /**A button to validate the map and write it to the .map file.*/
     private JButton finishButton;
+    /**A scroll pane for Jlist*/
     private JScrollPane scrollPaneList;
+    /** a list to maintain the current state of the country list*/
     private JList countryListLabel;
+    /**a label to display "Countries:" string*/
     private JLabel label5;
+    /**a back button to go to previous panel*/
     private JButton backButton;
 
     /**A public constructor to initialize the whole panel with different controls
@@ -88,7 +92,8 @@ public class AddCountry extends JPanel {
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void finishButtonMouseClicked(MouseEvent e) {
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
-        String message  = mapGenerator.validateMap();
+        String message = mapGenerator.writeConquestFile();
+        //String message  = mapGenerator.validateMap();
         JOptionPane.showMessageDialog(this.getParent(),message);
         Container container = this.getParent();
         container.remove(this);

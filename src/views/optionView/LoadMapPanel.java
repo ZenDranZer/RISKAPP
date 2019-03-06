@@ -32,10 +32,13 @@ public class LoadMapPanel extends JPanel {
     private JButton loadButton;
     /**A button to start the game after loading the file.*/
     private JButton startGameButton;
-
+    /**A button for going back to parent panel*/
     private JButton backButton;
 
-
+    /**A public constructor to initialize the whole panel with different controls
+     * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
+     * @param parent a previous panel which is being used to redirect back to the previous Panel.
+     * */
     public LoadMapPanel(GameEngine gameEngine,JPanel parent) {
         this.gameEngine = gameEngine;
         this.parent = parent;
@@ -44,6 +47,8 @@ public class LoadMapPanel extends JPanel {
         mapFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MAP file only", "map"));
     }
 
+    /**A mouse click event on the editContinent Button for invoking new panel for reading a file.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void readButtonMouseClicked(MouseEvent e) {
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
         String mapFilePath = mapFileChooser.getSelectedFile().getAbsolutePath();
@@ -72,6 +77,8 @@ public class LoadMapPanel extends JPanel {
         }
     }
 
+    /**A mouse click event on the editContinent Button for invoking new panel for editing map.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void editMapButtonMouseClicked(MouseEvent e) {
         if(editMapButton.isEnabled()){
             EditOptionPanel editOptionPanel = new EditOptionPanel(gameEngine,this);
@@ -83,6 +90,8 @@ public class LoadMapPanel extends JPanel {
         }
     }
 
+    /**A mouse click event on the editContinent Button for invoking new panel for loading map.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void loadButtonMouseClicked(MouseEvent e) {
         if(loadButton.isEnabled()){
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
@@ -104,12 +113,16 @@ public class LoadMapPanel extends JPanel {
         }
     }
 
+    /**A mouse click event on the back Button used for going back to the previous panel.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);
     }
 
+    /**A mouse click event on the editContinent Button for invoking new panel for reset the whole data structure.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void resetButtonMouseClicked(MouseEvent e) {
         if(resetButton.isEnabled()){
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
@@ -123,6 +136,9 @@ public class LoadMapPanel extends JPanel {
         }
     }
 
+    /**A mouse click event on the editContinent Button for invoking new panel for starting the game from already
+     * loaded map;
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void startGameButtonMouseClicked(MouseEvent e) {
         if(startGameButton.isEnabled()){
             Container container = this.getParent();
@@ -134,6 +150,7 @@ public class LoadMapPanel extends JPanel {
         }
     }
 
+    /**Initialize all the control components with their positions and panel layout.*/
     private void initComponents() {
         label1 = new JLabel();
         mapFileChooser = new JFileChooser();
