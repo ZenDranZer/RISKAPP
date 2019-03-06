@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionEvent;
 
 public class EditContinentValuePanel extends JPanel {
 
+    /**An arrayList for keeping the list of the continents a particular point*/
     private ArrayList<String> continentsName;
     /**GameEngine object to preserve the state of the game.*/
     private GameEngine gameEngine;
@@ -30,6 +31,7 @@ public class EditContinentValuePanel extends JPanel {
     private JTextField fixedNameField;
     /**A label to display "Field to Change :" string.*/
     private JLabel label3;
+    /**A comboBox for having different edit options*/
     private JComboBox<String> featureBox;
     /**A label to display "Name :" string.*/
     private JLabel label4;
@@ -58,7 +60,7 @@ public class EditContinentValuePanel extends JPanel {
         valueField.setText("1");
     }
 
-    /**An Action performed event on the finish Button for going to next panel.
+    /**An Action performed event on the featureBox for enabling the name text fields.
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void featureBoxActionPerformed(ActionEvent e) {
         int index = featureBox.getSelectedIndex();
@@ -78,7 +80,7 @@ public class EditContinentValuePanel extends JPanel {
         }
     }
 
-    /**An value changed event on the finish Button for going to next panel.
+    /**A list selection event on the continentList to display the selected name
      * @param e is a ListSelectionEvent object to get all the details regarding the event.*/
     private void continentListValueChanged(ListSelectionEvent e) {
         fixedNameField.setText((String)continentList.getSelectedValue());

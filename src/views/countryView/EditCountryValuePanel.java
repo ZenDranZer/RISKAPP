@@ -9,11 +9,53 @@ import javax.swing.*;
 
 public class EditCountryValuePanel extends JPanel {
 
+    /**An arrayList for keeping the list of the country a particular point*/
     private ArrayList<String> countryArrayList;
+    /**GameEngine object to preserve the state of the game.*/
     private GameEngine gameEngine;
+    /**A JPanel object for tracking the parent panel.*/
     private JPanel parent;
+    /**A MapGenerator object for using various map control event.*/
     private MapGenerator mapGenerator;
+    /**A label to display "Edit Country:" string.*/
+    private JLabel label1;
+    /**A scroll pane for JList to make it scrollable.*/
+    private JScrollPane scrollPane1;
+    /**A list containing all the country names.*/
+    private JList countryList;
+    /**A label to display "Country Name" string.*/
+    private JLabel label2;
+    /**A fisex text field for current name of the continent*/
+    private JTextField fixedCountryName;
+    /**A label to display "Select Option:" string.*/
+    private JLabel label6;
+    /**A comboBox for having different edit options*/
+    private JComboBox<String> featureBox;
+    /**A label to display "Name:" string.*/
+    private JLabel label3;
+    /**A text field used to get the user input for country name.*/
+    private JTextField countryName;
+    /**A label to display "Continent:" string.*/
+    private JLabel label4;
+    /**A text field used to get the user input for continent name.*/
+    private JTextField continentName;
+    /**A label to display "Neighbour:" string.*/
+    private JLabel label5;
+    /**A text field used to get the user input for neighbour name.*/
+    private JTextField neighboutName;
+    /**A button to add a new Neighbour.*/
+    private JButton addNeighbourButton;
+    /**A button to remove Neighbour.*/
+    private JButton removeNegihbourButton;
+    /**A button to perform any name change.*/
+    private JButton editButton;
+    /**A button for going to back button.*/
+    private JButton backButton;
 
+    /**A public constructor to initialize the whole panel with different controls
+     * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
+     * @param parent a previous panel which is being used to redirect back to the previous Panel.
+     * */
     public EditCountryValuePanel(GameEngine gameEngine, JPanel parent) {
         this.gameEngine = gameEngine;
         this.parent = parent;
@@ -23,10 +65,14 @@ public class EditCountryValuePanel extends JPanel {
         countryList.setListData(countryArrayList.toArray());
     }
 
+    /**A list selection event on the countryList to display the selected name
+     * @param e is a ListSelectionEvent object to get all the details regarding the event.*/
     private void countryListMouseClicked(MouseEvent e) {
         fixedCountryName.setText((String)countryList.getSelectedValue());
     }
 
+    /**An Action performed event on the featureBox for enabling the name text fields.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void featureBoxActionPerformed(ActionEvent e) {
         int index = featureBox.getSelectedIndex();
         switch (index){
@@ -73,6 +119,8 @@ public class EditCountryValuePanel extends JPanel {
         }
     }
 
+    /**A mouse click event on the add neighbour Button used for add new neighbours.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void addNeighbourButtonMouseClicked(MouseEvent e) {
         String neighbourName = neighboutName.getText();
         if(neighbourName.equals("")){
@@ -83,6 +131,8 @@ public class EditCountryValuePanel extends JPanel {
         }
     }
 
+    /**A mouse click event on the add neighbour Button used for removing neighbours.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void removeNegihbourButtonMouseClicked(MouseEvent e) {
         String neighbourName = neighboutName.getText();
         if(neighbourName.equals("")){
@@ -93,6 +143,8 @@ public class EditCountryValuePanel extends JPanel {
         }
     }
 
+    /**A mouse click event on the add neighbour Button used for editing an existing neighbours.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void editButtonMouseClicked(MouseEvent e) {
         int index = featureBox.getSelectedIndex();
         String message = "";
@@ -115,12 +167,15 @@ public class EditCountryValuePanel extends JPanel {
         JOptionPane.showMessageDialog(this,message);
     }
 
+    /**A mouse click event on the back Button used for going back to the previous panel.
+     * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);
     }
 
+    /**Initialize all the control components with their positions and panel layout.*/
     private void initComponents() {
         
         label1 = new JLabel();
@@ -290,21 +345,4 @@ public class EditCountryValuePanel extends JPanel {
             new Insets(0, 0, 0, 5), 0, 0));
     }
 
-    private JLabel label1;
-    private JScrollPane scrollPane1;
-    private JList countryList;
-    private JLabel label2;
-    private JTextField fixedCountryName;
-    private JLabel label6;
-    private JComboBox<String> featureBox;
-    private JLabel label3;
-    private JTextField countryName;
-    private JLabel label4;
-    private JTextField continentName;
-    private JLabel label5;
-    private JTextField neighboutName;
-    private JButton addNeighbourButton;
-    private JButton removeNegihbourButton;
-    private JButton editButton;
-    private JButton backButton;
 }
