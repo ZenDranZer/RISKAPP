@@ -67,19 +67,14 @@ public class MapGenerator {
                 }
                 int value = Integer.parseInt(inputLine.substring(inputLine.indexOf("=") + 1));
                 if (continentHashMap.containsKey(name)) {
-
-
                     return "ONE OR MORE DUPLICATE CONTINENTS ENCOUNTERED.";
                 }
                 continent.setContinentName(name);
                 continent.setContinentValue(value);
                 continentHashMap.put(name, continent);
-                //  continentList.add(continent);
                 inputLine = inputReader.readLine();
             }
-
-
-            return "SUCCESS";          //Return the current position of reader file so that countries can be loaded.
+            return "SUCCESS";
         }catch (IOException e){
             return null;
         }catch (NullPointerException e){
@@ -303,7 +298,6 @@ public class MapGenerator {
         return "SUCCESS";
 
     }
-
     /**Method builds a graph from the list of continents and country data acquired.
      *
      * @return returns the graph.
@@ -498,6 +492,7 @@ public class MapGenerator {
             HashMap <String,GameCountry> neighbors = countryHashMap.get(countryName).getNeighbouringCountries();
             if (countryHashMap.containsKey(neighborName)) {
                 neighbors.put(neighborName,countryHashMap.get(neighborName));
+                countryHashMap.get(neighborName).addNeighbouringCountry(countryHashMap.get(countryName));
             } else {
                 return "NEIGHBOR DOES NOT EXIST";
             }

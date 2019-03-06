@@ -72,7 +72,7 @@ public class MapValidator {
      * @return true if the continent count is valid
      */
     public boolean hasValidNumberOfContinents(ArrayList<GameContinent> listOfContinents){
-        if(listOfContinents.size()!=0 || listOfContinents.size()<=32 ){
+        if(listOfContinents.size()>1 && listOfContinents.size()<=32 ){
             return true;
         }
         return false;
