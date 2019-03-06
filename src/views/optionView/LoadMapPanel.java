@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
+
+/**this class is used read a file, load a file or reset the game.*/
 public class LoadMapPanel extends JPanel {
 
     /**GameEngine object to preserve the state of the game.*/

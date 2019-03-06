@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**This panel is used to redirect the flow to either create a map file or load an
+ * existing one.*/
 public class MapOptionPanel extends JPanel {
 
     GameEngine gameEngine;

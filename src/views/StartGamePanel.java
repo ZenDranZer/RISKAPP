@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**Here we initialize the players details and load the map file to play the game.*/
 public class StartGamePanel extends JPanel {
 
 	private GameEngine gameEngine;
