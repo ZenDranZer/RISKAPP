@@ -53,7 +53,8 @@ public class LoadMapPanel extends JPanel {
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
         String mapFilePath = mapFileChooser.getSelectedFile().getAbsolutePath();
         try {
-            String message = mapGenerator.readConquestFile(mapFilePath);
+             String newMessage = mapGenerator.reSetAllocations();
+             String message = mapGenerator.readConquestFile(mapFilePath);
             gameEngine.setMapPath(mapFilePath);
             resetButton.setEnabled(true);
             JOptionPane.showMessageDialog(this,message);

@@ -92,9 +92,19 @@ public class AddCountry extends JPanel {
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void finishButtonMouseClicked(MouseEvent e) {
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
-        String message = mapGenerator.writeConquestFile();
-        //String message  = mapGenerator.validateMap();
-        JOptionPane.showMessageDialog(this.getParent(),message);
+        String message  = mapGenerator.validateMap();
+        if(message.equals("SUCCESS")) {
+            message = "Writing the file...";
+            JOptionPane.showMessageDialog(this.getParent(),message);
+            message = mapGenerator.writeConquestFile();
+            if(message.equals("SUCCESS")){
+                JOptionPane.showMessageDialog(this.getParent(),message);
+            }else {
+                JOptionPane.showMessageDialog(this.getParent(), message);
+            }
+        }else {
+            JOptionPane.showMessageDialog(this.getParent(), message);
+        }
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);

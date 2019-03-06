@@ -32,6 +32,9 @@ public class MapGenerator {
         validator = new MapValidator();
     }
 
+    /**This method sets the default initial parameters according to the conquest map format.
+     *
+     */
     public static void setGuiHashMap() {
         guiHashMap.put("author","Default authorName");
         guiHashMap.put("warn","Default warning");
@@ -175,6 +178,12 @@ public class MapGenerator {
         }
         return null;
     }
+
+    /**This method gets the initial parameters from the map file.
+     *
+     * @param inputReader
+     * @return returns the status of execution of the method
+     */
     public String getGuiParameters(BufferedReader inputReader){
         try {
             String inputLine = inputReader.readLine();
@@ -292,11 +301,6 @@ public class MapGenerator {
 
     }
 
-    public String GenerateMap(){
-        return null;
-    }
-
-
     /**Method builds a graph from the list of continents and country data acquired.
      *
      * @return returns the graph.
@@ -312,6 +316,11 @@ public class MapGenerator {
             return null;
         }
     }
+
+    /**This method can be used to access the object of GraphUtil(The utility used for building a graph)
+     *
+     * @return
+     */
     public GraphUtil getGraphUtilObject(){
         return graphUtilObject;
     }
@@ -393,6 +402,10 @@ public class MapGenerator {
         }
     }
 
+    /**This method validates a map when the user wants to load the map after reading , editing a map.
+     *
+     * @return Status of the method execution
+     */
     public String validateMap(){
 
         String returnString = "SUCCESS";
@@ -436,8 +449,6 @@ public class MapGenerator {
         return  new ArrayList<>(continentHashMap.keySet());
 
     }
-
-
 
     /**Method gets the list of countries of the map.
      *
@@ -576,7 +587,7 @@ public class MapGenerator {
             }
             return "ALL GOOD";
         }catch (NullPointerException e){
-            return "EXCEPTION IN ACCESSING DATA";
+            return "EXCEPTION IN ACCESSING CONTINENT DATA";
         }
     }
 
@@ -664,7 +675,10 @@ public class MapGenerator {
 
     }
 
-
+    /**
+     *
+     * @return
+     */
     public String reSetAllocations(){
         try {
            countryHashMap.clear();
