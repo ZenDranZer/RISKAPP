@@ -1,5 +1,5 @@
 package models;
-import java.util.ArrayList;
+import java.util.*;
 
 
 /**
@@ -12,8 +12,9 @@ public class Player {
     private int playerArmies;
     private ArrayList<GameCountry> countries;
     private ArrayList<GameContinent> continents;
-    private String cardsHeld;
+    private HashMap<String, RiskCard> cardsHeld;
     private int remainingArmies;
+    private boolean isActive;
 
     /**
      * Initializes the Player
@@ -34,7 +35,7 @@ public class Player {
         playerArmies = 0;
         countries = new ArrayList<>();
         continents = new ArrayList<>();
-        cardsHeld = "";
+        cardsHeld = new HashMap<>();
     }
 
     /**
@@ -148,7 +149,7 @@ public class Player {
      * Gets the RISK cards held by the player
      * @return String that represents the RISK Cards held by the player
      */
-    public String getCardsHeld() {
+    public HashMap<String, RiskCard> getCardsHeld() {
         return cardsHeld;
     }
     
@@ -156,8 +157,8 @@ public class Player {
      * Sets the RISK Cards held by the player
      * @param cards_held String that represents RISK cards to be allocated to the player
      */
-    public void setCardsHeld(String cards_held) {
-        this.cardsHeld = cards_held;
+    public void setCardsHeld(HashMap<String, RiskCard> cardsHeld) {
+        this.cardsHeld = cardsHeld;
     }
     
     /**
