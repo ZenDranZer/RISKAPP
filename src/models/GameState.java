@@ -12,6 +12,10 @@ public class GameState {
 	private String mapPath;
 	private HashMap<String, RiskCard> cardPile;
 
+	/**
+	 * Gets the list of player
+	 * @return ArrayList of active players
+	 */
 	public ArrayList<Player> getPlayers() {
 		return lstPlayers;
 	}
