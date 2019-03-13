@@ -106,8 +106,7 @@ public class MapGenerator {
                     /*   countryList.add(currentCountry);*/
                     currentCountry.setCountryName(inpList[0]);
                     countryHashMap.put(inpList[0],currentCountry);
-                }
-                else{
+                }else{
                     currentCountry = countryExists(inpList[0]);
                     if(currentCountry.getNeighbouringCountries().size()!=0){
                         String returnString =  "ONE OR MORE DUPLICATE COUNTRIES ENCOUNTERED";
@@ -122,8 +121,7 @@ public class MapGenerator {
                 if(continentHashMap.containsKey(continentName)){
                     currentCountry.setContinent(continentHashMap.get(continentName));
                     continentHashMap.get(continentName).setCountries(currentCountry);
-                }
-                else{
+                }else{
                     return "One or more continents not present in the list.";
                 }
                 ArrayList<String> neighbours = new ArrayList<>();
@@ -140,8 +138,7 @@ public class MapGenerator {
 
                         neighborCountry.setCountryName(inpList[iterator]);
                         countryHashMap.put(inpList[iterator],neighborCountry);
-                    }
-                    else{
+                    }else{
                         neighborCountry = countryExists(inpList[iterator]);
                     }
                     currentCountry.addNeighbouringCountry(neighborCountry);
@@ -225,7 +222,7 @@ public class MapGenerator {
                         if (!returnString.equals("SUCCESS")) {
                             return "ONE OR MORE DUPLICATE CONTINENTS ENCOUNTERED";
                         }
-                    } else {
+                    }else{
 
                         return "THE MAP FORMAT IS WRONG";
                     }
@@ -241,8 +238,7 @@ public class MapGenerator {
             MapValidator validator = new MapValidator();
             if(validator.isFullyLinked()){
                 returnString = "SUCCESS";
-            }
-            else{
+            }else{
                 returnString = "The Countries are not properly linked to each other";
             }
 
@@ -383,7 +379,7 @@ public class MapGenerator {
                         newNeighbour.addNeighbouringCountry(newCountry);
 
 
-                    } else{
+                    }else{
                         newCountry.addNeighbouringCountry(countryExists(tempNeighbourName));
                         countryExists(tempNeighbourName).addNeighbouringCountry(newCountry);
                     }
@@ -493,7 +489,7 @@ public class MapGenerator {
             if (countryHashMap.containsKey(neighborName)) {
                 neighbors.put(neighborName,countryHashMap.get(neighborName));
                 countryHashMap.get(neighborName).addNeighbouringCountry(countryHashMap.get(countryName));
-            } else {
+            }else{
                 return "NEIGHBOR DOES NOT EXIST";
             }
         /*for(GameCountry neighbor : neighbors){ This should not be needed.
@@ -518,7 +514,7 @@ public class MapGenerator {
             if (continentHashMap.containsKey(continentName)) {
                 countryHashMap.get(countryName).setContinent(continentHashMap.get(continentName));
                 continentHashMap.get(continentName).setCountries(countryHashMap.get(countryName));
-            } else {
+            }else{
                 return "CONTINENT DOES NOT EXIST";
             }
 
@@ -540,7 +536,7 @@ public class MapGenerator {
                 countryHashMap.get(oldName).setCountryName(newName);
                 countryHashMap.put(newName,countryHashMap.get(oldName));
                 countryHashMap.remove(oldName);
-            } else {
+            }else{
                 return "COUNTRY DOES NOT EXIST";
             }
 
@@ -568,7 +564,7 @@ public class MapGenerator {
                 countryHashMap.remove(countryName);
                 returnString = "SUCCESS";
 
-            } else {
+            }else{
                 return "COUNTRY DOES NOT EXIST";
             }
             return returnString;
@@ -603,7 +599,7 @@ public class MapGenerator {
             if (continentHashMap.containsKey(continentName)) {
                 continentHashMap.remove(continentName);
                 return "SUCCESS";
-            } else {
+            }else{
                 return "NO SUCH CONTINENT";
             }
         }catch(Exception e){
@@ -625,7 +621,7 @@ public class MapGenerator {
                 continentHashMap.remove(continentName);
 
                 return "SUCCESS";
-            } else {
+            }else{
                 return "CONTINENT DOES NOT EXIST";
             }
         }catch (NullPointerException e){
@@ -644,7 +640,7 @@ public class MapGenerator {
             if (continentHashMap.containsKey(continentName)) {
                 continentHashMap.get(continentName).setContinentValue(continentValue);
                 return "SUCCESS";
-            } else {
+            }else{
                 return "CONTINENT DOES NOT EXIST";
             }
         }catch (NullPointerException e){

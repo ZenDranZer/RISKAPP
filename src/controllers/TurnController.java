@@ -106,7 +106,7 @@ public class TurnController {
 	}
 
 	/**
-	 * This function implements the fortification phase moving player arnies
+	 * This function implements the fortification phase moving player armies
 	 * from one country to another
 	 * 
 	 * @param Countries

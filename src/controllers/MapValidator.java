@@ -119,7 +119,7 @@ public class MapValidator {
 
     /**
      * Checks whether the whole map is connected
-     * @param util GraphUtiliry
+     * @param util GraphUtility
      * @return true is the map is connected
      */
     public boolean isWholeMapConnected(GraphUtil util){
