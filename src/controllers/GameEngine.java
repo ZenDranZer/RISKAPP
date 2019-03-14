@@ -22,7 +22,7 @@ public class GameEngine {
 	public GameEngine() {
 		turn = new TurnController();
 		gameState = new GameState();
-		mapGenerator = new MapGenerator(this);
+		mapGenerator = new MapGenerator();
 	}
 	public GameState getGameState(){
 		return gameState;
