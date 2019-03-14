@@ -75,10 +75,10 @@ public class Player {
 
     /**
      * sets the name of the player
-     * @param playerName string that represents the name of the player
+     * @param player_name string that represents the name of the player
      */
-    public void setName(String playerName) {
-        this.name = playerName;
+    public void setName(String player_name) {
+        this.name = player_name;
     }
 
     /**

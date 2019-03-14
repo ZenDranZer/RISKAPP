@@ -2,27 +2,18 @@ package controllers;
 
 import models.GameContinent;
 import models.GameCountry;
-import models.GameMap;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import utils.GraphUtil;
+
 import java.util.*;
 
 /**
  * Class containing various validations for the generated map
  */
 public class MapValidator {
-    HashMap<String, GameCountry>countryHashMap;
-    HashMap<String, GameContinent>continentHashMap;
-    HashMap<String, String>guiHashMap;
-    GameMap gameMap;
-	public MapValidator(GameEngine engine){
-        gameMap = engine.getGameState().getGameMapObject();
-        countryHashMap = gameMap.getCountryHashMap();
-        continentHashMap = gameMap.getContinentHashMap();
-        guiHashMap = gameMap.getGuiHashMap();
-    }
-    /**
+	
+	/**
 	 * Check whether a country has duplicate neighbors
 	 * @param neighbours List of neighboring countries 
 	 * @return true 
@@ -116,9 +107,9 @@ public class MapValidator {
      * @return true is map is linked
      */
     public boolean isFullyLinked() {
-        for(String country : countryHashMap.keySet()){
-            for(String neighbor : countryHashMap.get(country).getNeighbouringCountries().keySet()){
-                if(!(countryHashMap.get(neighbor).getNeighbouringCountries().containsKey(country))){
+        for(String country : MapGenerator.countryHashMap.keySet()){
+            for(String neighbor : MapGenerator.countryHashMap.get(country).getNeighbouringCountries().keySet()){
+                if(!(MapGenerator.countryHashMap.get(neighbor).getNeighbouringCountries().containsKey(country))){
                     return false;
                 }
             }
