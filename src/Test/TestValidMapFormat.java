@@ -1,5 +1,6 @@
 package Test;
 
+import controllers.GameEngine;
 import controllers.MapGenerator;
 import org.junit.After;
 import org.junit.Before;
@@ -13,9 +14,11 @@ import static org.junit.Assert.*;
 public class TestValidMapFormat {
 
     MapGenerator mapGenerator;
+    GameEngine gameEngine;
     @Before
     public void setUp() throws Exception {
-         mapGenerator = new MapGenerator();
+        gameEngine = new GameEngine();
+         mapGenerator = new MapGenerator(gameEngine);
     }
 
     @After

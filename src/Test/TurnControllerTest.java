@@ -18,6 +18,7 @@ public class TurnControllerTest {
 	TestUtil testData;
 	TurnController objTurnController;
 	MapGenerator mapGenerator ;
+
 	@Before
 	public void setUp() throws Exception {
 		testData = new TestUtil();
