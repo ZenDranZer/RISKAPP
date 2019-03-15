@@ -63,7 +63,6 @@ public class AddCountry extends JPanel {
         initComponents();
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
         countryListLabel.setListData(mapGenerator.getListOfCountries().toArray());
-        countryListLabel.setListData(mapGenerator.getListOfCountries().toArray());
         Set<String> continentHashMap = gameEngine.getGameState().getGameMapObject().getContinentHashMap().keySet();
         String[] continentList = continentHashMap.toArray(new String[continentHashMap.size()]);
         continentCombobox.setModel(new DefaultComboBoxModel<>(continentList));
@@ -87,6 +86,7 @@ public class AddCountry extends JPanel {
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
             String message = mapGenerator.addCountry(continentName,countryName,neighbourList);
             JOptionPane.showMessageDialog(this.getParent(),message);
+            countryListLabel.setListData(mapGenerator.getListOfCountries().toArray());
             nameField.setText("");
             neigbourList.setText("Neighbours:");
             neighbourField.setText("");

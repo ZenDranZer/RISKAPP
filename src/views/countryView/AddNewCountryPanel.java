@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import javax.swing.*;
 
-/**This panel is used to add the country to an existing map.*/
+/**This panel is used to add the. country to an existing map.*/
 public class AddNewCountryPanel extends JPanel {
 
     /**An arrayList maintaining the current state of the neighbour list of a country.*/
@@ -52,12 +52,13 @@ public class AddNewCountryPanel extends JPanel {
     public AddNewCountryPanel(GameEngine gameEngine,JPanel parent) {
         neighbourList = new ArrayList<>();
         this.gameEngine = gameEngine;
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
         this.parent = parent;
         initComponents();
         Set<String> continentHashMap = gameEngine.getGameState().getGameMapObject().getContinentHashMap().keySet();
         String[] continentList = continentHashMap.toArray(new String[continentHashMap.size()]);
         continentCombobox.setModel(new DefaultComboBoxModel<>(continentList));
-        countryList.setListData(gameEngine.getGameState().getGameMapObject().getCountryHashMap().keySet().toArray());
+        countryList.setListData(mapGenerator.getListOfCountries().toArray());
     }
 
     /**A mouse click event on the add neighbour Button for adding a neighbour.
