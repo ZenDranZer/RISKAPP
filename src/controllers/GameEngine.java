@@ -11,8 +11,6 @@ import models.*;
  */
 public class GameEngine {
 
-	private ArrayList<Player> listActivePlayers = new ArrayList<Player>();
-	private ArrayList<Player> listEliminatedPlayers = new ArrayList<Player>();
 	private static MapGenerator mapGenerator;
 	private String mapPath;
 	private TurnController turn;
@@ -73,7 +71,7 @@ public class GameEngine {
 		int i = 1;
 		for (String name : listActivePlayers) {
 			Player player = new Player(name, i);
-			this.listActivePlayers.add(player);
+			gameState.getPlayers().add(player);
 			i++;
 		}
 	}
@@ -82,9 +80,8 @@ public class GameEngine {
 	 * Assigns List of players to Active players 
 	 * @param lstPlayers ArrayList of player objects
 	 */
-	public void setActivePlayers(ArrayList<Player> lstPlayers)
-	{
-		this.listActivePlayers = lstPlayers;
+	public void setActivePlayers(ArrayList<Player> lstPlayers) {
+		gameState.setPlayers(lstPlayers);
 	}
 	
 	/**
@@ -94,10 +91,10 @@ public class GameEngine {
 	public void initialiseEngine() {
 
 		try {
-			setNumberOfPlayers(listActivePlayers.size());
-			turn.allocateCountries(listActivePlayers, getGameState().getGameMapObject().getAllCountries());
+			setNumberOfPlayers(gameState.getPlayers().size());
+			turn.allocateCountries(gameState.getPlayers(),getGameState().getGameMapObject().getAllCountries());
 			allocateInitialArmies();
-			turn.setActivePlayer(listActivePlayers.get(0));
+			turn.setActivePlayer(gameState.getPlayers().get(0));
 		} catch (NullPointerException nullEx) {
 			System.out.println("Objects not initialized properly");
 		} catch (Exception ex) {
@@ -110,12 +107,13 @@ public class GameEngine {
 	 * have at least 1 army at the beginning
 	 */
 	public void allocateInitialArmies() {
-		int initialArmies = turn.getEachPlayerArmy(listActivePlayers);
+		int initialArmies = turn.getEachPlayerArmy(gameState.getPlayers());
 
 		for (GameCountry country : getGameState().getGameMapObject().getAllCountries()) {
 			country.setArmies(1);
 		}
-		for (Player player : listActivePlayers) {
+
+		for (Player player : gameState.getPlayers()) {
 			int countryCount = player.getCountries().size();
 			player.setPlayerArmies(countryCount);
 			player.setRemainingArmies(initialArmies - countryCount);
@@ -127,13 +125,13 @@ public class GameEngine {
 	 * @param activePlayer current player
 	 */
 	public void setNextPlayer(Player activePlayer) {
-		int currentIndex = listActivePlayers.indexOf(activePlayer);
+		int currentIndex = gameState.getPlayers().indexOf(activePlayer);
 		currentIndex = currentIndex + 1;
 		System.out.println("::::::" + currentIndex);
-		if (currentIndex >= listActivePlayers.size()) {
+		if (currentIndex >= gameState.getPlayers().size()) {
 			currentIndex = 0;
 		}
-		Player nextPlayer = listActivePlayers.get(currentIndex);
+		Player nextPlayer = gameState.getPlayers().get(currentIndex);
 		turn.setActivePlayer(nextPlayer);
 	}
 
