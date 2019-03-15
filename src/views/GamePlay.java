@@ -332,9 +332,10 @@ public class GamePlay extends JPanel {
 	 */
 	public boolean fortify() {
 
-		GameCountry countryToFortify = MapGenerator.countryHashMap
+		GameCountry countryToFortify = objGameEngine.getGameState().getGameMapObject().getCountryHashMap()
 				.get(lstPlayerCountries.getSelectedValue().toString());
-		GameCountry fortifyFrom = MapGenerator.countryHashMap.get(lstActionCountry.getSelectedValue().toString());
+		GameCountry fortifyFrom = objGameEngine.getGameState().getGameMapObject().getCountryHashMap().
+				get(lstActionCountry.getSelectedValue().toString());
 
 		int armiesToMove = Integer.parseInt(txtReinforce.getText());
 
@@ -383,14 +384,13 @@ public class GamePlay extends JPanel {
 	 */
 	public void updateActionCountries() {
 		String seletedCountry = lstPlayerCountries.getSelectedValue().toString();
-		GameCountry cntry = MapGenerator.countryHashMap.get(seletedCountry);
+		GameCountry cntry = objGameEngine.getGameState().getGameMapObject().getCountryHashMap().get(seletedCountry);
 
 		if (dlstActionCountries.size() != 0) {
 			dlstActionCountries.removeAllElements();
 		}
 
-		List<GameCountry> lstPlayerNeighbors = (List) cntry.getNeighbouringCountries().values().stream()
-				.filter(neighbor -> neighbor.getCurrentPlayer().equals(activePlayer)).collect(Collectors.toList());
+		List<GameCountry> lstPlayerNeighbors = cntry.getNeighbouringCountries().values().stream().filter(neighbor -> neighbor.getCurrentPlayer().equals(activePlayer)).collect(Collectors.toList());
 
 		for (GameCountry country : lstPlayerNeighbors) {
 			dlstActionCountries.addElement(country.getCountryName());
@@ -454,7 +454,7 @@ public class GamePlay extends JPanel {
 	public String getArmiesPresent(String countryName) {
 
 		if (countryName != null && countryName != "") {
-			GameCountry country = MapGenerator.countryHashMap.get(countryName);
+			GameCountry country = objGameEngine.getGameState().getGameMapObject().getCountryHashMap().get(countryName);
 			return country.getArmiesStationed() + "";
 		}
 		return "";

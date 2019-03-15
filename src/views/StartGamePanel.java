@@ -80,7 +80,7 @@ public class StartGamePanel extends JPanel {
 					String message = mapGenerator.readConquestFile(gameEngine.getMapPath());
 					if (message.equals("SUCCESS")) {
 						message = mapGenerator.validateMap();
-						if(message.equals("SUCCESS")&& MapGenerator.countryHashMap.values().size() <playerName.size())
+						if(message.equals("SUCCESS")&& gameEngine.getGameState().getGameMapObject().getCountryHashMap().values().size() < playerName.size())
 						{
 							message = "Number of countries in the map should be more than the players";
 						}
