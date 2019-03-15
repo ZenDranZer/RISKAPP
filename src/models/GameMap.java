@@ -8,6 +8,7 @@ public class GameMap extends Observable {
     public  HashMap<String,GameCountry> countryHashMap;
     public  HashMap<String,GameContinent> continentHashMap;
     public HashMap <String,String>guiHashMap;
+
     public GameMap(){
         countryHashMap = new HashMap<>();
         continentHashMap = new HashMap<>();

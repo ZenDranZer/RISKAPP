@@ -1,11 +1,13 @@
 package models;
 
+import java.util.Observable;
+
 /**
  * Class that represents a Risk Card
  * @author hp
  *
  */
-public class RiskCard {
+public class RiskCard extends Observable {
 
 	private String countryName;
 	private String armyType;

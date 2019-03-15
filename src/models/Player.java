@@ -5,7 +5,7 @@ import java.util.*;
 /**
  *The Player class is a model which contains player related data.
   */
-public class Player {
+public class Player extends Observable {
 
     private String name;
     private int id;
