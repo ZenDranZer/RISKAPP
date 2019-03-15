@@ -13,15 +13,20 @@ public class GameEngine {
 
 	private ArrayList<Player> listActivePlayers = new ArrayList<Player>();
 	private ArrayList<Player> listEliminatedPlayers = new ArrayList<Player>();
-	private static MapGenerator mapGenerator = new MapGenerator();
+	private static MapGenerator mapGenerator;
 	private String mapPath;
 	private TurnController turn;
 	private int numberOfPlayers;
+	private GameState gameState;
 
 	public GameEngine() {
 		turn = new TurnController();
+		gameState = new GameState();
+		mapGenerator = new MapGenerator();
 	}
-
+	public GameState getGameState(){
+		return gameState;
+	}
 	/**
 	 * Gets the TurnController object
 	 * @return TurnController object representing the current turn
@@ -89,7 +94,7 @@ public class GameEngine {
 
 		try {
 			setNumberOfPlayers(listActivePlayers.size());
-			turn.allocateCountries(listActivePlayers, new ArrayList<GameCountry>(MapGenerator.countryHashMap.values()));
+			turn.allocateCountries(listActivePlayers, getGameState().getGameMapObject().getAllCountries());
 			allocateInitialArmies();
 			turn.setActivePlayer(listActivePlayers.get(0));
 		} catch (NullPointerException nullEx) {
@@ -106,7 +111,7 @@ public class GameEngine {
 	public void allocateInitialArmies() {
 		int initialArmies = turn.getEachPlayerArmy(listActivePlayers);
 
-		for (GameCountry country : MapGenerator.countryHashMap.values()) {
+		for (GameCountry country : getGameState().getGameMapObject().getAllCountries()) {
 			country.setArmies(1);
 		}
 		for (Player player : listActivePlayers) {

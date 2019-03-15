@@ -8,20 +8,26 @@ import java.util.*;
  */
 public class GameState {
 
-	private ArrayList<Player> lstPlayers;
+	private ArrayList<Player> players;
 	private String mapPath;
 	private HashMap<String, RiskCard> cardPile;
+	private GameMap gameMap;
 
+	public GameState(){
+		players = new ArrayList<>();
+		cardPile = new HashMap<>();
+		gameMap = new GameMap();
+	}
 	/**
 	 * Gets the list of player
 	 * @return ArrayList of active players
 	 */
 	public ArrayList<Player> getPlayers() {
-		return lstPlayers;
+		return players;
 	}
 
 	public void setPlayers(ArrayList<Player> lstPlayers) {
-		this.lstPlayers = lstPlayers;
+		this.players = players;
 	}
 
 	public String getMapPath() {
@@ -38,6 +44,9 @@ public class GameState {
 
 	public void setCardPile(HashMap<String, RiskCard> cardPile) {
 		this.cardPile = cardPile;
+	}
+	public GameMap getGameMapObject(){
+		return gameMap;
 	}
 
 }
