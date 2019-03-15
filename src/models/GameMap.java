@@ -44,6 +44,15 @@ public class GameMap extends Observable {
         setChanged();
         notifyObservers();
     }
+
+    public void setCountryHashMap(HashMap<String, GameCountry> countryHashMap) {
+        this.countryHashMap = countryHashMap;
+    }
+
+    public void setContinentHashMap(HashMap<String, GameContinent> continentHashMap) {
+        this.continentHashMap = continentHashMap;
+    }
+
     public boolean containsKey(String key){
         if(continentHashMap.containsKey(key)){
             return true;

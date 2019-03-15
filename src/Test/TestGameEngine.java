@@ -10,7 +10,7 @@ import models.*;
 
 import static org.junit.Assert.*;
 
-public class GameEngineTest {
+public class TestGameEngine {
 
 	TestUtil testData;
 	TurnController objTurnController;
@@ -22,8 +22,8 @@ public class GameEngineTest {
 		testData = new TestUtil();
 		objGameEngine.setActivePlayers(testData.lstPlayers);
 		//objTurnController = new TurnController();
-		MapGenerator.continentHashMap = testData.testContinentHashMap;
-		MapGenerator.countryHashMap = testData.testCountryHashMap;
+		objGameEngine.getGameState().getGameMapObject().setContinentHashMap(testData.testContinentHashMap);
+		objGameEngine.getGameState().getGameMapObject().setCountryHashMap(testData.testCountryHashMap);
 	}
 
 	@After
@@ -40,7 +40,7 @@ public class GameEngineTest {
 		objGameEngine.allocateInitialArmies();
 
 		boolean actualResult = true;
-		for(GameCountry country : MapGenerator.countryHashMap.values())
+		for(GameCountry country : objGameEngine.getGameState().getGameMapObject().getCountryHashMap().values())
 		{
 			if(country.getArmiesStationed() != 1)
 			{
