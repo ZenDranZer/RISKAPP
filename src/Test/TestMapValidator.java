@@ -25,8 +25,8 @@ public class TestMapValidator {
 
     @Before
     public void setUp() throws Exception {
-        validator = new MapValidator(gameEngine);
-        mapGenerator = new MapGenerator(gameEngine);
+        validator = new MapValidator(gameMap);
+        mapGenerator = new MapGenerator(gameMap);
         mapGenerator.readConquestFile("C:\\Users\\shiva\\Desktop\\Africa.map");
         graphUtil = mapGenerator.buildGraph();
         gameMap = gameEngine.getGameState().getGameMapObject();

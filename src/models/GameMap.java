@@ -11,6 +11,7 @@ public class GameMap extends Observable {
     public GameMap(){
         countryHashMap = new HashMap<>();
         continentHashMap = new HashMap<>();
+        guiHashMap = new HashMap<>();
     }
     public ArrayList<GameCountry> getAllCountries(){
         return new ArrayList<GameCountry>(this.countryHashMap.values());

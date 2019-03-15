@@ -2,11 +2,15 @@ package views.countryView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
+import models.GameContinent;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 import javax.swing.*;
+import javax.swing.event.ListDataListener;
 
 /**This panel is used to show the interface for adding a new country in creating new map.*/
 public class AddCountry extends JPanel {
@@ -27,8 +31,6 @@ public class AddCountry extends JPanel {
     private JTextField nameField;
     /**A label to display "Enter Continent Name:" string.*/
     private JLabel label4;
-    /**A text field used to get the user input for continent name.*/
-    private JTextField continentField;
     /**A label to display "Enter Neighbour:" string.*/
     private JLabel label3;
     /**A text field used to get the user input for neighbour name.*/
@@ -48,6 +50,8 @@ public class AddCountry extends JPanel {
     /**a back button to go to previous panel*/
     private JButton backButton;
 
+    private JComboBox continentCombobox;
+
     /**A public constructor to initialize the whole panel with different controls
      * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
      * @param parent a previous panel which is being used to redirect back to the previous Panel.
@@ -59,6 +63,10 @@ public class AddCountry extends JPanel {
         initComponents();
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
         countryListLabel.setListData(mapGenerator.getListOfCountries().toArray());
+        countryListLabel.setListData(mapGenerator.getListOfCountries().toArray());
+        Set<String> continentHashMap = gameEngine.getGameState().getGameMapObject().getContinentHashMap().keySet();
+        String[] continentList = continentHashMap.toArray(new String[continentHashMap.size()]);
+        continentCombobox.setModel(new DefaultComboBoxModel<>(continentList));
     }
 
     /**A mouse click event on the add neighbour Button for adding a neighbour.
@@ -72,7 +80,7 @@ public class AddCountry extends JPanel {
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void addCountryButtonMouseClicked(MouseEvent e) {
         String countryName = nameField.getText();
-        String continentName = continentField.getText();
+        String continentName = (String)continentCombobox.getSelectedItem();
         if(countryName.equals("") || continentName.equals("")){
             JOptionPane.showMessageDialog(this,"Value not added properly.");
         } else {
@@ -80,11 +88,10 @@ public class AddCountry extends JPanel {
             String message = mapGenerator.addCountry(continentName,countryName,neighbourList);
             JOptionPane.showMessageDialog(this.getParent(),message);
             nameField.setText("");
-            continentField.setText("");
             neigbourList.setText("Neighbours:");
             neighbourField.setText("");
             neighbourList.clear();
-            countryListLabel.setListData(mapGenerator.getListOfCountries().toArray());
+
         }
     }
 
@@ -125,9 +132,9 @@ public class AddCountry extends JPanel {
         label2 = new JLabel();
         nameField = new JTextField();
         label4 = new JLabel();
-        continentField = new JTextField();
         label3 = new JLabel();
         label5 = new JLabel();
+        continentCombobox = new JComboBox();
         neighbourField = new JTextField();
         scrollPaneList = new JScrollPane();
         countryListLabel = new JList();
@@ -195,7 +202,7 @@ public class AddCountry extends JPanel {
         add(label4, new GridBagConstraints(1, 4, 2, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 5), 0, 0));
-        add(continentField, new GridBagConstraints(3, 4, 2, 1, 0.0, 0.0,
+        add(continentCombobox, new GridBagConstraints(3, 4, 2, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 5), 0, 0));
 

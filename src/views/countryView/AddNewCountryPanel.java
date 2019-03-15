@@ -6,6 +6,7 @@ import controllers.MapGenerator;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.swing.*;
 
 /**This panel is used to add the country to an existing map.*/
@@ -39,6 +40,10 @@ public class AddNewCountryPanel extends JPanel {
     private JLabel neigbourList;
     /**A button for going to back button.*/
     private JButton backButton;
+    private JLabel countryLabel;
+    private JScrollPane scrollPane1;
+    private JList countryList;
+    private JComboBox continentCombobox;
 
     /**A public constructor to initialize the whole panel with different controls
      * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
@@ -49,6 +54,10 @@ public class AddNewCountryPanel extends JPanel {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
+        Set<String> continentHashMap = gameEngine.getGameState().getGameMapObject().getContinentHashMap().keySet();
+        String[] continentList = continentHashMap.toArray(new String[continentHashMap.size()]);
+        continentCombobox.setModel(new DefaultComboBoxModel<>(continentList));
+        countryList.setListData(gameEngine.getGameState().getGameMapObject().getCountryHashMap().keySet().toArray());
     }
 
     /**A mouse click event on the add neighbour Button for adding a neighbour.
@@ -74,6 +83,7 @@ public class AddNewCountryPanel extends JPanel {
             neigbourList.setText("Neighbours:");
             neighbourField.setText("");
             neighbourList.clear();
+            countryList.setListData(gameEngine.getGameState().getGameMapObject().getCountryHashMap().keySet().toArray());
         }
     }
 
@@ -97,47 +107,48 @@ public class AddNewCountryPanel extends JPanel {
         addNeighbourButton = new JButton();
         addCountryButton = new JButton();
         neigbourList = new JLabel();
+        countryLabel = new JLabel();
+        scrollPane1 = new JScrollPane();
+        countryList = new JList();
+        continentCombobox = new JComboBox();
         backButton = new JButton();
 
         //======== this ========
         setLayout(new GridBagLayout());
-        ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0, 134, 0};
+        ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0, 139, 0, 138, 0};
         ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0};
-        ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
+        ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
         ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
         //---- label1 ----
         label1.setText("Add Country:");
         add(label1, new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- label2 ----
         label2.setText("Enter Name :");
         add(label2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
         add(nameField, new GridBagConstraints(1, 1, 2, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- label4 ----
         label4.setText("Enter Continent Name:");
         add(label4, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
-        add(continentField, new GridBagConstraints(1, 2, 2, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- label3 ----
         label3.setText("Enter Neighbour:");
         add(label3, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
         add(neighbourField, new GridBagConstraints(1, 3, 2, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- addNeighbourButton ----
         addNeighbourButton.setText("Add Neighbour");
@@ -148,8 +159,8 @@ public class AddNewCountryPanel extends JPanel {
             }
         });
         add(addNeighbourButton, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- addCountryButton ----
         addCountryButton.setText("Add Country");
@@ -160,14 +171,31 @@ public class AddNewCountryPanel extends JPanel {
             }
         });
         add(addCountryButton, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- neigbourList ----
         neigbourList.setText("Neighbour:");
         add(neigbourList, new GridBagConstraints(3, 0, 1, 6, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 0, 0), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 5), 0, 0));
+
+        //---- countryLabel ----
+        countryLabel.setText("Countries:");
+        add(countryLabel, new GridBagConstraints(5, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 0), 0, 0));
+
+        //======== scrollPane1 ========
+        {
+            scrollPane1.setViewportView(countryList);
+        }
+        add(scrollPane1, new GridBagConstraints(5, 1, 1, 5, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 0), 0, 0));
+        add(continentCombobox, new GridBagConstraints(1, 2, 2, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- backButton ----
         backButton.setText("Back");
@@ -178,8 +206,8 @@ public class AddNewCountryPanel extends JPanel {
             }
         });
         add(backButton, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 0, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 5), 0, 0));
         }
 
 }
