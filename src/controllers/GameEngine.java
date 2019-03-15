@@ -20,9 +20,10 @@ public class GameEngine {
 	private GameState gameState;
 
 	public GameEngine() {
-		turn = new TurnController();
+
 		gameState = new GameState();
-		mapGenerator = new MapGenerator(this);
+		turn = new TurnController(gameState.getGameMapObject());
+		mapGenerator = new MapGenerator(gameState.getGameMapObject());
 	}
 	public GameState getGameState(){
 		return gameState;
@@ -33,7 +34,7 @@ public class GameEngine {
 	 */
 	public TurnController getTurmController() {
 		if (turn == null) {
-			turn = new TurnController();
+			turn = new TurnController(gameState.getGameMapObject());
 		}
 		return turn;
 	}

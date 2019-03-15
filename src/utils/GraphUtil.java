@@ -3,6 +3,7 @@ package utils;
 
 import controllers.MapGenerator;
 import models.GameCountry;
+import models.GameMap;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
@@ -20,10 +21,12 @@ public class GraphUtil {
 
     /**countryGraph is a Graph object for maintaining the map graph.*/
     private Graph<GameCountry, DefaultEdge> countryGraph;
+    private GameMap gameMap;
 
     /**Public constructor for initializing the countryGraph*/
-    public GraphUtil(){
+    public GraphUtil(GameMap map){
         countryGraph = new SimpleGraph<>(DefaultEdge.class);
+        gameMap = map;
     }
 
     /**Getter method to access the countryGraph
@@ -40,7 +43,7 @@ public class GraphUtil {
         }
         for (GameCountry gameCountry : countryList.values()) {
             for (GameCountry neighbour : gameCountry.getNeighbouringCountries().values()){
-                countryGraph.addEdge(gameCountry, MapGenerator.countryHashMap.get(neighbour.getCountryName()));
+                countryGraph.addEdge(gameCountry, gameMap.getCountryHashMap().get(neighbour.getCountryName()));
             }
         }
     }

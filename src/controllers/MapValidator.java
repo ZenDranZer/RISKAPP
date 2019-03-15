@@ -16,8 +16,8 @@ public class MapValidator {
     HashMap<String, GameContinent>continentHashMap;
     HashMap<String, String>guiHashMap;
     GameMap gameMap;
-	public MapValidator(GameEngine engine){
-        gameMap = engine.getGameState().getGameMapObject();
+	public MapValidator(GameMap map){
+        gameMap = map;
         countryHashMap = gameMap.getCountryHashMap();
         continentHashMap = gameMap.getContinentHashMap();
         guiHashMap = gameMap.getGuiHashMap();

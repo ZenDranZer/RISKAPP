@@ -13,11 +13,10 @@ public class TurnController {
 	private int availableArmies;
 	GameMap gameMap;
 
-	public TurnController(GameEngine engine) {
+	public TurnController(GameMap map) {
 		availableArmies = 3;
-		gameMap = engine.getGameState().getGameMapObject();
+		gameMap = map;
 	}
-
 	/**
 	 * Set available armies
 	 * 

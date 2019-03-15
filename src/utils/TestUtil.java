@@ -16,9 +16,10 @@ public class TestUtil {
 	public HashMap<String,GameCountry> testCountryHashMap;
 	public HashMap<String,GameContinent> testContinentHashMap;
 	public MapGenerator mapGenerator;
+	public GameMap gameMap;
 	public TestUtil()
 	{
-		mapGenerator = new MapGenerator();
+		mapGenerator = new MapGenerator(gameMap);
 		lstPlayers = new ArrayList<Player>();
 		testCountryHashMap = new HashMap<String,GameCountry>();
 		testContinentHashMap = new HashMap<String,GameContinent>();
@@ -157,12 +158,12 @@ public class TestUtil {
 
     	for(GameContinent c : testContinentHashMap.values())
     	{
-    		MapGenerator.continentHashMap.put(c.getContinentName(), c);
+    		gameMap.getContinentHashMap().put(c.getContinentName(), c);
     	}
     	
     	for(GameCountry cntry : testCountryHashMap.values())
     	{
-    		MapGenerator.countryHashMap.put(cntry.getCountryName(), cntry);
+    		gameMap.getCountryHashMap().put(cntry.getCountryName(), cntry);
     	}
 
     }

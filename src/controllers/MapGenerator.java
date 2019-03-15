@@ -16,7 +16,6 @@ public class MapGenerator {
 /*Making a temporary GameEngine object to access the GameState object that contains the GameMap object which
 contains the required hashmaps.
  */
-    GameEngine gameEngine;
     GraphUtil graphUtilObject ;
     BufferedReader inputReader;
     boolean firstCountryFlag;
@@ -28,12 +27,12 @@ contains the required hashmaps.
     /** Class constructor that initializes the ubiquitious countryHashMap and ContinentHashMap
      *
      */
-    public MapGenerator(GameEngine engine) {
-        gameEngine = engine;
-        gameMap = gameEngine.getGameState().getGameMapObject();
+    public MapGenerator(GameMap map) {
+
+        gameMap = map;
         setGuiHashMap();
         firstCountryFlag=true;
-        validator = new MapValidator(gameEngine);
+        validator = new MapValidator(gameMap);
        // countryHashMap = gameMap.getCountryHashMap();
         //continentHashMap = gameMap.getContinentHashMap();
         //guiHashMap = gameMap.getGuiHashMap();
@@ -318,7 +317,7 @@ contains the required hashmaps.
     public GraphUtil buildGraph(){
         try {
 
-            GraphUtil graphUtilObject = new GraphUtil();
+            GraphUtil graphUtilObject = new GraphUtil(gameMap);
             //countryHashMap
             graphUtilObject.setCountryGraph(gameMap.getCountryHashMap());
 
