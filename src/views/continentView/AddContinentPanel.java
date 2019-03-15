@@ -28,6 +28,9 @@ public class AddContinentPanel extends JPanel {
     private JButton addContinent;
     /**A button for going to back button.*/
     private JButton backButton;
+    private JLabel continentLabel;
+    private JScrollPane scrollPane1;
+    private JList continentList;
 
     /**A public constructor to initialize the whole panel with different controls
      * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
@@ -36,7 +39,9 @@ public class AddContinentPanel extends JPanel {
     public AddContinentPanel(GameEngine gameEngine,JPanel parent) {
         this.gameEngine = gameEngine;
         this.parent = parent;
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
         initComponents();
+        continentList.setListData(mapGenerator.getListOfContinents().toArray());
     }
 
     /**An mouse click event on the addContinent button used for performing addition operation of continent.
@@ -50,6 +55,7 @@ public class AddContinentPanel extends JPanel {
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
             String message = mapGenerator.addContinent(continentName,noOfArmies);
             JOptionPane.showMessageDialog(this,message);
+            continentList.setListData(mapGenerator.getListOfContinents().toArray());
         }
     }
 
@@ -70,6 +76,9 @@ public class AddContinentPanel extends JPanel {
         valueField = new JTextField();
         addContinent = new JButton();
         backButton = new JButton();
+        scrollPane1 = new JScrollPane();
+        continentList = new JList();
+        continentLabel = new JLabel();
 
         //======== this ========
 
@@ -82,29 +91,43 @@ public class AddContinentPanel extends JPanel {
         //---- label1 ----
         label1.setText("Create Continent");
         add(label1, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
+
+        //---- continentLabel ----
+        continentLabel.setText("Continents:");
+        add(continentLabel, new GridBagConstraints(4, 1, 3, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- label2 ----
         label2.setText("Enter Continent Name:");
         add(label2, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
         add(nameField, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
+
+        //======== scrollPane1 ========
+        {
+            scrollPane1.setViewportView(continentList);
+        }
+        add(scrollPane1, new GridBagConstraints(4, 2, 3, 4, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- label3 ----
         label3.setText("Enter Value:");
         add(label3, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- valueField ----
         valueField.setText("1");
         add(valueField, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- addContinent ----
         addContinent.setText("Add Continent");
@@ -115,8 +138,8 @@ public class AddContinentPanel extends JPanel {
             }
         });
         add(addContinent, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
 
         //---- backButton ----
         backButton.setText("Back");
@@ -127,7 +150,7 @@ public class AddContinentPanel extends JPanel {
             }
         });
         add(backButton, new GridBagConstraints(2, 5, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
     }
 }
