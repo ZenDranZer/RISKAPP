@@ -18,14 +18,15 @@ public class TurnControllerTest {
 	TestUtil testData;
 	TurnController objTurnController;
 	MapGenerator mapGenerator ;
+	GameMap gameMap = new GameMap();
 
 	@Before
 	public void setUp() throws Exception {
 		testData = new TestUtil();
-		mapGenerator = new MapGenerator();
-		objTurnController = new TurnController();
-		MapGenerator.continentHashMap = testData.testContinentHashMap;
-		MapGenerator.countryHashMap = testData.testCountryHashMap;
+		mapGenerator = new MapGenerator(this.gameMap);
+		objTurnController = new TurnController(this.gameMap);
+		mapGenerator.getGameMap().continentHashMap = testData.testContinentHashMap;
+		mapGenerator.getGameMap().countryHashMap = testData.testCountryHashMap;
 	}
 
 	@After

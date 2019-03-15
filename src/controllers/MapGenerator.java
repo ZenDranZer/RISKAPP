@@ -49,6 +49,14 @@ contains the required hashmaps.
         gameMap.setGetGuiHashMapParameter("scroll","Default scrolling");
     }
 
+    /**
+     * Passes game map
+     * @return
+     */
+    public GameMap getGameMap(){
+        return this.gameMap;
+    }
+
     /**Reads continents from a file and store them in required structure.
      *
      * @param inputReader

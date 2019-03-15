@@ -2,6 +2,7 @@ package Test;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
+import models.GameMap;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,10 +16,12 @@ public class TestValidMapFormat {
 
     MapGenerator mapGenerator;
     GameEngine gameEngine;
+    GameMap gameMap ;
     @Before
     public void setUp() throws Exception {
         gameEngine = new GameEngine();
-         mapGenerator = new MapGenerator(gameEngine);
+        gameMap = new GameMap();
+         mapGenerator = new MapGenerator(gameMap);
     }
 
     @After
