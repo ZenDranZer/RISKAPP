@@ -11,9 +11,11 @@ public class TurnController {
 
 	Player activePlayer;
 	private int availableArmies;
+	GameMap gameMap;
 
-	public TurnController() {
+	public TurnController(GameEngine engine) {
 		availableArmies = 3;
+		gameMap = engine.getGameState().getGameMapObject();
 	}
 
 	/**
@@ -119,8 +121,8 @@ public class TurnController {
 		int numOfArmies = 0;
 		String returnMessage = "";
 
-		GameCountry moveToCountry = MapGenerator.countryHashMap.get(moveTo);
-		GameCountry moveFromCountry = MapGenerator.countryHashMap.get(moveFrom);
+		GameCountry moveToCountry = gameMap.getCountryHashMap().get(moveTo);
+		GameCountry moveFromCountry = gameMap.getCountryHashMap().get(moveFrom);
 
 		if ((moveFromCountry.getArmiesStationed() - numOfArmies) > 1) {
 			moveFromCountry.setArmies(moveFromCountry.getArmiesStationed() - numOfArmies);
