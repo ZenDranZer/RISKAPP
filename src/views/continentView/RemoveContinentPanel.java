@@ -2,12 +2,16 @@ package views.continentView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
+import models.GameMap;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.*;
 
 /**This panel shows the removal procedures for the continent.*/
-public class RemoveContinentPanel extends JPanel {
+public class RemoveContinentPanel extends JPanel implements Observer {
 
     /**GameEngine object to preserve the state of the game.*/
     private GameEngine gameEngine;
@@ -121,4 +125,8 @@ public class RemoveContinentPanel extends JPanel {
                 new Insets(0, 0, 0, 0), 0, 0));
        }
 
+    @Override
+    public void update(Observable observable, Object o) {
+        continentList.setListData(((GameMap) o).getContinentHashMap().keySet().toArray());
+    }
 }

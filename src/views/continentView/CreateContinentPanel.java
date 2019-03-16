@@ -2,14 +2,17 @@ package views.continentView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
+import models.GameMap;
 import views.countryView.AddCountry;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.*;
 
 /**CreateContinentPanel is a panel which is used to add a new continent in the map in creating new map.*/
-public class CreateContinentPanel extends JPanel {
+public class CreateContinentPanel extends JPanel implements Observer {
 
     /**GameEngine object to preserve the state of the game.*/
     private GameEngine gameEngine;
@@ -53,6 +56,8 @@ public class CreateContinentPanel extends JPanel {
         AddCountry addCountry = new AddCountry(gameEngine , this);
         addCountry.setVisible(true);
         setVisible(false);
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.addObserver(addCountry);
         Container container = this.getParent();
         container.add(addCountry);
         container.revalidate();
@@ -66,11 +71,12 @@ public class CreateContinentPanel extends JPanel {
         int value = Integer.parseInt(valueField.getText());
         if(continentName.equals("")){
             JOptionPane.showMessageDialog(this,"Wrong Input.");
+            nameField.setText("");
+            valueField.setText("1");
         }else {
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
             String message = mapGenerator.addContinent(continentName, value);
             JOptionPane.showMessageDialog(this.getParent().getParent(), message);
-            continentList.setListData(mapGenerator.getListOfContinents().toArray());
             finishButton.setEnabled(true);
         }
         nameField.setText("");
@@ -83,6 +89,8 @@ public class CreateContinentPanel extends JPanel {
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.deleteObserver(this);
     }
 
     /**Initialize all the control components with their positions and panel layout.*/
@@ -178,5 +186,10 @@ public class CreateContinentPanel extends JPanel {
         add(backButton, new GridBagConstraints(3, 9, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 5), 0, 0));
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        continentList.setListData(((GameMap) o).getCountryHashMap().keySet().toArray());
     }
 }

@@ -1,6 +1,7 @@
 package views.countryView;
 
 import controllers.GameEngine;
+import models.GameMap;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -38,6 +39,8 @@ public class EditCountryPanel extends JPanel {
         AddNewCountryPanel addNewCountryPanel = new AddNewCountryPanel(gameEngine,this);
         addNewCountryPanel.setVisible(true);
         setVisible(false);
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.addObserver(addNewCountryPanel);
         Container container = this.getParent();
         container.add(addNewCountryPanel);
         container.revalidate();
@@ -50,6 +53,8 @@ public class EditCountryPanel extends JPanel {
         removeCountryPanel.setVisible(true);
         setVisible(false);
         Container container = this.getParent();
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.addObserver(removeCountryPanel);
         container.add(removeCountryPanel);
         container.revalidate();
     }
@@ -61,6 +66,8 @@ public class EditCountryPanel extends JPanel {
         editCountryValuePanel.setVisible(true);
         setVisible(false);
         Container container = this.getParent();
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.addObserver(editCountryValuePanel);
         container.add(editCountryValuePanel);
         container.revalidate();
     }

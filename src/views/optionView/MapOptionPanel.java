@@ -1,6 +1,7 @@
 package views.optionView;
 
 import controllers.GameEngine;
+import models.GameMap;
 import views.continentView.CreateContinentPanel;
 
 import javax.swing.*;
@@ -47,6 +48,8 @@ public class MapOptionPanel extends JPanel {
         CreateContinentPanel createContinentPanel = new CreateContinentPanel(gameEngine,this);
         createContinentPanel.setVisible(true);
         Container container = getParent();
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.addObserver(createContinentPanel);
         container.add(createContinentPanel);
         container.revalidate();
     }

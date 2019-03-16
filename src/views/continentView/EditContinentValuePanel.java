@@ -2,16 +2,19 @@ package views.continentView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
+import models.GameMap;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 
 /**This view panel is used to show the edit functionality for the existing
  * continent.*/
-public class EditContinentValuePanel extends JPanel {
+public class EditContinentValuePanel extends JPanel implements Observer {
 
     /**An arrayList for keeping the list of the continents a particular point*/
     private ArrayList<String> continentsName;
@@ -127,8 +130,6 @@ public class EditContinentValuePanel extends JPanel {
         }
         nameField.setText("");
         valueField.setText("1");
-        continentsName = mapGenerator.getListOfContinents();
-        continentList.setListData(continentsName.toArray());
         continentList.revalidate();
     }
 
@@ -250,4 +251,8 @@ public class EditContinentValuePanel extends JPanel {
     }
 
 
+    @Override
+    public void update(Observable observable, Object o) {
+        continentList.setListData(((GameMap) o).getContinentHashMap().keySet().toArray());
+    }
 }

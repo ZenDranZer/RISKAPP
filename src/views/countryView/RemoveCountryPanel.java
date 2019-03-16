@@ -2,13 +2,16 @@ package views.countryView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
+import models.GameMap;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.*;
 
 /**This panel is used to remove country from an existing map.*/
-public class RemoveCountryPanel extends JPanel {
+public class RemoveCountryPanel extends JPanel implements Observer {
 
     /**A JPanel object for tracking the parent panel.*/
     private JPanel parent;
@@ -45,6 +48,8 @@ public class RemoveCountryPanel extends JPanel {
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();
         container.remove(this);
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.deleteObserver(this);
         parent.setVisible(true);
     }
 
@@ -58,7 +63,6 @@ public class RemoveCountryPanel extends JPanel {
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
             String message = mapGenerator.removeCountry(country);
             JOptionPane.showMessageDialog(this,message);
-            CountryList.setListData(mapGenerator.getListOfCountries().toArray());
         }
     }
 
@@ -125,4 +129,9 @@ public class RemoveCountryPanel extends JPanel {
                 new Insets(0, 0, 0, 0), 0, 0));
     }
 
+    @Override
+    public void update(Observable observable, Object o) {
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        CountryList.setListData(mapGenerator.getListOfCountries().toArray());
+    }
 }

@@ -2,13 +2,17 @@ package views.countryView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
+import models.GameMap;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.*;
 
 /**This panel is used to edit an existing country in an existing map*/
-public class EditCountryValuePanel extends JPanel {
+public class EditCountryValuePanel extends JPanel implements Observer {
 
     /**An arrayList for keeping the list of the country a particular point*/
     private ArrayList<String> countryArrayList;
@@ -173,6 +177,8 @@ public class EditCountryValuePanel extends JPanel {
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();
         container.remove(this);
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.deleteObserver(this);
         parent.setVisible(true);
     }
 
@@ -346,4 +352,10 @@ public class EditCountryValuePanel extends JPanel {
             new Insets(0, 0, 0, 5), 0, 0));
     }
 
+    @Override
+    public void update(Observable observable, Object o) {
+        countryArrayList = mapGenerator.getListOfCountries();
+        initComponents();
+        countryList.setListData(countryArrayList.toArray());
+    }
 }

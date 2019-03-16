@@ -1,6 +1,7 @@
 package views.continentView;
 
 import controllers.GameEngine;
+import models.GameMap;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -39,6 +40,8 @@ public class EditContinentPanel extends JPanel {
         addContinent.setVisible(true);
         setVisible(false);
         Container container = this.getParent();
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.addObserver(addContinent);
         container.add(addContinent);
         container.revalidate();
     }
@@ -49,6 +52,8 @@ public class EditContinentPanel extends JPanel {
         RemoveContinentPanel removeContinentPanel = new RemoveContinentPanel(gameEngine,this);
         removeContinentPanel.setVisible(true);
         setVisible(false);
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.addObserver(removeContinentPanel);
         Container container = this.getParent();
         container.add(removeContinentPanel);
         container.revalidate();
@@ -60,6 +65,8 @@ public class EditContinentPanel extends JPanel {
         EditContinentValuePanel editContinentValuePanel = new EditContinentValuePanel(gameEngine,this);
         editContinentValuePanel.setVisible(true);
         setVisible(false);
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.addObserver(editContinentValuePanel);
         Container container = this.getParent();
         container.add(editContinentValuePanel);
         container.revalidate();

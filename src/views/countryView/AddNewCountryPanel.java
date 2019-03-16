@@ -2,15 +2,19 @@ package views.countryView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
+import models.GameMap;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
 
 /**This panel is used to add the. country to an existing map.*/
-public class AddNewCountryPanel extends JPanel {
+public class AddNewCountryPanel extends JPanel implements Observer {
 
     /**An arrayList maintaining the current state of the neighbour list of a country.*/
     private ArrayList<String> neighbourList;
@@ -44,6 +48,9 @@ public class AddNewCountryPanel extends JPanel {
     private JScrollPane scrollPane1;
     private JList countryList;
     private JComboBox continentCombobox;
+    private JScrollPane scrollPane2;
+    private JList countryNeighbourList;
+    private JLabel neighbourLabel;
 
     /**A public constructor to initialize the whole panel with different controls
      * @param gameEngine a GameEngine object which is used for maintaining the current state of the game.
@@ -84,14 +91,23 @@ public class AddNewCountryPanel extends JPanel {
             neigbourList.setText("Neighbours:");
             neighbourField.setText("");
             neighbourList.clear();
-            countryList.setListData(gameEngine.getGameState().getGameMapObject().getCountryHashMap().keySet().toArray());
+
         }
+    }
+
+    private void countryListValueChanged(ListSelectionEvent e) {
+        Set<String> neighbours = gameEngine.getGameState().getGameMapObject().getCountryHashMap()
+                .get((String)countryList.getSelectedValue()).getNeighbouringCountries().keySet();
+        String[] neighList = neighbours.toArray(new String[neighbours.size()]);
+        countryNeighbourList.setListData(neighList);
     }
 
     /**A mouse click event on the back Button used for going back to the previous panel.
      * @param e is a MouseEvent object to get all the details regarding the event.*/
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.deleteObserver(this);
         container.remove(this);
         parent.setVisible(true);
     }
@@ -112,13 +128,15 @@ public class AddNewCountryPanel extends JPanel {
         scrollPane1 = new JScrollPane();
         countryList = new JList();
         continentCombobox = new JComboBox();
+        scrollPane2 = new JScrollPane();
+        countryNeighbourList = new JList();
+        neighbourLabel = new JLabel();
         backButton = new JButton();
 
-        //======== this ========
         setLayout(new GridBagLayout());
-        ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0, 139, 0, 138, 0};
+        ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0, 139, 0, 143, 0, 113, 0};
         ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0};
-        ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+        ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
         ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
         //---- label1 ----
@@ -185,13 +203,30 @@ public class AddNewCountryPanel extends JPanel {
         countryLabel.setText("Countries:");
         add(countryLabel, new GridBagConstraints(5, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
+
+        //---- neighbourLabel ----
+        neighbourLabel.setText("Neighbour:");
+        add(neighbourLabel, new GridBagConstraints(7, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 0), 0, 0));
 
         //======== scrollPane1 ========
         {
+
+            //---- countryList ----
+            countryList.addListSelectionListener(e -> countryListValueChanged(e));
             scrollPane1.setViewportView(countryList);
         }
         add(scrollPane1, new GridBagConstraints(5, 1, 1, 5, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 5), 0, 0));
+
+        //======== scrollPane2 ========
+        {
+            scrollPane2.setViewportView(countryNeighbourList);
+        }
+        add(scrollPane2, new GridBagConstraints(7, 1, 1, 5, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 0), 0, 0));
         add(continentCombobox, new GridBagConstraints(1, 2, 2, 1, 0.0, 0.0,
@@ -211,4 +246,8 @@ public class AddNewCountryPanel extends JPanel {
                 new Insets(0, 0, 0, 5), 0, 0));
         }
 
+    @Override
+    public void update(Observable observable, Object o) {
+        countryList.setListData(gameEngine.getGameState().getGameMapObject().getCountryHashMap().keySet().toArray());
+    }
 }

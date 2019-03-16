@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.Set;
 
 public class GameMap extends Observable {
     public  HashMap<String,GameCountry> countryHashMap;
@@ -26,6 +27,8 @@ public class GameMap extends Observable {
     public HashMap<String,String>getGuiHashMap(){
         return this.guiHashMap;
     }
+
+
     public void addCountry(GameCountry newCountry){
         this.countryHashMap.put(newCountry.getCountryName(),newCountry);
         setChanged();
@@ -45,6 +48,13 @@ public class GameMap extends Observable {
         this.countryHashMap.remove(continentName);
         setChanged();
         notifyObservers();
+    }
+
+    public Set<String> getNeighbourList(String countryName){
+        if(countryHashMap.containsKey(countryName)){
+            return countryHashMap.get(countryName).getNeighbouringCountries().keySet();
+        }
+        return null;
     }
 
     public void setCountryHashMap(HashMap<String, GameCountry> countryHashMap) {

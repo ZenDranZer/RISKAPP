@@ -2,13 +2,17 @@ package views.continentView;
 
 import controllers.GameEngine;
 import controllers.MapGenerator;
+import models.GameMap;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.*;
 
+
 /**AddContinentPanel is a panel which is used to add a new continent into the map after reading map.*/
-public class AddContinentPanel extends JPanel {
+public class AddContinentPanel extends JPanel implements Observer {
 
     /**GameEngine object to preserve the state of the game.*/
     private GameEngine gameEngine;
@@ -55,7 +59,6 @@ public class AddContinentPanel extends JPanel {
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
             String message = mapGenerator.addContinent(continentName,noOfArmies);
             JOptionPane.showMessageDialog(this,message);
-            continentList.setListData(mapGenerator.getListOfContinents().toArray());
         }
     }
 
@@ -65,6 +68,8 @@ public class AddContinentPanel extends JPanel {
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);
+        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+        gameMap.deleteObserver(this);
     }
 
     /**Initialize all the control components with their positions and panel layout.*/
@@ -152,5 +157,10 @@ public class AddContinentPanel extends JPanel {
         add(backButton, new GridBagConstraints(2, 5, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 5), 0, 0));
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        continentList.setListData(((GameMap) o).getCountryHashMap().keySet().toArray());
     }
 }
