@@ -351,19 +351,23 @@ contains the required hashmaps.
      * @return returns the status of the method execution
      */
     public String addContinent(String continentName, int continentValue){
+
         try {
             //continentHashMap.containsKey(continentName)
-            if (!gameMap.getContinentHashMap().containsKey(continentName)) {
+
+            if ( gameMap.getContinentHashMap().isEmpty() || !gameMap.getContinentHashMap().containsKey(continentName) ) {
                 GameContinent newContinent = new GameContinent();
                 newContinent.setContinentName(continentName);
                 newContinent.setContinentValue(continentValue);
                 //continentHashMap.put(continentName,newContinent);
                 gameMap.addContinent(newContinent);
+
                 return "CONTINENT ADDED SUCCESSFULLY";
             }
             return "THE CONTINENT ALREADY EXISTS";
         }catch (NullPointerException e){
             return "EXCEPTION IN ACCESSING CONTINENT DATA";
+
         }
     }
 

@@ -313,6 +313,6 @@ public class AddCountry extends JPanel implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        countryListLabel.setListData(((GameMap) o).getCountryHashMap().keySet().toArray());
+        countryListLabel.setListData(((GameMap) observable).getCountryHashMap().keySet().toArray());
     }
 }
