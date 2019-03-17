@@ -4,6 +4,7 @@ import controllers.GameEngine;
 import controllers.MapGenerator;
 import models.GameContinent;
 import models.GameMap;
+import views.StartGamePanel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -40,7 +41,7 @@ public class AddCountry extends JPanel implements Observer {
     /**A button to perform addition of a country*/
     private JButton addCountryButton;
     /**A button to validate the map and write it to the .map file.*/
-    private JButton finishButton;
+    private JButton saveButton;
     /**A scroll pane for Jlist*/
     private JScrollPane scrollPaneList;
     /** a list to maintain the current state of the country list*/
@@ -52,6 +53,7 @@ public class AddCountry extends JPanel implements Observer {
     private JScrollPane scrollPane1;
     private JList<String> countryNeighbourList;
     private JLabel neighbourLabel;
+    private JButton startGameButton;
 
     private JComboBox continentCombobox;
 
@@ -99,27 +101,14 @@ public class AddCountry extends JPanel implements Observer {
 
     /**A mouse click event on the add finish Button for writing and validating the map file.
      * @param e is a MouseEvent object to get all the details regarding the event.*/
-    private void finishButtonMouseClicked(MouseEvent e) {
+    private void saveButtonMouseClicked(MouseEvent e) {
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
-        String message  = mapGenerator.validateMap();
-        if(message.equals("SUCCESS")) {
-            message = "Writing the file...";
-            JOptionPane.showMessageDialog(this.getParent(),message);
-            String fileName = (String)JOptionPane.showInputDialog(this,"Enter File Name :","File name",JOptionPane.YES_OPTION,null,null,null);
-            message = mapGenerator.writeConquestFile(fileName);
-            if(message.equals("SUCCESS")){
-                JOptionPane.showMessageDialog(this.getParent(),message);
-            }else {
-                JOptionPane.showMessageDialog(this.getParent(), message);
-            }
-        }else {
-            JOptionPane.showMessageDialog(this.getParent(), message);
-        }
-        Container container = this.getParent();
-        GameMap gameMap = gameEngine.getGameState().getGameMapObject();
-        gameMap.deleteObserver(this);
-        container.remove(this);
-        parent.setVisible(true);
+        String message;
+        String fileName = (String)JOptionPane.showInputDialog(this,"Enter File Name :","File name",JOptionPane.YES_OPTION,null,null,null);
+        message = mapGenerator.writeConquestFile(fileName);
+        JOptionPane.showMessageDialog(this.getParent(),message);
+
+
     }
 
     private void countryListLabelValueChanged(ListSelectionEvent e) {
@@ -135,6 +124,24 @@ public class AddCountry extends JPanel implements Observer {
         parent.setVisible(true);
         GameMap gameMap = gameEngine.getGameState().getGameMapObject();
         gameMap.deleteObserver(this);
+    }
+
+    private void startGameButtonMouseClicked(MouseEvent e) {
+        // TODO add your code here
+        MapGenerator mapGenerator = gameEngine.getMapGenerator();
+        String message  = mapGenerator.validateMap();
+        if(message.equals("SUCCESS")) {
+            this.setVisible(false);
+            GameMap gameMap = gameEngine.getGameState().getGameMapObject();
+            gameMap.deleteObserver(this);
+            Container container = this.getParent();
+            container.remove(this);
+            StartGamePanel startGamePanel = new StartGamePanel(gameEngine,this,true);
+            startGamePanel.setVisible(true);
+            container.add(startGamePanel);
+        }else {
+            JOptionPane.showMessageDialog(this.getParent(), message);
+        }
     }
 
     /**Initialize all the control components with their positions and panel layout.*/
@@ -156,8 +163,9 @@ public class AddCountry extends JPanel implements Observer {
         countryListLabel = new JList();
         addNeighbourButton = new JButton();
         addCountryButton = new JButton();
-        finishButton = new JButton();
+        saveButton = new JButton();
         backButton = new JButton();
+        startGameButton = new JButton();
 
         //======== this ========
 
@@ -286,6 +294,18 @@ public class AddCountry extends JPanel implements Observer {
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 5), 0, 0));
 
+        //---- startGameButton ----
+        startGameButton.setText("Start Game!");
+        startGameButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                startGameButtonMouseClicked(e);
+            }
+        });
+        add(startGameButton, new GridBagConstraints(3, 8, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
+
         //---- backButton ----
         backButton.setText("Back");
         backButton.addMouseListener(new MouseAdapter() {
@@ -298,17 +318,18 @@ public class AddCountry extends JPanel implements Observer {
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 5), 0, 0));
 
-        //---- finishButton ----
-        finishButton.setText("Finish");
-        finishButton.addMouseListener(new MouseAdapter() {
+        //---- saveButton ----
+        saveButton.setText("Save File");
+        saveButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                finishButtonMouseClicked(e);
+                saveButtonMouseClicked(e);
             }
         });
-        add(finishButton, new GridBagConstraints(4, 10, 1, 1, 0.0, 0.0,
+        add(saveButton, new GridBagConstraints(4, 10, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 5), 0, 0));
+
     }
 
     @Override
