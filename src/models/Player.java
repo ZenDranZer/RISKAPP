@@ -183,4 +183,32 @@ public class Player extends Observable {
     {
     	this.playerArmies += armies;
     }
+    
+    public void placeArmy(String countryName , int armies)
+    {
+    	ArrayList<GameCountry> lstPlayerCountries = this.getCountries();
+		GameCountry matchedCountry = lstPlayerCountries.stream()
+				.filter(cntry -> cntry.getCountryName().equals(countryName)).findFirst().get();
+		matchedCountry.setArmies(matchedCountry.getArmiesStationed() + armies);
+		//System.out.println("Reinforced Country : " + matchedCountry.getArmiesStationed());
+		this.addPlayerArmy(armies);
+		this.updateRemainingArmies(armies);
+	//	this.availableArmies = this.availableArmies - armies;
+    }
+    
+    public void reinforcement(String countryName, int armies)
+    {
+    	placeArmy(countryName, armies);
+    }
+    
+	public boolean isAllocationComplete() {
+		for (GameCountry country : countries) {
+			if (country.getArmiesStationed() < 12) {
+				return false;
+			}
+		}
+		remainingArmies = 0;
+		return true;
+	}
+
 }

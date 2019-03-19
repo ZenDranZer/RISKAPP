@@ -89,6 +89,7 @@ public class StartGamePanel extends JPanel {
 							JOptionPane.showMessageDialog(this, message);
 							Container container = this.getParent();
 							GamePlay gamePlay = new GamePlay(gameEngine);
+							gameEngine.getGameState().addObserver(gamePlay);
 							gamePlay.setVisible(true);
 							this.setVisible(false);
 							container.add(gamePlay);
@@ -105,6 +106,7 @@ public class StartGamePanel extends JPanel {
 					gameEngine.initialiseEngine();
 					Container container = this.getParent();
 					GamePlay gamePlay = new GamePlay(gameEngine);
+					gameEngine.getGameState().addObserver(gamePlay);
 					gamePlay.setVisible(true);
 					this.setVisible(false);
 					container.add(gamePlay);

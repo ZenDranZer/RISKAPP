@@ -49,4 +49,23 @@ public class GameState extends Observable {
 		return gameMap;
 	}
 
+	public Player getNextPlayer(Player activePlayer) {
+		int currentIndex = players.indexOf(activePlayer);
+		currentIndex = currentIndex + 1;
+//		System.out.println("::::::" + currentIndex);
+//		System.out.println("Number of player : " +  gameState.getPlayers().size());
+		if (currentIndex >= players.size()) {
+			currentIndex = 0;
+		}
+		Player nextPlayer = players.get(currentIndex);
+		
+		//turn.setActivePlayer(nextPlayer);
+		return nextPlayer;
+	}
+	
+	public void notifyGameStateChange()
+	{
+		setChanged();
+		notifyObservers();
+	}
 }

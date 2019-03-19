@@ -20,7 +20,7 @@ public class GameEngine {
 	public GameEngine() {
 
 		gameState = new GameState();
-		turn = new TurnController(gameState.getGameMapObject());
+		turn = new TurnController(gameState);
 		mapGenerator = new MapGenerator(gameState.getGameMapObject());
 	}
 	public GameState getGameState(){
@@ -32,7 +32,7 @@ public class GameEngine {
 	 */
 	public TurnController getTurmController() {
 		if (turn == null) {
-			turn = new TurnController(gameState.getGameMapObject());
+			turn = new TurnController(gameState);
 		}
 		return turn;
 	}
@@ -125,14 +125,16 @@ public class GameEngine {
 	 * @param activePlayer current player
 	 */
 	public void setNextPlayer(Player activePlayer) {
-		int currentIndex = gameState.getPlayers().indexOf(activePlayer);
-		currentIndex = currentIndex + 1;
-		System.out.println("::::::" + currentIndex);
-		if (currentIndex >= gameState.getPlayers().size()) {
-			currentIndex = 0;
-		}
-		Player nextPlayer = gameState.getPlayers().get(currentIndex);
-		turn.setActivePlayer(nextPlayer);
+//		int currentIndex = gameState.getPlayers().indexOf(activePlayer);
+//		currentIndex = currentIndex + 1;
+////		System.out.println("::::::" + currentIndex);
+////		System.out.println("Number of player : " +  gameState.getPlayers().size());
+//		if (currentIndex >= gameState.getPlayers().size()) {
+//			currentIndex = 0;
+//		}
+//		Player nextPlayer = gameState.getPlayers().get(currentIndex);
+		
+		turn.setActivePlayer(gameState.getNextPlayer(activePlayer));
 	}
 
 	/**

@@ -1,8 +1,7 @@
 package Test;
 
 import utils.*;
-import controllers.MapGenerator;
-import controllers.TurnController;
+import controllers.*;
 import models.*;
 import org.junit.After;
 import org.junit.Before;
@@ -18,13 +17,15 @@ public class TurnControllerTest {
 	TestUtil testData;
 	TurnController objTurnController;
 	MapGenerator mapGenerator ;
+	GameState gameState;
 	GameMap gameMap = new GameMap();
 
 	@Before
 	public void setUp() throws Exception {
 		testData = new TestUtil();
+		gameState = new GameState();
 		mapGenerator = new MapGenerator(this.gameMap);
-		objTurnController = new TurnController(this.gameMap);
+		objTurnController = new TurnController(this.gameState);
 		mapGenerator.getGameMap().continentHashMap = testData.testContinentHashMap;
 		mapGenerator.getGameMap().countryHashMap = testData.testCountryHashMap;
 	}

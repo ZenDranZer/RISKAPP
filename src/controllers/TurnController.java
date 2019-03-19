@@ -12,10 +12,12 @@ public class TurnController {
 	Player activePlayer;
 	private int availableArmies;
 	GameMap gameMap;
+	GameState gameState;
 
-	public TurnController(GameMap map) {
+	public TurnController(GameState state) {
 		availableArmies = 3;
-		gameMap = map;
+		gameState = state;
+		gameMap = gameState.getGameMapObject();
 	}
 	/**
 	 * Set available armies
@@ -95,17 +97,21 @@ public class TurnController {
 	public void placeArmy(Player activePlayer, String country, int armies) {
 
 		try {
-			ArrayList<GameCountry> lstPlayerCountries = activePlayer.getCountries();
-			GameCountry matchedCountry = lstPlayerCountries.stream()
-					.filter(cntry -> cntry.getCountryName().equals(country)).findFirst().get();
-			matchedCountry.setArmies(matchedCountry.getArmiesStationed() + armies);
-			System.out.println("Reinforced Country : " + matchedCountry.getArmiesStationed());
+//			ArrayList<GameCountry> lstPlayerCountries = activePlayer.getCountries();
+//			GameCountry matchedCountry = lstPlayerCountries.stream()
+//					.filter(cntry -> cntry.getCountryName().equals(country)).findFirst().get();
+//			matchedCountry.setArmies(matchedCountry.getArmiesStationed() + armies);
+//			System.out.println("Reinforced Country : " + matchedCountry.getArmiesStationed());
+//			activePlayer.addPlayerArmy(armies);
+			activePlayer.placeArmy(country, armies);
 			this.availableArmies = this.availableArmies - armies;
+			gameState.notifyGameStateChange();
+			
 		} catch (Exception ex) {
 
 		}
 	}
-
+	
 	/**
 	 * This function implements the fortification phase moving player armies
 	 * from one country to another
