@@ -190,5 +190,11 @@ public class TurnController {
 			i++;
 		}
 	}
+	
+	public void fortification(String countryToFortify, String fortifyFrom, int armies)
+	{
+		activePlayer.fortify(countryToFortify, fortifyFrom, armies);
+		gameState.notifyGameStateChange();
+	}
 
 }

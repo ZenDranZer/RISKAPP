@@ -4,6 +4,7 @@ import controllers.GameEngine;
 import controllers.MapGenerator;
 import controllers.TurnController;
 import models.GameCountry;
+import models.GameState;
 import models.Player;
 
 import javax.swing.*;
@@ -118,10 +119,10 @@ public class GamePlay extends JPanel implements Observer {
 
 				} else if (phase.equals("fortify")) {
 					if (fortify()) {
-						phase = "reinforce";
-						objGameEngine.setNextPlayer(activePlayer);
-						activePlayer = objTurnController.getActivePlayer();
-						updateReinforcementPanel();
+//						phase = "reinforce";
+//						objGameEngine.setNextPlayer(activePlayer);
+//						activePlayer = objTurnController.getActivePlayer();
+//						updateReinforcementPanel();
 					}
 				}
 			}
@@ -293,22 +294,9 @@ public class GamePlay extends JPanel implements Observer {
 	 */
 	public boolean fortify() {
 
-		GameCountry countryToFortify = objGameEngine.getGameState().getGameMapObject().getCountryHashMap()
-				.get(lstPlayerCountries.getSelectedValue().toString());
-		GameCountry fortifyFrom = objGameEngine.getGameState().getGameMapObject().getCountryHashMap()
-				.get(lstActionCountry.getSelectedValue().toString());
-
+		// TODO : validate input here/controller
 		int armiesToMove = Integer.parseInt(txtReinforce.getText());
-
-		if (armiesToMove > fortifyFrom.getArmiesStationed() - 1) {
-			txtError.setText("Selected country should have atleast one army");
-			return false;
-		}
-		countryToFortify.setArmies(countryToFortify.getArmiesStationed() + armiesToMove);
-		fortifyFrom.setArmies(fortifyFrom.getArmiesStationed() - armiesToMove);
-
-		txtError.setText("Fortification : " + countryToFortify.getCountryName() + " fortified by "
-				+ fortifyFrom.getCountryName() + "\n Armies moved : " + armiesToMove);
+		objTurnController.fortification(lstPlayerCountries.getSelectedValue().toString(), lstActionCountry.getSelectedValue().toString(), armiesToMove);
 		return true;
 	}
 
@@ -428,11 +416,15 @@ public class GamePlay extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
+		
+		if(arg0 instanceof GameState )
+		{
+			System.out.println("Works!!");
+		}
 		// basically game loop logic goes here
 		if (phase.equals("initial")) {
 			
-			//TODO : move this code to a different function
+			//TODO : logic to get next player should be in controller
 			
 			activePlayer.isAllocationComplete();
 			// set next player
@@ -471,6 +463,13 @@ public class GamePlay extends JPanel implements Observer {
 				// TODO on complete initiate attack phase
 				attack();
 			}
+		}
+		else if(phase.equalsIgnoreCase("fortify"))
+		{
+			phase = "reinforce";
+			objGameEngine.setNextPlayer(activePlayer);
+			activePlayer = objTurnController.getActivePlayer();
+			updateReinforcementPanel();
 		}
 	}
 }
