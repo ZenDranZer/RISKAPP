@@ -127,7 +127,7 @@ public class AddCountry extends JPanel implements Observer {
     }
 
     private void startGameButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+
         MapGenerator mapGenerator = gameEngine.getMapGenerator();
         String message  = mapGenerator.validateMap();
         if(message.equals("SUCCESS")) {
