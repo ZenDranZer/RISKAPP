@@ -12,6 +12,7 @@ public class GameState extends Observable {
 	private String mapPath;
 	private HashMap<String, RiskCard> cardPile;
 	private GameMap gameMap;
+	private Player activePlayer;
 
 	public GameState() {
 		players = new ArrayList<>();
@@ -32,6 +33,24 @@ public class GameState extends Observable {
 		this.players = players;
 	}
 
+	/**
+	 * function to get the current player
+	 * 
+	 * @return current player
+	 */
+	public Player getActivePlayer() {
+		return activePlayer;
+	}
+
+	/**
+	 * Function to allocate the active player for the next turn
+	 * 
+	 * @param objPlayer
+	 */
+	public void setActivePlayer(Player objPlayer) {
+		activePlayer = objPlayer;
+	}
+	
 	public String getMapPath() {
 		return mapPath;
 	}
@@ -100,7 +119,12 @@ public class GameState extends Observable {
 		notifyObservers();
 	}
 
-	public void eliminatePlayer() {
-		
+	//reinforce
+	//attack
+	//fortify
+	public void fortification(String countryToFortify, String fortifyFrom, int armies)
+	{
+		activePlayer.fortify(countryToFortify, fortifyFrom, armies);
+		notifyGameStateChange();
 	}
 }

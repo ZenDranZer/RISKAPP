@@ -57,7 +57,7 @@ public class GamePlay extends JPanel implements Observer {
 	public GamePlay(GameEngine engine) {
 		objGameEngine = engine;
 		objTurnController = objGameEngine.getTurmController();
-		activePlayer = objTurnController.getActivePlayer();
+		activePlayer = objGameEngine.getGameState().getActivePlayer();
 
 		setLayout(null);
 		this.setBounds(10, 10, 814, 503);
@@ -210,7 +210,7 @@ public class GamePlay extends JPanel implements Observer {
 				if (phase.equals("fortify")) {
 					phase = "reinforce";
 					objGameEngine.setNextPlayer(activePlayer, false);
-					activePlayer = objTurnController.getActivePlayer();
+					activePlayer = objGameEngine.getGameState().getActivePlayer();
 					updateReinforcementPanel();
 					btnSkip.setVisible(false);
 				} else {
@@ -326,7 +326,7 @@ public class GamePlay extends JPanel implements Observer {
 
 		// TODO : validate input here/controller
 		int armiesToMove = Integer.parseInt(txtReinforce.getText());
-		objTurnController.fortification(lstPlayerCountries.getSelectedValue().toString(),
+		objGameEngine.getGameState().fortification(lstPlayerCountries.getSelectedValue().toString(),
 				lstActionCountry.getSelectedValue().toString(), armiesToMove);
 	}
 
@@ -461,11 +461,11 @@ public class GamePlay extends JPanel implements Observer {
 			if (objGameEngine.getGameState().isAllocationComplete()) {
 				phase = "reinforce";
 				objGameEngine.setNextPlayer(activePlayer, false);
-				activePlayer = objTurnController.getActivePlayer();
+				activePlayer = objGameEngine.getGameState().getActivePlayer();
 				updateReinforcementPanel();
 			} else {
 				objGameEngine.setNextPlayer(activePlayer, true);
-				activePlayer = objTurnController.getActivePlayer();
+				activePlayer = objGameEngine.getGameState().getActivePlayer();
 				updateInitialPanel();
 			}
 			break;
@@ -483,7 +483,7 @@ public class GamePlay extends JPanel implements Observer {
 		case "fortify":
 			phase = "reinforce";
 			objGameEngine.setNextPlayer(activePlayer, false);
-			activePlayer = objTurnController.getActivePlayer();
+			activePlayer = objGameEngine.getGameState().getActivePlayer();
 			updateReinforcementPanel();
 			break;
 		}
