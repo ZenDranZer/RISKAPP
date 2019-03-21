@@ -315,6 +315,7 @@ public class GamePlay extends JPanel implements Observer {
 		lblRemainingArmies.setVisible(false);
         btnSkip.setText("No Attack");
         btnSkip.setVisible(true);
+
     }
 
 	/**
