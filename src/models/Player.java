@@ -1,6 +1,6 @@
 package models;
 import java.util.*;
-
+import utils.*;
 
 /**
  *The Player class is a model which contains player related data.
