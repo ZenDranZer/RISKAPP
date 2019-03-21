@@ -126,9 +126,14 @@ public class Player extends Observable {
      * @param country GameCountry that represents the country to be added to the player
      */
     public void setCountries(GameCountry country) {
+    	country.setCurrentPlayer(this);
         this.countries.add(country);
     }
 
+    public void removeCountry(GameCountry country)
+    {
+    	this.countries.remove(country);
+    }
     /**
      * Gets the list of continents owned by the player
      * @return ArrayList that represents the List of continents owned by the player
@@ -235,11 +240,20 @@ public class Player extends Observable {
 		//	else
 		//		remove army from attacker player and country
 		
-		//	if(defender.armies == 0)
-		//		give country to attacker
-		//		placeArmy()
+		//This remains inside the loop
+			if(defendingCountry.getArmiesStationed()== 0)
+			{
+//				give country to attacker
+				defender.removeCountry(defendingCountry);
+				this.setCountries(defendingCountry);
+//				placeArmy()
+			}
 		
 		//	check player elimination logic
+		if(defender.getCountries().size() ==0)
+		{
+			eliminate(defender);
+		}
 		//	
 		//	check if attacker has enough armies for next attack
 		
@@ -255,5 +269,27 @@ public class Player extends Observable {
 		//get max white dice
 		
 		attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
+	}
+	
+	public boolean getIsActive()
+	{
+		return this.isActive;
+	}
+	
+	public void setIsActive(boolean state)
+	{
+		this.isActive = state;
+	}
+	
+	public void addRiskCards(HashMap<String, RiskCard> cards)
+	{
+		this.cardsHeld.putAll(cards);
+	}
+	
+	public void eliminate(Player eliminatedPlayer)
+	{
+		eliminatedPlayer.setIsActive(false);
+		this.addRiskCards(eliminatedPlayer.getCardsHeld());
+		eliminatedPlayer.setCardsHeld(null);
 	}
 }

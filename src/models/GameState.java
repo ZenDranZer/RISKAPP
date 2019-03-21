@@ -99,4 +99,9 @@ public class GameState extends Observable {
 		setChanged();
 		notifyObservers();
 	}
+
+	public void eliminatePlayer()
+	{
+		
+	}
 }

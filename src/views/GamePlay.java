@@ -49,7 +49,7 @@ public class GamePlay extends JPanel implements Observer {
 	private int flag = 0;
 	private JScrollPane scrollPane_1;
 	private JLabel lblPhase;
-	private JButton btnSkipFortification;
+	private JButton btnSkip;
 
 	/**
 	 * Renders the initial view of the panel
@@ -158,7 +158,7 @@ public class GamePlay extends JPanel implements Observer {
 							"Armies present : " + getArmiesPresent(lstPlayerCountries.getSelectedValue().toString()));
 				}
 
-				if (phase.equals("fortify")|| phase.equals("attack")) {
+				if (phase.equals("fortify") || phase.equals("attack")) {
 					txtReinforce.setVisible(false);
 					btnAdd.setVisible(false);
 					updateActionCountries();
@@ -200,20 +200,25 @@ public class GamePlay extends JPanel implements Observer {
 		lblAction.setBounds(618, 23, 148, 24);
 		add(lblAction);
 
-		btnSkipFortification = new JButton("Skip");
-		btnSkipFortification.addMouseListener(new MouseAdapter() {
+		btnSkip = new JButton("Skip");
+		btnSkip.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				phase = "reinforce";
-				objGameEngine.setNextPlayer(activePlayer, false);
-				activePlayer = objTurnController.getActivePlayer();
-				updateReinforcementPanel();
-				btnSkipFortification.setVisible(false);
+				if (phase.equals("fortify")) {
+					phase = "reinforce";
+					objGameEngine.setNextPlayer(activePlayer, false);
+					activePlayer = objTurnController.getActivePlayer();
+					updateReinforcementPanel();
+					btnSkip.setVisible(false);
+				} else {
+					phase = "fortify";
+					updateFortificationPanel();
+				}
 			}
 		});
-		btnSkipFortification.setBounds(505, 48, 89, 41);
-		add(btnSkipFortification);
-		btnSkipFortification.setVisible(false);
+		btnSkip.setBounds(505, 48, 89, 41);
+		add(btnSkip);
+		btnSkip.setVisible(false);
 
 		scrollPane_1.setVisible(false);
 		lstActionCountry.setVisible(false);
@@ -300,6 +305,9 @@ public class GamePlay extends JPanel implements Observer {
 		lblReinforce.setVisible(false);
 		lblactionArmiesPresent.setText("");
 		lblArmiesPresent.setText("");
+
+		btnSkip.setText("No Attack");
+		btnSkip.setVisible(true);
 	}
 
 	/**
@@ -328,7 +336,7 @@ public class GamePlay extends JPanel implements Observer {
 		lstPlayerCountries.setSelectedIndex(-1);
 		scrollPane_1.setVisible(true);
 		lstActionCountry.setVisible(true);
-		btnSkipFortification.setVisible(true);
+		btnSkip.setVisible(true);
 	}
 
 	/**
