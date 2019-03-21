@@ -183,7 +183,7 @@ public class GamePlay extends JPanel implements Observer {
 			public void valueChanged(ListSelectionEvent arg0) {
 				lblactionArmiesPresent.setText("");
 				if (lstActionCountry.getSelectedIndex() != -1) {
-					lblactionArmiesPresent.setText( lstActionCountry.getSelectedValue() + " armies : "
+					lblactionArmiesPresent.setText( lstActionCountry.getSelectedValue()+ " armies : "
 							+ getArmiesPresent(lstActionCountry.getSelectedValue().toString()));
 				}
 				txtReinforce.setVisible(true);
