@@ -155,7 +155,7 @@ public class GamePlay extends JPanel implements Observer {
 				lblArmiesPresent.setText("");
 				if (lstPlayerCountries.getSelectedIndex() != -1) {
 					lblArmiesPresent.setText(
-							"Armies present : " + getArmiesPresent(lstPlayerCountries.getSelectedValue().toString()));
+                            lstPlayerCountries.getSelectedValue()+ " armies : " + getArmiesPresent(lstPlayerCountries.getSelectedValue().toString()));
 				}
 
 				if (phase.equals("fortify") || phase.equals("attack")) {
@@ -183,7 +183,7 @@ public class GamePlay extends JPanel implements Observer {
 			public void valueChanged(ListSelectionEvent arg0) {
 				lblactionArmiesPresent.setText("");
 				if (lstActionCountry.getSelectedIndex() != -1) {
-					lblactionArmiesPresent.setText("Fortifying Country armies  : "
+					lblactionArmiesPresent.setText( lstActionCountry.getSelectedValue()+ " armies : "
 							+ getArmiesPresent(lstActionCountry.getSelectedValue().toString()));
 				}
 				txtReinforce.setVisible(true);
@@ -290,25 +290,30 @@ public class GamePlay extends JPanel implements Observer {
 	 */
 	public void attack() {
 		phase = "attack";
-		// flag = 1;
 
-		lblPhase.setText("Attack");
-		scrollPane.setVisible(true);
-		lstPlayerCountries.setVisible(true);
-		lstPlayerCountries.setSelectedIndex(-1);
-		scrollPane_1.setVisible(true);
-		lstActionCountry.setVisible(true);
-		txtError.setText("attack phase");
-		txtReinforce.setText("");
-		txtReinforce.setVisible(false);
-		btnAdd.setVisible(true);
-		lblReinforce.setVisible(false);
-		lblactionArmiesPresent.setText("");
-		lblArmiesPresent.setText("");
-
-		btnSkip.setText("No Attack");
-		btnSkip.setVisible(true);
 	}
+
+	public void updateAttackPanel(){
+        // flag = 1;
+        phase = "attack";
+        lblPhase.setText("Attack");
+        scrollPane.setVisible(true);
+        lstPlayerCountries.setVisible(true);
+        lstPlayerCountries.setSelectedIndex(-1);
+        scrollPane_1.setVisible(true);
+        lstActionCountry.setVisible(true);
+        txtError.setText("attack phase");
+        txtReinforce.setText("");
+        txtReinforce.setVisible(false);
+        btnAdd.setVisible(true);
+        lblReinforce.setVisible(false);
+        lblactionArmiesPresent.setText("");
+        lblArmiesPresent.setText("");
+        btnAdd.setText("Attack");
+
+        btnSkip.setText("No Attack");
+        btnSkip.setVisible(true);
+    }
 
 	/**
 	 * Fortifies a given country based on user selection
@@ -466,7 +471,8 @@ public class GamePlay extends JPanel implements Observer {
 		case "reinforce":
 			displayRemainingArmies();
 			if (activePlayer.getRemainingArmies() == 0 || activePlayer.isAllocationComplete()) {
-				attack();
+				//attack();
+                updateAttackPanel();
 			}
 			break;
 
