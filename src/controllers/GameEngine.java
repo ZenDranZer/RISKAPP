@@ -124,17 +124,8 @@ public class GameEngine {
 	 * function to change the current player to the next player 
 	 * @param activePlayer current player
 	 */
-	public void setNextPlayer(Player activePlayer) {
-//		int currentIndex = gameState.getPlayers().indexOf(activePlayer);
-//		currentIndex = currentIndex + 1;
-////		System.out.println("::::::" + currentIndex);
-////		System.out.println("Number of player : " +  gameState.getPlayers().size());
-//		if (currentIndex >= gameState.getPlayers().size()) {
-//			currentIndex = 0;
-//		}
-//		Player nextPlayer = gameState.getPlayers().get(currentIndex);
-		
-		turn.setActivePlayer(gameState.getNextPlayer(activePlayer));
+	public void setNextPlayer(Player activePlayer,boolean checkInitialAllocation) {		
+		turn.setActivePlayer(gameState.getNextPlayer(activePlayer,checkInitialAllocation));
 	}
 
 	/**

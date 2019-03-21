@@ -4,6 +4,7 @@ import controllers.GameEngine;
 import controllers.MapGenerator;
 import controllers.TurnController;
 import models.GameCountry;
+import models.GameState;
 import models.Player;
 
 import javax.swing.*;
@@ -48,6 +49,7 @@ public class GamePlay extends JPanel implements Observer {
 	private int flag = 0;
 	private JScrollPane scrollPane_1;
 	private JLabel lblPhase;
+	private JButton btnSkipFortification;
 
 	/**
 	 * Renders the initial view of the panel
@@ -88,7 +90,7 @@ public class GamePlay extends JPanel implements Observer {
 
 		lblReinforce = new JLabel("Add army to country");
 		lblReinforce.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblReinforce.setBounds(64, 11, 254, 36);
+		lblReinforce.setBounds(64, 11, 211, 36);
 		add(lblReinforce);
 
 		txtReinforce = new JTextField();
@@ -117,17 +119,12 @@ public class GamePlay extends JPanel implements Observer {
 					updateFortificationPanel();
 
 				} else if (phase.equals("fortify")) {
-					if (fortify()) {
-						phase = "reinforce";
-						objGameEngine.setNextPlayer(activePlayer);
-						activePlayer = objTurnController.getActivePlayer();
-						updateReinforcementPanel();
-					}
+					fortify();
 				}
 			}
 		});
 
-		btnAdd.setBounds(417, 58, 104, 41);
+		btnAdd.setBounds(391, 48, 104, 41);
 		btnAdd.setVisible(false);
 		add(btnAdd);
 
@@ -140,7 +137,7 @@ public class GamePlay extends JPanel implements Observer {
 
 		lblPhase = new JLabel("Initial Allocation");
 		lblPhase.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblPhase.setBounds(254, 399, 267, 32);
+		lblPhase.setBounds(254, 15, 267, 32);
 		add(lblPhase);
 
 		scrollPane = new JScrollPane();
@@ -161,7 +158,7 @@ public class GamePlay extends JPanel implements Observer {
 							"Armies present : " + getArmiesPresent(lstPlayerCountries.getSelectedValue().toString()));
 				}
 
-				if (phase.equals("fortify")) {
+				if (phase.equals("fortify")|| phase.equals("attack")) {
 					txtReinforce.setVisible(false);
 					btnAdd.setVisible(false);
 					updateActionCountries();
@@ -203,6 +200,21 @@ public class GamePlay extends JPanel implements Observer {
 		lblAction.setBounds(618, 23, 148, 24);
 		add(lblAction);
 
+		btnSkipFortification = new JButton("Skip");
+		btnSkipFortification.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				phase = "reinforce";
+				objGameEngine.setNextPlayer(activePlayer, false);
+				activePlayer = objTurnController.getActivePlayer();
+				updateReinforcementPanel();
+				btnSkipFortification.setVisible(false);
+			}
+		});
+		btnSkipFortification.setBounds(505, 48, 89, 41);
+		add(btnSkipFortification);
+		btnSkipFortification.setVisible(false);
+
 		scrollPane_1.setVisible(false);
 		lstActionCountry.setVisible(false);
 		displayRemainingArmies();
@@ -213,14 +225,14 @@ public class GamePlay extends JPanel implements Observer {
 	 * function for turn based initial allocation of armies for the players
 	 */
 	public void initialAllocation() {
-	
+
 		int army = Integer.parseInt(txtReinforce.getText());
 		String selectedCountry = lstPlayerCountries.getSelectedValue().toString();
-		
+
 		txtReinforce.setText("");
 		txtReinforce.setVisible(false);
 		btnAdd.setVisible(false);
-		
+
 		objTurnController.placeArmy(activePlayer, selectedCountry, army);
 	}
 
@@ -244,7 +256,7 @@ public class GamePlay extends JPanel implements Observer {
 
 		lstPlayerCountries.setSelectedIndex(-1);
 		txtReinforce.setText("");
-		
+
 		objTurnController.placeArmy(activePlayer, selectedCountry, reinforcements);
 	}
 
@@ -252,6 +264,7 @@ public class GamePlay extends JPanel implements Observer {
 	 * Updates the panel for reinforcement phase of the intended player
 	 */
 	public void updateReinforcementPanel() {
+
 		scrollPane.setVisible(true);
 		lstPlayerCountries.setVisible(true);
 		scrollPane_1.setVisible(false);
@@ -272,11 +285,14 @@ public class GamePlay extends JPanel implements Observer {
 	 */
 	public void attack() {
 		phase = "attack";
-		flag = 1;
+		// flag = 1;
 
 		lblPhase.setText("Attack");
-		scrollPane.setVisible(false);
-		lstPlayerCountries.setVisible(false);
+		scrollPane.setVisible(true);
+		lstPlayerCountries.setVisible(true);
+		lstPlayerCountries.setSelectedIndex(-1);
+		scrollPane_1.setVisible(true);
+		lstActionCountry.setVisible(true);
 		txtError.setText("attack phase");
 		txtReinforce.setText("");
 		txtReinforce.setVisible(false);
@@ -291,25 +307,12 @@ public class GamePlay extends JPanel implements Observer {
 	 * 
 	 * @return true if all values are correct
 	 */
-	public boolean fortify() {
+	public void fortify() {
 
-		GameCountry countryToFortify = objGameEngine.getGameState().getGameMapObject().getCountryHashMap()
-				.get(lstPlayerCountries.getSelectedValue().toString());
-		GameCountry fortifyFrom = objGameEngine.getGameState().getGameMapObject().getCountryHashMap()
-				.get(lstActionCountry.getSelectedValue().toString());
-
+		// TODO : validate input here/controller
 		int armiesToMove = Integer.parseInt(txtReinforce.getText());
-
-		if (armiesToMove > fortifyFrom.getArmiesStationed() - 1) {
-			txtError.setText("Selected country should have atleast one army");
-			return false;
-		}
-		countryToFortify.setArmies(countryToFortify.getArmiesStationed() + armiesToMove);
-		fortifyFrom.setArmies(fortifyFrom.getArmiesStationed() - armiesToMove);
-
-		txtError.setText("Fortification : " + countryToFortify.getCountryName() + " fortified by "
-				+ fortifyFrom.getCountryName() + "\n Armies moved : " + armiesToMove);
-		return true;
+		objTurnController.fortification(lstPlayerCountries.getSelectedValue().toString(),
+				lstActionCountry.getSelectedValue().toString(), armiesToMove);
 	}
 
 	/**
@@ -325,7 +328,7 @@ public class GamePlay extends JPanel implements Observer {
 		lstPlayerCountries.setSelectedIndex(-1);
 		scrollPane_1.setVisible(true);
 		lstActionCountry.setVisible(true);
-		lstPlayerCountries.setSelectedIndex(-1);
+		btnSkipFortification.setVisible(true);
 	}
 
 	/**
@@ -346,14 +349,19 @@ public class GamePlay extends JPanel implements Observer {
 	public void updateActionCountries() {
 		String seletedCountry = lstPlayerCountries.getSelectedValue().toString();
 		GameCountry cntry = objGameEngine.getGameState().getGameMapObject().getCountryHashMap().get(seletedCountry);
-
+		List<GameCountry> lstPlayerNeighbors;
 		if (dlstActionCountries.size() != 0) {
 			dlstActionCountries.removeAllElements();
 		}
 
-		List<GameCountry> lstPlayerNeighbors = cntry.getNeighbouringCountries().values().stream()
-				.filter(neighbor -> neighbor.getCurrentPlayer().equals(activePlayer)).collect(Collectors.toList());
+		if (phase.equalsIgnoreCase("attack")) {
+			lstPlayerNeighbors = cntry.getNeighbouringCountries().values().stream()
+					.filter(neighbor -> !neighbor.getCurrentPlayer().equals(activePlayer)).collect(Collectors.toList());
 
+		} else {
+			lstPlayerNeighbors = cntry.getNeighbouringCountries().values().stream()
+					.filter(neighbor -> neighbor.getCurrentPlayer().equals(activePlayer)).collect(Collectors.toList());
+		}
 		for (GameCountry country : lstPlayerNeighbors) {
 			dlstActionCountries.addElement(country.getCountryName());
 		}
@@ -428,49 +436,40 @@ public class GamePlay extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		// basically game loop logic goes here
-		if (phase.equals("initial")) {
-			
-			//TODO : move this code to a different function
-			
-			activePlayer.isAllocationComplete();
-			// set next player
-			int allocatedPlayers = 0;
-			displayRemainingArmies();
 
-			do {
-				objGameEngine.setNextPlayer(activePlayer);
-				activePlayer = objTurnController.getActivePlayer();
-				if (activePlayer.getRemainingArmies() == 0) {
-					allocatedPlayers++;
-				} else {
-					break;
-				}
-			} while (allocatedPlayers < objGameEngine.getNumberOfPlayers());
+		// if (arg0 instanceof GameState) {
+		// System.out.println("Works!!");
+		// }
 
-			if (allocatedPlayers == objGameEngine.getNumberOfPlayers()) {
+		switch (phase) {
+		case "initial":
+			if (objGameEngine.getGameState().isAllocationComplete()) {
 				phase = "reinforce";
-				lblPhase.setText("Reinforcement");
-				objGameEngine.setNextPlayer(activePlayer);
+				objGameEngine.setNextPlayer(activePlayer, false);
 				activePlayer = objTurnController.getActivePlayer();
-				objTurnController.calculateNewArmies(activePlayer, objGameEngine.getMapGenerator());
 				updateReinforcementPanel();
-				flag = 1;
-				System.out.println("Reinforcement");
 			} else {
-				allocatedPlayers = 0;
+				objGameEngine.setNextPlayer(activePlayer, true);
+				activePlayer = objTurnController.getActivePlayer();
 				updateInitialPanel();
 			}
-		}
-		else if(phase.equalsIgnoreCase("reinforce"))
-		{
+			break;
+
+		case "reinforce":
 			displayRemainingArmies();
-			activePlayer.isAllocationComplete();
-			if (activePlayer.getRemainingArmies() == 0) {
-				// TODO on complete initiate attack phase
+			if (activePlayer.getRemainingArmies() == 0 || activePlayer.isAllocationComplete()) {
 				attack();
 			}
+			break;
+
+		case "attack":
+			break;
+		case "fortify":
+			phase = "reinforce";
+			objGameEngine.setNextPlayer(activePlayer, false);
+			activePlayer = objTurnController.getActivePlayer();
+			updateReinforcementPanel();
+			break;
 		}
 	}
 }

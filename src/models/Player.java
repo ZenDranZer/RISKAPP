@@ -1,6 +1,6 @@
 package models;
 import java.util.*;
-
+import utils.*;
 
 /**
  *The Player class is a model which contains player related data.
@@ -201,6 +201,15 @@ public class Player extends Observable {
     	placeArmy(countryName, armies);
     }
     
+    public void fortify(String countryToFortify, String fortifyFrom, int armies)
+    {
+    	GameCountry toCountry = countries.stream().filter(cntry -> cntry.getCountryName().equals(countryToFortify)).findFirst().get();
+    	GameCountry fortifyingCountry = countries.stream().filter(cntry -> cntry.getCountryName().equals(fortifyFrom)).findFirst().get();
+    	
+    	toCountry.setArmies(toCountry.getArmiesStationed() + armies);
+    	fortifyingCountry.setArmies(fortifyingCountry.getArmiesStationed() - armies);
+    }
+    
 	public boolean isAllocationComplete() {
 		for (GameCountry country : countries) {
 			if (country.getArmiesStationed() < 12) {
@@ -210,5 +219,41 @@ public class Player extends Observable {
 		remainingArmies = 0;
 		return true;
 	}
-
+	
+	public boolean attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice)
+	{
+		boolean attackSuccessful = false;
+		if(attackingCountry.getArmiesStationed() <2)
+		{
+			attackSuccessful = false;
+		}
+		
+		//dice logic - get dice sets
+		//for each set in dice sets
+		//	if(red roll > white roll)
+		//		remove army from defender player and country
+		//	else
+		//		remove army from attacker player and country
+		
+		//	if(defender.armies == 0)
+		//		give country to attacker
+		//		placeArmy()
+		
+		//	check player elimination logic
+		//	
+		//	check if attacker has enough armies for next attack
+		
+		return attackSuccessful;
+	}
+	
+	public void allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry)
+	{
+		int redDice =0;
+		//get max red dice
+		
+		int whiteDice =0;
+		//get max white dice
+		
+		attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
+	}
 }

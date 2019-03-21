@@ -97,12 +97,6 @@ public class TurnController {
 	public void placeArmy(Player activePlayer, String country, int armies) {
 
 		try {
-//			ArrayList<GameCountry> lstPlayerCountries = activePlayer.getCountries();
-//			GameCountry matchedCountry = lstPlayerCountries.stream()
-//					.filter(cntry -> cntry.getCountryName().equals(country)).findFirst().get();
-//			matchedCountry.setArmies(matchedCountry.getArmiesStationed() + armies);
-//			System.out.println("Reinforced Country : " + matchedCountry.getArmiesStationed());
-//			activePlayer.addPlayerArmy(armies);
 			activePlayer.placeArmy(country, armies);
 			this.availableArmies = this.availableArmies - armies;
 			gameState.notifyGameStateChange();
@@ -112,33 +106,6 @@ public class TurnController {
 		}
 	}
 	
-	/**
-	 * This function implements the fortification phase moving player armies
-	 * from one country to another
-	 * 
-	 * @param Countries
-	 *            List of game countries
-	 * @return returns message showing success or failure of fortification
-	 */
-	public String fortification(List<GameCountry> Countries) {
-		String moveTo = "";
-		String moveFrom = "";
-		int numOfArmies = 0;
-		String returnMessage = "";
-
-		GameCountry moveToCountry = gameMap.getCountryHashMap().get(moveTo);
-		GameCountry moveFromCountry = gameMap.getCountryHashMap().get(moveFrom);
-
-		if ((moveFromCountry.getArmiesStationed() - numOfArmies) > 1) {
-			moveFromCountry.setArmies(moveFromCountry.getArmiesStationed() - numOfArmies);
-			moveToCountry.setArmies(moveToCountry.getArmiesStationed() + numOfArmies);
-			returnMessage = "Armies Moved !!!";
-		} else {
-			returnMessage = "Atleast one army should remain in the country !!!";
-		}
-		return returnMessage;
-	}
-
 	/**
 	 * This method allocates the initial number of armies to each player based
 	 * upon the number of players in the game
@@ -189,6 +156,12 @@ public class TurnController {
 			activePlayers.get(i).setCountries(countries.get(k));
 			i++;
 		}
+	}
+	
+	public void fortification(String countryToFortify, String fortifyFrom, int armies)
+	{
+		activePlayer.fortify(countryToFortify, fortifyFrom, armies);
+		gameState.notifyGameStateChange();
 	}
 
 }
