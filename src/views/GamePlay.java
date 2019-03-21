@@ -186,9 +186,12 @@ public class GamePlay extends JPanel implements Observer {
 					lblactionArmiesPresent.setText( lstActionCountry.getSelectedValue()+ " armies : "
 							+ getArmiesPresent(lstActionCountry.getSelectedValue().toString()));
 				}
-				txtReinforce.setVisible(true);
-				txtReinforce.setText("");
+				if(phase.equals("fortify")) {
+					txtReinforce.setVisible(true);
+					txtReinforce.setText("");
+				}
 				btnAdd.setVisible(true);
+
 			}
 		});
 		lstActionCountry.setBounds(490, 59, 124, 258);
@@ -302,7 +305,6 @@ public class GamePlay extends JPanel implements Observer {
         lstPlayerCountries.setSelectedIndex(-1);
         scrollPane_1.setVisible(true);
         lstActionCountry.setVisible(true);
-        txtError.setText("attack phase");
         txtReinforce.setText("");
         txtReinforce.setVisible(false);
         btnAdd.setVisible(true);
@@ -310,7 +312,7 @@ public class GamePlay extends JPanel implements Observer {
         lblactionArmiesPresent.setText("");
         lblArmiesPresent.setText("");
         btnAdd.setText("Attack");
-
+		lblRemainingArmies.setVisible(false);
         btnSkip.setText("No Attack");
         btnSkip.setVisible(true);
     }
