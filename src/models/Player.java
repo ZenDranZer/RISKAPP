@@ -170,11 +170,9 @@ public class Player extends Observable {
      *  Gets the list of country name owned by the player
      * @return ArrayList of strings that represents the Country names owned by the player
      */
-    public ArrayList<String> getCountryNames()
-    {
+    public ArrayList<String> getCountryNames() {
     	ArrayList<String> names = new ArrayList<String>();
-    	for(GameCountry country : countries)
-    	{
+    	for(GameCountry country : countries) {
     		names.add(country.getCountryName());
     	}
     	return names;
@@ -189,8 +187,7 @@ public class Player extends Observable {
     	this.playerArmies += armies;
     }
     
-    public void placeArmy(String countryName , int armies)
-    {
+    public void placeArmy(String countryName , int armies) {
     	ArrayList<GameCountry> lstPlayerCountries = this.getCountries();
 		GameCountry matchedCountry = lstPlayerCountries.stream()
 				.filter(cntry -> cntry.getCountryName().equals(countryName)).findFirst().get();
@@ -206,8 +203,7 @@ public class Player extends Observable {
     	placeArmy(countryName, armies);
     }
     
-    public void fortify(String countryToFortify, String fortifyFrom, int armies)
-    {
+    public void fortify(String countryToFortify, String fortifyFrom, int armies) {
     	GameCountry toCountry = countries.stream().filter(cntry -> cntry.getCountryName().equals(countryToFortify)).findFirst().get();
     	GameCountry fortifyingCountry = countries.stream().filter(cntry -> cntry.getCountryName().equals(fortifyFrom)).findFirst().get();
     	
@@ -225,11 +221,9 @@ public class Player extends Observable {
 		return true;
 	}
 	
-	public boolean attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice)
-	{
+	public boolean attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
 		boolean attackSuccessful = false;
-		if(attackingCountry.getArmiesStationed() <2)
-		{
+		if(attackingCountry.getArmiesStationed() <2) {
 			attackSuccessful = false;
 		}
 		
@@ -241,8 +235,7 @@ public class Player extends Observable {
 		//		remove army from attacker player and country
 		
 		//This remains inside the loop
-			if(defendingCountry.getArmiesStationed()== 0)
-			{
+			if(defendingCountry.getArmiesStationed()== 0) {
 //				give country to attacker
 				defender.removeCountry(defendingCountry);
 				this.setCountries(defendingCountry);
@@ -250,8 +243,7 @@ public class Player extends Observable {
 			}
 		
 		//	check player elimination logic
-		if(defender.getCountries().size() ==0)
-		{
+		if(defender.getCountries().size() ==0) {
 			eliminate(defender);
 		}
 		//	
@@ -260,8 +252,7 @@ public class Player extends Observable {
 		return attackSuccessful;
 	}
 	
-	public void allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry)
-	{
+	public void allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry) {
 		int redDice =0;
 		//get max red dice
 		
@@ -286,8 +277,7 @@ public class Player extends Observable {
 		this.cardsHeld.putAll(cards);
 	}
 	
-	public void eliminate(Player eliminatedPlayer)
-	{
+	public void eliminate(Player eliminatedPlayer) {
 		eliminatedPlayer.setIsActive(false);
 		this.addRiskCards(eliminatedPlayer.getCardsHeld());
 		eliminatedPlayer.setCardsHeld(null);

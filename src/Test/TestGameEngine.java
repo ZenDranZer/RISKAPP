@@ -40,10 +40,8 @@ public class TestGameEngine {
 		objGameEngine.allocateInitialArmies();
 
 		boolean actualResult = true;
-		for(GameCountry country : objGameEngine.getGameState().getGameMapObject().getCountryHashMap().values())
-		{
-			if(country.getArmiesStationed() != 1)
-			{
+		for(GameCountry country : objGameEngine.getGameState().getGameMapObject().getCountryHashMap().values()) {
+			if(country.getArmiesStationed() != 1) {
 				actualResult = false;
 			}
 		}

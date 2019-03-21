@@ -24,7 +24,7 @@ public class GraphUtil {
     private GameMap gameMap;
 
     /**Public constructor for initializing the countryGraph*/
-    public GraphUtil(GameMap map){
+    public GraphUtil(GameMap map) {
         countryGraph = new SimpleGraph<>(DefaultEdge.class);
         gameMap = map;
     }
@@ -52,14 +52,14 @@ public class GraphUtil {
     /**A method which decide whether given countries are connected with an edge
      * @param firstCountry source country
      * @param  secondCountry destination country*/
-    public boolean areConnected(GameCountry firstCountry,GameCountry secondCountry){
+    public boolean areConnected(GameCountry firstCountry,GameCountry secondCountry) {
         return countryGraph.containsEdge(firstCountry, secondCountry);
     }
 
     /**A method which will return the breadth first search result for a graph from a particular source
      * @param initialCountry the source node
      * @return Iterator<GameCountry> is an iterator with result of BFS of GameCountry type.*/
-    public Iterator<GameCountry> breadthFirstSearch(GameCountry initialCountry){
+    public Iterator<GameCountry> breadthFirstSearch(GameCountry initialCountry) {
         return new BreadthFirstIterator<>(countryGraph,initialCountry);
     }
 
@@ -72,9 +72,9 @@ public class GraphUtil {
     /**getIteratorSize takes an Iterator and returns the size of the iterator.
      * @param iterator its an Iterator object for which we need to find size
      * @return int which is the count of iterator.*/
-    public int getIteratorSize(Iterator<GameCountry> iterator){
+    public int getIteratorSize(Iterator<GameCountry> iterator) {
         int count = 0;
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             iterator.next();
             count++;
         }
@@ -84,7 +84,7 @@ public class GraphUtil {
     /**A method which will return the depth first search result for a graph from a particular source
      * @param initialCountry the source node
      * @return Iterator<GameCountry> is an iterator with result of DFS of GameCountry type.*/
-    public Iterator<GameCountry> depthFirstSearch(GameCountry initialCountry){
+    public Iterator<GameCountry> depthFirstSearch(GameCountry initialCountry) {
         return new DepthFirstIterator<>(countryGraph);
     }
 
@@ -103,7 +103,7 @@ public class GraphUtil {
 
     /**This method is used to get all the connected components of a graph.
      * @return it returns a list of subgraphs as a set containing all countries in that subgraph.*/
-    public List<Set<GameCountry>> getConnectedComponentSet(){
+    public List<Set<GameCountry>> getConnectedComponentSet() {
         ConnectivityInspector<GameCountry,DefaultEdge> inspector = new ConnectivityInspector<>(countryGraph);
         return inspector.connectedSets();
     }

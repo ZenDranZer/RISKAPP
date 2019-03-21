@@ -10,7 +10,7 @@ public class GameMap extends Observable {
     public  HashMap<String,GameContinent> continentHashMap;
     public HashMap <String,String>guiHashMap;
 
-    public GameMap(){
+    public GameMap() {
         countryHashMap = new HashMap<>();
         continentHashMap = new HashMap<>();
         guiHashMap = new HashMap<>();
@@ -29,30 +29,30 @@ public class GameMap extends Observable {
     }
 
 
-    public void addCountry(GameCountry newCountry){
+    public void addCountry(GameCountry newCountry) {
         this.countryHashMap.put(newCountry.getCountryName(),newCountry);
         setChanged();
         notifyObservers();
     }
-    public void addContinent(GameContinent newContinent){
+    public void addContinent(GameContinent newContinent) {
         this.continentHashMap.put(newContinent.getContinentName(),newContinent);
         setChanged();
         notifyObservers();
     }
-    public void removeCountry(String countryName){
+    public void removeCountry(String countryName) {
         this.countryHashMap.remove(countryName);
         setChanged();
         notifyObservers();
     }
-    public void removeContinent(String continentName){
+    public void removeContinent(String continentName) {
         this.countryHashMap.remove(continentName);
         setChanged();
         Object a = new Object();
         notifyObservers(a);
     }
 
-    public Set<String> getNeighbourList(String countryName){
-        if(countryHashMap.containsKey(countryName)){
+    public Set<String> getNeighbourList(String countryName) {
+        if(countryHashMap.containsKey(countryName)) {
             return countryHashMap.get(countryName).getNeighbouringCountries().keySet();
         }
         return null;
@@ -66,18 +66,17 @@ public class GameMap extends Observable {
         this.continentHashMap = continentHashMap;
     }
 
-    public boolean containsKey(String key){
-        if(continentHashMap.containsKey(key)){
+    public boolean containsKey(String key) {
+        if(continentHashMap.containsKey(key)) {
             return true;
         }
         return false;
     }
+
     public HashMap<String, GameContinent> getContinentHashMap(){
         return continentHashMap;
     }
     public HashMap<String, GameCountry> getCountryHashMap(){
         return countryHashMap;
     }
-
-
 }

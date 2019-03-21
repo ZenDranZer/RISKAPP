@@ -24,7 +24,7 @@ public class GameCountry extends Observable {
      * Creates a country with the specified name 
      * @param countryName String that represents the Country name
      */
-    public GameCountry(String countryName){
+    public GameCountry(String countryName) {
         this.countryName = countryName;
         neighbouringCountries = new HashMap<>();
     }
