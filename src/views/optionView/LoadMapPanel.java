@@ -130,7 +130,7 @@ public class LoadMapPanel extends JPanel {
     private void resetButtonMouseClicked(MouseEvent e) {
         if(resetButton.isEnabled()){
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
-            if(mapGenerator.reSetAllocations().equals("SUCCESS")){
+            if(mapGenerator.reSetAllocations().equals("SUCCESS")) {
                 JOptionPane.showMessageDialog(this,"Map is being reset.");
             }
             else{

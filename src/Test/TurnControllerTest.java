@@ -110,8 +110,7 @@ public class TurnControllerTest {
 	 * checks the army placement functionality
 	 */
 	@Test
-	public void testPlaceArmy()
-	{
+	public void testPlaceArmy() {
 		objTurnController.placeArmy(testData.lstPlayers.get(0), "India", 3);
 		assertEquals(3, testData.testCountryHashMap.get("India").getArmiesStationed());
 	}

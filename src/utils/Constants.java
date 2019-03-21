@@ -17,7 +17,7 @@ public class Constants {
 
     /**This enumeration gives a predefined colors for players.
      * Max player limit is 6.*/
-    public enum PLAYER_COLOR{
+    public enum PLAYER_COLOR {
 
         /**Player objects with predefined color values.*/
         player1 (RED) ,

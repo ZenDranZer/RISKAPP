@@ -100,8 +100,7 @@ public class GameState extends Observable {
 		notifyObservers();
 	}
 
-	public void eliminatePlayer()
-	{
+	public void eliminatePlayer() {
 		
 	}
 }

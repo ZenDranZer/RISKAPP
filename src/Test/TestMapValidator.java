@@ -38,41 +38,40 @@ public class TestMapValidator {
     }
 
     @Test
-    public void testHasValidNumberOfNeighbors(){
-        for (String s : gameMap.getCountryHashMap().keySet()){
+    public void testHasValidNumberOfNeighbors() {
+        for (String s : gameMap.getCountryHashMap().keySet()) {
             assertTrue(validator.hasValidNumberOfNeighbors(gameMap.getCountryHashMap().get(s)));
         }
 
     }
     @Test
-    public void testHasNeighbour(){
+    public void testHasNeighbour() {
 
-        for (String s : gameMap.getCountryHashMap().keySet()){
+        for (String s : gameMap.getCountryHashMap().keySet()) {
             assertTrue(validator.hasNeighbor(gameMap.getCountryHashMap().get(s)));
         }
 
     }
     @Test
-    public void testNumberOfContinents(){
+    public void testNumberOfContinents() {
 
         assertTrue(validator.hasValidNumberOfContinents(new ArrayList<>(gameMap.getContinentHashMap().values())));
 
     }
     @Test
-    public void TestNumberOfCountries(){
+    public void TestNumberOfCountries() {
 
         assertTrue(validator.hasValidNumberOfCountries(new ArrayList<>(gameMap.getCountryHashMap().values())));
     }
     @Test
-    public void TestIsWholeGraphConnected(){
+    public void TestIsWholeGraphConnected() {
 
         assertTrue(validator.isWholeMapConnected(graphUtil));
     }
     @Test
-    public void TestMapValidity(){
+    public void TestMapValidity() {
        String output = mapGenerator.validateMap();
        assertEquals("SUCCESS",output);
     }
-
 
 }

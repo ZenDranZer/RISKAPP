@@ -17,8 +17,7 @@ public class TestUtil {
 	public HashMap<String,GameContinent> testContinentHashMap;
 	public MapGenerator mapGenerator;
 	public GameMap gameMap;
-	public TestUtil()
-	{
+	public TestUtil() {
 		gameMap = new GameMap();
 		mapGenerator = new MapGenerator(this.gameMap);
 		lstPlayers = new ArrayList<Player>();
@@ -34,7 +33,7 @@ public class TestUtil {
 	
     /**This static method is used to get the array list of players ccontaining name and ID.
      * @return ArrayList of players with 6 players.*/
-    public static ArrayList<Player> getPlayerArrayList(){
+    public static ArrayList<Player> getPlayerArrayList() {
         ArrayList<Player> players = new ArrayList<>();
         Player player = new Player("Jil",1);
         players.add(player);
@@ -52,7 +51,7 @@ public class TestUtil {
     
     /**This static method is used to provide an array list of countries for testing.
      * @return Array list of countries with 10 countries.*/
-    public static ArrayList<GameCountry> getGameCountryList(){
+    public static ArrayList<GameCountry> getGameCountryList() {
         ArrayList<GameCountry> countries = new ArrayList<>();
         GameCountry country = new GameCountry("India");
         countries.add(country);
@@ -77,8 +76,7 @@ public class TestUtil {
         return countries;
     }
     
-    public void makePlayerList()
-    {
+    public void makePlayerList() {
     	Player objPlayer1 = new Player("Player 1",1);
     	objPlayer1.setCountries(testCountryHashMap.get("India"));
     	objPlayer1.setCountries(testCountryHashMap.get("China"));
@@ -98,8 +96,7 @@ public class TestUtil {
     	lstPlayers.add(objPlayer2);
     }
     
-    public void makeContinentList()
-    {
+    public void makeContinentList() {
     	GameContinent continent1 = new GameContinent();
     	continent1.setContinentName("Asia");
     	continent1.setContinentValue(5);
@@ -112,7 +109,7 @@ public class TestUtil {
     	testContinentHashMap.put("Europe", continent2);
     }
     
-    public void makeCountryList(){
+    public void makeCountryList() {
     	
     	GameCountry country1 = new GameCountry("India");
     	country1.setContinent(testContinentHashMap.get("Asia"));
@@ -143,8 +140,7 @@ public class TestUtil {
     	testCountryHashMap.put(country4.getCountryName(),country4);
     }
     
-    public void addCountriesToContinents()
-    {
+    public void addCountriesToContinents() {
     	GameContinent continent = testContinentHashMap.get("Asia");
     	continent.setCountries(testCountryHashMap.get("India"));
     	continent.setCountries(testCountryHashMap.get("China"));
@@ -154,16 +150,13 @@ public class TestUtil {
     	continent.setCountries(testCountryHashMap.get("Russia"));
     }
     
-    public void updateGlobals()
-    {
+    public void updateGlobals() {
 
-    	for(GameContinent c : testContinentHashMap.values())
-    	{
+    	for(GameContinent c : testContinentHashMap.values()) {
     		mapGenerator.getGameMap().continentHashMap.put(c.getContinentName(), c);
     	}
     	
-    	for(GameCountry cntry : testCountryHashMap.values())
-    	{
+    	for(GameCountry cntry : testCountryHashMap.values()) {
     		mapGenerator.getGameMap().countryHashMap.put(cntry.getCountryName(), cntry);
     	}
 
