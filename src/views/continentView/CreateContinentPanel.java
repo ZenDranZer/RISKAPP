@@ -190,6 +190,6 @@ public class CreateContinentPanel extends JPanel implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        continentList.setListData(((GameMap) observable).getCountryHashMap().keySet().toArray());
+        continentList.setListData(((GameMap) observable).getContinentHashMap().keySet().toArray());
     }
 }

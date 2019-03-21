@@ -47,7 +47,8 @@ public class GameMap extends Observable {
     public void removeContinent(String continentName){
         this.countryHashMap.remove(continentName);
         setChanged();
-        notifyObservers();
+        Object a = new Object();
+        notifyObservers(a);
     }
 
     public Set<String> getNeighbourList(String countryName){
