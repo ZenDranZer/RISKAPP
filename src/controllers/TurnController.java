@@ -9,7 +9,7 @@ import static utils.Constants.ARMY_DISTRIBUTION.*;
  */
 public class TurnController {
 
-	Player activePlayer;
+	//Player activePlayer;
 	private int availableArmies;
 	GameMap gameMap;
 	GameState gameState;
@@ -19,6 +19,7 @@ public class TurnController {
 		gameState = state;
 		gameMap = gameState.getGameMapObject();
 	}
+	
 	/**
 	 * Set available armies
 	 * 
@@ -38,23 +39,23 @@ public class TurnController {
 		return this.availableArmies;
 	}
 
-	/**
-	 * function to get the current player
-	 * 
-	 * @return current player
-	 */
-	public Player getActivePlayer() {
-		return activePlayer;
-	}
+//	/**
+//	 * function to get the current player
+//	 * 
+//	 * @return current player
+//	 */
+//	public Player getActivePlayer() {
+//		return activePlayer;
+//	}
 
-	/**
-	 * Function to allocate the active player for the next turn
-	 * 
-	 * @param objPlayer
-	 */
-	public void setActivePlayer(Player objPlayer) {
-		activePlayer = objPlayer;
-	}
+//	/**
+//	 * Function to allocate the active player for the next turn
+//	 * 
+//	 * @param objPlayer
+//	 */
+//	public void setActivePlayer(Player objPlayer) {
+//		activePlayer = objPlayer;
+//	}
 
 	/**
 	 * function to calculate the new army allocation for the player. Minimum 3
@@ -158,10 +159,4 @@ public class TurnController {
 		}
 	}
 	
-	public void fortification(String countryToFortify, String fortifyFrom, int armies)
-	{
-		activePlayer.fortify(countryToFortify, fortifyFrom, armies);
-		gameState.notifyGameStateChange();
-	}
-
 }

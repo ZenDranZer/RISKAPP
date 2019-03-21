@@ -94,7 +94,7 @@ public class GameEngine {
 			setNumberOfPlayers(gameState.getPlayers().size());
 			turn.allocateCountries(gameState.getPlayers(),getGameState().getGameMapObject().getAllCountries());
 			allocateInitialArmies();
-			turn.setActivePlayer(gameState.getPlayers().get(0));
+			gameState.setActivePlayer(gameState.getPlayers().get(0));
 		} catch (NullPointerException nullEx) {
 			System.out.println("Objects not initialized properly");
 		} catch (Exception ex) {
@@ -125,7 +125,7 @@ public class GameEngine {
 	 * @param activePlayer current player
 	 */
 	public void setNextPlayer(Player activePlayer,boolean checkInitialAllocation) {		
-		turn.setActivePlayer(gameState.getNextPlayer(activePlayer,checkInitialAllocation));
+		gameState.setActivePlayer(gameState.getNextPlayer(activePlayer,checkInitialAllocation));
 	}
 
 	/**
