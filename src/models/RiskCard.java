@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 /**
@@ -11,6 +12,11 @@ public class RiskCard extends Observable {
 
 	private String countryName;
 	private String armyType;
+	private boolean isWild;
+
+	public boolean isCardWild() { return isWild;}
+
+	public void setWild(boolean wild) { isWild = wild; }
 
 	public String getCountryName() {
 		return countryName;
