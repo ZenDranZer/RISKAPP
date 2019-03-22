@@ -202,6 +202,7 @@ public class GamePlay extends JPanel implements Observer {
 					txtReinforce.setText("");
 				}
 				btnAdd.setVisible(true);
+				groupRadioSetVisibility(true);
 
 			}
 		});
@@ -249,6 +250,7 @@ public class GamePlay extends JPanel implements Observer {
 		grpRedDice.add(rdbtnRed1);
 		grpRedDice.add(rdbtnRed2);
 		grpRedDice.add(rdbtnRed3);
+
 		
 		rdbtnWhite2 = new JRadioButton("2");
 		rdbtnWhite2.setBounds(571, 95, 43, 23);
@@ -268,6 +270,15 @@ public class GamePlay extends JPanel implements Observer {
 		lstActionCountry.setVisible(false);
 		displayRemainingArmies();
 		lblAction.setVisible(false);
+		groupRadioSetVisibility(false);
+	}
+
+	public void groupRadioSetVisibility(boolean value){
+		rdbtnRed1.setVisible(value);
+		rdbtnRed2.setVisible(value);
+		rdbtnRed3.setVisible(value);
+		rdbtnWhite1.setVisible(value);
+		rdbtnWhite2.setVisible(value);
 	}
 
 	/**
