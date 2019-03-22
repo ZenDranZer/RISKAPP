@@ -313,23 +313,29 @@ public class GamePlay extends JPanel implements Observer {
 	}
 
 	public boolean attackValidation(){
-		boolean validationValue = true;
+
 
 		if (grpRedDice.getSelection() != null && grpWhiteDice.getSelection() != null) {
-			String selectedDice = Collections.list(grpRedDice.getElements()).stream().filter(a -> a.isSelected()).findFirst().get().getText();
+			String selectedRedDice = Collections.list(grpRedDice.getElements()).stream().filter(a -> a.isSelected()).findFirst().get().getText();
+			String selectedWhiteDice = Collections.list(grpWhiteDice.getElements()).stream().filter(a -> a.isSelected()).findFirst().get().getText();
 			String selcetedAttackCountry = (String) lstPlayerCountries.getSelectedValue();
 			String selectedActionCountry = (String) lstActionCountry.getSelectedValue();
 			GameCountry attackCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap.get(selcetedAttackCountry);
 			GameCountry actionCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap.get(selectedActionCountry);
+			if (Integer.parseInt(selectedRedDice) < attackCountry.getArmiesStationed() ||
+					Integer.parseInt(selectedWhiteDice) < actionCountry.getArmiesStationed() ){
+				return false;
+			}
 
 		}
 		else{
 			txtError.setText("Select Number of Red and White Dices");
+			return false;
 		}
 
 
 
-		return validationValue;
+		return true;
 	}
 
 	/**
