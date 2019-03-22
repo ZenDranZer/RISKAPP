@@ -324,6 +324,7 @@ public class GamePlay extends JPanel implements Observer {
 			GameCountry actionCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap.get(selectedActionCountry);
 			if (Integer.parseInt(selectedRedDice) < attackCountry.getArmiesStationed() ||
 					Integer.parseInt(selectedWhiteDice) < actionCountry.getArmiesStationed() ){
+                txtError.setText("Select Number of Dices should be more than armies in country");
 				return false;
 			}
 
@@ -333,8 +334,7 @@ public class GamePlay extends JPanel implements Observer {
 			return false;
 		}
 
-
-
+		txtError.setText("success");
 		return true;
 	}
 
