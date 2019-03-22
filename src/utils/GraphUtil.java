@@ -1,7 +1,5 @@
 package utils;
 
-
-import controllers.MapGenerator;
 import models.GameCountry;
 import models.GameMap;
 import org.jgrapht.Graph;

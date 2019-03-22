@@ -46,7 +46,6 @@ public class GamePlay extends JPanel implements Observer {
 	private GameEngine objGameEngine;
 	private TurnController objTurnController;
 	private Player activePlayer;
-
 	private JScrollPane scrollPane;
 	private String phase = "initial";
 	private JTextArea txtError;
@@ -260,7 +259,7 @@ public class GamePlay extends JPanel implements Observer {
 		grpRedDice.add(rdbtnRed2);
 		grpRedDice.add(rdbtnRed3);
 
-		
+
 		rdbtnWhite2 = new JRadioButton("2");
 		rdbtnWhite2.setBounds(569, 106, 43, 23);
 		add(rdbtnWhite2);
@@ -277,16 +276,16 @@ public class GamePlay extends JPanel implements Observer {
 		lblRedDice.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblRedDice.setBounds(222, 91, 67, 14);
 		add(lblRedDice);
-		
+
 		lblWhiteDice = new JLabel("White Dice");
 		lblWhiteDice.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblWhiteDice.setBounds(526, 91, 82, 14);
 		add(lblWhiteDice);
-		
+
 		chckbxAllOutAttack = new JCheckBox("All out attack");
 		chckbxAllOutAttack.setBounds(392, 87, 113, 23);
 		add(chckbxAllOutAttack);
-		
+
 		btnSkip.setVisible(false);
 		lblRedDice.setVisible(false);
 		lblWhiteDice.setVisible(false);
