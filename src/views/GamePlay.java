@@ -312,6 +312,11 @@ public class GamePlay extends JPanel implements Observer {
 		rdbtnWhite2.setVisible(value);
 	}
 
+	/**
+	 * This function checks validations before each attack
+	 * @return boolean
+	 */
+
 	public boolean attackValidation(){
 
 
