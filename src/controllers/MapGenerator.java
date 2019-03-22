@@ -11,7 +11,7 @@ import java.util.HashMap;
  * which any map related operations are to be performed in the game.
  *
  */
-public class MapGenerator {
+public class  MapGenerator {
 
 /*Making a temporary GameEngine object to access the GameState object that contains the GameMap object which
 contains the required hashmaps.
@@ -24,7 +24,7 @@ contains the required hashmaps.
     //HashMap<String, GameCountry>countryHashMap;
     //HashMap<String, GameContinent>continentHashMap;
     //HashMap<String, String>guiHashMap;
-    /** Class constructor that initializes the ubiquitious countryHashMap and ContinentHashMap
+    /** Class constructor that initializes the ubiquitous countryHashMap and ContinentHashMap
      *
      */
     public MapGenerator(GameMap map) {
@@ -405,7 +405,7 @@ contains the required hashmaps.
                     if (countryExists(tempNeighbourName)==null) {
                         newNeighbour = new GameCountry();
                         newNeighbour.setCountryName(tempNeighbourName);
-                        //countryHashMap.put(tempNeighbourName,newNeighbour);
+                        gameMap.getCountryHashMap().put(tempNeighbourName,newNeighbour);
                         gameMap.addCountry(newCountry);
                         newCountry.addNeighbouringCountry(newNeighbour);
                         newNeighbour.addNeighbouringCountry(newCountry);
