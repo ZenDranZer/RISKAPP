@@ -116,6 +116,12 @@ public class Player extends Observable {
     public void setPlayerArmies(int player_armies) {
         this.playerArmies = player_armies;
     }
+    public void addPlayerArmies(int player_armies) {
+        this.playerArmies += player_armies;
+    }
+    public void removePlayerArmies(int player_armies) {
+        this.playerArmies -= player_armies;
+    }
 
     /**
      * Gets the list of countries owned by the player
@@ -247,12 +253,12 @@ public class Player extends Observable {
 		    if(successfulAttack>successfulDefend){
 		        int armiesLostbyDefender = successfulAttack - successfulDefend;
 		        defendingCountry.removeArmies(armiesLostbyDefender);
-		        defender.updateRemainingArmies(armiesLostbyDefender);
+		        defender.removePlayerArmies(armiesLostbyDefender);
             }
 		    else{
 		        int armiesLostbyAttacker = successfulDefend - successfulAttack;
 		        attackingCountry.removeArmies(armiesLostbyAttacker);
-		        this.updateRemainingArmies(armiesLostbyAttacker);
+		        this.removePlayerArmies(armiesLostbyAttacker);
             }
         }
 		//for each set in dice sets
@@ -262,17 +268,32 @@ public class Player extends Observable {
 		//		remove army from attacker player and country
 		
 		//This remains inside the loop
-			if(defendingCountry.getArmiesStationed()== 0) {
+			if(defendingCountry.getArmiesStationed() == 0) {
 //				give country to attacker
 				defender.removeCountry(defendingCountry);
 				this.setCountries(defendingCountry);
 //				placeArmy()
+                //following lines move the army from the country that won to the country with no current armies.
+                defendingCountry.setArmies(redDice);
+                attackingCountry.removeArmies(redDice);
 			}
+			else if(attackingCountry.getArmiesStationed() == 0) {
+//				give country to attacker
+                this.removeCountry(defendingCountry);
+                defender.setCountries(defendingCountry);
+//				placeArmy()
+                //following lines move the army from the country that won to the country with no current armies.
+                attackingCountry.setArmies(redDice);
+                defendingCountry.removeArmies(redDice);
+            }
 		
 		//	check player elimination logic
-		if(defender.getCountries().size() ==0) {
+		if(defender.countries.size() ==0) {
 			eliminate(defender);
 		}
+		if(this.countries.size()==0){
+		    eliminate(this);
+        }
 		//	
 		//	check if attacker has enough armies for next attack
 		
