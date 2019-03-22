@@ -51,6 +51,17 @@ public class GamePlay extends JPanel implements Observer {
 	private JLabel lblPhase;
 	private JButton btnSkip;
 
+	JRadioButton rdbtnRed1;
+	JRadioButton rdbtnRed2;
+	JRadioButton rdbtnRed3;
+
+	ButtonGroup grpRedDice;
+
+	JRadioButton rdbtnWhite1;
+	JRadioButton rdbtnWhite2;
+
+	ButtonGroup grpWhiteDice;
+
 	/**
 	 * Renders the initial view of the panel
 	 */
@@ -67,7 +78,7 @@ public class GamePlay extends JPanel implements Observer {
 		add(lblPlayerName);
 
 		lblArmiesPresent = new JLabel("");
-		lblArmiesPresent.setBounds(288, 125, 201, 32);
+		lblArmiesPresent.setBounds(288, 139, 201, 32);
 		add(lblArmiesPresent);
 
 		lblactionArmiesPresent = new JLabel("");
@@ -124,7 +135,7 @@ public class GamePlay extends JPanel implements Observer {
 			}
 		});
 
-		btnAdd.setBounds(391, 48, 104, 41);
+		btnAdd.setBounds(391, 48, 104, 32);
 		btnAdd.setVisible(false);
 		add(btnAdd);
 
@@ -154,8 +165,8 @@ public class GamePlay extends JPanel implements Observer {
 				btnAdd.setVisible(true);
 				lblArmiesPresent.setText("");
 				if (lstPlayerCountries.getSelectedIndex() != -1) {
-					lblArmiesPresent.setText(
-                            lstPlayerCountries.getSelectedValue()+ " armies : " + getArmiesPresent(lstPlayerCountries.getSelectedValue().toString()));
+					lblArmiesPresent.setText(lstPlayerCountries.getSelectedValue() + " armies : "
+							+ getArmiesPresent(lstPlayerCountries.getSelectedValue().toString()));
 				}
 
 				if (phase.equals("fortify") || phase.equals("attack")) {
@@ -183,10 +194,10 @@ public class GamePlay extends JPanel implements Observer {
 			public void valueChanged(ListSelectionEvent arg0) {
 				lblactionArmiesPresent.setText("");
 				if (lstActionCountry.getSelectedIndex() != -1) {
-					lblactionArmiesPresent.setText( lstActionCountry.getSelectedValue()+ " armies : "
+					lblactionArmiesPresent.setText(lstActionCountry.getSelectedValue() + " armies : "
 							+ getArmiesPresent(lstActionCountry.getSelectedValue().toString()));
 				}
-				if(phase.equals("fortify")) {
+				if (phase.equals("fortify")) {
 					txtReinforce.setVisible(true);
 					txtReinforce.setText("");
 				}
@@ -219,8 +230,38 @@ public class GamePlay extends JPanel implements Observer {
 				}
 			}
 		});
-		btnSkip.setBounds(505, 48, 89, 41);
+		btnSkip.setBounds(505, 48, 89, 32);
 		add(btnSkip);
+
+		rdbtnRed1 = new JRadioButton("1");
+		rdbtnRed1.setBounds(218, 95, 43, 23);
+		add(rdbtnRed1);
+
+		rdbtnRed2 = new JRadioButton("2");
+		rdbtnRed2.setBounds(268, 95, 43, 23);
+		add(rdbtnRed2);
+
+		rdbtnRed3 = new JRadioButton("3");
+		rdbtnRed3.setBounds(313, 95, 43, 23);
+		add(rdbtnRed3);
+
+		grpRedDice = new ButtonGroup();
+		grpRedDice.add(rdbtnRed1);
+		grpRedDice.add(rdbtnRed2);
+		grpRedDice.add(rdbtnRed3);
+		
+		rdbtnWhite2 = new JRadioButton("2");
+		rdbtnWhite2.setBounds(571, 95, 43, 23);
+		add(rdbtnWhite2);
+
+		rdbtnWhite1 = new JRadioButton("1");
+		rdbtnWhite1.setBounds(526, 95, 43, 23);
+		add(rdbtnWhite1);
+		
+		grpWhiteDice = new ButtonGroup();
+		grpWhiteDice.add(rdbtnWhite1);
+		grpWhiteDice.add(rdbtnWhite2);
+		
 		btnSkip.setVisible(false);
 
 		scrollPane_1.setVisible(false);
@@ -296,27 +337,27 @@ public class GamePlay extends JPanel implements Observer {
 
 	}
 
-	public void updateAttackPanel(){
-        // flag = 1;
-        phase = "attack";
-        lblPhase.setText("Attack");
-        scrollPane.setVisible(true);
-        lstPlayerCountries.setVisible(true);
-        lstPlayerCountries.setSelectedIndex(-1);
-        scrollPane_1.setVisible(true);
-        lstActionCountry.setVisible(true);
-        txtReinforce.setText("");
-        txtReinforce.setVisible(false);
-        btnAdd.setVisible(true);
-        lblReinforce.setVisible(false);
-        lblactionArmiesPresent.setText("");
-        lblArmiesPresent.setText("");
-        btnAdd.setText("Attack");
+	public void updateAttackPanel() {
+		// flag = 1;
+		phase = "attack";
+		lblPhase.setText("Attack");
+		scrollPane.setVisible(true);
+		lstPlayerCountries.setVisible(true);
+		lstPlayerCountries.setSelectedIndex(-1);
+		scrollPane_1.setVisible(true);
+		lstActionCountry.setVisible(true);
+		txtReinforce.setText("");
+		txtReinforce.setVisible(false);
+		btnAdd.setVisible(true);
+		lblReinforce.setVisible(false);
+		lblactionArmiesPresent.setText("");
+		lblArmiesPresent.setText("");
+		btnAdd.setText("Attack");
 		lblRemainingArmies.setVisible(false);
-        btnSkip.setText("No Attack");
-        btnSkip.setVisible(true);
+		btnSkip.setText("No Attack");
+		btnSkip.setVisible(true);
 
-    }
+	}
 
 	/**
 	 * Fortifies a given country based on user selection
@@ -474,8 +515,8 @@ public class GamePlay extends JPanel implements Observer {
 		case "reinforce":
 			displayRemainingArmies();
 			if (activePlayer.getRemainingArmies() == 0 || activePlayer.isAllocationComplete()) {
-				//attack();
-                updateAttackPanel();
+				// attack();
+				updateAttackPanel();
 			}
 			break;
 
