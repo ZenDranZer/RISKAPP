@@ -37,6 +37,9 @@ public class GamePlay extends JPanel implements Observer {
 	private JTextField txtReinforce;
 	private JButton btnAdd;
 	private JLabel lblRemainingArmies;
+	private JCheckBox chckbxAllOutAttack;
+	private JLabel lblWhiteDice;
+	private JLabel lblRedDice;
 
 	private DefaultListModel<String> dlstPlayerCountries;
 	private DefaultListModel<String> dlstActionCountries;
@@ -175,7 +178,7 @@ public class GamePlay extends JPanel implements Observer {
 
 				if (phase.equals("fortify") || phase.equals("attack")) {
 					txtReinforce.setVisible(false);
-					btnAdd.setVisible(false);
+					//btnAdd.setVisible(false);
 					updateActionCountries();
 				}
 			}
@@ -207,7 +210,9 @@ public class GamePlay extends JPanel implements Observer {
 				}
 				btnAdd.setVisible(true);
 				groupRadioSetVisibility(true);
-
+				lblRedDice.setVisible(true);
+				lblWhiteDice.setVisible(true);
+				chckbxAllOutAttack.setVisible(true);
 			}
 		});
 		lstActionCountry.setBounds(490, 59, 124, 258);
@@ -268,21 +273,24 @@ public class GamePlay extends JPanel implements Observer {
 		grpWhiteDice.add(rdbtnWhite1);
 		grpWhiteDice.add(rdbtnWhite2);
 		
-		JLabel lblRedDice = new JLabel("Red Dice");
+		lblRedDice = new JLabel("Red Dice");
 		lblRedDice.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblRedDice.setBounds(222, 91, 67, 14);
 		add(lblRedDice);
 		
-		JLabel lblWhiteDice = new JLabel("White Dice");
+		lblWhiteDice = new JLabel("White Dice");
 		lblWhiteDice.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblWhiteDice.setBounds(526, 91, 82, 14);
 		add(lblWhiteDice);
 		
-		JCheckBox chckbxAllOutAttack = new JCheckBox("All out attack");
+		chckbxAllOutAttack = new JCheckBox("All out attack");
 		chckbxAllOutAttack.setBounds(392, 87, 113, 23);
 		add(chckbxAllOutAttack);
 		
 		btnSkip.setVisible(false);
+		lblRedDice.setVisible(false);
+		lblWhiteDice.setVisible(false);
+		chckbxAllOutAttack.setVisible(false);
 
 		scrollPane_1.setVisible(false);
 		lstActionCountry.setVisible(false);
@@ -365,6 +373,7 @@ public class GamePlay extends JPanel implements Observer {
 	 * Updates the panel for reinforcement phase of the intended player
 	 */
 	public void updateReinforcementPanel() {
+
 
 		scrollPane.setVisible(true);
 		lstPlayerCountries.setVisible(true);
