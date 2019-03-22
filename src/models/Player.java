@@ -1,5 +1,7 @@
 package models;
 import java.util.*;
+
+import javafx.util.Pair;
 import utils.*;
 
 /**
@@ -222,12 +224,31 @@ public class Player extends Observable {
 	}
 	
 	public boolean attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
+        ArrayList<Pair> diceSets;
+        int successfulAttack=0;
+        int successfulDefend=0;
 		boolean attackSuccessful = false;
 		if(attackingCountry.getArmiesStationed() <2) {
 			attackSuccessful = false;
 		}
 		
 		//dice logic - get dice sets
+        diceSets = Dice.getDiceSets(redDice,whiteDice);
+		for(Pair diceSet : diceSets){
+		    if(Integer.parseInt(diceSet.getKey().toString())<=Integer.parseInt(diceSet.getValue().toString())){
+                successfulDefend++;
+            }else{
+		        successfulAttack++;
+            }
+        }
+		if(successfulAttack!=successfulDefend){
+		    if(successfulAttack>successfulDefend){
+		        int armiesLostbyDefender = successfulAttack - successfulDefend;
+            }
+		    else{
+		        int armiesLostbyAttacker = successfulDefend - successfulAttack;
+            }
+        }
 		//for each set in dice sets
 		//	if(red roll > white roll)
 		//		remove army from defender player and country

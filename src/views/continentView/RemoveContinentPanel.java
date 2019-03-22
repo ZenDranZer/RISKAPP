@@ -51,7 +51,7 @@ public class RemoveContinentPanel extends JPanel implements Observer {
             JOptionPane.showMessageDialog(this,"Invalid argument");
         }else{
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
-            String message = mapGenerator.removeContinent(continentName);
+            String message = gameEngine.getGameState().getGameMapObject().removeContinent(continentName);
             JOptionPane.showMessageDialog(this,message);
             continentList.setListData(mapGenerator.getListOfContinents().toArray());
         }
