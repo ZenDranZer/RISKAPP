@@ -32,19 +32,10 @@ public class RiskCardController {
         countryList = new ArrayList<>(gamemap.getCountryHashMap().keySet());
         int numOfRiskCards = countryList.size();
 
-        for(i=0;i< (numOfRiskCards-2);i++) {
+        for(i=0;i< numOfRiskCards;i++) {
             RiskCard card = new RiskCard();
             card.setCountryName(countryList.get(i));
             card.setArmyType(armyType.get(i%3));
-            card.setWild(false);
-            cardDeck.add(card);
-        }
-
-        for(i=0;i<2;i++) {
-            RiskCard card = new RiskCard();
-            card.setCountryName("Wild");
-            card.setArmyType("Wild");
-            card.setWild(true);
             cardDeck.add(card);
         }
 
