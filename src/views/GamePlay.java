@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * View for main game play includes the reinforcement , attack and fortification
@@ -127,7 +128,10 @@ public class GamePlay extends JPanel implements Observer {
 						}
 					}
 				} else if (phase.equals("attack")) {
-					updateFortificationPanel();
+					//updateFortificationPanel();
+					if(attackValidation()){
+
+					}
 
 				} else if (phase.equals("fortify")) {
 					fortify();
@@ -287,12 +291,35 @@ public class GamePlay extends JPanel implements Observer {
 		groupRadioSetVisibility(false);
 	}
 
+	/**
+	 *
+	 * This functions is updating Number of Dice radio Button visibility
+	 */
+
 	public void groupRadioSetVisibility(boolean value){
 		rdbtnRed1.setVisible(value);
 		rdbtnRed2.setVisible(value);
 		rdbtnRed3.setVisible(value);
 		rdbtnWhite1.setVisible(value);
 		rdbtnWhite2.setVisible(value);
+	}
+
+	public boolean attackValidation(){
+		boolean validationValue = true;
+
+		if (grpRedDice.getSelection() != null && grpWhiteDice.getSelection() != null) {
+			String selectedDice = Collections.list(grpRedDice.getElements()).stream().filter(a -> a.isSelected()).findFirst().get().getText();
+			GameCountry selcetedAttackCountry = (GameCountry) lstPlayerCountries.getSelectedValue();
+			System.out.println(selectedDice);
+			System.out.println(selcetedAttackCountry.getCountryName());
+		}
+		else{
+			txtError.setText("Select Dice Number");
+		}
+
+
+
+		return validationValue;
 	}
 
 	/**
@@ -361,6 +388,10 @@ public class GamePlay extends JPanel implements Observer {
 		phase = "attack";
 
 	}
+
+	/**
+	 * This function updates the panel for getting ready for attach phase
+	 */
 
 	public void updateAttackPanel() {
 		// flag = 1;
