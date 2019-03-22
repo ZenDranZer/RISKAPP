@@ -16,7 +16,7 @@ public class Player extends Observable {
     private int playerArmies;
     private ArrayList<GameCountry> countries;
     private ArrayList<GameContinent> continents;
-    private HashMap<String, RiskCard> cardsHeld;
+    private ArrayList<RiskCard> playerCards;
     private int remainingArmies;
     private boolean isActive;
 
@@ -39,7 +39,7 @@ public class Player extends Observable {
         playerArmies = 0;
         countries = new ArrayList<>();
         continents = new ArrayList<>();
-        cardsHeld = new HashMap<>();
+        playerCards = new ArrayList<>();
     }
 
     /**
@@ -164,16 +164,16 @@ public class Player extends Observable {
      * Gets the RISK cards held by the player
      * @return String that represents the RISK Cards held by the player
      */
-    public HashMap<String, RiskCard> getCardsHeld() {
-        return cardsHeld;
+    public ArrayList<RiskCard> getCardsHeld() {
+        return playerCards;
     }
     
     /**
      * Sets the RISK Cards held by the player
      * @param cardsHeld String that represents RISK cards to be allocated to the player
      */
-    public void setCardsHeld(HashMap<String, RiskCard> cardsHeld) {
-        this.cardsHeld = cardsHeld;
+    public void setCardsHeld(ArrayList<RiskCard> cardsHeld) {
+        this.playerCards = cardsHeld;
     }
     
     /**
@@ -291,7 +291,7 @@ public class Player extends Observable {
 		if(defender.countries.size() ==0) {
 			eliminate(defender);
 		}
-		if(this.countries.size()==0){
+		if(this.countries.size()==0) {
 		    eliminate(this);
         }
 		//	
@@ -320,11 +320,10 @@ public class Player extends Observable {
 		this.isActive = state;
 	}
 	
-	public void addRiskCards(HashMap<String, RiskCard> cards)
-	{
-		this.cardsHeld.putAll(cards);
+	public void addRiskCards(ArrayList<RiskCard> cards) {
+		this.playerCards.addAll(cards);
 	}
-	
+
 	public void eliminate(Player eliminatedPlayer) {
 		eliminatedPlayer.setIsActive(false);
 		this.addRiskCards(eliminatedPlayer.getCardsHeld());
