@@ -1,8 +1,10 @@
 package models;
-import java.util.*;
-
 import javafx.util.Pair;
-import utils.*;
+import utils.Dice;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Observable;
 
 /**
  *The Player class is a model which contains player related data.
@@ -162,7 +164,7 @@ public class Player extends Observable {
     
     /**
      * Sets the RISK Cards held by the player
-     * @param cards_held String that represents RISK cards to be allocated to the player
+     * @param cardsHeld String that represents RISK cards to be allocated to the player
      */
     public void setCardsHeld(HashMap<String, RiskCard> cardsHeld) {
         this.cardsHeld = cardsHeld;
@@ -244,9 +246,13 @@ public class Player extends Observable {
 		if(successfulAttack!=successfulDefend){
 		    if(successfulAttack>successfulDefend){
 		        int armiesLostbyDefender = successfulAttack - successfulDefend;
+		        defendingCountry.removeArmies(armiesLostbyDefender);
+		        defender.updateRemainingArmies(armiesLostbyDefender);
             }
 		    else{
 		        int armiesLostbyAttacker = successfulDefend - successfulAttack;
+		        attackingCountry.removeArmies(armiesLostbyAttacker);
+		        this.updateRemainingArmies(armiesLostbyAttacker);
             }
         }
 		//for each set in dice sets

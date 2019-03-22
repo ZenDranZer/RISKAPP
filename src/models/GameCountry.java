@@ -1,5 +1,4 @@
 package models;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 
@@ -91,6 +90,10 @@ public class GameCountry extends Observable {
      */
     public void setArmies(int armiesStationed) {
         this.armiesStationed = armiesStationed;
+    }
+
+    public void removeArmies(int armies) {
+        this.armiesStationed-=armies;
     }
 
     /**
