@@ -1,5 +1,6 @@
 package utils;
 
+import javafx.util.Pair;
 import org.omg.CORBA.INTERNAL;
 
 import java.lang.reflect.Array;
@@ -30,8 +31,8 @@ public class Dice {
         diceNumber = diceNumber + 1;
         return diceNumber;
     }
-    public static ArrayList<HashSet<Integer>> getDiceSets(int redDice, int whiteDice){
-        ArrayList<HashSet<Integer>> diceSets = new ArrayList<>();
+    public static ArrayList<Pair> getDiceSets(int redDice, int whiteDice){
+        ArrayList<Pair> diceSets = new ArrayList<>();
         int setCount = redDice<=whiteDice?redDice:whiteDice;
        ArrayList<Integer> redRolls = new ArrayList<>();
        ArrayList<Integer> whiteRolls = new ArrayList<>();
@@ -46,9 +47,7 @@ public class Dice {
         Collections.reverse(redRolls);
         Collections.reverse(whiteRolls);
         for(int i=0;i<setCount;i++){
-            HashSet<Integer> diceSet = new HashSet<>();
-            diceSet.add(redRolls.get(i));
-            diceSet.add(whiteRolls.get(i));
+            Pair diceSet = new Pair(redRolls.get(i),whiteRolls.get(i));
             diceSets.add(diceSet);
         }
         return diceSets;
