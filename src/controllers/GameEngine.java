@@ -12,6 +12,7 @@ import models.*;
 public class GameEngine {
 
 	private static MapGenerator mapGenerator;
+	private RiskCardController riskCards;
 	private String mapPath;
 	private TurnController turn;
 	private int numberOfPlayers;
@@ -22,6 +23,7 @@ public class GameEngine {
 		gameState = new GameState();
 		turn = new TurnController(gameState);
 		mapGenerator = new MapGenerator(gameState.getGameMapObject());
+		riskCards = new RiskCardController();
 	}
 	public GameState getGameState(){
 		return gameState;
@@ -51,6 +53,10 @@ public class GameEngine {
 	 */
 	public String getMapPath() {
 		return mapPath;
+	}
+
+	public RiskCardController getRiskCardDeck() {
+		return riskCards;
 	}
 
 	/**
@@ -95,7 +101,11 @@ public class GameEngine {
 			turn.allocateCountries(gameState.getPlayers(),getGameState().getGameMapObject().getAllCountries());
 			allocateInitialArmies();
 			gameState.setActivePlayer(gameState.getPlayers().get(0));
+			riskCards.initRiskCardDeck(gameState.getGameMapObject());
 		} catch (NullPointerException nullEx) {
+			System.out.println(nullEx.toString());
+			System.out.println("\n\n");
+			nullEx.printStackTrace();
 			System.out.println("Objects not initialized properly");
 		} catch (Exception ex) {
 			System.out.println("Something went wrong during initialization");
