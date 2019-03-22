@@ -317,12 +317,14 @@ public class GamePlay extends JPanel implements Observer {
 
 		if (grpRedDice.getSelection() != null && grpWhiteDice.getSelection() != null) {
 			String selectedDice = Collections.list(grpRedDice.getElements()).stream().filter(a -> a.isSelected()).findFirst().get().getText();
-			GameCountry selcetedAttackCountry = (GameCountry) lstPlayerCountries.getSelectedValue();
-			System.out.println(selectedDice);
-			System.out.println(selcetedAttackCountry.getCountryName());
+			String selcetedAttackCountry = (String) lstPlayerCountries.getSelectedValue();
+			String selectedActionCountry = (String) lstActionCountry.getSelectedValue();
+			GameCountry attackCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap.get(selcetedAttackCountry);
+			GameCountry actionCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap.get(selectedActionCountry);
+
 		}
 		else{
-			txtError.setText("Select Dice Number");
+			txtError.setText("Select Number of Red and White Dices");
 		}
 
 
