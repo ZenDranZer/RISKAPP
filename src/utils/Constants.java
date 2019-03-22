@@ -14,6 +14,7 @@ public class Constants {
      * when a player owns whole continent.*/
     public static final int CONTINENT_VALUE = 7;
 
+    public static final int RISKCARDS = 44;
 
     /**This enumeration gives a predefined colors for players.
      * Max player limit is 6.*/
