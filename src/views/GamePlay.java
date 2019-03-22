@@ -235,15 +235,15 @@ public class GamePlay extends JPanel implements Observer {
 		add(btnSkip);
 
 		rdbtnRed1 = new JRadioButton("1");
-		rdbtnRed1.setBounds(218, 95, 43, 23);
+		rdbtnRed1.setBounds(218, 106, 43, 23);
 		add(rdbtnRed1);
 
 		rdbtnRed2 = new JRadioButton("2");
-		rdbtnRed2.setBounds(268, 95, 43, 23);
+		rdbtnRed2.setBounds(268, 106, 43, 23);
 		add(rdbtnRed2);
 
 		rdbtnRed3 = new JRadioButton("3");
-		rdbtnRed3.setBounds(313, 95, 43, 23);
+		rdbtnRed3.setBounds(313, 106, 43, 23);
 		add(rdbtnRed3);
 
 		grpRedDice = new ButtonGroup();
@@ -253,16 +253,30 @@ public class GamePlay extends JPanel implements Observer {
 
 		
 		rdbtnWhite2 = new JRadioButton("2");
-		rdbtnWhite2.setBounds(571, 95, 43, 23);
+		rdbtnWhite2.setBounds(569, 106, 43, 23);
 		add(rdbtnWhite2);
 
 		rdbtnWhite1 = new JRadioButton("1");
-		rdbtnWhite1.setBounds(526, 95, 43, 23);
+		rdbtnWhite1.setBounds(526, 106, 43, 23);
 		add(rdbtnWhite1);
 		
 		grpWhiteDice = new ButtonGroup();
 		grpWhiteDice.add(rdbtnWhite1);
 		grpWhiteDice.add(rdbtnWhite2);
+		
+		JLabel lblRedDice = new JLabel("Red Dice");
+		lblRedDice.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRedDice.setBounds(222, 91, 67, 14);
+		add(lblRedDice);
+		
+		JLabel lblWhiteDice = new JLabel("White Dice");
+		lblWhiteDice.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblWhiteDice.setBounds(526, 91, 82, 14);
+		add(lblWhiteDice);
+		
+		JCheckBox chckbxAllOutAttack = new JCheckBox("All out attack");
+		chckbxAllOutAttack.setBounds(392, 87, 113, 23);
+		add(chckbxAllOutAttack);
 		
 		btnSkip.setVisible(false);
 
