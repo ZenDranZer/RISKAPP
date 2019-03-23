@@ -207,11 +207,13 @@ public class GamePlay extends JPanel implements Observer {
 					txtReinforce.setVisible(true);
 					txtReinforce.setText("");
 				}
-				btnAdd.setVisible(true);
-				groupRadioSetVisibility(true);
-				lblRedDice.setVisible(true);
-				lblWhiteDice.setVisible(true);
-				chckbxAllOutAttack.setVisible(true);
+				if (phase.equals("attack")) {
+					btnAdd.setVisible(true);
+					groupRadioSetVisibility(true);
+					lblRedDice.setVisible(true);
+					lblWhiteDice.setVisible(true);
+					chckbxAllOutAttack.setVisible(true);
+				}
 			}
 		});
 		lstActionCountry.setBounds(490, 59, 124, 258);
@@ -326,12 +328,17 @@ public class GamePlay extends JPanel implements Observer {
 			String selectedActionCountry = (String) lstActionCountry.getSelectedValue();
 			GameCountry attackCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap.get(selcetedAttackCountry);
 			GameCountry actionCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap.get(selectedActionCountry);
-			if (Integer.parseInt(selectedRedDice) > attackCountry.getArmiesStationed() ||
-					Integer.parseInt(selectedWhiteDice) > actionCountry.getArmiesStationed() ){
-                txtError.setText("Select Number of Dices should be more than armies in country");
+			if(attackCountry.getArmiesStationed() >= 2 && actionCountry.getArmiesStationed() >= 2) {
+				if (Integer.parseInt(selectedRedDice) > attackCountry.getArmiesStationed() ||
+						Integer.parseInt(selectedWhiteDice) > actionCountry.getArmiesStationed()) {
+					txtError.setText("Select Number of Dices should be more than armies in country");
+					return false;
+				}
+			}else {
+				txtError.setText("Allocated armies in both countries should be more than 1 for attack");
 				return false;
-			}
 
+			}
 		}
 		else{
 			txtError.setText("Select Number of Red and White Dices");
@@ -463,6 +470,19 @@ public class GamePlay extends JPanel implements Observer {
 		scrollPane_1.setVisible(true);
 		lstActionCountry.setVisible(true);
 		btnSkip.setVisible(true);
+		btnSkip.setText("skip");
+		btnAdd.setText("Fortify");
+		lblRedDice.setVisible(false);
+		lblWhiteDice.setVisible(false);
+		rdbtnRed1.setVisible(false);
+		rdbtnRed2.setVisible(false);
+		rdbtnRed3.setVisible(false);
+		rdbtnWhite1.setVisible(false);
+		rdbtnWhite2.setVisible(false);
+		chckbxAllOutAttack.setVisible(false);
+		txtReinforce.setVisible(true);
+		txtError.setText("");
+		updateActionCountries();
 	}
 
 	/**
