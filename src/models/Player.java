@@ -3,7 +3,6 @@ import javafx.util.Pair;
 import utils.Dice;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Observable;
 
 /**
@@ -249,17 +248,13 @@ public class Player extends Observable {
 		        successfulAttack++;
             }
         }
-		if(successfulAttack!=successfulDefend){
-		    if(successfulAttack>successfulDefend){
-		        int armiesLostbyDefender = successfulAttack - successfulDefend;
-		        defendingCountry.removeArmies(armiesLostbyDefender);
-		        defender.removePlayerArmies(armiesLostbyDefender);
-            }
-		    else{
-		        int armiesLostbyAttacker = successfulDefend - successfulAttack;
-		        attackingCountry.removeArmies(armiesLostbyAttacker);
-		        this.removePlayerArmies(armiesLostbyAttacker);
-            }
+		if(successfulAttack!=0){
+            defendingCountry.removeArmies(successfulAttack);
+            defender.removePlayerArmies(successfulAttack);
+        }
+		if(successfulDefend!=0){
+            attackingCountry.removeArmies(successfulDefend);
+            this.removePlayerArmies(successfulDefend);
         }
 		//for each set in dice sets
 		//	if(red roll > white roll)
