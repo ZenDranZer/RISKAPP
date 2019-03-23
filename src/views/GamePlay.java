@@ -482,6 +482,7 @@ public class GamePlay extends JPanel implements Observer {
 		chckbxAllOutAttack.setVisible(false);
 		txtReinforce.setVisible(true);
 		txtError.setText("");
+
 		updateActionCountries();
 	}
 
