@@ -17,6 +17,7 @@ public class GameEngine {
 	private TurnController turn;
 	private int numberOfPlayers;
 	private GameState gameState;
+	private RiskCardController riskCardController;
 
 	public GameEngine() {
 
@@ -24,6 +25,7 @@ public class GameEngine {
 		turn = new TurnController(gameState);
 		mapGenerator = new MapGenerator(gameState.getGameMapObject());
 		riskCards = new RiskCardController();
+		riskCardController = new RiskCardController();
 	}
 	public GameState getGameState(){
 		return gameState;
@@ -37,6 +39,10 @@ public class GameEngine {
 			turn = new TurnController(gameState);
 		}
 		return turn;
+	}
+
+	public RiskCardController getRiskCardController() {
+		return riskCardController;
 	}
 
 	/**
