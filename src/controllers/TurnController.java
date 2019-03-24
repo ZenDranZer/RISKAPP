@@ -103,7 +103,6 @@ public class TurnController {
 			gameState.notifyGameStateChange();
 			
 		} catch (Exception ex) {
-
 		}
 	}
 	

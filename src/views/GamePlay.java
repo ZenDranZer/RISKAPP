@@ -131,7 +131,6 @@ public class GamePlay extends JPanel implements Observer {
 						}
 					}
 				} else if (phase.equals("attack")) {
-					// updateFortificationPanel();
 					if (attackValidation()) {
 						if (!chckbxAllOutAttack.isSelected()) {
 							attack();
@@ -139,7 +138,6 @@ public class GamePlay extends JPanel implements Observer {
 							allOutAttack();
 						}
 					}
-
 				} else if (phase.equals("fortify")) {
 					fortify();
 				}
@@ -225,7 +223,8 @@ public class GamePlay extends JPanel implements Observer {
 					lblWhiteDice.setVisible(true);
 					chckbxAllOutAttack.setVisible(true);
 					if (lstActionCountry.getSelectedIndex() != -1) {
-						lblDefender.setText("Defender : " + getOwnerName(lstActionCountry.getSelectedValue().toString()));
+						lblDefender
+								.setText("Defender : " + getOwnerName(lstActionCountry.getSelectedValue().toString()));
 						lblDefender.setVisible(true);
 					}
 				}
@@ -347,7 +346,7 @@ public class GamePlay extends JPanel implements Observer {
 					.get(selcetedAttackCountry);
 			GameCountry actionCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap
 					.get(selectedActionCountry);
-			if (attackCountry.getArmiesStationed() >= 2 ) {
+			if (attackCountry.getArmiesStationed() >= 2) {
 				if (Integer.parseInt(selectedRedDice) >= attackCountry.getArmiesStationed()
 						|| Integer.parseInt(selectedWhiteDice) > actionCountry.getArmiesStationed()) {
 					txtError.setText("Select Number of Dices should be more than armies in country");
@@ -374,7 +373,7 @@ public class GamePlay extends JPanel implements Observer {
 	}
 
 	public void allOutAttack() {
-		
+
 		String selcetedAttackCountry = (String) lstPlayerCountries.getSelectedValue();
 		String selectedActionCountry = (String) lstActionCountry.getSelectedValue();
 		GameCountry attackCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap
@@ -383,7 +382,7 @@ public class GamePlay extends JPanel implements Observer {
 				.get(selectedActionCountry);
 		objGameEngine.getGameState().allOutAttack(actionCountry.getCurrentPlayer(), attackCountry, actionCountry);
 		Player defender = actionCountry.getCurrentPlayer();
-		String message = activePlayer.allOutAttack(defender,attackCountry,actionCountry);
+		String message = activePlayer.allOutAttack(defender, attackCountry, actionCountry);
 		txtError.setText(message);
 	}
 
@@ -478,7 +477,6 @@ public class GamePlay extends JPanel implements Observer {
 		phase = "attack";
 		lblPhase.setText("Attack");
 
-		//updateListElements();
 		scrollPane.setVisible(true);
 		lstPlayerCountries.setVisible(true);
 		lstPlayerCountries.setSelectedIndex(-1);
@@ -496,7 +494,7 @@ public class GamePlay extends JPanel implements Observer {
 		lblRemainingArmies.setVisible(false);
 		btnSkip.setText("No Attack");
 		btnSkip.setVisible(true);
-
+		updateListElements();
 	}
 
 	/**
@@ -521,7 +519,7 @@ public class GamePlay extends JPanel implements Observer {
 		lblReinforce.setText("Select country to forify : ");
 		lblAction.setVisible(true);
 		lblDefender.setVisible(false);
-		//updateListElements();
+		updateListElements();
 		scrollPane.setVisible(true);
 		lstPlayerCountries.setVisible(true);
 		lstPlayerCountries.setSelectedIndex(-1);
@@ -541,7 +539,7 @@ public class GamePlay extends JPanel implements Observer {
 		txtReinforce.setVisible(true);
 		txtError.setText("");
 
-		updateActionCountries();
+		// updateActionCountries();
 	}
 
 	/**
@@ -560,23 +558,35 @@ public class GamePlay extends JPanel implements Observer {
 	 * Updates list of action countries
 	 */
 	public void updateActionCountries() {
-		String seletedCountry = lstPlayerCountries.getSelectedValue().toString();
-		GameCountry cntry = objGameEngine.getGameState().getGameMapObject().getCountryHashMap().get(seletedCountry);
-		List<GameCountry> lstPlayerNeighbors;
-		if (dlstActionCountries.size() != 0) {
-			dlstActionCountries.removeAllElements();
-		}
+		if (lstPlayerCountries.getSelectedIndex() != -1 && lstPlayerCountries.getSelectedValue() != null) {
+			String seletedCountry = lstPlayerCountries.getSelectedValue().toString();
+			if (!seletedCountry.isEmpty() && seletedCountry != null) {
 
-		if (phase.equalsIgnoreCase("attack")) {
-			lstPlayerNeighbors = cntry.getNeighbouringCountries().values().stream()
-					.filter(neighbor -> !neighbor.getCurrentPlayer().equals(activePlayer)).collect(Collectors.toList());
+				GameCountry cntry = objGameEngine.getGameState().getGameMapObject().getCountryHashMap()
+						.get(seletedCountry);
+				List<GameCountry> lstPlayerNeighbors;
+				if (dlstActionCountries.size() != 0) {
+					dlstActionCountries.removeAllElements();
+				}
 
+				if (phase.equalsIgnoreCase("attack")) {
+					lstPlayerNeighbors = cntry.getNeighbouringCountries().values().stream()
+							.filter(neighbor -> !neighbor.getCurrentPlayer().equals(activePlayer))
+							.collect(Collectors.toList());
+
+				} else {
+					lstPlayerNeighbors = cntry.getNeighbouringCountries().values().stream()
+							.filter(neighbor -> neighbor.getCurrentPlayer().equals(activePlayer))
+							.collect(Collectors.toList());
+				}
+				for (GameCountry country : lstPlayerNeighbors) {
+					dlstActionCountries.addElement(country.getCountryName());
+				}
+			}
 		} else {
-			lstPlayerNeighbors = cntry.getNeighbouringCountries().values().stream()
-					.filter(neighbor -> neighbor.getCurrentPlayer().equals(activePlayer)).collect(Collectors.toList());
-		}
-		for (GameCountry country : lstPlayerNeighbors) {
-			dlstActionCountries.addElement(country.getCountryName());
+			if (dlstActionCountries.size() != 0) {
+				dlstActionCountries.removeAllElements();
+			}
 		}
 	}
 
@@ -687,7 +697,7 @@ public class GamePlay extends JPanel implements Observer {
 		case "attack":
 			updateAttackPanel();
 			String test = arg1.toString();
-			System.out.println(""+test+ "		" + arg1.getClass().getName());
+			System.out.println("" + test + "		" + arg1.getClass().getName());
 			break;
 		case "fortify":
 			phase = "reinforce";
