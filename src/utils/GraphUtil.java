@@ -41,7 +41,7 @@ public class GraphUtil {
         }
         for (GameCountry gameCountry : countryList.values()) {
             for (GameCountry neighbour : gameCountry.getNeighbouringCountries().values()){
-                countryGraph.addEdge(gameCountry, gameMap.getCountryHashMap().get(neighbour.getCountryName()));
+                countryGraph.addEdge(gameCountry, countryList.get(neighbour.getCountryName()));
             }
         }
     }

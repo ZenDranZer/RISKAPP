@@ -67,7 +67,7 @@ public class TurnControllerTest {
 		ArrayList<Player> tempPlayers = new ArrayList<Player>();
 
 		for (Player pl : testData.lstPlayers) {
-			Player obj = new Player(pl.getName(), pl.getId());
+			Player obj = new Player(pl.getName(), pl.getId(),gameMap);
 			tempPlayers.add(obj);
 		}
 
@@ -92,7 +92,7 @@ public class TurnControllerTest {
 		ArrayList<Player> tempPlayers = new ArrayList<Player>();
 
 		for (Player pl : testData.lstPlayers) {
-			Player obj = new Player(pl.getName(), pl.getId());
+			Player obj = new Player(pl.getName(), pl.getId(),gameMap);
 			tempPlayers.add(obj);
 		}
 
