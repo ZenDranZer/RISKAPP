@@ -18,7 +18,7 @@ public class Player extends Observable {
     private ArrayList<RiskCard> playerCards;
     private int remainingArmies;
     private boolean isActive;
-    private GameState gameState;
+    private GameMap gameMap;
 
     /**
      * Initializes the Player
@@ -33,10 +33,10 @@ public class Player extends Observable {
      * @param name Player Name
      * @param id Player Id
      */
-    public Player(String name,int id,GameState gameState) {
+    public Player(String name,int id,GameMap gameMap) {
         this.name = name;
         this.id = id;
-        this.gameState = gameState;
+        this.gameMap = gameMap;
         playerArmies = 0;
         countries = new ArrayList<>();
         continents = new ArrayList<>();
@@ -339,7 +339,7 @@ public class Player extends Observable {
 		eliminatedPlayer.setCardsHeld(null);
 	}
     public boolean hasPlayerWon(Player player){
-        if(player.getCountries().size()==gameState.getGameMapObject().getCountryHashMap().size()){
+        if(player.getCountries().size()==gameMap.getCountryHashMap().size()){
             return true;
         }
         return false;

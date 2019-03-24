@@ -1,8 +1,10 @@
 package controllers;
 
+import models.GameCountry;
+import models.GameState;
+import models.Player;
+
 import java.util.ArrayList;
-import java.util.Scanner;
-import models.*;
 
 /**
  * Controller class to maintain the game state and handle object allocation for the game
@@ -82,7 +84,7 @@ public class GameEngine {
 	public void setListActivePlayers(ArrayList<String> listActivePlayers) {
 		int i = 1;
 		for (String name : listActivePlayers) {
-			Player player = new Player(name, i,gameState);
+			Player player = new Player(name, i,gameState.getGameMapObject());
 			gameState.getPlayers().add(player);
 			i++;
 		}

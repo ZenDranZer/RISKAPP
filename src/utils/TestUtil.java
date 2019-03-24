@@ -1,11 +1,13 @@
 package utils;
 
-import models.*;
+import controllers.MapGenerator;
+import models.GameContinent;
+import models.GameCountry;
+import models.GameMap;
+import models.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import controllers.MapGenerator;
 
 /**A utility class that provides basic inputs for testing.
  * They can be used as stubs.*/
@@ -16,7 +18,7 @@ public class TestUtil {
 	public HashMap<String,GameCountry> testCountryHashMap;
 	public HashMap<String,GameContinent> testContinentHashMap;
 	public MapGenerator mapGenerator;
-	public GameMap gameMap;
+	public static GameMap gameMap;
 	public TestUtil() {
 		gameMap = new GameMap();
 		mapGenerator = new MapGenerator(this.gameMap);
@@ -35,15 +37,15 @@ public class TestUtil {
      * @return ArrayList of players with 6 players.*/
     public static ArrayList<Player> getPlayerArrayList() {
         ArrayList<Player> players = new ArrayList<>();
-        Player player = new Player("Jil",1);
+        Player player = new Player("Jil",1,gameMap);
         players.add(player);
-        player = new Player("Shivam",2);
+        player = new Player("Shivam",2,gameMap);
         players.add(player);
-        player = new Player("Sidhant",3);
+        player = new Player("Sidhant",3,gameMap);
         players.add(player);
-        player = new Player("Sarvesh",4);
+        player = new Player("Sarvesh",4,gameMap);
         players.add(player);
-        player = new Player("Naghmeh",5);
+        player = new Player("Naghmeh",5,gameMap);
         players.add(player);
         return players;
     }
@@ -77,7 +79,7 @@ public class TestUtil {
     }
     
     public void makePlayerList() {
-    	Player objPlayer1 = new Player("Player 1",1);
+    	Player objPlayer1 = new Player("Player 1",1,gameMap);
     	objPlayer1.setCountries(testCountryHashMap.get("India"));
     	objPlayer1.setCountries(testCountryHashMap.get("China"));
     	
@@ -85,7 +87,7 @@ public class TestUtil {
     	testCountryHashMap.get("China").setCurrentPlayer(objPlayer1);
     	
     	
-    	Player objPlayer2 = new Player("Player 2",2);
+    	Player objPlayer2 = new Player("Player 2",2,gameMap);
     	objPlayer2.setCountries(testCountryHashMap.get("England"));
     	objPlayer2.setCountries(testCountryHashMap.get("Russia"));
     	
