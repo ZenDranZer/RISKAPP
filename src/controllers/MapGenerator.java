@@ -464,6 +464,8 @@ contains the required hashmaps.
             returnString = "INVALID NUMBER OF COUNTRIES";
         }
 
+            graphUtilObject = buildGraph();
+
         graphUtilObject = this.buildGraph();
         if(!validator.isWholeMapConnected(graphUtilObject)){
             returnString = "THE WHOLE MAP IS NOT CONNECTED";
