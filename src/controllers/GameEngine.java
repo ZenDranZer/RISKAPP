@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class GameEngine {
 
-	private static MapGenerator mapGenerator;
+	private  MapGenerator mapGenerator;
 	private RiskCardController riskCards;
 	private String mapPath;
 	private TurnController turn;

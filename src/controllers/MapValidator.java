@@ -3,10 +3,12 @@ package controllers;
 import models.GameContinent;
 import models.GameCountry;
 import models.GameMap;
-import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultEdge;
 import utils.GraphUtil;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class containing various validations for the generated map
@@ -42,7 +44,7 @@ public class MapValidator {
      */
     public boolean hasSingleCountryContinent(ArrayList<GameContinent> continents){
         for(GameContinent continent : continents){
-            if(continent.getCountries().size()==1){
+            if(continent.getCountries().size()<=1){
                 return true;
             }
         }

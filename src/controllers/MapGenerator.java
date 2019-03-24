@@ -439,7 +439,7 @@ contains the required hashmaps.
         String returnString = "SUCCESS";
         //continentHashMap.values()
         if(validator.hasSingleCountryContinent(new ArrayList<>(gameMap.getContinentHashMap().values()))){
-            return "One of the continents have only one country";
+            return "One of the continents have only one country or less";
         }
         //countryHashMap.values()
         if(validator.containsLoop(new ArrayList<>(gameMap.getCountryHashMap().values()))){
@@ -592,16 +592,19 @@ contains the required hashmaps.
     public String removeCountry(String countryName){
         try {
             String returnString;
+            for(GameCountry neighbor : gameMap.getCountryHashMap().get(countryName).getNeighbouringCountries().values()){
+                neighbor.getNeighbouringCountries().remove(neighbor.getCountryName());
+            }
             //countryHashMap.containsKey(countryName)
             if (gameMap.getCountryHashMap().containsKey(countryName)) {
                 gameMap.getCountryHashMap().get(countryName).getContinent().   //Removes the country from its continent's countrylist.
                         getCountries().remove(gameMap.getCountryHashMap().get(countryName));
                 returnString = validateContinent(gameMap.getCountryHashMap().get(countryName).getContinent());
                 if (returnString.equals("EMPTY")) {
+                    gameMap.removeCountry(countryName);
                     this.removeContinent(gameMap.getCountryHashMap().get(countryName).getContinent().getContinentName());
                 }
                 //countryHashMap.remove(countryName);
-                gameMap.removeCountry(countryName);
                 returnString = "SUCCESS";
 
             }else{
@@ -636,7 +639,8 @@ contains the required hashmaps.
      */
     public String removeContinent(String continentName){
         try {
-            if (gameMap.getCountryHashMap().containsKey(continentName)) {
+            if (gameMap.getContinentHashMap().containsKey(continentName)) {
+
                 gameMap.getContinentHashMap().remove(continentName);
                 return "SUCCESS";
             }else{

@@ -4,14 +4,15 @@ import controllers.GameEngine;
 import controllers.MapGenerator;
 import models.GameMap;
 
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
 
 /**This panel is used to add the. country to an existing map.*/
 public class AddNewCountryPanel extends JPanel implements Observer {
@@ -81,7 +82,7 @@ public class AddNewCountryPanel extends JPanel implements Observer {
         String countryName = nameField.getText();
         String continentName = continentField.getText();
         if(countryName.equals("") || continentName.equals("")){
-            JOptionPane.showMessageDialog(this,"Valu    e not added properly.");
+            JOptionPane.showMessageDialog(this,"Value not added properly.");
         } else {
             MapGenerator mapGenerator = gameEngine.getMapGenerator();
             String message = mapGenerator.addCountry(continentName,countryName,neighbourList);
