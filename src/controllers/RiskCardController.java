@@ -19,12 +19,12 @@ public class RiskCardController {
 
     //{"Infantry","Cavalry","Artillery"};
     public RiskCardController() {
-        armyType = new ArrayList<>();
+        armyType = new HashMap<>();
         cardDeck = new ArrayList<>();
         armyType.put(1,"Infantry");
         armyType.put(5,"Cavalry");
         armyType.put(10,"Artillery");
-        army = new ArrayList<>(armyType.keySet().toArray());
+        army = new ArrayList<>(armyType.keySet());
     }
 
     public void initRiskCardDeck(GameMap gamemap) {
@@ -60,7 +60,6 @@ public class RiskCardController {
 
         ArrayList<Integer> set = new ArrayList<>();
 
-        // Consider all possible pairs and check their sums
         for (int i = 0; i < cards.size(); i++)
             for (int j = i + 1; j < cards.size(); j++)
                 for (int k = j+1 ; k<cards.size();k++) {
@@ -80,20 +79,65 @@ public class RiskCardController {
      * the list of country names(3 country names).*/
     public HashMap<String,ArrayList<RiskCard>> getPossibleSets(Player activeplayer) {
         ArrayList<RiskCard> playerCards = new ArrayList<>();
-        ArrayList<Integer> Infantry = new ArrayList<>();
-        ArrayList<Integer> Cavalry = new ArrayList<>();
-        ArrayList<Integer> Artillery = new ArrayList<>();
+        ArrayList<Integer> infantry = new ArrayList<>();
+        ArrayList<Integer> cavalry = new ArrayList<>();
+        ArrayList<Integer> artillery = new ArrayList<>();
+        ArrayList<Integer> allDifferent = new ArrayList<>();
 
         HashMap<String,ArrayList<RiskCard>> possiblSets = new HashMap<>();
         int possSet = 0;
         int i=0;
         playerCards = activeplayer.getCardsHeld();
-        Infantry = getCombinations(playerCards,3);
-        Cavalry = getCombinations(playerCards,15);
-        Artillery = getCombinations(playerCards,30);
+        infantry = getCombinations(playerCards,3);
+        cavalry = getCombinations(playerCards,15);
+        artillery = getCombinations(playerCards,30);
+        allDifferent = getCombinations(playerCards,16);
 
+        if (infantry.size() > 0){
 
+            for (int k=0;k<infantry.size()/3;k++) {
+                ArrayList<RiskCard> temp = new ArrayList<>();
+                for (int m=0;m<3;m++) {
+                    temp.add(playerCards.get(infantry.get((3*k)+m)));
+                }
+                possiblSets.put(Integer.toString(possSet), temp);
+                possSet++;
+            }
+        }
 
+        if (cavalry.size() > 0) {
+            for (int k=0;k<cavalry.size()/3;k++) {
+                ArrayList<RiskCard> temp = new ArrayList<>();
+                for (int m=0;m<3;m++) {
+                    temp.add(playerCards.get(cavalry.get((3*k)+m)));
+                }
+                possiblSets.put(Integer.toString(possSet), temp);
+                possSet++;
+            }
+        }
+
+        if (artillery.size() > 0) {
+            for (int k=0;k<artillery.size()/3;k++) {
+                ArrayList<RiskCard> temp = new ArrayList<>();
+                for (int m=0;m<3;m++) {
+                    temp.add(playerCards.get(artillery.get((3*k)+m)));
+                }
+                possiblSets.put(Integer.toString(possSet), temp);
+                possSet++;
+            }
+        }
+
+        if (allDifferent.size() > 0) {
+            for (int k=0;k<allDifferent.size()/3;k++) {
+                ArrayList<RiskCard> temp = new ArrayList<>();
+                for (int m=0;m<3;m++) {
+                    temp.add(playerCards.get(allDifferent.get((3*k)+m)));
+                }
+                possiblSets.put(Integer.toString(possSet), temp);
+                possSet++;
+            }
+        }
+        return possiblSets;
     }
 
     /**
