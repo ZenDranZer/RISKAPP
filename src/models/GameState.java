@@ -123,8 +123,9 @@ public class GameState extends Observable {
 	//attack
 	public void attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice)
 	{
-		activePlayer.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
-		notifyGameStateChange();
+		String status = activePlayer.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);		
+		setChanged();
+		notifyObservers(status);
 	}
 	
 	//fortify
