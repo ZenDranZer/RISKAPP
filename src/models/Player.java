@@ -345,14 +345,46 @@ public class Player extends Observable {
 		return status;
 	}
 
-	public void allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry) {
-		int redDice = 0;
-		// get max red dice
+	/**
+	 * this function implements all out attack mode
+	 * @param defender
+	 * @param attackingCountry
+	 * @param defendingCountry
+	 * @return String message for status of attack
+	 */
+	public String allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry) {
+		int numberOfArmies_attacker = attackingCountry.getArmiesStationed();
+		int numberOfArmies_defender = defendingCountry.getArmiesStationed();
+		while (numberOfArmies_attacker > 1 ) {
 
-		int whiteDice = 0;
-		// get max white dice
+			int redDice = 0;
+			// get max red dice
+			if (numberOfArmies_attacker == 1) {
+				redDice = 1;
+			} else if (numberOfArmies_attacker == 2) {
+				redDice = 2;
+			} else {
+				redDice = 3;
+			}
+			int whiteDice = 0;
+			// get max white dice
+			if (numberOfArmies_defender == 1) {
+				whiteDice = 1;
+			} else if (numberOfArmies_defender == 2) {
+				whiteDice = 2;
+			} else {
+				whiteDice = 3;
+			}
+			attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
+			numberOfArmies_attacker = attackingCountry.getArmiesStationed();
+			numberOfArmies_defender = defendingCountry.getArmiesStationed();
+		}
+		if (defendingCountry.getCurrentPlayer().getId() == attackingCountry.getCurrentPlayer().getId()){
+			return "Attack was Successful";
+		}else {
+			return "Attack was not Successful";
+		}
 
-		attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
 	}
 
 	public boolean getIsActive() {

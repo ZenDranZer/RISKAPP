@@ -382,6 +382,9 @@ public class GamePlay extends JPanel implements Observer {
 		GameCountry actionCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap
 				.get(selectedActionCountry);
 		objGameEngine.getGameState().allOutAttack(actionCountry.getCurrentPlayer(), attackCountry, actionCountry);
+		Player defender = actionCountry.getCurrentPlayer();
+		String message = activePlayer.allOutAttack(defender,attackCountry,actionCountry);
+		txtError.setText(message);
 	}
 
 	/**

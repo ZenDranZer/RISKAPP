@@ -132,7 +132,7 @@ public class GameState extends Observable {
 	{
 		activePlayer.allOutAttack(defender, attackingCountry, defendingCountry);
 		setChanged();
-		notifyObservers();
+		notifyObservers("done!");
 	}
 	
 	//fortify
