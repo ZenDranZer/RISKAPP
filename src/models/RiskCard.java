@@ -1,12 +1,9 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.Observable;
 
 /**
  * Class that represents a Risk Card
- * @author hp
- *
  */
 public class RiskCard extends Observable {
 
