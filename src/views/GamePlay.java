@@ -132,7 +132,11 @@ public class GamePlay extends JPanel implements Observer {
 				} else if (phase.equals("attack")) {
 					//updateFortificationPanel();
 					if(attackValidation()){
-
+						if (!chckbxAllOutAttack.isSelected()) {
+							attack();
+						}else {
+							allOutAttack();
+						}
 					}
 
 				} else if (phase.equals("fortify")) {
@@ -321,7 +325,7 @@ public class GamePlay extends JPanel implements Observer {
 	public boolean attackValidation(){
 
 
-		if (grpRedDice.getSelection() != null && grpWhiteDice.getSelection() != null) {
+		if (grpRedDice.getSelection() != null && grpWhiteDice.getSelection() != null && !chckbxAllOutAttack.isSelected()) {
 			String selectedRedDice = Collections.list(grpRedDice.getElements()).stream().filter(a -> a.isSelected()).findFirst().get().getText();
 			String selectedWhiteDice = Collections.list(grpWhiteDice.getElements()).stream().filter(a -> a.isSelected()).findFirst().get().getText();
 			String selcetedAttackCountry = (String) lstPlayerCountries.getSelectedValue();
@@ -341,12 +345,22 @@ public class GamePlay extends JPanel implements Observer {
 			}
 		}
 		else{
-			txtError.setText("Select Number of Red and White Dices");
-			return false;
+			if (chckbxAllOutAttack.isSelected()){
+				txtError.setText("All out attack");
+				return true;
+			}else {
+				txtError.setText("Select Number of Red and White Dices");
+				return false;
+			}
 		}
 
 		txtError.setText("success");
 		return true;
+	}
+
+
+	public void allOutAttack(){
+		
 	}
 
 	/**
