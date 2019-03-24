@@ -465,7 +465,7 @@ public class GamePlay extends JPanel implements Observer {
 		phase = "attack";
 		lblPhase.setText("Attack");
 
-		updateListElements();
+		//updateListElements();
 		scrollPane.setVisible(true);
 		lstPlayerCountries.setVisible(true);
 		lstPlayerCountries.setSelectedIndex(-1);
@@ -508,7 +508,7 @@ public class GamePlay extends JPanel implements Observer {
 		lblReinforce.setText("Select country to forify : ");
 		lblAction.setVisible(true);
 		
-		updateListElements();
+		//updateListElements();
 		scrollPane.setVisible(true);
 		lstPlayerCountries.setVisible(true);
 		lstPlayerCountries.setSelectedIndex(-1);
