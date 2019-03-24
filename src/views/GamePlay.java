@@ -336,6 +336,7 @@ public class GamePlay extends JPanel implements Observer {
 				if (Integer.parseInt(selectedRedDice) > attackCountry.getArmiesStationed() ||
 						Integer.parseInt(selectedWhiteDice) > actionCountry.getArmiesStationed()) {
 					txtError.setText("Select Number of Dices should be more than armies in country");
+
 					return false;
 				}
 			}else {
