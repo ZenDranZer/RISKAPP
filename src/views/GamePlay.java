@@ -22,7 +22,7 @@ import java.util.*;
 /**
  * View for main game play includes the reinforcement , attack and fortification
  * phases for the game
- *
+ *`
  */
 public class GamePlay extends JPanel implements Observer {
 
