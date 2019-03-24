@@ -14,7 +14,7 @@ public class RiskCardController {
     /**A list of all cards which are not owned by any player.*/
     private ArrayList<RiskCard> cardDeck;
     /**A counter which specifies the number of trade up till now*/
-    private int noOfTrades;
+    private int noOfTrades=1;
     /**GameEngine object to preserve the state of the game.*/
     private GameMap gameMap;
     /**A list of possible army types.*/
@@ -152,7 +152,18 @@ public class RiskCardController {
      * @return It returns whether the operation is sucessful or not. if not specify the error.
      * */
     public String tradeCards(Player activePlayer,ArrayList<RiskCard> set){
-        return null;
+
+        ArrayList<RiskCard> playerCards = activePlayer.getCardsHeld();
+
+        for (int i=0;i<3;i++)
+            cardDeck.add(set.get(i));
+
+        for (int i=0;i<3;i++)
+            playerCards.remove(set.get(i));
+
+        activePlayer.addPlayerArmy(noOfTrades*5);
+        noOfTrades++;
+        return "You got :"+ (noOfTrades*5) + " armies by trading your Risk Cards";
     }
 
 }
