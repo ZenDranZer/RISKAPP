@@ -49,22 +49,24 @@ public class GamePlay extends JPanel implements Observer {
 	private JScrollPane scrollPane;
 	private String phase = "initial";
 	private JTextArea txtError;
-	private int flag = 0;
 	private JScrollPane scrollPane_1;
 	private JLabel lblPhase;
 	private JButton btnSkip;
 
-	JRadioButton rdbtnRed1;
-	JRadioButton rdbtnRed2;
-	JRadioButton rdbtnRed3;
+	private JRadioButton rdbtnRed1;
+	private JRadioButton rdbtnRed2;
+	private JRadioButton rdbtnRed3;
 
-	ButtonGroup grpRedDice;
+	private ButtonGroup grpRedDice;
 
-	JRadioButton rdbtnWhite1;
-	JRadioButton rdbtnWhite2;
+	private JRadioButton rdbtnWhite1;
+	private JRadioButton rdbtnWhite2;
 
-	ButtonGroup grpWhiteDice;
+	private ButtonGroup grpWhiteDice;
 	private JLabel lblDefender;
+	
+	private JButton btnSwapcards;
+	private JButton btnMapview;
 
 	/**
 	 * Renders the initial view of the panel
@@ -300,6 +302,25 @@ public class GamePlay extends JPanel implements Observer {
 		chckbxAllOutAttack = new JCheckBox("All out attack");
 		chckbxAllOutAttack.setBounds(392, 87, 113, 23);
 		add(chckbxAllOutAttack);
+		
+		btnSwapcards = new JButton("Swap RISK Cards");
+		btnSwapcards.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
+		btnSwapcards.setBounds(64, 368, 148, 23);
+		add(btnSwapcards);
+		
+	
+		btnMapview = new JButton("View Map");
+		btnMapview.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		btnMapview.setBounds(313, 449, 176, 23);
+		add(btnMapview);
 
 		btnSkip.setVisible(false);
 		lblRedDice.setVisible(false);
