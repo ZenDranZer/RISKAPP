@@ -82,7 +82,7 @@ public class GameEngine {
 	public void setListActivePlayers(ArrayList<String> listActivePlayers) {
 		int i = 1;
 		for (String name : listActivePlayers) {
-			Player player = new Player(name, i);
+			Player player = new Player(name, i,gameState);
 			gameState.getPlayers().add(player);
 			i++;
 		}

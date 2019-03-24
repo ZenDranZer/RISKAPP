@@ -18,6 +18,7 @@ public class Player extends Observable {
     private ArrayList<RiskCard> playerCards;
     private int remainingArmies;
     private boolean isActive;
+    private GameState gameState;
 
     /**
      * Initializes the Player
@@ -32,9 +33,10 @@ public class Player extends Observable {
      * @param name Player Name
      * @param id Player Id
      */
-    public Player(String name,int id) {
+    public Player(String name,int id,GameState gameState) {
         this.name = name;
         this.id = id;
+        this.gameState = gameState;
         playerArmies = 0;
         countries = new ArrayList<>();
         continents = new ArrayList<>();
@@ -275,25 +277,31 @@ public class Player extends Observable {
 				this.setCountries(defendingCountry);
 //				placeArmy()
                 //following lines move the army from the country that won to the country with no current armies.
-                defendingCountry.setArmies(redDice);
-                attackingCountry.removeArmies(redDice);
+                defendingCountry.setArmies(attackingCountry.getArmiesStationed()-1);
+                attackingCountry.removeArmies(attackingCountry.getArmiesStationed()-1);
 			}
 			else if(attackingCountry.getArmiesStationed() == 0) {
-//				give country to attacker
+//				give country to defender
                 this.removeCountry(defendingCountry);
                 defender.setCountries(defendingCountry);
 //				placeArmy()
                 //following lines move the army from the country that won to the country with no current armies.
-                attackingCountry.setArmies(redDice);
-                defendingCountry.removeArmies(redDice);
+                attackingCountry.setArmies(defendingCountry.getArmiesStationed()-1);
+                defendingCountry.removeArmies(defendingCountry.getArmiesStationed()-1);
             }
 		
 		//	check player elimination logic
 		if(defender.countries.size() ==0) {
 			eliminate(defender);
+			if(hasPlayerWon(this)){
+			    //Return somehow that the player has won
+            }
 		}
-		if(this.countries.size()==0) {
+		else if(this.countries.size()==0) {
 		    eliminate(this);
+		    if(hasPlayerWon(defender)){
+		        //return somehow that the player has won
+            }
         }
 		//	
 		//	check if attacker has enough armies for next attack
@@ -330,4 +338,10 @@ public class Player extends Observable {
 		this.addRiskCards(eliminatedPlayer.getCardsHeld());
 		eliminatedPlayer.setCardsHeld(null);
 	}
+    public boolean hasPlayerWon(Player player){
+        if(player.getCountries().size()==gameState.getGameMapObject().getCountryHashMap().size()){
+            return true;
+        }
+        return false;
+    }
 }
