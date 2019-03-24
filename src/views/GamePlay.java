@@ -314,11 +314,6 @@ public class GamePlay extends JPanel implements Observer {
 		
 	
 		btnMapview = new JButton("View Map");
-		btnMapview.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
 		btnMapview.setBounds(313, 449, 176, 23);
 		add(btnMapview);
 
@@ -710,15 +705,13 @@ public class GamePlay extends JPanel implements Observer {
 		case "reinforce":
 			displayRemainingArmies();
 			if (activePlayer.getRemainingArmies() == 0 || activePlayer.isAllocationComplete()) {
-				// attack();
 				updateAttackPanel();
 			}
 			break;
 
 		case "attack":
 			updateAttackPanel();
-			String test = arg1.toString();
-			System.out.println("" + test + "		" + arg1.getClass().getName());
+			String status = arg1.toString();
 			break;
 		case "fortify":
 			phase = "reinforce";
