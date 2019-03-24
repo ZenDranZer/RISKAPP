@@ -335,13 +335,6 @@ public class Player extends Observable {
 			}
 		}
 		
-//		} else if (this.countries.size() == 0) {
-//			eliminate(this);
-//			if (hasPlayerWon(defender)) {
-//				// return somehow that the player has won
-//			}
-//		}
-		//
 		// check if attacker has enough armies for next attack
 
 		return status;
