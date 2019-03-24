@@ -346,8 +346,8 @@ public class GamePlay extends JPanel implements Observer {
 					.get(selcetedAttackCountry);
 			GameCountry actionCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap
 					.get(selectedActionCountry);
-			if (attackCountry.getArmiesStationed() >= 2 && actionCountry.getArmiesStationed() >= 2) {
-				if (Integer.parseInt(selectedRedDice) > attackCountry.getArmiesStationed()
+			if (attackCountry.getArmiesStationed() >= 2 ) {
+				if (Integer.parseInt(selectedRedDice) >= attackCountry.getArmiesStationed()
 						|| Integer.parseInt(selectedWhiteDice) > actionCountry.getArmiesStationed()) {
 					txtError.setText("Select Number of Dices should be more than armies in country");
 
@@ -373,7 +373,14 @@ public class GamePlay extends JPanel implements Observer {
 	}
 
 	public void allOutAttack() {
-
+		
+		String selcetedAttackCountry = (String) lstPlayerCountries.getSelectedValue();
+		String selectedActionCountry = (String) lstActionCountry.getSelectedValue();
+		GameCountry attackCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap
+				.get(selcetedAttackCountry);
+		GameCountry actionCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap
+				.get(selectedActionCountry);
+		objGameEngine.getGameState().allOutAttack(actionCountry.getCurrentPlayer(), attackCountry, actionCountry);
 	}
 
 	/**
@@ -672,6 +679,9 @@ public class GamePlay extends JPanel implements Observer {
 			break;
 
 		case "attack":
+			updateAttackPanel();
+			String test = arg1.toString();
+			System.out.println(""+test+ "		" + arg1.getClass().getName());
 			break;
 		case "fortify":
 			phase = "reinforce";

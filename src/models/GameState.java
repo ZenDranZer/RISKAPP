@@ -128,6 +128,13 @@ public class GameState extends Observable {
 		notifyObservers(status);
 	}
 	
+	public void allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry)
+	{
+		activePlayer.allOutAttack(defender, attackingCountry, defendingCountry);
+		setChanged();
+		notifyObservers();
+	}
+	
 	//fortify
 	public void fortification(String countryToFortify, String fortifyFrom, int armies)
 	{

@@ -289,6 +289,7 @@ public class Player extends Observable {
 		// dice logic - get dice sets
 		diceSets = Dice.getDiceSets(redDice, whiteDice);
 		for (Pair diceSet : diceSets) {
+			System.out.println(diceSet.getKey().toString()+"	"+ diceSet.getValue().toString());
 			if (Integer.parseInt(diceSet.getKey().toString()) <= Integer.parseInt(diceSet.getValue().toString())) {
 				successfulDefend++;
 			} else {
@@ -296,14 +297,18 @@ public class Player extends Observable {
 			}
 		}
 		if (successfulAttack != 0) {
+			
+			System.out.println("Attack success : " +successfulAttack);
 			defendingCountry.removeArmies(successfulAttack);
 			defender.removePlayerArmies(successfulAttack);
 		}
 		if (successfulDefend != 0) {
+			System.out.println("Defended : " + successfulDefend);
 			attackingCountry.removeArmies(successfulDefend);
 			this.removePlayerArmies(successfulDefend);
 		}
 		if (defendingCountry.getArmiesStationed() == 0) {
+			System.out.println("Country won : "+ defendingCountry.getCountryName());
 			// give country to attacker
 			defender.removeCountry(defendingCountry);
 			this.setCountries(defendingCountry);
