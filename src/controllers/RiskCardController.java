@@ -1,11 +1,8 @@
 package controllers;
 
-import models.GameCountry;
 import models.GameMap;
 import models.Player;
 import models.RiskCard;
-import utils.Constants;
-import controllers.MapGenerator;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -62,6 +59,12 @@ public class RiskCardController {
         return noOfTrades;
     }
 
+    /**
+     * This method generates possible combinations of risk cards that the player can trade for armies
+     * @param cards cards held by player
+     * @param sum type of armies on cards e.g. Artillery, Cavalry or Infantry
+     * @return possible set of the cards that the player can trade
+     */
     public ArrayList<RiskCard> getCombinations(ArrayList<RiskCard> cards,int sum) {
         ArrayList<RiskCard> set = new ArrayList<>();
         for (int i = 0; i < cards.size(); i++)
