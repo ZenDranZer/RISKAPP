@@ -11,7 +11,7 @@ import java.util.Observable;
 public class RiskCard extends Observable {
 
 	private String countryName;
-	private String armyType;
+	private int armyType;
 
 	public String getCountryName() {
 		return countryName;
@@ -21,11 +21,11 @@ public class RiskCard extends Observable {
 		this.countryName = countryName;
 	}
 
-	public String getArmyType() {
+	public int getArmyType() {
 		return armyType;
 	}
 
-	public void setArmyType(String armyType) {
+	public void setArmyType(int armyType) {
 		this.armyType = armyType;
 	}
 
