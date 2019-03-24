@@ -226,6 +226,7 @@ public class GamePlay extends JPanel implements Observer {
 					chckbxAllOutAttack.setVisible(true);
 					if (lstActionCountry.getSelectedIndex() != -1) {
 						lblDefender.setText("Defender : " + getOwnerName(lstActionCountry.getSelectedValue().toString()));
+						lblDefender.setVisible(true);
 					}
 				}
 			}
@@ -404,6 +405,7 @@ public class GamePlay extends JPanel implements Observer {
 	public void updateInitialPanel() {
 		updateListElements();
 		lblPlayerName.setText("Player Name : " + activePlayer.getName());
+		lblDefender.setVisible(false);
 		displayRemainingArmies();
 	}
 
@@ -438,6 +440,7 @@ public class GamePlay extends JPanel implements Observer {
 		objTurnController.calculateNewArmies(activePlayer, objGameEngine.getMapGenerator());
 		updateListElements();
 		lblPlayerName.setText("Player Name : " + activePlayer.getName());
+		lblDefender.setVisible(false);
 		displayRemainingArmies();
 	}
 
@@ -514,7 +517,7 @@ public class GamePlay extends JPanel implements Observer {
 		lblPhase.setText("Fortify");
 		lblReinforce.setText("Select country to forify : ");
 		lblAction.setVisible(true);
-		
+		lblDefender.setVisible(false);
 		//updateListElements();
 		scrollPane.setVisible(true);
 		lstPlayerCountries.setVisible(true);
