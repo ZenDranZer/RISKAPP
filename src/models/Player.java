@@ -172,9 +172,15 @@ public class Player extends Observable {
      * @param cardsHeld String that represents RISK cards to be allocated to the player
      */
     public void setCardsHeld(ArrayList<RiskCard> cardsHeld) {
-        this.playerCards = cardsHeld;
+        for (RiskCard rc: cardsHeld) {
+            playerCards.add(rc);
+        }
     }
-    
+
+    public void emptyCards() {
+        playerCards.clear();
+    }
+
     /**
      *  Gets the list of country name owned by the player
      * @return ArrayList of strings that represents the Country names owned by the player

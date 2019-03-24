@@ -11,13 +11,18 @@ import java.util.HashMap;
 
 public class RiskCardController {
 
+    /**A list of all cards which are not owned by any player.*/
     private ArrayList<RiskCard> cardDeck;
+    /**A counter which specifies the number of trade up till now*/
     private int noOfTrades;
+    /**GameEngine object to preserve the state of the game.*/
     private GameMap gameMap;
+    /**A list of possible army types.*/
     private final HashMap<Integer,String> armyType;
     private final ArrayList<Integer> army;
 
     //{"Infantry","Cavalry","Artillery"};
+    /**A public constructor for initializing all the data structures.*/
     public RiskCardController() {
         armyType = new HashMap<>();
         cardDeck = new ArrayList<>();
@@ -27,6 +32,8 @@ public class RiskCardController {
         army = new ArrayList<>(armyType.keySet());
     }
 
+    /**The method will generate the risk card deck.
+     * @param gamemap is used to get the country names.*/
     public void initRiskCardDeck(GameMap gamemap) {
 
         ArrayList<String> countryList;
@@ -45,28 +52,25 @@ public class RiskCardController {
         }
     }
 
-    //this method is done!
-    public void increamentTrade(){
+    /**Increment the number of trade when a trade operation is successful.*/
+    public void incrementTrade(){
         noOfTrades++;
     }
 
-    //this method is done!
+    /**A simple getter method to get the number of trades.*/
     public int getNoOfTrades() {
         return noOfTrades;
     }
 
-
-    public ArrayList<Integer> getCombinations(ArrayList<RiskCard> cards,int sum) {
-
-        ArrayList<Integer> set = new ArrayList<>();
-
+    public ArrayList<RiskCard> getCombinations(ArrayList<RiskCard> cards,int sum) {
+        ArrayList<RiskCard> set = new ArrayList<>();
         for (int i = 0; i < cards.size(); i++)
             for (int j = i + 1; j < cards.size(); j++)
                 for (int k = j+1 ; k<cards.size();k++) {
                     if (cards.get(i).getArmyType() + cards.get(j).getArmyType() + cards.get(k).getArmyType() == sum) {
-                        set.add(i);
-                        set.add(j);
-                        set.add(k);
+                        set.add(cards.get(i));
+                        set.add(cards.get(j));
+                        set.add(cards.get(k));
                     }
                 }
         return set;
@@ -78,14 +82,14 @@ public class RiskCardController {
      * @return The method returns a HashMap which has Set1,Set2,Set3, etc. as keys and values will be
      * the list of country names(3 country names).*/
     public HashMap<String,ArrayList<RiskCard>> getPossibleSets(Player activeplayer) {
-        ArrayList<RiskCard> playerCards = new ArrayList<>();
-        ArrayList<Integer> infantry = new ArrayList<>();
-        ArrayList<Integer> cavalry = new ArrayList<>();
-        ArrayList<Integer> artillery = new ArrayList<>();
-        ArrayList<Integer> allDifferent = new ArrayList<>();
+        ArrayList<RiskCard> playerCards;
+        ArrayList<RiskCard> infantry;
+        ArrayList<RiskCard> cavalry;
+        ArrayList<RiskCard> artillery;
+        ArrayList<RiskCard> allDifferent;
 
         HashMap<String,ArrayList<RiskCard>> possiblSets = new HashMap<>();
-        int possSet = 0;
+        int possSet = 1;
         int i=0;
         playerCards = activeplayer.getCardsHeld();
         infantry = getCombinations(playerCards,3);
@@ -98,7 +102,7 @@ public class RiskCardController {
             for (int k=0;k<infantry.size()/3;k++) {
                 ArrayList<RiskCard> temp = new ArrayList<>();
                 for (int m=0;m<3;m++) {
-                    temp.add(playerCards.get(infantry.get((3*k)+m)));
+                    temp.add(infantry.get((3*k)+m));
                 }
                 possiblSets.put(Integer.toString(possSet), temp);
                 possSet++;
@@ -109,7 +113,7 @@ public class RiskCardController {
             for (int k=0;k<cavalry.size()/3;k++) {
                 ArrayList<RiskCard> temp = new ArrayList<>();
                 for (int m=0;m<3;m++) {
-                    temp.add(playerCards.get(cavalry.get((3*k)+m)));
+                    temp.add(cavalry.get((3*k)+m));
                 }
                 possiblSets.put(Integer.toString(possSet), temp);
                 possSet++;
@@ -120,7 +124,7 @@ public class RiskCardController {
             for (int k=0;k<artillery.size()/3;k++) {
                 ArrayList<RiskCard> temp = new ArrayList<>();
                 for (int m=0;m<3;m++) {
-                    temp.add(playerCards.get(artillery.get((3*k)+m)));
+                    temp.add(artillery.get((3*k)+m));
                 }
                 possiblSets.put(Integer.toString(possSet), temp);
                 possSet++;
@@ -131,7 +135,7 @@ public class RiskCardController {
             for (int k=0;k<allDifferent.size()/3;k++) {
                 ArrayList<RiskCard> temp = new ArrayList<>();
                 for (int m=0;m<3;m++) {
-                    temp.add(playerCards.get(allDifferent.get((3*k)+m)));
+                    temp.add(allDifferent.get((3*k)+m));
                 }
                 possiblSets.put(Integer.toString(possSet), temp);
                 possSet++;
@@ -147,7 +151,7 @@ public class RiskCardController {
      *            accordingly.
      * @return It returns whether the operation is sucessful or not. if not specify the error.
      * */
-    public String tradeCards(Player activePlayer,ArrayList<String> set){
+    public String tradeCards(Player activePlayer,ArrayList<RiskCard> set){
         return null;
     }
 

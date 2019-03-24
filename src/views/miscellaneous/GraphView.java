@@ -1,4 +1,4 @@
-package views;
+package views.miscellaneous;
 
 import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.swing.mxGraphComponent;
@@ -9,16 +9,20 @@ import org.jgrapht.ListenableGraph;
 import org.jgrapht.ext.JGraphXAdapter;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultListenableGraph;
-
 import javax.swing.*;
 import java.awt.*;
 
-
+/**The GraphView is an Applet for visualizing the whole graph
+ * It will generate a new frame in which the graph will be displayed.*/
 public class GraphView extends JApplet {
 
+    /**A Serializable ID*/
     private static final long serialVersionUID = 2202072534703043194L;
+    /**Dimension object for the default frame dimension.*/
     private static final Dimension DEFAULT_SIZE = new Dimension(700, 500);
+    /**An adapter for graph object to */
     private JGraphXAdapter<GameCountry, DefaultEdge> jgxAdapter;
+    /***/
     private Graph<GameCountry, DefaultEdge> graph;
 
     public GraphView(GameEngine gameEngine){

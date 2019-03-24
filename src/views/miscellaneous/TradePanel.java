@@ -3,6 +3,7 @@ package views.miscellaneous;
 import controllers.GameEngine;
 import controllers.RiskCardController;
 import models.Player;
+import models.RiskCard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class TradePanel extends JPanel implements Observer {
     private GameEngine gameEngine;
     /**A JPanel object for tracking the parent panel.*/
     private JPanel parent;
-    private HashMap<String,ArrayList<String>> validSet;
+    private HashMap<String,ArrayList<RiskCard>> validSet;
     private JLabel label1;
     private JLabel label2;
     private JLabel playerNameLabel;
@@ -31,7 +32,6 @@ public class TradePanel extends JPanel implements Observer {
     RiskCardController riskCardController;
     Player activePlayer;
 
-
     public TradePanel(GameEngine gameEngine,JPanel panel) {
         initComponents();
         this.gameEngine = gameEngine;
@@ -43,8 +43,8 @@ public class TradePanel extends JPanel implements Observer {
     }
 
     private void tradeButtonMouseClicked(MouseEvent e) {
-        ArrayList<String> set = validSet.get((String)tradeSetList.getSelectedItem());
-        riskCardController.tradeCards(activePlayer,set);
+        ArrayList<RiskCard> cardSet = validSet.get((String)tradeSetList.getSelectedItem());
+        riskCardController.tradeCards(activePlayer,cardSet);
     }
 
     private void continueButtonMouseClicked(MouseEvent e) {
@@ -56,12 +56,16 @@ public class TradePanel extends JPanel implements Observer {
     }
 
     private void tradeSetListActionPerformed(ActionEvent e) {
-        ArrayList<String> setValue = validSet.get(tradeSetList.getSelectedItem());
-        String setString = "";
-        for (String s: setValue) {
-            setString += s;
+        ArrayList<RiskCard> setValue = validSet.get(tradeSetList.getSelectedItem());
+        ArrayList<String> stringSet = new ArrayList<>();
+        for (RiskCard r: setValue) {
+            stringSet.add(r.getCountryName());
         }
-        cardLabel.setText(setString);
+        String stringCardSet = "";
+        for (String s : stringSet) {
+            stringCardSet = stringCardSet + s + "\n";
+        }
+        cardLabel.setText(stringCardSet);
     }
 
     private void initComponents() {
