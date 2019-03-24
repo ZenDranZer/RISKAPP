@@ -121,6 +121,12 @@ public class GameState extends Observable {
 
 	//reinforce
 	//attack
+	public void attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice)
+	{
+		activePlayer.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
+		notifyGameStateChange();
+	}
+	
 	//fortify
 	public void fortification(String countryToFortify, String fortifyFrom, int armies)
 	{
