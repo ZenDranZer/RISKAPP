@@ -178,12 +178,8 @@ public class RiskCardController {
      */
     public String getCardsFromEliminatedPlayer(Player attacker, Player eliminatedPlayer) {
 
-        ArrayList<RiskCard> cardsHeldAttacker = new ArrayList<>();
-        ArrayList<RiskCard> cardsHeldEliminated = new ArrayList<>();
-
-        cardsHeldAttacker = attacker.getCardsHeld();
-        cardsHeldEliminated = eliminatedPlayer.getCardsHeld();
-
+        ArrayList<RiskCard> cardsHeldAttacker = attacker.getCardsHeld();
+        ArrayList<RiskCard> cardsHeldEliminated = eliminatedPlayer.getCardsHeld();
         cardsHeldAttacker.addAll(cardsHeldEliminated);
         eliminatedPlayer.setCardsHeld(null);
         return "Eliminated Player cards transferred to attacker successfully";

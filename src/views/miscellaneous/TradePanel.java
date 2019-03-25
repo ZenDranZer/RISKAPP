@@ -48,11 +48,15 @@ public class TradePanel extends JPanel implements Observer {
     }
 
     private void continueButtonMouseClicked(MouseEvent e) {
+        if(activePlayer.getCardsHeld().size()<=4){
         Container container = this.getParent();
         container.remove(this);
         parent.setVisible(true);
         Player player = gameEngine.getGameState().getActivePlayer();
         player.deleteObserver(this);
+        }else{
+            JOptionPane.showMessageDialog(this,"You can not hold more than 4 more cards.");
+        }
     }
 
     private void tradeSetListActionPerformed(ActionEvent e) {
@@ -154,6 +158,9 @@ public class TradePanel extends JPanel implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
+        Player player = (Player) observable;
+        playerNameLabel.setText(player.getName());
+        armyLabel.setText(Integer.toString(player.getPlayerArmies()));
         validSet = riskCardController.getPossibleSets(activePlayer);
         tradeSetList.setModel(new DefaultComboBoxModel<>(validSet.keySet().toArray()));
     }

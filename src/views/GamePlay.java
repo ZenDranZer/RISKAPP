@@ -6,6 +6,8 @@ import controllers.TurnController;
 import models.GameCountry;
 import models.GameState;
 import models.Player;
+import views.miscellaneous.GraphView;
+import views.miscellaneous.TradePanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -64,7 +66,7 @@ public class GamePlay extends JPanel implements Observer {
 
 	private ButtonGroup grpWhiteDice;
 	private JLabel lblDefender;
-
+	
 	private JButton btnSwapcards;
 	private JButton btnMapview;
 
@@ -303,20 +305,32 @@ public class GamePlay extends JPanel implements Observer {
 		chckbxAllOutAttack = new JCheckBox("All out attack");
 		chckbxAllOutAttack.setBounds(392, 87, 113, 23);
 		add(chckbxAllOutAttack);
-
+		
 		btnSwapcards = new JButton("Swap RISK Cards");
+
 		btnSwapcards.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				showTradePanel();
 			}
 		});
 		btnSwapcards.setBounds(64, 368, 148, 23);
 		add(btnSwapcards);
 		btnSwapcards.setVisible(true);
 
+		add(btnSwapcards);
+
+
 		btnMapview = new JButton("View Map");
+        btnMapview.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent arg0) {
+                btnMapviewMouseClicked(arg0);
+            }
+        });
 		btnMapview.setBounds(313, 449, 176, 23);
 		add(btnMapview);
+		btnMapview.setVisible(true);
 
 		btnSkip.setVisible(false);
 		lblRedDice.setVisible(false);
@@ -329,6 +343,11 @@ public class GamePlay extends JPanel implements Observer {
 		lblAction.setVisible(false);
 		groupRadioSetVisibility(false);
 	}
+
+
+    private void btnMapviewMouseClicked(MouseEvent e){
+        GraphView graphView = new GraphView(objGameEngine);
+    }
 
 	/**
 	 *
@@ -409,6 +428,9 @@ public class GamePlay extends JPanel implements Observer {
 		Player defender = actionCountry.getCurrentPlayer();
 		String message = activePlayer.allOutAttack(defender, attackCountry, actionCountry);
 		txtError.setText(message);
+		if (activePlayer.getCardsHeld().size()>=5){
+			showTradePanel();
+		}
 	}
 
 	/**
@@ -441,7 +463,9 @@ public class GamePlay extends JPanel implements Observer {
 	 * the UI
 	 */
 	public void reinforceCountry() {
-
+		if (activePlayer.getCardsHeld().size()>=5){
+			showTradePanel();
+		}
 		int reinforcements = Integer.parseInt(txtReinforce.getText());
 		String selectedCountry = lstPlayerCountries.getSelectedValue().toString();
 
@@ -449,6 +473,16 @@ public class GamePlay extends JPanel implements Observer {
 		txtReinforce.setText("");
 
 		objTurnController.placeArmy(activePlayer, selectedCountry, reinforcements);
+	}
+
+	private void showTradePanel(){
+		this.setVisible(false);
+		TradePanel tradePanel = new TradePanel(objGameEngine,this);
+		tradePanel.setVisible(true);
+		Container container = this.getParent();
+		activePlayer.addObserver(tradePanel);
+		container.add(tradePanel);
+		container.revalidate();
 	}
 
 	/**
@@ -495,7 +529,9 @@ public class GamePlay extends JPanel implements Observer {
 				.get(selectedActionCountry);
 		objGameEngine.getGameState().attack(actionCountry.getCurrentPlayer(), attackCountry, actionCountry,
 				Integer.parseInt(selectedRedDice), Integer.parseInt(selectedWhiteDice));
-
+		if (activePlayer.getCardsHeld().size()>=5){
+			showTradePanel();
+		}
 	}
 
 	/**
@@ -779,7 +815,7 @@ public class GamePlay extends JPanel implements Observer {
 			break;
 		}
 	}
-	
+
 	public void displayActions()
 	{
 		switch(phase)
@@ -798,7 +834,6 @@ public class GamePlay extends JPanel implements Observer {
 			txtError.setText(activePlayer.getName() + " fortified "+lstPlayerCountries.getSelectedValue().toString()+ " from "+ lstActionCountry.getSelectedValue().toString() +"with "+txtReinforce.getText() + "armies ");
 			break;
 		}
-			
+
 	}
-	
 }
