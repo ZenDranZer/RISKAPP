@@ -280,7 +280,7 @@ public class Player extends Observable {
 		ArrayList<Pair> diceSets;
 		int successfulAttack = 0;
 		int successfulDefend = 0;
-		String status= "";
+		String status = "";
 		if (attackingCountry.getArmiesStationed() < 2) {
 			status = "invalid";
 			return status;
@@ -289,7 +289,7 @@ public class Player extends Observable {
 		// dice logic - get dice sets
 		diceSets = Dice.getDiceSets(redDice, whiteDice);
 		for (Pair diceSet : diceSets) {
-			System.out.println(diceSet.getKey().toString()+"	"+ diceSet.getValue().toString());
+			System.out.println(diceSet.getKey().toString() + "	" + diceSet.getValue().toString());
 			if (Integer.parseInt(diceSet.getKey().toString()) <= Integer.parseInt(diceSet.getValue().toString())) {
 				successfulDefend++;
 			} else {
@@ -297,8 +297,8 @@ public class Player extends Observable {
 			}
 		}
 		if (successfulAttack != 0) {
-			
-			System.out.println("Attack success : " +successfulAttack);
+
+			System.out.println("Attack success : " + successfulAttack);
 			defendingCountry.removeArmies(successfulAttack);
 			defender.removePlayerArmies(successfulAttack);
 		}
@@ -308,7 +308,7 @@ public class Player extends Observable {
 			this.removePlayerArmies(successfulDefend);
 		}
 		if (defendingCountry.getArmiesStationed() == 0) {
-			System.out.println("Country won : "+ defendingCountry.getCountryName());
+			System.out.println("Country won : " + defendingCountry.getCountryName());
 			// give country to attacker
 			defender.removeCountry(defendingCountry);
 			this.setCountries(defendingCountry);
@@ -316,7 +316,7 @@ public class Player extends Observable {
 			// country with no current armies.
 			defendingCountry.setArmies(attackingCountry.getArmiesStationed() - 1);
 			attackingCountry.removeArmies(attackingCountry.getArmiesStationed() - 1);
-			status= "success";
+			status = "success";
 		}
 		// } else if (attackingCountry.getArmiesStationed() == 0) {
 		// // give country to defender
@@ -336,10 +336,10 @@ public class Player extends Observable {
 			eliminate(defender);
 			if (hasPlayerWon(this)) {
 				// Return somehow that the player has won
-				status= "winner";
+				status = "winner";
 			}
 		}
-		
+
 		// check if attacker has enough armies for next attack
 
 		return status;
@@ -347,6 +347,7 @@ public class Player extends Observable {
 
 	/**
 	 * this function implements all out attack mode
+	 * 
 	 * @param defender
 	 * @param attackingCountry
 	 * @param defendingCountry
@@ -355,36 +356,40 @@ public class Player extends Observable {
 	public String allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry) {
 		int numberOfArmies_attacker = attackingCountry.getArmiesStationed();
 		int numberOfArmies_defender = defendingCountry.getArmiesStationed();
-		while (numberOfArmies_attacker > 1 ) {
+		while (numberOfArmies_attacker > 1) {
 
 			int redDice = 0;
 			// get max red dice
-			if (numberOfArmies_attacker == 1) {
+			// if (numberOfArmies_attacker == 1) {
+			// redDice = 1;
+			// } else
+			if (numberOfArmies_attacker == 2) {
 				redDice = 1;
-			} else if (numberOfArmies_attacker == 2) {
+			} else if (numberOfArmies_attacker == 3) {
 				redDice = 2;
-			} else {
+			} else if(numberOfArmies_attacker >3) {
 				redDice = 3;
 			}
+			
 			int whiteDice = 0;
 			// get max white dice
 			if (numberOfArmies_defender == 1) {
 				whiteDice = 1;
-			} else if (numberOfArmies_defender == 2) {
+			} else if (numberOfArmies_defender >= 2) {
 				whiteDice = 2;
-			} else {
-				whiteDice = 3;
-			}
+			} 
+//			else {
+//				whiteDice = 3;
+//			}
 			attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
 			numberOfArmies_attacker = attackingCountry.getArmiesStationed();
 			numberOfArmies_defender = defendingCountry.getArmiesStationed();
 		}
-		if (defendingCountry.getCurrentPlayer().getId() == attackingCountry.getCurrentPlayer().getId()){
+		if (defendingCountry.getCurrentPlayer().getId() == attackingCountry.getCurrentPlayer().getId()) {
 			return "Attack was Successful";
-		}else {
+		} else {
 			return "Attack was not Successful";
 		}
-
 	}
 
 	public boolean getIsActive() {

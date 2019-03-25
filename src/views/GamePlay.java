@@ -64,7 +64,7 @@ public class GamePlay extends JPanel implements Observer {
 
 	private ButtonGroup grpWhiteDice;
 	private JLabel lblDefender;
-	
+
 	private JButton btnSwapcards;
 	private JButton btnMapview;
 
@@ -140,7 +140,7 @@ public class GamePlay extends JPanel implements Observer {
 							allOutAttack();
 						}
 					}
-				} else if (phase.equals("fortify")) {
+				} else if (phase.equals("fortify") && validateFortification()) {
 					fortify();
 				}
 			}
@@ -209,6 +209,7 @@ public class GamePlay extends JPanel implements Observer {
 		lstActionCountry = new JList(dlstActionCountries);
 		lstActionCountry.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
+				lblactionArmiesPresent.setVisible(true);
 				lblactionArmiesPresent.setText("");
 				if (lstActionCountry.getSelectedIndex() != -1) {
 					lblactionArmiesPresent.setText(lstActionCountry.getSelectedValue() + " armies : "
@@ -302,7 +303,7 @@ public class GamePlay extends JPanel implements Observer {
 		chckbxAllOutAttack = new JCheckBox("All out attack");
 		chckbxAllOutAttack.setBounds(392, 87, 113, 23);
 		add(chckbxAllOutAttack);
-		
+
 		btnSwapcards = new JButton("Swap RISK Cards");
 		btnSwapcards.addMouseListener(new MouseAdapter() {
 			@Override
@@ -311,8 +312,8 @@ public class GamePlay extends JPanel implements Observer {
 		});
 		btnSwapcards.setBounds(64, 368, 148, 23);
 		add(btnSwapcards);
-		
-	
+		btnSwapcards.setVisible(true);
+
 		btnMapview = new JButton("View Map");
 		btnMapview.setBounds(313, 449, 176, 23);
 		add(btnMapview);
@@ -350,41 +351,49 @@ public class GamePlay extends JPanel implements Observer {
 
 	public boolean attackValidation() {
 
-		if (grpRedDice.getSelection() != null && grpWhiteDice.getSelection() != null
-				&& !chckbxAllOutAttack.isSelected()) {
-			String selectedRedDice = Collections.list(grpRedDice.getElements()).stream().filter(a -> a.isSelected())
-					.findFirst().get().getText();
-			String selectedWhiteDice = Collections.list(grpWhiteDice.getElements()).stream().filter(a -> a.isSelected())
-					.findFirst().get().getText();
-			String selcetedAttackCountry = (String) lstPlayerCountries.getSelectedValue();
-			String selectedActionCountry = (String) lstActionCountry.getSelectedValue();
-			GameCountry attackCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap
-					.get(selcetedAttackCountry);
-			GameCountry actionCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap
-					.get(selectedActionCountry);
-			if (attackCountry.getArmiesStationed() >= 2) {
+		if (lstPlayerCountries.getSelectedIndex() == -1 || lstPlayerCountries.getSelectedValue() == null) {
+			txtError.setText("Please select a country");
+			return false;
+		}
+
+		if (lstActionCountry.getSelectedIndex() == -1 || lstActionCountry.getSelectedValue() == null) {
+			txtError.setText("Please select a country to attack");
+			return false;
+		}
+
+		String selcetedAttackCountry = (String) lstPlayerCountries.getSelectedValue();
+		String selectedActionCountry = (String) lstActionCountry.getSelectedValue();
+
+		GameCountry attackCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap
+				.get(selcetedAttackCountry);
+		GameCountry actionCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap
+				.get(selectedActionCountry);
+
+		if (attackCountry.getArmiesStationed() < 2) {
+			txtError.setText("Attacking country should have more than 1 army");
+			return false;
+		}
+
+		if (!chckbxAllOutAttack.isSelected()) {
+			if (grpRedDice.getSelection() != null && grpWhiteDice.getSelection() != null) {
+				String selectedRedDice = Collections.list(grpRedDice.getElements()).stream().filter(a -> a.isSelected())
+						.findFirst().get().getText();
+				String selectedWhiteDice = Collections.list(grpWhiteDice.getElements()).stream()
+						.filter(a -> a.isSelected()).findFirst().get().getText();
 				if (Integer.parseInt(selectedRedDice) >= attackCountry.getArmiesStationed()
 						|| Integer.parseInt(selectedWhiteDice) > actionCountry.getArmiesStationed()) {
-					txtError.setText("Select Number of Dices should be more than armies in country");
-
+					txtError.setText("Select Number of Dices should be less than armies in country");
 					return false;
 				}
-			} else {
-				txtError.setText("Allocated armies in both countries should be more than 1 for attack");
-				return false;
-
-			}
-		} else {
-			if (chckbxAllOutAttack.isSelected()) {
-				txtError.setText("All out attack");
-				return true;
 			} else {
 				txtError.setText("Select Number of Red and White Dices");
 				return false;
 			}
 		}
 
-		txtError.setText("success");
+		if (chckbxAllOutAttack.isSelected()) {
+			txtError.setText("All out attack");
+		}
 		return true;
 	}
 
@@ -413,7 +422,7 @@ public class GamePlay extends JPanel implements Observer {
 		txtReinforce.setText("");
 		txtReinforce.setVisible(false);
 		btnAdd.setVisible(false);
-
+		displayActions();
 		objTurnController.placeArmy(activePlayer, selectedCountry, army);
 	}
 
@@ -447,6 +456,8 @@ public class GamePlay extends JPanel implements Observer {
 	 */
 	public void updateReinforcementPanel() {
 
+		btnAdd.setText("Reinforce");
+		btnSkip.setVisible(false);
 		scrollPane.setVisible(true);
 		lstPlayerCountries.setVisible(true);
 		scrollPane_1.setVisible(false);
@@ -460,6 +471,9 @@ public class GamePlay extends JPanel implements Observer {
 		lblPlayerName.setText("Player Name : " + activePlayer.getName());
 		lblDefender.setVisible(false);
 		displayRemainingArmies();
+		btnSwapcards.setVisible(true);
+		lblactionArmiesPresent.setVisible(false);
+		lblRemainingArmies.setVisible(true);
 	}
 
 	/**
@@ -490,6 +504,7 @@ public class GamePlay extends JPanel implements Observer {
 
 	public void updateAttackPanel() {
 		// flag = 1;
+		btnSwapcards.setVisible(false);
 		phase = "attack";
 		lblPhase.setText("Attack");
 
@@ -511,6 +526,7 @@ public class GamePlay extends JPanel implements Observer {
 		btnSkip.setText("No Attack");
 		btnSkip.setVisible(true);
 		updateListElements();
+		lblactionArmiesPresent.setVisible(false);
 	}
 
 	/**
@@ -526,10 +542,48 @@ public class GamePlay extends JPanel implements Observer {
 				lstActionCountry.getSelectedValue().toString(), armiesToMove);
 	}
 
+	public boolean validateFortification() {
+		if (lstPlayerCountries.getSelectedIndex() == -1 || lstPlayerCountries.getSelectedValue() == null) {
+			txtError.setText("Please select a country to fortify");
+			return false;
+		}
+
+		if (lstActionCountry.getSelectedIndex() == -1 || lstActionCountry.getSelectedValue() == null) {
+			txtError.setText("Please select a country to move armies from");
+			return false;
+		}
+
+		String selcetedAttackCountry = (String) lstPlayerCountries.getSelectedValue();
+		String selectedActionCountry = (String) lstActionCountry.getSelectedValue();
+
+		GameCountry attackCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap
+				.get(selcetedAttackCountry);
+		GameCountry actionCountry = objGameEngine.getGameState().getGameMapObject().countryHashMap
+				.get(selectedActionCountry);
+
+		if (actionCountry.getArmiesStationed() < 2) {
+			txtError.setText("Fortifying country should have more than one army");
+			return false;
+		}
+
+		if (txtReinforce.getText().isEmpty() || txtReinforce.getText() == null) {
+			txtError.setText("Please enter armies to move");
+			return false;
+		}
+
+		if (Integer.parseInt(txtReinforce.getText()) > actionCountry.getArmiesStationed() - 1) {
+			txtError.setText("Fortifying country should have atleast 1 army left");
+			return false;
+		}
+
+		return true;
+	}
+
 	/**
 	 * updates panel for fortification phase of the
 	 */
 	public void updateFortificationPanel() {
+		btnSwapcards.setVisible(false);
 		phase = "fortify";
 		lblPhase.setText("Fortify");
 		lblReinforce.setText("Select country to forify : ");
@@ -554,8 +608,7 @@ public class GamePlay extends JPanel implements Observer {
 		chckbxAllOutAttack.setVisible(false);
 		txtReinforce.setVisible(true);
 		txtError.setText("");
-
-		// updateActionCountries();
+		lblactionArmiesPresent.setVisible(false);
 	}
 
 	/**
@@ -690,6 +743,7 @@ public class GamePlay extends JPanel implements Observer {
 
 		switch (phase) {
 		case "initial":
+			displayActions();
 			if (objGameEngine.getGameState().isAllocationComplete()) {
 				phase = "reinforce";
 				objGameEngine.setNextPlayer(activePlayer, false);
@@ -712,6 +766,10 @@ public class GamePlay extends JPanel implements Observer {
 		case "attack":
 			updateAttackPanel();
 			String status = arg1.toString();
+			if(status.equals("winner"))
+			{
+				//display game win and UI cleared
+			}
 			break;
 		case "fortify":
 			phase = "reinforce";
@@ -721,4 +779,26 @@ public class GamePlay extends JPanel implements Observer {
 			break;
 		}
 	}
+	
+	public void displayActions()
+	{
+		switch(phase)
+		{
+		case "initial":
+			txtError.setText(activePlayer.getName() + " allocated " +txtReinforce.getText() + "armies to " + lstPlayerCountries.getSelectedValue().toString() );
+			break;
+		case "reinforce":
+			txtError.setText(activePlayer.getName() + " reinforced "+lstPlayerCountries.getSelectedValue().toString()+ " with " +txtReinforce.getText() + "armies ");
+			//status update for RISK Cards
+			break;
+		case "attack":
+			//update for attacks based on status returned
+			break;
+		case "fortify":
+			txtError.setText(activePlayer.getName() + " fortified "+lstPlayerCountries.getSelectedValue().toString()+ " from "+ lstActionCountry.getSelectedValue().toString() +"with "+txtReinforce.getText() + "armies ");
+			break;
+		}
+			
+	}
+	
 }
