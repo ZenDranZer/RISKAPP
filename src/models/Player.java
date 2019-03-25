@@ -21,6 +21,7 @@ public class Player extends Observable {
 	private boolean isActive;
 	private GameMap gameMap;
 
+
 	/**
 	 * Initializes the Player
 	 */
