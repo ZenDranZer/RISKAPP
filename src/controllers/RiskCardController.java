@@ -159,6 +159,7 @@ public class RiskCardController {
 
         for (int i=0;i<3;i++)
             playerCards.remove(set.get(i));
+
         int armies = activePlayer.getRemainingArmies();
         activePlayer.setRemainingArmies(armies+(noOfTrades*5));
         noOfTrades++;

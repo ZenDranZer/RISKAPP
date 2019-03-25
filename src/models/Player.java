@@ -65,6 +65,8 @@ public class Player extends Observable {
 	 */
 	public void setRemainingArmies(int armies) {
 		this.remainingArmies = armies;
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -207,6 +209,10 @@ public class Player extends Observable {
 		for (RiskCard rc : cardsHeld) {
 			playerCards.add(rc);
 		}
+	}
+
+	public void addRiskCard(RiskCard riskCard){
+		playerCards.add(riskCard);
 	}
 
 	public void emptyCards() {
