@@ -69,7 +69,7 @@ public class GamePlay extends JPanel implements Observer {
 	
 	private JButton btnSwapcards;
 	private JButton btnMapview;
-
+	private boolean countryWon;
 	/**
 	 * Renders the initial view of the panel
 	 */
@@ -79,7 +79,7 @@ public class GamePlay extends JPanel implements Observer {
 		activePlayer = objGameEngine.getGameState().getActivePlayer();
 
 		setLayout(null);
-		this.setBounds(10, 10, 814, 503);
+		this.setBounds(10, 10, 883, 556);
 		lblPlayerName = new JLabel("Player Name :" + activePlayer.getName());
 		lblPlayerName.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblPlayerName.setBounds(10, 442, 267, 32);
@@ -255,6 +255,10 @@ public class GamePlay extends JPanel implements Observer {
 					updateReinforcementPanel();
 					btnSkip.setVisible(false);
 				} else {
+					if(phase.equals("attack") && countryWon) 
+					{
+						// TODO:  add new RISK card to player
+					}
 					phase = "fortify";
 					updateFortificationPanel();
 				}
@@ -319,7 +323,6 @@ public class GamePlay extends JPanel implements Observer {
 		btnSwapcards.setVisible(true);
 
 		add(btnSwapcards);
-
 
 		btnMapview = new JButton("View Map");
         btnMapview.addMouseListener(new MouseAdapter() {
@@ -441,8 +444,6 @@ public class GamePlay extends JPanel implements Observer {
 		int army = Integer.parseInt(txtReinforce.getText());
 		String selectedCountry = lstPlayerCountries.getSelectedValue().toString();
 
-		txtReinforce.setText("");
-		txtReinforce.setVisible(false);
 		btnAdd.setVisible(false);
 		displayActions();
 		objTurnController.placeArmy(activePlayer, selectedCountry, army);
@@ -452,6 +453,8 @@ public class GamePlay extends JPanel implements Observer {
 	 * Updates the panel for initial allocation of next player
 	 */
 	public void updateInitialPanel() {
+		txtReinforce.setText("");
+		txtReinforce.setVisible(false);
 		updateListElements();
 		lblPlayerName.setText("Player Name : " + activePlayer.getName());
 		lblDefender.setVisible(false);
@@ -804,7 +807,11 @@ public class GamePlay extends JPanel implements Observer {
 			String status = arg1.toString();
 			if(status.equals("winner"))
 			{
-				//display game win and UI cleared
+				//TODO :display game win and UI cleared
+			}
+			else if(status.equals("success"))
+			{
+				countryWon = true;
 			}
 			break;
 		case "fortify":
@@ -829,6 +836,26 @@ public class GamePlay extends JPanel implements Observer {
 			break;
 		case "attack":
 			//update for attacks based on status returned
+			String actions = "";
+			
+			if(chckbxAllOutAttack.isSelected())
+			{
+				actions = activePlayer.getName() + " attacked " + lstActionCountry.getSelectedValue().toString() + " from "+ lstPlayerCountries.getSelectedValue().toString() ;
+				actions = actions + "\n All out attack";
+				if(countryWon)
+				{
+					actions = actions + "successful";
+				}
+				else 
+				{
+					actions = actions + "not successful";
+				}
+				
+			}
+			else
+			{
+				
+			}
 			break;
 		case "fortify":
 			txtError.setText(activePlayer.getName() + " fortified "+lstPlayerCountries.getSelectedValue().toString()+ " from "+ lstActionCountry.getSelectedValue().toString() +"with "+txtReinforce.getText() + "armies ");

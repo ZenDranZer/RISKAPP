@@ -9,7 +9,7 @@ import static utils.Constants.ARMY_DISTRIBUTION.*;
  */
 public class TurnController {
 
-	//Player activePlayer;
+	// Player activePlayer;
 	private int availableArmies;
 	GameMap gameMap;
 	GameState gameState;
@@ -19,7 +19,7 @@ public class TurnController {
 		gameState = state;
 		gameMap = gameState.getGameMapObject();
 	}
-	
+
 	/**
 	 * Set available armies
 	 * 
@@ -39,29 +39,32 @@ public class TurnController {
 		return this.availableArmies;
 	}
 
-//	/**
-//	 * function to get the current player
-//	 * 
-//	 * @return current player
-//	 */
-//	public Player getActivePlayer() {
-//		return activePlayer;
-//	}
+	// /**
+	// * function to get the current player
+	// *
+	// * @return current player
+	// */
+	// public Player getActivePlayer() {
+	// return activePlayer;
+	// }
 
-//	/**
-//	 * Function to allocate the active player for the next turn
-//	 * 
-//	 * @param objPlayer
-//	 */
-//	public void setActivePlayer(Player objPlayer) {
-//		activePlayer = objPlayer;
-//	}
+	// /**
+	// * Function to allocate the active player for the next turn
+	// *
+	// * @param objPlayer
+	// */
+	// public void setActivePlayer(Player objPlayer) {
+	// activePlayer = objPlayer;
+	// }
 
 	/**
 	 * function to calculate the new army allocation for the player. Minimum 3
 	 * armies are allocated at each turn
-	 * @param activePlayer current player
-	 * @param mapGenerator MapGenerator object
+	 * 
+	 * @param activePlayer
+	 *            current player
+	 * @param mapGenerator
+	 *            MapGenerator object
 	 * @return integer number of new armies
 	 */
 	public int calculateNewArmies(Player activePlayer, MapGenerator mapGenerator) {
@@ -76,9 +79,15 @@ public class TurnController {
 
 		if (playerContinents != null && playerContinents.size() > 0) {
 			for (GameContinent continent : playerContinents) {
-				activePlayer.setContinents(continent);
-				availableArmies += continent.getContinentValue();
+				if (!activePlayer.getContinents().contains(continent)) {
+					activePlayer.setContinents(continent);
+					//availableArmies += continent.getContinentValue();
+				}
 			}
+		}
+		for(GameContinent continent : activePlayer.getContinents())
+		{
+			availableArmies += continent.getContinentValue();
 		}
 
 		activePlayer.setRemainingArmies(availableArmies);
@@ -101,11 +110,11 @@ public class TurnController {
 			activePlayer.placeArmy(country, armies);
 			this.availableArmies = this.availableArmies - armies;
 			gameState.notifyGameStateChange();
-			
+
 		} catch (Exception ex) {
 		}
 	}
-	
+
 	/**
 	 * This method allocates the initial number of armies to each player based
 	 * upon the number of players in the game
@@ -157,5 +166,5 @@ public class TurnController {
 			i++;
 		}
 	}
-	
+
 }
