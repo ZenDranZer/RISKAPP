@@ -111,8 +111,7 @@ public class GameState extends Observable {
 
 	//reinforce
 	//attack
-	public void attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice)
-	{
+	public void attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
 		String status = activePlayer.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
 		RiskCard card = new RiskCard();
 		if (status.equalsIgnoreCase("success")) {
