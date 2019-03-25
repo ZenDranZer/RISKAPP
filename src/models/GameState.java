@@ -116,17 +116,20 @@ public class GameState extends Observable {
 		RiskCard card = new RiskCard();
 		if (status.equalsIgnoreCase("success")) {
 			card = riskController.allocateRiskCard();
+			this.activePlayer.addRiskCard(card);
 		}
-		this.activePlayer.getCardsHeld().add(card);
 		setChanged();
 		notifyObservers(status);
 	}
 	
-	public void allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry) {
-		activePlayer.allOutAttack(defender, attackingCountry, defendingCountry);
+	public void allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry)
+	{
 		RiskCard card = new RiskCard();
-		card = riskController.allocateRiskCard();
-		this.activePlayer.getCardsHeld().add(card);
+		String status = activePlayer.allOutAttack(defender, attackingCountry, defendingCountry);
+		if(status.equalsIgnoreCase("Attack was Successful")){
+			card = riskController.allocateRiskCard();
+			this.activePlayer.addRiskCard(card);
+		}
 		setChanged();
 		notifyObservers("done!");
 	}
