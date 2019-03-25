@@ -32,6 +32,7 @@ public class RiskCardController {
     /**The method will generate the risk card deck.
      * @param gamemap is used to get the country names.*/
     public void initRiskCardDeck(GameMap gamemap) {
+
         ArrayList<String> countryList;
         int i = 0;
         this.gameMap=gamemap;
@@ -43,6 +44,15 @@ public class RiskCardController {
             card.setArmyType(army.get(i%3));
             cardDeck.add(card);
         }
+
+/*        for(int m=0;m<cardDeck.size();m++) {
+            System.out.println(cardDeck.get(m).getCountryName());
+        }*/
+
+    }
+
+    public ArrayList<RiskCard> getCardDeck() {
+        return cardDeck;
     }
 
     /**Increment the number of trade when a trade operation is successful.*/
@@ -159,6 +169,7 @@ public class RiskCardController {
 
         for (int i=0;i<3;i++)
             playerCards.remove(set.get(i));
+
         int armies = activePlayer.getRemainingArmies();
         activePlayer.setRemainingArmies(armies+(noOfTrades*5));
         noOfTrades++;
@@ -166,9 +177,11 @@ public class RiskCardController {
     }
 
     public RiskCard allocateRiskCard() {
+
         RiskCard card;
         card = cardDeck.get(0);
         cardDeck.remove(0);
+
         return card;
     }
 
