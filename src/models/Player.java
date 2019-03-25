@@ -76,6 +76,7 @@ public class Player extends Observable {
 		this.remainingArmies -= armies;
 	}
 
+
 	/**
 	 * gets the player name
 	 * 

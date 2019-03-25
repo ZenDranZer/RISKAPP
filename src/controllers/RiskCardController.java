@@ -161,8 +161,8 @@ public class RiskCardController {
 
         for (int i=0;i<3;i++)
             playerCards.remove(set.get(i));
-
-        activePlayer.addPlayerArmy(noOfTrades*5);
+        int armies = activePlayer.getRemainingArmies();
+        activePlayer.setRemainingArmies(armies+(noOfTrades*5));
         noOfTrades++;
         return "You got :"+ (noOfTrades*5) + " armies by trading your Risk Cards";
     }
