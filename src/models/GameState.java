@@ -11,7 +11,6 @@ import java.util.*;
 public class GameState extends Observable {
 
 	private ArrayList<Player> players;
-	private String mapPath;
 
 	private GameMap gameMap;
 	private Player activePlayer;
@@ -21,6 +20,10 @@ public class GameState extends Observable {
 		players = new ArrayList<>();
 		gameMap = new GameMap();
 		riskController = new RiskCardController();
+	}
+
+	public RiskCardController getRiskController() {
+		return riskController;
 	}
 
 	/**
@@ -52,14 +55,6 @@ public class GameState extends Observable {
 	 */
 	public void setActivePlayer(Player objPlayer) {
 		activePlayer = objPlayer;
-	}
-	
-	public String getMapPath() {
-		return mapPath;
-	}
-
-	public void setMapPath(String mapPath) {
-		this.mapPath = mapPath;
 	}
 
 	public GameMap getGameMapObject() {

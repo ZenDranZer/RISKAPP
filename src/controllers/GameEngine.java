@@ -18,7 +18,6 @@ public class GameEngine {
 	private TurnController turn;
 	private int numberOfPlayers;
 	private GameState gameState;
-	private RiskCardController riskCardController;
 
 	public GameEngine() {
 
@@ -26,7 +25,6 @@ public class GameEngine {
 		turn = new TurnController(gameState);
 		mapGenerator = new MapGenerator(gameState.getGameMapObject());
 
-		riskCardController = new RiskCardController();
 	}
 	public GameState getGameState(){
 		return gameState;
@@ -40,10 +38,6 @@ public class GameEngine {
 			turn = new TurnController(gameState);
 		}
 		return turn;
-	}
-
-	public RiskCardController getRiskCardController() {
-		return riskCardController;
 	}
 
 	/**
@@ -105,7 +99,6 @@ public class GameEngine {
 			turn.allocateCountries(gameState.getPlayers(),getGameState().getGameMapObject().getAllCountries());
 			allocateInitialArmies();
 			gameState.setActivePlayer(gameState.getPlayers().get(0));
-			riskCardController.initRiskCardDeck(gameState.getGameMapObject());
 		} catch (NullPointerException nullEx) {
 			System.out.println(nullEx.toString());
 			System.out.println("\n\n");

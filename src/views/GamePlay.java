@@ -83,6 +83,8 @@ public class GamePlay extends JPanel implements Observer {
 		activePlayer = objGameEngine.getGameState().getActivePlayer();
 		worldDominationView = new WorldDominationView(objGameEngine.getGameState());
 		worldDominationView.setVisible(true);
+		objGameEngine.getGameState().getRiskController().initRiskCardDeck(
+				objGameEngine.getGameState().getGameMapObject());
 		add(worldDominationView);
 		setLayout(null);
 		this.setBounds(10, 10, 883, 556);
