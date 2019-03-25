@@ -12,14 +12,13 @@ public class GameState extends Observable {
 
 	private ArrayList<Player> players;
 	private String mapPath;
-	private HashMap<String, RiskCard> cardPile;
+
 	private GameMap gameMap;
 	private Player activePlayer;
 	private RiskCardController riskController;
 
 	public GameState() {
 		players = new ArrayList<>();
-		cardPile = new HashMap<>();
 		gameMap = new GameMap();
 		riskController = new RiskCardController();
 	}
@@ -61,14 +60,6 @@ public class GameState extends Observable {
 
 	public void setMapPath(String mapPath) {
 		this.mapPath = mapPath;
-	}
-
-	public HashMap<String, RiskCard> getCardPile() {
-		return cardPile;
-	}
-
-	public void setCardPile(HashMap<String, RiskCard> cardPile) {
-		this.cardPile = cardPile;
 	}
 
 	public GameMap getGameMapObject() {
