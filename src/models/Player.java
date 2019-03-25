@@ -135,10 +135,6 @@ public class Player extends Observable {
 		this.playerArmies = player_armies;
 	}
 
-	public void addPlayerArmies(int player_armies) {
-		this.playerArmies += player_armies;
-	}
-
 	public void removePlayerArmies(int player_armies) {
 		this.playerArmies -= player_armies;
 	}
@@ -237,6 +233,8 @@ public class Player extends Observable {
 	 */
 	public void addPlayerArmy(int armies) {
 		this.playerArmies += armies;
+		setChanged();
+		notifyObservers();
 	}
 
 	public void placeArmy(String countryName, int armies) {
@@ -325,6 +323,7 @@ public class Player extends Observable {
 		// // placeArmy()
 		// // following lines move the army from the country that won to the
 		// // country with no current armies.
+		// // country with no current armies.
 		// attackingCountry.setArmies(defendingCountry.getArmiesStationed() -
 		// 1);
 		// defendingCountry.removeArmies(defendingCountry.getArmiesStationed() -
@@ -333,6 +332,7 @@ public class Player extends Observable {
 
 		// check player elimination logic
 		if (defender.countries.size() == 0) {
+			this.getCardsHeld().addAll(defender.getCardsHeld());
 			eliminate(defender);
 			if (hasPlayerWon(this)) {
 				// Return somehow that the player has won

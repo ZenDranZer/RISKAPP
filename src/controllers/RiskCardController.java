@@ -169,20 +169,4 @@ public class RiskCardController {
         return "You got :"+ (noOfTrades*5) + " armies by trading your Risk Cards";
     }
 
-    /**
-     * This method transfers cards from attacker to defender, who is eliminated from the game
-     * on losing ll his countries.
-     * @param attacker The attacker who defeated the defender
-     * @param eliminatedPlayer Defender who loses all the countries and hence is eliminated
-     * @return Success message
-     */
-    public String getCardsFromEliminatedPlayer(Player attacker, Player eliminatedPlayer) {
-
-        ArrayList<RiskCard> cardsHeldAttacker = attacker.getCardsHeld();
-        ArrayList<RiskCard> cardsHeldEliminated = eliminatedPlayer.getCardsHeld();
-        cardsHeldAttacker.addAll(cardsHeldEliminated);
-        eliminatedPlayer.setCardsHeld(null);
-        return "Eliminated Player cards transferred to attacker successfully";
-    }
-
 }
