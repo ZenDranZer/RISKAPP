@@ -40,6 +40,8 @@ public class TradePanel extends JPanel implements Observer {
         activePlayer = gameEngine.getGameState().getActivePlayer();
         validSet = riskCardController.getPossibleSets(activePlayer);
         tradeSetList.setModel(new DefaultComboBoxModel<>(validSet.keySet().toArray()));
+        playerNameLabel.setText(activePlayer.getName());
+        armyLabel.setText(Integer.toString(activePlayer.getRemainingArmies()));
     }
 
     private void tradeButtonMouseClicked(MouseEvent e) {
@@ -160,7 +162,7 @@ public class TradePanel extends JPanel implements Observer {
     public void update(Observable observable, Object o) {
         Player player = (Player) observable;
         playerNameLabel.setText(player.getName());
-        armyLabel.setText(Integer.toString(player.getPlayerArmies()));
+        armyLabel.setText(Integer.toString(player.getRemainingArmies()));
         validSet = riskCardController.getPossibleSets(activePlayer);
         tradeSetList.setModel(new DefaultComboBoxModel<>(validSet.keySet().toArray()));
     }

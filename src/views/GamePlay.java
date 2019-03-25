@@ -8,6 +8,7 @@ import models.GameState;
 import models.Player;
 import views.miscellaneous.GraphView;
 import views.miscellaneous.TradePanel;
+import views.miscellaneous.WorldDominationView;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -69,6 +70,9 @@ public class GamePlay extends JPanel implements Observer {
 	
 	private JButton btnSwapcards;
 	private JButton btnMapview;
+
+	private WorldDominationView worldDominationView;
+
 	private boolean countryWon;
 	/**
 	 * Renders the initial view of the panel
@@ -77,7 +81,9 @@ public class GamePlay extends JPanel implements Observer {
 		objGameEngine = engine;
 		objTurnController = objGameEngine.getTurmController();
 		activePlayer = objGameEngine.getGameState().getActivePlayer();
-
+		worldDominationView = new WorldDominationView(objGameEngine.getGameState());
+		worldDominationView.setVisible(true);
+		add(worldDominationView);
 		setLayout(null);
 		this.setBounds(10, 10, 883, 556);
 		lblPlayerName = new JLabel("Player Name :" + activePlayer.getName());
@@ -255,7 +261,7 @@ public class GamePlay extends JPanel implements Observer {
 					updateReinforcementPanel();
 					btnSkip.setVisible(false);
 				} else {
-					if(phase.equals("attack") && countryWon) 
+					if(phase.equals("attack") && countryWon)
 					{
 						// TODO:  add new RISK card to player
 					}
@@ -837,7 +843,7 @@ public class GamePlay extends JPanel implements Observer {
 		case "attack":
 			//update for attacks based on status returned
 			String actions = "";
-			
+
 			if(chckbxAllOutAttack.isSelected())
 			{
 				actions = activePlayer.getName() + " attacked " + lstActionCountry.getSelectedValue().toString() + " from "+ lstPlayerCountries.getSelectedValue().toString() ;
@@ -846,15 +852,15 @@ public class GamePlay extends JPanel implements Observer {
 				{
 					actions = actions + "successful";
 				}
-				else 
+				else
 				{
 					actions = actions + "not successful";
 				}
-				
+
 			}
 			else
 			{
-				
+
 			}
 			break;
 		case "fortify":
