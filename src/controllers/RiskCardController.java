@@ -45,6 +45,14 @@ public class RiskCardController {
             cardDeck.add(card);
         }
 
+/*        for(int m=0;m<cardDeck.size();m++) {
+            System.out.println(cardDeck.get(m).getCountryName());
+        }*/
+
+    }
+
+    public ArrayList<RiskCard> getCardDeck() {
+        return cardDeck;
     }
 
     /**Increment the number of trade when a trade operation is successful.*/
