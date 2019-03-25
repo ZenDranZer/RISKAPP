@@ -427,6 +427,10 @@ public class GamePlay extends JPanel implements Observer {
 		return true;
 	}
 
+	/**
+	 * This function implements all out attack and invokes alloutatack function in player model
+	 */
+
 	public void allOutAttack() {
 
 		String selcetedAttackCountry = (String) lstPlayerCountries.getSelectedValue();
