@@ -4,12 +4,14 @@ import controllers.GameEngine;
 import controllers.MapGenerator;
 import models.GameMap;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.*;
 
 /**This panel is used to edit an existing country in an existing map*/
 public class EditCountryValuePanel extends JPanel implements Observer {
@@ -18,6 +20,7 @@ public class EditCountryValuePanel extends JPanel implements Observer {
     private ArrayList<String> countryArrayList;
     /**GameEngine object to preserve the state of the game.*/
     private GameEngine gameEngine;
+    private GameMap gameMap;
     /**A JPanel object for tracking the parent panel.*/
     private JPanel parent;
     /**A MapGenerator object for using various map control event.*/
@@ -65,6 +68,7 @@ public class EditCountryValuePanel extends JPanel implements Observer {
         this.gameEngine = gameEngine;
         this.parent = parent;
         mapGenerator = gameEngine.getMapGenerator();
+        gameMap = gameEngine.getGameState().getGameMapObject();
         countryArrayList = mapGenerator.getListOfCountries();
         initComponents();
         countryList.setListData(countryArrayList.toArray());
@@ -143,7 +147,7 @@ public class EditCountryValuePanel extends JPanel implements Observer {
         if(neighbourName.equals("")){
             JOptionPane.showMessageDialog(this,"Invalid argument");
         }else{
-            String message = mapGenerator.removeNeighbor((String) countryList.getSelectedValue(),neighbourName);
+            String message = gameMap.removeNeighbor((String) countryList.getSelectedValue(),neighbourName);
             JOptionPane.showMessageDialog(this,message);
         }
     }

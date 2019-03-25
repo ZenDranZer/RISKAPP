@@ -46,12 +46,18 @@ public class GameMap extends Observable {
     }
     public String removeContinent(String continentName){
         for(String country: continentHashMap.get(continentName).getCountries().keySet()){
+            for(GameCountry neighbor: countryHashMap.get(country).getNeighbouringCountries().values()){
+                neighbor.getNeighbouringCountries().remove(country);
+            }
             countryHashMap.remove(country);
         }
-        this.continentHashMap.remove(continentName);
+        this.removeContinentFromMap(continentName);
         setChanged();
         notifyObservers();
         return "SUCCESS";
+    }
+    public void removeContinentFromMap(String continentName){
+        this.continentHashMap.remove(continentName);
     }
 
     public Set<String> getNeighbourList(String countryName){
@@ -81,6 +87,27 @@ public class GameMap extends Observable {
     public HashMap<String, GameCountry> getCountryHashMap(){
         return countryHashMap;
     }
+    /**This method removes a neighbour as per the player request.
+     *
+     * @param countryName
+     * @param neighborName
+     * @return status of the method execcution
+     */
+    public String removeNeighbor(String countryName , String neighborName) {
+        try {
+
+            for (GameCountry neighbor :  countryHashMap.get(countryName).getNeighbouringCountries().values()) {
+                if (neighbor.getCountryName().equals(neighborName)) {
+                    countryHashMap.get(countryName).getNeighbouringCountries().remove(neighborName);
+                }
+            }
+            //  countryHashMap.get(countryName).setNeighbouringCountries(neighbors); This is not needed.
+            return "SUCCESS";
+        }catch (NullPointerException e){
+            return "EXCEPTION IN ACCESSING DATA";
+        }
+    }
+
 
 
 }
