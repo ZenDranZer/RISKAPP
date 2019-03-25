@@ -428,7 +428,8 @@ public class GamePlay extends JPanel implements Observer {
 	}
 
 	/**
-	 * This function implements all out attack and invokes alloutatack function in player model
+	 * This function implements all out attack and
+	 * invokes alloutatack function in player model
 	 */
 
 	public void allOutAttack() {
