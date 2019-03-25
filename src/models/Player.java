@@ -296,17 +296,17 @@ public class Player extends Observable {
 		}
 		if (successfulAttack != 0) {
 
-			System.out.println("Attack success : " + successfulAttack);
+			System.out.println("Opponent armies eliminated: " + successfulAttack);
 			defendingCountry.removeArmies(successfulAttack);
 			defender.removePlayerArmies(successfulAttack);
 		}
 		if (successfulDefend != 0) {
-			System.out.println("Defended : " + successfulDefend);
+			System.out.println("Host armies eliminated  : " + successfulDefend);
 			attackingCountry.removeArmies(successfulDefend);
 			this.removePlayerArmies(successfulDefend);
 		}
 		if (defendingCountry.getArmiesStationed() == 0) {
-			System.out.println("Country won : " + defendingCountry.getCountryName());
+			System.out.println("Country captured by attacker : " + defendingCountry.getCountryName());
 			// give country to attacker
 			defender.removeCountry(defendingCountry);
 			this.setCountries(defendingCountry);

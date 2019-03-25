@@ -1,5 +1,7 @@
 package models;
 
+import controllers.RiskCardController;
+
 import java.util.*;
 
 /**
@@ -13,11 +15,13 @@ public class GameState extends Observable {
 	private HashMap<String, RiskCard> cardPile;
 	private GameMap gameMap;
 	private Player activePlayer;
+	private RiskCardController riskController;
 
 	public GameState() {
 		players = new ArrayList<>();
 		cardPile = new HashMap<>();
 		gameMap = new GameMap();
+		riskController = new RiskCardController();
 	}
 
 	/**
@@ -123,7 +127,12 @@ public class GameState extends Observable {
 	//attack
 	public void attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice)
 	{
-		String status = activePlayer.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);		
+		String status = activePlayer.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
+		RiskCard card = new RiskCard();
+		if (status.equalsIgnoreCase("success")) {
+			card = riskController.allocateRiskCard();
+		}
+		this.activePlayer.getCardsHeld().add(card);
 		setChanged();
 		notifyObservers(status);
 	}

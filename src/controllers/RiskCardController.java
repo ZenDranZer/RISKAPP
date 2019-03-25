@@ -44,9 +44,7 @@ public class RiskCardController {
             card.setArmyType(army.get(i%3));
             cardDeck.add(card);
         }
-        for (i=0;i<cardDeck.size();i++) {
-            System.out.println(cardDeck.get(i));
-        }
+
     }
 
     /**Increment the number of trade when a trade operation is successful.*/
@@ -167,6 +165,15 @@ public class RiskCardController {
         activePlayer.addPlayerArmy(noOfTrades*5);
         noOfTrades++;
         return "You got :"+ (noOfTrades*5) + " armies by trading your Risk Cards";
+    }
+
+    public RiskCard allocateRiskCard() {
+
+        RiskCard card;
+        card = cardDeck.get(0);
+        cardDeck.remove(0);
+
+        return card;
     }
 
 }
