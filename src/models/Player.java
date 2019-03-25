@@ -31,11 +31,8 @@ public class Player extends Observable {
 
 	/**
 	 * Creates a player with the given name and Id
-	 * 
-	 * @param name
-	 *            Player Name
-	 * @param id
-	 *            Player Id
+	 * @param name Player Name
+	 * @param id Player Id
 	 */
 	public Player(String name, int id, GameMap gameMap) {
 		this.name = name;
@@ -49,7 +46,6 @@ public class Player extends Observable {
 
 	/**
 	 * Gets the number of unallocated armies
-	 * 
 	 * @return number of unallocated armies
 	 */
 	public int getRemainingArmies() {
@@ -58,9 +54,7 @@ public class Player extends Observable {
 
 	/**
 	 * sets the number of unallocated armies
-	 * 
-	 * @param armies
-	 *            number of unallocated armies
+	 * @param armies number of unallocated armies
 	 */
 	public void setRemainingArmies(int armies) {
 		this.remainingArmies = armies;
@@ -68,9 +62,7 @@ public class Player extends Observable {
 
 	/**
 	 * updates the number of unallocated armies
-	 * 
-	 * @param armies
-	 *            number of armies to subtract from
+	 * @param armies number of armies to subtract from
 	 */
 	public void updateRemainingArmies(int armies) {
 		this.remainingArmies -= armies;
@@ -78,7 +70,6 @@ public class Player extends Observable {
 
 	/**
 	 * gets the player name
-	 * 
 	 * @return a string that represents name of the player
 	 */
 	public String getName() {
@@ -87,9 +78,7 @@ public class Player extends Observable {
 
 	/**
 	 * sets the name of the player
-	 * 
-	 * @param playerName
-	 *            string that represents the name of the player
+	 * @param playerName string that represents the name of the player
 	 */
 	public void setName(String playerName) {
 		this.name = playerName;
@@ -97,7 +86,6 @@ public class Player extends Observable {
 
 	/**
 	 * gets the Id of the player
-	 * 
 	 * @return integer that represents the player id
 	 */
 	public int getId() {
@@ -106,9 +94,7 @@ public class Player extends Observable {
 
 	/**
 	 * Set the Id of the player
-	 * 
-	 * @param id
-	 *            integer that represents the player Id
+	 * @param id integer that represents the player Id
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -116,9 +102,7 @@ public class Player extends Observable {
 
 	/**
 	 * gets the number armies allocated to the player
-	 * 
-	 * @return integer that represents the number of armies allocated to the
-	 *         player
+	 * @return integer that represents the number of armies allocated to the player
 	 */
 	public int getPlayerArmies() {
 		return playerArmies;
@@ -126,7 +110,6 @@ public class Player extends Observable {
 
 	/**
 	 * sets the number of armies allocated to the player
-	 * 
 	 * @param player_armies
 	 *            integer that represents the number of armies allocated to the
 	 *            player
@@ -141,7 +124,6 @@ public class Player extends Observable {
 
 	/**
 	 * Gets the list of countries owned by the player
-	 * 
 	 * @return ArrayList that represents the countries owned by the player
 	 */
 	public ArrayList<GameCountry> getCountries() {
@@ -150,10 +132,7 @@ public class Player extends Observable {
 
 	/**
 	 * Sets the list of countries owned by the player
-	 * 
-	 * @param country
-	 *            GameCountry that represents the country to be added to the
-	 *            player
+	 * @param country GameCountry that represents the country to be added to the player
 	 */
 	public void setCountries(GameCountry country) {
 		country.setCurrentPlayer(this);
@@ -166,9 +145,7 @@ public class Player extends Observable {
 
 	/**
 	 * Gets the list of continents owned by the player
-	 * 
-	 * @return ArrayList that represents the List of continents owned by the
-	 *         player
+	 * @return ArrayList that represents the List of continents owned by the player
 	 */
 	public ArrayList<GameContinent> getContinents() {
 		return continents;
@@ -176,9 +153,7 @@ public class Player extends Observable {
 
 	/**
 	 * Updates the list of continents owned by the player
-	 * 
-	 * @param continent
-	 *            GameContinent that has to be added to the list of continents
+	 * @param continent GameContinent that has to be added to the list of continents
 	 *            owned by the player
 	 */
 	public void setContinents(GameContinent continent) {
@@ -187,7 +162,6 @@ public class Player extends Observable {
 
 	/**
 	 * Gets the RISK cards held by the player
-	 * 
 	 * @return String that represents the RISK Cards held by the player
 	 */
 	public ArrayList<RiskCard> getCardsHeld() {
@@ -196,10 +170,7 @@ public class Player extends Observable {
 
 	/**
 	 * Sets the RISK Cards held by the player
-	 * 
-	 * @param cardsHeld
-	 *            String that represents RISK cards to be allocated to the
-	 *            player
+	 * @param cardsHeld String that represents RISK cards to be allocated to the player
 	 */
 	public void setCardsHeld(ArrayList<RiskCard> cardsHeld) {
 		for (RiskCard rc : cardsHeld) {
@@ -213,7 +184,6 @@ public class Player extends Observable {
 
 	/**
 	 * Gets the list of country name owned by the player
-	 * 
 	 * @return ArrayList of strings that represents the Country names owned by
 	 *         the player
 	 */
@@ -227,9 +197,7 @@ public class Player extends Observable {
 
 	/**
 	 * Adds armies to the player allocated armies by the intended amount
-	 * 
-	 * @param armies
-	 *            integer that represents the number of armies to add
+	 * @param armies integer that represents the number of armies to add
 	 */
 	public void addPlayerArmy(int armies) {
 		this.playerArmies += armies;
