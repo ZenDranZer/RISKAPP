@@ -86,11 +86,11 @@ public class GamePlay extends JPanel implements Observer {
 		add(lblPlayerName);
 
 		lblArmiesPresent = new JLabel("");
-		lblArmiesPresent.setBounds(288, 139, 201, 32);
+		lblArmiesPresent.setBounds(288, 139, 300, 32);
 		add(lblArmiesPresent);
 
 		lblactionArmiesPresent = new JLabel("");
-		lblactionArmiesPresent.setBounds(288, 182, 201, 32);
+		lblactionArmiesPresent.setBounds(250, 182, 350, 32);
 		add(lblactionArmiesPresent);
 
 		txtError = new JTextArea();
@@ -307,7 +307,7 @@ public class GamePlay extends JPanel implements Observer {
 		add(lblWhiteDice);
 
 		chckbxAllOutAttack = new JCheckBox("All out attack");
-		chckbxAllOutAttack.setBounds(392, 87, 113, 23);
+		chckbxAllOutAttack.setBounds(300, 87, 200, 23);
 		add(chckbxAllOutAttack);
 		
 		btnSwapcards = new JButton("Swap RISK Cards");
@@ -562,7 +562,7 @@ public class GamePlay extends JPanel implements Observer {
 		lblArmiesPresent.setText("");
 		btnAdd.setText("Attack");
 		lblRemainingArmies.setVisible(false);
-		btnSkip.setText("No Attack");
+		btnSkip.setText("Skip");
 		btnSkip.setVisible(true);
 		updateListElements();
 		lblactionArmiesPresent.setVisible(false);
