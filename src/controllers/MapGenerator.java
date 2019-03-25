@@ -405,7 +405,7 @@ contains the required hashmaps.
                     if (countryExists(tempNeighbourName)==null) {
                         newNeighbour = new GameCountry();
                         newNeighbour.setCountryName(tempNeighbourName);
-                        gameMap.getCountryHashMap().put(tempNeighbourName,newNeighbour);
+                        gameMap.addCountry(newNeighbour);
                         gameMap.addCountry(newCountry);
                         newCountry.addNeighbouringCountry(newNeighbour);
                         newNeighbour.addNeighbouringCountry(newCountry);
@@ -493,13 +493,16 @@ contains the required hashmaps.
         ArrayList<String> countries = new ArrayList<>(gameMap.getCountryHashMap().keySet());
         return countries;
     }
+/*
 
-    /**This method removes a neighbour as per the player request.
+    */
+/**This method removes a neighbour as per the player request.
      *
      * @param countryName
      * @param neighborName
      * @return status of the method execcution
-     */
+     *//*
+
     public String removeNeighbor(String countryName , String neighborName) {
         try {
 
@@ -514,6 +517,7 @@ contains the required hashmaps.
             return "EXCEPTION IN ACCESSING DATA";
         }
     }
+*/
 
     /**This method adds a neighbour for a specified country on user demand.
      *
@@ -595,16 +599,16 @@ contains the required hashmaps.
         try {
             String returnString;
             for(GameCountry neighbor : gameMap.getCountryHashMap().get(countryName).getNeighbouringCountries().values()){
-                neighbor.getNeighbouringCountries().remove(neighbor.getCountryName());
+                neighbor.getNeighbouringCountries().remove(countryName);
             }
             //countryHashMap.containsKey(countryName)
             if (gameMap.getCountryHashMap().containsKey(countryName)) {
                 gameMap.getCountryHashMap().get(countryName).getContinent().   //Removes the country from its continent's countrylist.
                         getCountries().remove(gameMap.getCountryHashMap().get(countryName));
                 returnString = validateContinent(gameMap.getCountryHashMap().get(countryName).getContinent());
+                gameMap.removeCountry(countryName);
                 if (returnString.equals("EMPTY")) {
-                    gameMap.removeCountry(countryName);
-                    this.removeContinent(gameMap.getCountryHashMap().get(countryName).getContinent().getContinentName());
+                    gameMap.removeContinentFromMap(gameMap.getCountryHashMap().get(countryName).getContinent().getContinentName());
                 }
                 //countryHashMap.remove(countryName);
                 returnString = "SUCCESS";
@@ -643,7 +647,7 @@ contains the required hashmaps.
         try {
             if (gameMap.getContinentHashMap().containsKey(continentName)) {
 
-                gameMap.getContinentHashMap().remove(continentName);
+                gameMap.removeContinentFromMap(continentName);
                 return "SUCCESS";
             }else{
                 return "NO SUCH CONTINENT";
@@ -663,8 +667,8 @@ contains the required hashmaps.
         try {
             if (gameMap.getContinentHashMap().containsKey(continentName)) {
                 gameMap.getContinentHashMap().get(continentName).setContinentName(newContinentName);
-                gameMap.getContinentHashMap().put(newContinentName,gameMap.getContinentHashMap().get(continentName));
-                gameMap.getContinentHashMap().remove(continentName);
+                gameMap.addContinent(gameMap.getContinentHashMap().get(continentName));
+                gameMap.removeContinentFromMap(continentName);
 
                 return "SUCCESS";
             }else{
