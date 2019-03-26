@@ -1,20 +1,16 @@
 package Test;
 
-import controllers.GameEngine;
-import controllers.MapGenerator;
-import controllers.MapValidator;
-import models.*;
-import org.junit.After;
+import models.GameCountry;
+import models.Player;
+import models.RiskCard;
 import org.junit.Before;
 import org.junit.Test;
-import utils.GraphUtil;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-public class TestPlayerAttack {
+public class TestPlayer {
     Player player ;
     GameCountry attackingCountry;
     GameCountry defendingCountry;
@@ -57,9 +53,6 @@ public class TestPlayerAttack {
 //        assertEquals( "winner" , player.attack(player , attackingCountry , defendingCountry , 2 , 1));
 //    }
 //
-//    @Test
-//    public void TestAllOutAttack(){
-//        assertEquals("Attack was Successful" , player.allOutAttack(player,attackingCountry,defendingCountry));
-//    }
+
 
 }

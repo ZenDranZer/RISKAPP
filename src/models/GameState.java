@@ -82,6 +82,7 @@ public class GameState extends Observable {
 				allocatedPlayers++;
 
 			} while (allocatedPlayers < players.size());
+			System.out.println(nextPlayer.getName());
 			return nextPlayer;
 		}
 

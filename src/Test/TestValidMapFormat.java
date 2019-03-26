@@ -38,7 +38,7 @@ public class TestValidMapFormat {
     @Test
     public void testInvalidMapFormat() throws IOException {
 
-        String output = mapGenerator.readConquestFile("C:\\Users\\shiva\\Desktop\\smallMap.map");
+        String output = mapGenerator.readConquestFile("C:\\Users\\shiva\\Desktop\\InvalidFile.map");
         assertNotEquals("SUCCESS",output);
 
     }

@@ -345,7 +345,7 @@ public class Player extends Observable {
 
 		if (redDice < 1 || whiteDice < 1 || redDice > 3 || whiteDice > 3){
 			status = "invalid";
-			System.out.println("dice can not be more than 3");
+			System.out.println("invalid dice number");
 			return status;
 		}
 

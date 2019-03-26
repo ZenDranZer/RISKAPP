@@ -243,7 +243,7 @@ contains the required hashmaps.
                 }
                 returnString = this.readCountryList(inputReader);
                 if (!returnString.equals("SUCCESS")){
-                    return returnString+" AROUND LINE "+(lineCounter+getListOfContinents().size()+3);
+                    return returnString;
                 }
                 lineCounter++;
             }
