@@ -34,10 +34,8 @@ public class Player extends Observable {
 	/**
 	 * Creates a player with the given name and Id
 	 * 
-	 * @param name
-	 *            Player Name
-	 * @param id
-	 *            Player Id
+	 * @param name Player Name
+	 * @param id Player Id
 	 */
 	public Player(String name, int id, GameMap gameMap) {
 		this.name = name;
@@ -61,8 +59,7 @@ public class Player extends Observable {
 	/**
 	 * sets the number of unallocated armies
 	 * 
-	 * @param armies
-	 *            number of unallocated armies
+	 * @param armies number of unallocated armies
 	 */
 	public void setRemainingArmies(int armies) {
 		this.remainingArmies = armies;
@@ -73,8 +70,7 @@ public class Player extends Observable {
 	/**
 	 * updates the number of unallocated armies
 	 * 
-	 * @param armies
-	 *            number of armies to subtract from
+	 * @param armies number of armies to subtract from
 	 */
 	public void updateRemainingArmies(int armies) {
 		this.remainingArmies -= armies;
@@ -95,8 +91,7 @@ public class Player extends Observable {
 	/**
 	 * sets the name of the player
 	 * 
-	 * @param playerName
-	 *            string that represents the name of the player
+	 * @param playerName string that represents the name of the player
 	 */
 	public void setName(String playerName) {
 		this.name = playerName;
@@ -114,8 +109,7 @@ public class Player extends Observable {
 	/**
 	 * Set the Id of the player
 	 * 
-	 * @param id
-	 *            integer that represents the player Id
+	 * @param id integer that represents the player Id
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -124,8 +118,7 @@ public class Player extends Observable {
 	/**
 	 * gets the number armies allocated to the player
 	 * 
-	 * @return integer that represents the number of armies allocated to the
-	 *         player
+	 * @return integer that represents the number of armies allocated to the player
 	 */
 	public int getPlayerArmies() {
 		return playerArmies;
@@ -134,9 +127,7 @@ public class Player extends Observable {
 	/**
 	 * sets the number of armies allocated to the player
 	 * 
-	 * @param player_armies
-	 *            integer that represents the number of armies allocated to the
-	 *            player
+	 * @param player_armies integer that represents the number of armies allocated to the player
 	 */
 	public void setPlayerArmies(int player_armies) {
 		this.playerArmies = player_armies;
@@ -162,8 +153,7 @@ public class Player extends Observable {
 	/**
 	 * Sets the list of countries owned by the player
 	 * 
-	 * @param country
-	 *            GameCountry that represents the country to be added to the
+	 * @param country GameCountry that represents the country to be added to the
 	 *            player
 	 */
 	public void setCountries(GameCountry country) {
@@ -173,6 +163,10 @@ public class Player extends Observable {
 		notifyObservers();
 	}
 
+	/** Removes the country from the list of countries in current object
+	 *
+	 * @param country The country object to be removed from the list.
+	 */
 	public void removeCountry(GameCountry country) {
 		this.countries.remove(country);
 		setChanged();
@@ -182,8 +176,7 @@ public class Player extends Observable {
 	/**
 	 * Gets the list of continents owned by the player
 	 * 
-	 * @return ArrayList that represents the List of continents owned by the
-	 *         player
+	 * @return ArrayList that represents the List of continents owned by the player
 	 */
 	public ArrayList<GameContinent> getContinents() {
 		return continents;
@@ -192,9 +185,7 @@ public class Player extends Observable {
 	/**
 	 * Updates the list of continents owned by the player
 	 * 
-	 * @param continent
-	 *            GameContinent that has to be added to the list of continents
-	 *            owned by the player
+	 * @param continent GameContinent that has to be added to the list of continents owned by the player
 	 */
 	public void setContinents(GameContinent continent) {
 		this.continents.add(continent);
@@ -214,9 +205,7 @@ public class Player extends Observable {
 	/**
 	 * Sets the RISK Cards held by the player
 	 * 
-	 * @param cardsHeld
-	 *            String that represents RISK cards to be allocated to the
-	 *            player
+	 * @param cardsHeld String that represents RISK cards to be allocated to the player
 	 */
 	public void setCardsHeld(ArrayList<RiskCard> cardsHeld) {
 		for (RiskCard rc : cardsHeld) {
@@ -232,6 +221,9 @@ public class Player extends Observable {
 		notifyObservers();
 	}
 
+	/**Clears the card allocated to the player
+	 *
+	 */
 	public void emptyCards() {
 		playerCards.clear();
 	}
@@ -253,8 +245,7 @@ public class Player extends Observable {
 	/**
 	 * Adds armies to the player allocated armies by the intended amount
 	 * 
-	 * @param armies
-	 *            integer that represents the number of armies to add
+	 * @param armies integer that represents the number of armies to add
 	 */
 	public void addPlayerArmy(int armies) {
 		this.playerArmies += armies;
@@ -262,6 +253,11 @@ public class Player extends Observable {
 		notifyObservers();
 	}
 
+	/**Adds the specified number of armies in the specified country
+	 *
+	 * @param countryName Name of the country in which armies need to be added
+	 * @param armies Number of armies to be added
+	 */
 	public void placeArmy(String countryName, int armies) {
 		ArrayList<GameCountry> lstPlayerCountries = this.getCountries();
 		GameCountry matchedCountry = lstPlayerCountries.stream()
@@ -274,10 +270,21 @@ public class Player extends Observable {
 		// this.availableArmies = this.availableArmies - armies;
 	}
 
+	/**The Reinforcement method that takes care of placing army on a specified country
+	 *
+	 * @param countryName The country name
+	 * @param armies Number of armies to be placed
+	 */
 	public void reinforcement(String countryName, int armies) {
 		placeArmy(countryName, armies);
 	}
 
+	/**The method that contains the logic of fortification phase
+	 *
+	 * @param countryToFortify The country to be fortified
+	 * @param fortifyFrom The country from which the fortification is carried out
+	 * @param armies Number of armies to be used to fortify
+	 */
 	public void fortify(String countryToFortify, String fortifyFrom, int armies) {
 		GameCountry toCountry = countries.stream().filter(cntry -> cntry.getCountryName().equals(countryToFortify))
 				.findFirst().get();
@@ -288,6 +295,10 @@ public class Player extends Observable {
 		fortifyingCountry.setArmies(fortifyingCountry.getArmiesStationed() - armies);
 	}
 
+	/**Check if the countries have maximum number of armies possible
+	 *
+	 * @return Returns true if successful, false otherwise
+	 */
 	public boolean isAllocationComplete() {
 		for (GameCountry country : countries) {
 			if (country.getArmiesStationed() < 12) {
@@ -298,6 +309,15 @@ public class Player extends Observable {
 		return true;
 	}
 
+	/**The Logic of attack phase of the game
+	 *
+	 * @param defender The player who's country is being attacked
+	 * @param attackingCountry The country from where the attack takes place
+	 * @param defendingCountry The country on which the attack takes place
+	 * @param redDice Number of dice selected by attacker
+	 * @param whiteDice Number of dice selected by defender
+	 * @return returns the status of the method execution
+	 */
 	public String attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice,
 			int whiteDice) {
 		ArrayList<Pair> diceSets;
@@ -325,7 +345,7 @@ public class Player extends Observable {
 
 		if (redDice < 1 || whiteDice < 1 || redDice > 3 || whiteDice > 3){
 			status = "invalid";
-			System.out.println("dice can not be more than 3");
+			System.out.println("invalid dice number");
 			return status;
 		}
 
@@ -437,24 +457,45 @@ public class Player extends Observable {
 		}
 	}
 
+	/** Checks if the player is active or dead
+	 *
+	 * @return true if active, false otherwise
+	 */
 	public boolean getIsActive() {
 		return this.isActive;
 	}
 
+	/**Set the state of the player
+	 *
+	 * @param state the state of the player to be set
+	 */
 	public void setIsActive(boolean state) {
 		this.isActive = state;
 	}
 
+	/**Award risk cards to the current player
+	 *
+	 * @param cards cards to be awarded to the player
+	 */
 	public void addRiskCards(ArrayList<RiskCard> cards) {
 		this.playerCards.addAll(cards);
 	}
 
+	/**Contains the logic to eliminate the player
+	 *
+	 * @param eliminatedPlayer Player to be eliminated
+	 */
 	public void eliminate(Player eliminatedPlayer) {
 		eliminatedPlayer.setIsActive(false);
 		this.addRiskCards(eliminatedPlayer.getCardsHeld());
 		eliminatedPlayer.setCardsHeld(null);
 	}
 
+	/**Checks if player has won the game
+	 *
+	 * @param player Player object
+	 * @return True if player won, false otherwise
+	 */
 	public boolean hasPlayerWon(Player player) {
 		if (player.getCountries().size() == gameMap.getCountryHashMap().size()) {
 			return true;
