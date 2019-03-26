@@ -41,4 +41,9 @@ public class TestPlayerAttack {
         assertEquals( "invalid" , player.attack(player , attackingCountry , defendingCountry , 3 , 4));
     }
 
+    @Test
+    public void TestNegetiveDiceNumber(){
+        assertEquals( "invalid" , player.attack(player , attackingCountry , defendingCountry , -6 , 1));
+    }
+
 }
