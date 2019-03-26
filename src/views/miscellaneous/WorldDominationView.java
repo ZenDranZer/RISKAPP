@@ -19,6 +19,35 @@ public class WorldDominationView extends JPanel implements Observer {
     private int numberOfCountry;
     private int numberOfPlayer;
     private ArrayList<Player> players;
+    private JLabel label1;
+    private JLabel label5;
+    private JLabel label4;
+    private JLabel label3;
+    private JLabel player1Label;
+    private JTextField player1Ratio;
+    private JTextField player1Army;
+    private JScrollPane scrollPane1;
+    private JTextArea player1Continents;
+    private JLabel player2Label;
+    private JTextField player2Ratio;
+    private JTextField player2Army;
+    private JScrollPane scrollPane2;
+    private JTextArea player2Continents;
+    private JLabel player3Label;
+    private JTextField player3Ratio;
+    private JTextField player3Army;
+    private JScrollPane scrollPane3;
+    private JTextArea player3Continents;
+    private JLabel player4Label;
+    private JTextField player4Ratio;
+    private JTextField player4Army;
+    private JScrollPane scrollPane4;
+    private JTextArea player4Continents;
+    private JLabel player5Label;
+    private JTextField player5Ratio;
+    private JTextField player5Army;
+    private JScrollPane scrollPane5;
+    private JTextArea player5Continents;
 
     public WorldDominationView(GameState gameState) {
         initComponents();
@@ -38,6 +67,10 @@ public class WorldDominationView extends JPanel implements Observer {
             case 4:
                 hidePlayer5();
                 break;
+        }
+        for (Player p: players) {
+            int index = players.indexOf(p);
+            setPlayerValue(p,index+1);
         }
     }
 
@@ -270,37 +303,6 @@ public class WorldDominationView extends JPanel implements Observer {
             new Insets(0, 0, 0, 5), 0, 0));
     }
 
-    private JLabel label1;
-    private JLabel label5;
-    private JLabel label4;
-    private JLabel label3;
-    private JLabel player1Label;
-    private JTextField player1Ratio;
-    private JTextField player1Army;
-    private JScrollPane scrollPane1;
-    private JTextArea player1Continents;
-    private JLabel player2Label;
-    private JTextField player2Ratio;
-    private JTextField player2Army;
-    private JScrollPane scrollPane2;
-    private JTextArea player2Continents;
-    private JLabel player3Label;
-    private JTextField player3Ratio;
-    private JTextField player3Army;
-    private JScrollPane scrollPane3;
-    private JTextArea player3Continents;
-    private JLabel player4Label;
-    private JTextField player4Ratio;
-    private JTextField player4Army;
-    private JScrollPane scrollPane4;
-    private JTextArea player4Continents;
-    private JLabel player5Label;
-    private JTextField player5Ratio;
-    private JTextField player5Army;
-    private JScrollPane scrollPane5;
-    private JTextArea player5Continents;
-
-
     private String arrayToString(ArrayList<GameContinent> continents){
             String continentString = "";
             for (GameContinent continent: continents) {
@@ -313,33 +315,48 @@ public class WorldDominationView extends JPanel implements Observer {
         switch (index){
             case 1 :
                 player1Army.setText(Integer.toString(player.getPlayerArmies()));
-                player1Ratio.setText(Integer.toString((player.getCountries().size()/numberOfCountry)*100));
+                float numberOfPlayerCountry = player.getCountries().size();
+                float ratio = numberOfPlayerCountry/numberOfCountry;
+                player1Ratio.setText(Float.toString((ratio)*100));
                 String continents = arrayToString(player.getContinents());
                 player1Continents.setText(continents);
+                player1Label.setText(player.getName());
                 break;
             case 2:
                 player2Army.setText(Integer.toString(player.getPlayerArmies()));
-                player2Ratio.setText(Integer.toString((player.getCountries().size()/numberOfCountry)*100));
+                numberOfPlayerCountry = player.getCountries().size();
+                ratio = numberOfPlayerCountry/numberOfCountry;
+                player2Ratio.setText(Float.toString((ratio)*100));
                 continents = arrayToString(player.getContinents());
                 player2Continents.setText(continents);
+                player2Label.setText(player.getName());
                 break;
             case 3:
                 player3Army.setText(Integer.toString(player.getPlayerArmies()));
-                player3Ratio.setText(Integer.toString((player.getCountries().size()/numberOfCountry)*100));
+                numberOfPlayerCountry = player.getCountries().size();
+                ratio = numberOfPlayerCountry/numberOfCountry;
+                player3Ratio.setText(Float.toString((ratio)*100));
                 continents = arrayToString(player.getContinents());
                 player3Continents.setText(continents);
+                player3Label.setText(player.getName());
                 break;
             case 4:
                 player4Army.setText(Integer.toString(player.getPlayerArmies()));
-                player4Ratio.setText(Integer.toString((player.getCountries().size()/numberOfCountry)*100));
+                numberOfPlayerCountry = player.getCountries().size();
+                ratio = numberOfPlayerCountry/numberOfCountry;
+                player4Ratio.setText(Float.toString((ratio)*100));
                 continents = arrayToString(player.getContinents());
                 player4Continents.setText(continents);
+                player4Label.setText(player.getName());
                 break;
             case 5:
                 player5Army.setText(Integer.toString(player.getPlayerArmies()));
-                player5Ratio.setText(Integer.toString((player.getCountries().size()/numberOfCountry)*100));
+                numberOfPlayerCountry = player.getCountries().size();
+                ratio = numberOfPlayerCountry/numberOfCountry;
+                player5Ratio.setText(Float.toString((ratio)*100));
                 continents = arrayToString(player.getContinents());
                 player5Continents.setText(continents);
+                player5Label.setText(player.getName());
                 break;
         }
     }
@@ -347,6 +364,6 @@ public class WorldDominationView extends JPanel implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         int index = players.indexOf(observable);
-        setPlayerValue((Player)observable,index);
+        setPlayerValue((Player)observable,index+1);
     }
 }

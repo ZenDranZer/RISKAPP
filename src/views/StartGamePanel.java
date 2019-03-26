@@ -44,7 +44,7 @@ public class StartGamePanel extends JPanel {
 	}
 
 	private void continueButtonMouseClicked(MouseEvent e) throws IOException {
-		if (continueButton.isEnabled()) {
+		if (continueButton.isEnabled() && !mapFileChooser.getSelectedFile().getAbsolutePath().isEmpty()) {
 			ArrayList<String> playerName = new ArrayList<>();
 			int value = (Integer) numberOfPlayers.getValue();
 			if (validateNames()) {
