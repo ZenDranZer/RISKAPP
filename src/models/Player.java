@@ -77,6 +77,8 @@ public class Player extends Observable {
 	 */
 	public void updateRemainingArmies(int armies) {
 		this.remainingArmies -= armies;
+		setChanged();
+		notifyObservers();
 	}
 
 
@@ -137,10 +139,14 @@ public class Player extends Observable {
 	 */
 	public void setPlayerArmies(int player_armies) {
 		this.playerArmies = player_armies;
+		setChanged();
+		notifyObservers();
 	}
 
 	public void removePlayerArmies(int player_armies) {
 		this.playerArmies -= player_armies;
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -162,10 +168,14 @@ public class Player extends Observable {
 	public void setCountries(GameCountry country) {
 		country.setCurrentPlayer(this);
 		this.countries.add(country);
+		setChanged();
+		notifyObservers();
 	}
 
 	public void removeCountry(GameCountry country) {
 		this.countries.remove(country);
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -187,6 +197,8 @@ public class Player extends Observable {
 	 */
 	public void setContinents(GameContinent continent) {
 		this.continents.add(continent);
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -209,10 +221,14 @@ public class Player extends Observable {
 		for (RiskCard rc : cardsHeld) {
 			playerCards.add(rc);
 		}
+		setChanged();
+		notifyObservers();
 	}
 
 	public void addRiskCard(RiskCard riskCard){
 		playerCards.add(riskCard);
+		setChanged();
+		notifyObservers();
 	}
 
 	public void emptyCards() {

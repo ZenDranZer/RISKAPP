@@ -83,9 +83,11 @@ public class GamePlay extends JPanel implements Observer {
 		activePlayer = objGameEngine.getGameState().getActivePlayer();
 		worldDominationView = new WorldDominationView(objGameEngine.getGameState());
 		worldDominationView.setVisible(true);
+		worldDominationView.setBounds(800,60,400,150);
 		objGameEngine.getGameState().getRiskController().initRiskCardDeck(
 				objGameEngine.getGameState().getGameMapObject());
 		add(worldDominationView);
+
 		setLayout(null);
 		this.setBounds(10, 10, 883, 556);
 		lblPlayerName = new JLabel("Player Name :" + activePlayer.getName());
@@ -353,6 +355,11 @@ public class GamePlay extends JPanel implements Observer {
 		displayRemainingArmies();
 		lblAction.setVisible(false);
 		groupRadioSetVisibility(false);
+
+		ArrayList<Player> activePlayers = objGameEngine.getGameState().getPlayers();
+		for (Player p: activePlayers) {
+			p.addObserver(worldDominationView);
+		}
 	}
 
 
