@@ -29,30 +29,17 @@ public class TestRiskCardController {
         gameMap = new GameMap();
         p1  =new Player();
         p2 = new Player();
-        r1 = new RiskCard();
-        r2 = new RiskCard();
-        int totalcards = 0;
 
         riskCardController = new RiskCardController();
 
-        for (int i=0;i<4;i++){
+        for (int i=1;i<=4;i++){
             GameCountry country = new GameCountry();
-            country.setCountryName("country"+(i+1));
+            country.setCountryName("country"+(i));
             gameMap.addCountry(country);
         }
 
-        totalcards = gameMap.getAllCountries().size();
-        riskCardController.initRiskCardDeck(gameMap);
-        //System.out.println(riskCardController.getCardDeck().get(0).getCountryName());
+        //riskCardController.initRiskCardDeck(gameMap);
 
-/*        for(int i=0;i<4;i= i+2) {
-            p1.setCountries(gameMap.getAllCountries().get(i));
-            p2.setCountries(gameMap.getAllCountries().get(i+1));
-        }*/
-
-
-        p1.addRiskCard(riskCardController.allocateRiskCard());
-        p2.addRiskCard(riskCardController.allocateRiskCard());
 
     }
 
@@ -82,12 +69,12 @@ public class TestRiskCardController {
 
     @Test
     public void totalCards() {
-
-        System.out.println(riskCardController.getCardDeck().size());
-
-        //totalCards = p1.getCardsHeld().size() + p2.getCardsHeld().size() + riskCardController.getCardDeck().size();
-
-        //assertEquals(4,totalCards);
+        int totalCards = 0;
+        riskCardController.initRiskCardDeck(gameMap);
+        p1.addRiskCard(riskCardController.allocateRiskCard());
+        p2.addRiskCard(riskCardController.allocateRiskCard());
+        totalCards = p1.getCardsHeld().size() + p2.getCardsHeld().size() + riskCardController.getCardDeck().size();
+        assertEquals(4,totalCards);
     }
 
 }
