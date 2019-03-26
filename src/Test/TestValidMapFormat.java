@@ -7,10 +7,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class TestValidMapFormat {
 
@@ -38,7 +38,7 @@ public class TestValidMapFormat {
     @Test
     public void testInvalidMapFormat() throws IOException {
 
-        String output = mapGenerator.readConquestFile("C:\\Users\\shiva\\Desktop\\new.map");
+        String output = mapGenerator.readConquestFile("C:\\Users\\shiva\\Desktop\\smallMap.map");
         assertNotEquals("SUCCESS",output);
 
     }

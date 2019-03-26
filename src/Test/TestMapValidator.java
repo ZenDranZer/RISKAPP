@@ -4,7 +4,6 @@ import controllers.GameEngine;
 import controllers.MapGenerator;
 import controllers.MapValidator;
 import models.GameContinent;
-import models.GameCountry;
 import models.GameMap;
 import org.junit.After;
 import org.junit.Before;
@@ -73,5 +72,10 @@ public class TestMapValidator {
        String output = mapGenerator.validateMap();
        assertEquals("SUCCESS",output);
     }
-
+    @Test
+    public void TestIsContinentFullyLinked(){
+        for(GameContinent continent : gameMap.getContinentHashMap().values()){
+            assertTrue(validator.isContinentFullyLinked(continent,graphUtil));
+        }
+    }
 }

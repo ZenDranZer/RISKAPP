@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-public class TurnControllerTest {
+public class TestTurnController {
 	private ArrayList<Player> lstPlayers;
 
 	TestUtil testData;
