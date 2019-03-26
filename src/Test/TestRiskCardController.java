@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -20,8 +21,9 @@ public class TestRiskCardController {
     Player p2;
     GameState gameState;
     RiskCardController riskCardController;
-    RiskCard r1;
-    RiskCard r2;
+    RiskCard riskcard;
+    GameCountry attackingCountry;
+    GameCountry defendingCountry;
 
     @Before
     public void setUp() throws Exception {
@@ -29,10 +31,11 @@ public class TestRiskCardController {
         gameMap = new GameMap();
         p1  =new Player();
         p2 = new Player();
+        riskcard = new RiskCard();
 
         riskCardController = new RiskCardController();
 
-        for (int i=1;i<=4;i++){
+        for (int i=1;i<=8;i++){
             GameCountry country = new GameCountry();
             country.setCountryName("country"+(i));
             gameMap.addCountry(country);
@@ -60,6 +63,24 @@ public class TestRiskCardController {
     @Test
     public void afterReinforcementCardStatus() {
 
+        HashMap<String,ArrayList<RiskCard>> possibleset = new HashMap<>();
+        ArrayList<RiskCard> chooseSet;
+
+        riskCardController.initRiskCardDeck(gameMap);
+        //System.out.println(gameMap.getAllCountries().size());
+        //System.out.println(riskCardController.getCardDeck().size());
+
+        for(int i=0;i< 8;i++)
+            p1.addRiskCard(riskCardController.allocateRiskCard());
+
+        while (p1.getCardsHeld().size() >= 5) {
+            possibleset = riskCardController.getPossibleSets(p1);
+            chooseSet = possibleset.get("1");
+
+            riskCardController.tradeCards(p1,chooseSet);
+        }
+
+        assertTrue(p1.getCardsHeld().size()<5);
     }
 
     @Test
@@ -74,7 +95,7 @@ public class TestRiskCardController {
         p1.addRiskCard(riskCardController.allocateRiskCard());
         p2.addRiskCard(riskCardController.allocateRiskCard());
         totalCards = p1.getCardsHeld().size() + p2.getCardsHeld().size() + riskCardController.getCardDeck().size();
-        assertEquals(4,totalCards);
+        assertEquals(8,totalCards);
     }
 
 }
