@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
 
 
 /**this class is used read a file, load a file or reset the game.*/
@@ -75,8 +74,8 @@ public class LoadMapPanel extends JPanel {
                 }
 
             }
-        } catch (IOException e1) {
-            JOptionPane.showMessageDialog(this,"IO Exception");
+        } catch (Exception e1) {
+            JOptionPane.showMessageDialog(this,"Exception");
         }
     }
 
