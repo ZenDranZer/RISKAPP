@@ -303,8 +303,28 @@ public class Player extends Observable {
 		int successfulAttack = 0;
 		int successfulDefend = 0;
 		String status = "";
+
+		//Validation of Dice
 		if (attackingCountry.getArmiesStationed() < 2) {
 			status = "invalid";
+			System.out.println("number of armies should be more than 2 in attacking country");
+			return status;
+		}
+		if(redDice > attackingCountry.getArmiesStationed()){
+			status = "invalid";
+			System.out.println("number of dice selected can not be more than armies in attacking country");
+			return status;
+		}
+
+		if (whiteDice > defendingCountry.getArmiesStationed()){
+			status = "invalid";
+			System.out.println("number of dice selected should be more than armies in defending country");
+			return status;
+		}
+
+		if (redDice < 1 || whiteDice < 1 || redDice > 3 || whiteDice > 3){
+			status = "invalid";
+			System.out.println("dice can not be more than 3");
 			return status;
 		}
 
@@ -391,7 +411,7 @@ public class Player extends Observable {
 				redDice = 1;
 			} else if (numberOfArmies_attacker == 3) {
 				redDice = 2;
-			} else if (numberOfArmies_attacker > 3) {
+			} else {
 				redDice = 3;
 			}
 
