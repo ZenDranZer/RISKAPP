@@ -5,10 +5,7 @@ import models.GameCountry;
 import models.GameMap;
 import utils.GraphUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Class containing various validations for the generated map
@@ -126,6 +123,24 @@ public class MapValidator {
             }
         }
         return true;
+    }
+    public boolean isContinentFullyLinked(GameContinent continent, GraphUtil graphUtilObject){
+        ArrayList<String> countries = new ArrayList<>();
+        for(GameCountry country : continent.getCountries().values()){
+            for(GameCountry neighbor : continent.getCountries().values()){
+                if(graphUtilObject.getCountryGraph().containsEdge(country,neighbor)){
+                    countries.add(neighbor.getCountryName());
+                }
+            }
+        }
+        LinkedHashSet<String> noDuplicates = new LinkedHashSet<>();
+        noDuplicates.addAll(countries);
+        countries.clear();
+        countries.addAll(noDuplicates);
+        if(countries.size()==continent.getCountries().size()){
+            return true;
+        }
+        return false;
     }
 
     /**

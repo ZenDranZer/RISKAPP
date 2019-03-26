@@ -1,8 +1,10 @@
 package controllers;
+
 import models.GameContinent;
 import models.GameCountry;
 import models.GameMap;
 import utils.GraphUtil;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -325,7 +327,7 @@ contains the required hashmaps.
     public GraphUtil buildGraph(){
         try {
 
-            GraphUtil graphUtilObject = new GraphUtil(gameMap);
+            GraphUtil graphUtilObject = new GraphUtil();
             //countryHashMap
             graphUtilObject.setCountryGraph(gameMap.getCountryHashMap());
 
@@ -464,11 +466,15 @@ contains the required hashmaps.
             returnString = "INVALID NUMBER OF COUNTRIES";
         }
 
-            graphUtilObject = buildGraph();
-
+        graphUtilObject = buildGraph();
         graphUtilObject = this.buildGraph();
         if(!validator.isWholeMapConnected(graphUtilObject)){
             returnString = "THE WHOLE MAP IS NOT CONNECTED";
+        }
+        for(GameContinent continent : gameMap.getContinentHashMap().values()){
+            if(!(validator.isContinentFullyLinked(continent,graphUtilObject))){
+                returnString = "ONE OR MORE CONTINENTS ARE NOT CONNECTED WITHIN THEMSELVES";
+            }
         }
 
         return returnString;
@@ -729,6 +735,7 @@ contains the required hashmaps.
         try {
            gameMap.getCountryHashMap().clear();
             gameMap.getContinentHashMap().clear();
+            gameMap.guiHashMap.clear();
             return "SUCCESS";
         }
         catch (Exception e){

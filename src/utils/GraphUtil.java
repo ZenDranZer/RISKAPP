@@ -1,7 +1,6 @@
 package utils;
 
 import models.GameCountry;
-import models.GameMap;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
@@ -9,7 +8,10 @@ import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.traverse.BreadthFirstIterator;
 import org.jgrapht.traverse.DepthFirstIterator;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 
 /**GraphUtil class is used for representing the map in a graph formation
@@ -19,12 +21,11 @@ public class GraphUtil {
 
     /**countryGraph is a Graph object for maintaining the map graph.*/
     private Graph<GameCountry, DefaultEdge> countryGraph;
-    private GameMap gameMap;
+
 
     /**Public constructor for initializing the countryGraph*/
-    public GraphUtil(GameMap map) {
+    public GraphUtil() {
         countryGraph = new SimpleGraph<>(DefaultEdge.class);
-        gameMap = map;
     }
 
     /**Getter method to access the countryGraph
