@@ -96,7 +96,7 @@ public class GameState extends Observable {
 	public boolean isAllocationComplete() {
 		boolean isAllocated = true;
 		for (Player pl : players) {
-			if (pl.getRemainingArmies() > 0) {
+			if (pl.getRemainingArmies() > 0  && !pl.isAllocationComplete()) {
 				isAllocated = false;
 				break;
 			}

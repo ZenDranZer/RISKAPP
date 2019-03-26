@@ -81,7 +81,6 @@ public class TurnController {
 			for (GameContinent continent : playerContinents) {
 				if (!activePlayer.getContinents().contains(continent)) {
 					activePlayer.setContinents(continent);
-					//availableArmies += continent.getContinentValue();
 				}
 			}
 		}
@@ -166,5 +165,4 @@ public class TurnController {
 			i++;
 		}
 	}
-
 }
