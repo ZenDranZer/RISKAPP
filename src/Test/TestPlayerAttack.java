@@ -18,11 +18,16 @@ public class TestPlayerAttack {
     Player player ;
     GameCountry attackingCountry;
     GameCountry defendingCountry;
+    RiskCard riskCard;
 
     @Before
     public void setup() throws Exception{
+        riskCard =new RiskCard();
         player = new Player();
-        //player.setCardsHeld(ArrayList< RiskCard > );
+        player.addRiskCard(riskCard);
+        ArrayList<RiskCard> arrayList = new ArrayList<>();
+        arrayList.add(riskCard);
+        player.setCardsHeld(arrayList);
         attackingCountry = new GameCountry();
         attackingCountry.setArmies(1);
         attackingCountry.setArmies(2);
@@ -44,6 +49,10 @@ public class TestPlayerAttack {
     @Test
     public void TestNegetiveDiceNumber(){
         assertEquals( "invalid" , player.attack(player , attackingCountry , defendingCountry , -6 , 1));
+    }
+    @Test
+    public void TestWinning(){
+        assertEquals( "winner" , player.attack(player , attackingCountry , defendingCountry , 2 , 1));
     }
 
 }
