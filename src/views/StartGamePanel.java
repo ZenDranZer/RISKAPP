@@ -115,6 +115,7 @@ public class StartGamePanel extends JPanel {
 			}
 		}
 		else{
+			JOptionPane.showMessageDialog(this,"Please choose a file");
 			System.out.println("Please choose a file"); //pop up accordingly
 		}
 	}

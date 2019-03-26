@@ -420,7 +420,7 @@ contains the required hashmaps.
         if(!validator.hasValidNumberOfCountries(new ArrayList<>(gameMap.getCountryHashMap().values()))){
             returnString = "INVALID NUMBER OF COUNTRIES";
         }
-        graphUtilObject = buildGraph();
+        //graphUtilObject = buildGraph();
         graphUtilObject = this.buildGraph();
         if(!validator.isWholeMapConnected(graphUtilObject)){
             returnString = "THE WHOLE MAP IS NOT CONNECTED";
