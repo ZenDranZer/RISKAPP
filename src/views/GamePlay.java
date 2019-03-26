@@ -83,7 +83,7 @@ public class GamePlay extends JPanel implements Observer {
 		activePlayer = objGameEngine.getGameState().getActivePlayer();
 		worldDominationView = new WorldDominationView(objGameEngine.getGameState());
 		worldDominationView.setVisible(true);
-		worldDominationView.setBounds(800,60,400,150);
+		worldDominationView.setBounds(800,60,400,200);
 		objGameEngine.getGameState().getRiskController().initRiskCardDeck(
 				objGameEngine.getGameState().getGameMapObject());
 		add(worldDominationView);
@@ -365,6 +365,7 @@ public class GamePlay extends JPanel implements Observer {
 
     private void btnMapviewMouseClicked(MouseEvent e){
         GraphView graphView = new GraphView(objGameEngine);
+        graphView.setVisible(true);
     }
 
 	/**
