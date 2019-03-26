@@ -28,6 +28,7 @@ public class Player extends Observable {
 	public Player() {
 		countries = new ArrayList<>();
 		continents = new ArrayList<>();
+		playerCards=new ArrayList<>();
 	}
 
 	/**
