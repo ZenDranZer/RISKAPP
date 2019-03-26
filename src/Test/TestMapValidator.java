@@ -23,17 +23,18 @@ public class TestMapValidator {
     GameMap gameMap;
 
     @Before
-    public void setUp() throws Exception {
-        validator = new MapValidator(gameMap);
-        mapGenerator = new MapGenerator(gameMap);
+    public void setUp() {
+        gameEngine = new GameEngine();
+        mapGenerator = gameEngine.getMapGenerator();
         mapGenerator.readConquestFile("C:\\Users\\shiva\\Desktop\\Africa.map");
-        graphUtil = mapGenerator.buildGraph();
         gameMap = gameEngine.getGameState().getGameMapObject();
+        graphUtil = mapGenerator.buildGraph();
+        validator = new MapValidator(gameMap);
 
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
     }
 
     @Test
