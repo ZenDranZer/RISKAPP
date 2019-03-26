@@ -44,7 +44,7 @@ public class StartGamePanel extends JPanel {
 	}
 
 	private void continueButtonMouseClicked(MouseEvent e) throws IOException {
-		if (continueButton.isEnabled() && !mapFileChooser.getSelectedFile().getAbsolutePath().isEmpty()) {
+		if (continueButton.isEnabled() && (isSet||!mapFileChooser.getSelectedFile().getAbsolutePath().isEmpty())) {
 			ArrayList<String> playerName = new ArrayList<>();
 			int value = (Integer) numberOfPlayers.getValue();
 			if (validateNames()) {
@@ -113,6 +113,9 @@ public class StartGamePanel extends JPanel {
 					container.revalidate();
 				}
 			}
+		}
+		else{
+			System.out.println("Please choose a file"); //pop up accordingly
 		}
 	}
 

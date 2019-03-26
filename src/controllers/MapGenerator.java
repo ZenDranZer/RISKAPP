@@ -114,6 +114,11 @@ contains the required hashmaps.
             while(!inputLine.equals("")){
 
                 String[] inpList = inputLine.split(",");
+                for(int i=0;i<inpList.length;i++){
+                    if(inpList[i].equals("")){
+                        return "ONE OR MORE VALUES ARE EMPTY";
+                    }
+                }
                 GameCountry currentCountry;
                 String continentName;
 
@@ -255,7 +260,7 @@ contains the required hashmaps.
                 returnString = this.readCountryList(inputReader);
 
                 if (!returnString.equals("SUCCESS")){
-                    return returnString;
+                    return returnString+" AROUND LINE "+(lineCounter+getListOfContinents().size()+3);
                 }
                 lineCounter++;
             }
