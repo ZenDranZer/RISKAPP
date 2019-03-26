@@ -20,9 +20,6 @@ public class TestRiskCardController {
     @Before
     public void setUp() throws Exception {
 
-        //gameEngine = new GameEngine();
-        //gameState = gameEngine.getGameState();
-        //gameMap = gameEngine.getGameState().getGameMapObject();
         gameMap = new GameMap();
         for (int i=0;i<10;i++){
             GameCountry country = new GameCountry();
@@ -36,6 +33,9 @@ public class TestRiskCardController {
     public void tearDown() throws Exception {
     }
 
+    /**
+     * Checks if the card deck constructed from Gamemap is correct or not
+     */
     @Test
     public void checkDeckSize() {
 
@@ -43,6 +43,21 @@ public class TestRiskCardController {
         System.out.println(gameMap.getAllCountries().size());
         System.out.println(riskCardController.getCardDeck().size());
         assertEquals(gameMap.getAllCountries().size(),riskCardController.getCardDeck().size());
+    }
+
+    @Test
+    public void afterReinforcementCardStatus() {
+
+    }
+
+    @Test
+    public void afterAttackCardStatus() {
+
+    }
+
+    @Test
+    public void totalCards() {
+
     }
 
 }
