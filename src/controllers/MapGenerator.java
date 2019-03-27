@@ -57,7 +57,7 @@ public class  MapGenerator {
 
     /**Reads continents from a file and store them in required structure.
      *
-     * @param inputReader
+     * @param inputReader BufferedReader for reading continents
      * @return object of buffered reader to continue reading after continents are read.
      */
     public String readContinentList(BufferedReader inputReader) {
@@ -94,7 +94,7 @@ public class  MapGenerator {
     }
 
     /**Reads countries from the file and stores them in the required structure.
-     * @param inputReader
+     * @param inputReader BufferedReader Object
      * @return object of buffered reader to continue reading after continents are read.
      */
     public String readCountryList(BufferedReader inputReader) {
@@ -117,9 +117,7 @@ public class  MapGenerator {
                 if(countryExists(inpList[0])==null) {
 
                     currentCountry = new GameCountry();
-                    /*   countryList.add(currentCountry);*/
                     currentCountry.setCountryName(inpList[0]);
-                    //countryHashMap.put(inpList[0],currentCountry);
                     gameMap.addCountry(currentCountry);
                 } else {
                     currentCountry = countryExists(inpList[0]);
@@ -173,7 +171,7 @@ public class  MapGenerator {
     }
 
     /**Checks if a country already exist using the country name.
-     * @param countryName
+     * @param countryName NAme of country to check if exists or not
      * @return null if the country does not exist and the country object if the country already exists.
      */
     public GameCountry countryExists(String  countryName) {
@@ -184,7 +182,7 @@ public class  MapGenerator {
     }
 
     /**This method gets the initial parameters from the map file.
-     * @param inputReader
+     * @param inputReader BufferedReader Object
      * @return returns the status of execution of the method
      */
     public String getGuiParameters(BufferedReader inputReader) {
@@ -193,7 +191,6 @@ public class  MapGenerator {
             inputLine = inputReader.readLine();
             while (!inputLine.equals("")) {
                 String[] inpList = inputLine.split("=");
-                //guiHashMap.put(inpList[0],inpList[1]);
                 gameMap.setGetGuiHashMapParameter(inpList[0],inpList[1]);
                 inputLine = inputReader.readLine();
             }
@@ -204,7 +201,7 @@ public class  MapGenerator {
     }
 
     /**This method is called when a user wants to load the file from the system.
-     * @param filePath
+     * @param filePath PAth of Map file
      * @return status of the operation
      * @throws IOException
      */
@@ -222,7 +219,7 @@ public class  MapGenerator {
             while ((inputLine = inputReader.readLine()) != null) {
                 if (lineCounter == 6) {
                     if (inputLine.equals("[Continents]")) {
-                        returnString= this.readContinentList(inputReader);//reader is returned as we need to have a single reader reading different parts of the map file.
+                        returnString= this.readContinentList(inputReader);
                         if (!returnString.equals("SUCCESS")) {
                             return "ONE OR MORE DUPLICATE CONTINENTS ENCOUNTERED";
                         }
@@ -281,7 +278,6 @@ public class  MapGenerator {
                         + country.getContinent().getContinentName()+neighbours + "\n");
             }
         } catch (IOException ex) {
-            // Report
         } finally {
             try {writer.close();} catch (Exception ex) {/*ignore*/}
         }
@@ -311,8 +307,8 @@ public class  MapGenerator {
 
     /**This method adds a continent in the map.
      *
-     * @param continentName
-     * @param continentValue
+     * @param continentName Name of Continent to be added
+     * @param continentValue Value of continent
      * @return returns the status of the method execution
      */
     public String addContinent(String continentName, int continentValue) {
@@ -332,9 +328,9 @@ public class  MapGenerator {
     }
 
     /**This method adds a country to the map.
-     * @param continentname
-     * @param countryName
-     * @param neighbours
+     * @param continentname Name of Continent to be added
+     * @param countryName Name of country to be added in the continent
+     * @param neighbours Country neighbours
      * @return returns the status of the method execution
      */
     public String addCountry(String continentname, String countryName, ArrayList<String> neighbours) {
@@ -438,8 +434,8 @@ public class  MapGenerator {
 
     /**This method adds a neighbour for a specified country on user demand.
      *
-     * @param countryName
-     * @param neighborName
+     * @param countryName Name of country whose neighbour is to be added
+     * @param neighborName Name of neighbour to be added
      * @return status of the method execcution
      */
     public String addNeighbor(String countryName , String neighborName) {
@@ -459,8 +455,8 @@ public class  MapGenerator {
 
     /**This method changes the continent of a specified country on user demand.
      *
-     * @param countryName
-     * @param continentName
+     * @param countryName Name of country whose continent to be added
+     * @param continentName Name of continent where it is to be added
      * @return status of the method execcution
      */
     public String changeCountryContinent(String countryName, String continentName) {
@@ -481,8 +477,8 @@ public class  MapGenerator {
 
     /** This method changes the name of a specified country on user demand.
      *
-     * @param oldName
-     * @param newName
+     * @param oldName Change name from
+     * @param newName Change name to
      * @return status of the method execution
      */
     public String changeCountryName(String oldName , String newName) {
@@ -502,7 +498,7 @@ public class  MapGenerator {
 
     /**This method removes a whole country from the database on user demand.
      *
-     * @param countryName
+     * @param countryName Name of country which is to be removed
      * @return status of the method execcution
      */
     public String removeCountry(String countryName) {
@@ -512,7 +508,7 @@ public class  MapGenerator {
                 neighbor.getNeighbouringCountries().remove(countryName);
             }
             if (gameMap.getCountryHashMap().containsKey(countryName)) {
-                gameMap.getCountryHashMap().get(countryName).getContinent().   //Removes the country from its continent's countrylist.
+                gameMap.getCountryHashMap().get(countryName).getContinent().
                         getCountries().remove(gameMap.getCountryHashMap().get(countryName));
                 returnString = validateContinent(gameMap.getCountryHashMap().get(countryName).getContinent());
                 gameMap.removeCountry(countryName);
@@ -524,14 +520,14 @@ public class  MapGenerator {
                 return "COUNTRY DOES NOT EXIST";
             }
             return returnString;
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             return "EXCEPTION IN ACCESSING DATA";
         }
     }
 
     /**This method validates if the continent has any country or not.
      *
-     * @param continent
+     * @param continent Continent to be validated
      * @return returns the appropriate signal
      */
     public String validateContinent(GameContinent continent) {
@@ -547,8 +543,8 @@ public class  MapGenerator {
 
     /**This method changes the name of the specified continent.
      *
-     * @param continentName
-     * @param newContinentName
+     * @param continentName Name of continent whose name is to be changed
+     * @param newContinentName new continent name
      * @return status of the method execcution
      */
     public String changeContinentName(String continentName, String newContinentName) {
@@ -569,8 +565,8 @@ public class  MapGenerator {
 
     /**This method changes the value of the continent.
      *
-     * @param continentName
-     * @param continentValue
+     * @param continentName Old continent value
+     * @param continentValue new continent value
      * @return status of the method execcution
      */
     public String changeContinentValue(String continentName, int continentValue) {
@@ -588,7 +584,7 @@ public class  MapGenerator {
 
     /***
      * This Method checks for all continents owned by a player
-     * @param playerID
+     * @param playerID ID of player
      * @return ArrayList<GameContinent> continentsOwnedByPlayer
      */
     public ArrayList<GameContinent> checkContinentsOwnedByOnePlayer(int playerID) {
