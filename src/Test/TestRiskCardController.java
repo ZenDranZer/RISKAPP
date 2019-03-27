@@ -54,14 +54,14 @@ public class TestRiskCardController {
      * Checks if the card deck constructed from Gamemap is correct or not
      */
     @Test
-    public void checkDeckSize() {
+    public void testCheckDeckSize() {
 
         riskCardController.initRiskCardDeck(gameMap);
         assertEquals(gameMap.getAllCountries().size(),riskCardController.getCardDeck().size());
     }
 
     @Test
-    public void afterReinforcementCardStatus() {
+    public void testAfterReinforcementCardStatus() {
 
         HashMap<String,ArrayList<RiskCard>> possibleset = new HashMap<>();
         ArrayList<RiskCard> chooseSet;
@@ -84,12 +84,12 @@ public class TestRiskCardController {
     }
 
     @Test
-    public void afterAttackCardStatus() {
+    public void testAfterAttackCardStatus() {
 
     }
 
     @Test
-    public void totalCards() {
+    public void testTotalCards() {
         int totalCards = 0;
         riskCardController.initRiskCardDeck(gameMap);
         p1.addRiskCard(riskCardController.allocateRiskCard());
