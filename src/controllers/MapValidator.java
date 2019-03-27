@@ -126,6 +126,13 @@ public class MapValidator {
         }
         return true;
     }
+
+    /**
+     * Function to check if the continent is fully linked with other continents in the map
+     * @param continent Continent to be checked
+     * @param graphUtilObject GraphUtilObject
+     * @return Boolean value indicating linking of the continent
+     */
     public boolean isContinentFullyLinked(GameContinent continent, GraphUtil graphUtilObject) {
         ArrayList<String> countries = new ArrayList<>();
         for(GameCountry country : continent.getCountries().values()) {
