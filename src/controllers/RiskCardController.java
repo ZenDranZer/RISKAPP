@@ -16,6 +16,7 @@ public class RiskCardController {
     private GameMap gameMap;
     /**A list of possible army types.*/
     private final HashMap<Integer,String> armyType;
+    /**Stores the Integer keys for different types of risk card.*/
     private final ArrayList<Integer> army;
 
     //{"Infantry","Cavalry","Artillery"};

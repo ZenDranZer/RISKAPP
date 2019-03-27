@@ -6,6 +6,7 @@ import controllers.TurnController;
 import models.GameCountry;
 import models.GameState;
 import models.Player;
+import models.RiskCard;
 import views.miscellaneous.GraphView;
 import views.miscellaneous.TradePanel;
 import views.miscellaneous.WorldDominationView;
@@ -72,12 +73,13 @@ public class GamePlay extends JPanel implements Observer {
 	private JButton btnMapview;
 	private JButton btnEndgame;
 	private WorldDominationView worldDominationView;
-
+	private StartGamePanel parent;
 	private boolean countryWon;
 	/**
 	 * Renders the initial view of the panel
 	 */
-	public GamePlay(GameEngine engine) {
+	public GamePlay(GameEngine engine, StartGamePanel parent) {
+		this.parent = parent;
 		objGameEngine = engine;
 		objTurnController = objGameEngine.getTurmController();
 		activePlayer = objGameEngine.getGameState().getActivePlayer();
@@ -267,7 +269,10 @@ public class GamePlay extends JPanel implements Observer {
 				} else {
 					if(phase.equals("attack") && countryWon)
 					{
-						// TODO:  add new RISK card to player
+						//TODO
+						RiskCard card;
+						card = objGameEngine.getGameState().getRiskController().allocateRiskCard();
+						activePlayer.addRiskCard(card);
 					}
 					phase = "fortify";
 					updateFortificationPanel();
@@ -320,7 +325,7 @@ public class GamePlay extends JPanel implements Observer {
 		chckbxAllOutAttack.setBounds(300, 87, 200, 23);
 		add(chckbxAllOutAttack);
 		
-		btnSwapcards = new JButton("Swap RISK Cards");
+		btnSwapcards = new JButton("Trade Cards");
 
 		btnSwapcards.addMouseListener(new MouseAdapter() {
 			@Override
@@ -348,6 +353,7 @@ public class GamePlay extends JPanel implements Observer {
 		btnEndgame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				endGame();
 			}
 		});
 		btnEndgame.setBounds(313, 483, 176, 23);
@@ -388,6 +394,16 @@ public class GamePlay extends JPanel implements Observer {
 		rdbtnRed3.setVisible(value);
 		rdbtnWhite1.setVisible(value);
 		rdbtnWhite2.setVisible(value);
+	}
+
+	private void endGame(){
+		/*
+		this.setVisible(false);
+		parent.getParentPanel().setVisible(true);
+		objGameEngine.getMapGenerator().reSetAllocations();
+		objGameEngine.resetGame();
+		* */
+		System.exit(0);
 	}
 
 	/**
@@ -845,7 +861,8 @@ public class GamePlay extends JPanel implements Observer {
 			String status = arg1.toString().split("|")[0];
 			if(status.equals("winner"))
 			{
-				//TODO :display game win and UI cleared
+				JOptionPane.showMessageDialog(this,activePlayer.getName()+" won!");
+				System.exit(0);
 			}
 			else if(status.equals("success"))
 			{

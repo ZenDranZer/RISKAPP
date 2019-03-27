@@ -43,6 +43,10 @@ public class StartGamePanel extends JPanel {
 		mapFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MAP file only", "map"));
 	}
 
+	public JPanel getParentPanel() {
+		return parent;
+	}
+
 	private void continueButtonMouseClicked(MouseEvent e) throws IOException {
 		if (continueButton.isEnabled() && (isSet||!mapFileChooser.getSelectedFile().getAbsolutePath().isEmpty())) {
 			ArrayList<String> playerName = new ArrayList<>();
@@ -88,7 +92,7 @@ public class StartGamePanel extends JPanel {
 							gameEngine.initialiseEngine();
 							JOptionPane.showMessageDialog(this, message);
 							Container container = this.getParent();
-							GamePlay gamePlay = new GamePlay(gameEngine);
+							GamePlay gamePlay = new GamePlay(gameEngine,this);
 							gameEngine.getGameState().addObserver(gamePlay);
 							gamePlay.setVisible(true);
 							this.setVisible(false);
@@ -105,7 +109,7 @@ public class StartGamePanel extends JPanel {
 				} else {
 					gameEngine.initialiseEngine();
 					Container container = this.getParent();
-					GamePlay gamePlay = new GamePlay(gameEngine);
+					GamePlay gamePlay = new GamePlay(gameEngine,this);
 					gameEngine.getGameState().addObserver(gamePlay);
 					gamePlay.setVisible(true);
 					this.setVisible(false);
