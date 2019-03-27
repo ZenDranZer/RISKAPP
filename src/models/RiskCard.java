@@ -7,7 +7,9 @@ import java.util.Observable;
  */
 public class RiskCard extends Observable {
 
+	/**Specifies the unique country name per card.*/
 	private String countryName;
+
 	private int armyType;
 
 	public String getCountryName() {

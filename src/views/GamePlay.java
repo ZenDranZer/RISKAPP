@@ -85,7 +85,7 @@ public class GamePlay extends JPanel implements Observer {
 		activePlayer = objGameEngine.getGameState().getActivePlayer();
 		worldDominationView = new WorldDominationView(objGameEngine.getGameState());
 		worldDominationView.setVisible(true);
-		worldDominationView.setBounds(800,60,400,200);
+		worldDominationView.setBounds(800,60,400,400);
 		objGameEngine.getGameState().getRiskController().initRiskCardDeck(
 				objGameEngine.getGameState().getGameMapObject());
 		add(worldDominationView);
@@ -378,6 +378,7 @@ public class GamePlay extends JPanel implements Observer {
 	}
 
 
+	/**This is an event function for graph view.*/
     private void btnMapviewMouseClicked(MouseEvent e){
         GraphView graphView = new GraphView(objGameEngine);
         graphView.setVisible(true);
@@ -396,6 +397,7 @@ public class GamePlay extends JPanel implements Observer {
 		rdbtnWhite2.setVisible(value);
 	}
 
+	/**This function ends the game and close the frame.*/
 	private void endGame(){
 		/*
 		this.setVisible(false);
@@ -522,6 +524,7 @@ public class GamePlay extends JPanel implements Observer {
 		objTurnController.placeArmy(activePlayer, selectedCountry, reinforcements);
 	}
 
+	/**This function is used to show the trade panel for risk card trading.*/
 	private void showTradePanel(){
 		this.setVisible(false);
 		TradePanel tradePanel = new TradePanel(objGameEngine,this);

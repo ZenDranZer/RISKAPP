@@ -18,7 +18,6 @@ public class RiskCardController {
     private final HashMap<Integer,String> armyType;
     /**Stores the Integer keys for different types of risk card.*/
     private final ArrayList<Integer> army;
-
     //{"Infantry","Cavalry","Artillery"};
     /**A public constructor for initializing all the data structures.*/
     public RiskCardController() {
@@ -52,6 +51,7 @@ public class RiskCardController {
 
     }
 
+    /**This is used to get the risk card deck*/
     public ArrayList<RiskCard> getCardDeck() {
         return cardDeck;
     }
@@ -173,16 +173,16 @@ public class RiskCardController {
 
         int armies = activePlayer.getRemainingArmies();
         activePlayer.setRemainingArmies(armies+(noOfTrades*5));
-        noOfTrades++;
-        return "You got :"+ (noOfTrades*5) + " armies by trading your Risk Cards";
+        incrementTrade();
+        return "You got :"+ (getNoOfTrades()*5) + " armies by trading your Risk Cards";
     }
 
+    /**This method will give the first card from the card deck and return it.*/
     public RiskCard allocateRiskCard() {
 
         RiskCard card;
         card = cardDeck.get(0);
         cardDeck.remove(0);
-
         return card;
     }
 
