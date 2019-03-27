@@ -68,13 +68,14 @@ public class GamePlay extends JPanel implements Observer {
 
 	private ButtonGroup grpWhiteDice;
 	private JLabel lblDefender;
-	
+
 	private JButton btnSwapcards;
 	private JButton btnMapview;
 	private JButton btnEndgame;
 	private WorldDominationView worldDominationView;
 	private StartGamePanel parent;
 	private boolean countryWon;
+
 	/**
 	 * Renders the initial view of the panel
 	 */
@@ -85,9 +86,9 @@ public class GamePlay extends JPanel implements Observer {
 		activePlayer = objGameEngine.getGameState().getActivePlayer();
 		worldDominationView = new WorldDominationView(objGameEngine.getGameState());
 		worldDominationView.setVisible(true);
-		worldDominationView.setBounds(800,60,400,200);
-		objGameEngine.getGameState().getRiskController().initRiskCardDeck(
-				objGameEngine.getGameState().getGameMapObject());
+		worldDominationView.setBounds(800, 60, 400, 200);
+		objGameEngine.getGameState().getRiskController()
+				.initRiskCardDeck(objGameEngine.getGameState().getGameMapObject());
 		add(worldDominationView);
 
 		setLayout(null);
@@ -267,9 +268,8 @@ public class GamePlay extends JPanel implements Observer {
 					updateReinforcementPanel();
 					btnSkip.setVisible(false);
 				} else {
-					if(phase.equals("attack") && countryWon)
-					{
-						//TODO
+					if (phase.equals("attack") && countryWon) {
+						// TODO
 						RiskCard card;
 						card = objGameEngine.getGameState().getRiskController().allocateRiskCard();
 						activePlayer.addRiskCard(card);
@@ -324,7 +324,7 @@ public class GamePlay extends JPanel implements Observer {
 		chckbxAllOutAttack = new JCheckBox("All out attack");
 		chckbxAllOutAttack.setBounds(300, 87, 200, 23);
 		add(chckbxAllOutAttack);
-		
+
 		btnSwapcards = new JButton("Trade Cards");
 
 		btnSwapcards.addMouseListener(new MouseAdapter() {
@@ -340,15 +340,15 @@ public class GamePlay extends JPanel implements Observer {
 		add(btnSwapcards);
 
 		btnMapview = new JButton("View Map");
-        btnMapview.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent arg0) {
-                btnMapviewMouseClicked(arg0);
-            }
-        });
+		btnMapview.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				btnMapviewMouseClicked(arg0);
+			}
+		});
 		btnMapview.setBounds(313, 449, 176, 23);
 		add(btnMapview);
-		
+
 		btnEndgame = new JButton("End Game");
 		btnEndgame.addMouseListener(new MouseAdapter() {
 			@Override
@@ -372,16 +372,15 @@ public class GamePlay extends JPanel implements Observer {
 		groupRadioSetVisibility(false);
 
 		ArrayList<Player> activePlayers = objGameEngine.getGameState().getPlayers();
-		for (Player p: activePlayers) {
+		for (Player p : activePlayers) {
 			p.addObserver(worldDominationView);
 		}
 	}
 
-
-    private void btnMapviewMouseClicked(MouseEvent e){
-        GraphView graphView = new GraphView(objGameEngine);
-        graphView.setVisible(true);
-    }
+	private void btnMapviewMouseClicked(MouseEvent e) {
+		GraphView graphView = new GraphView(objGameEngine);
+		graphView.setVisible(true);
+	}
 
 	/**
 	 *
@@ -396,13 +395,12 @@ public class GamePlay extends JPanel implements Observer {
 		rdbtnWhite2.setVisible(value);
 	}
 
-	private void endGame(){
+	private void endGame() {
 		/*
-		this.setVisible(false);
-		parent.getParentPanel().setVisible(true);
-		objGameEngine.getMapGenerator().reSetAllocations();
-		objGameEngine.resetGame();
-		* */
+		 * this.setVisible(false); parent.getParentPanel().setVisible(true);
+		 * objGameEngine.getMapGenerator().reSetAllocations();
+		 * objGameEngine.resetGame();
+		 */
 		System.exit(0);
 	}
 
@@ -461,8 +459,8 @@ public class GamePlay extends JPanel implements Observer {
 	}
 
 	/**
-	 * This function implements all out attack and
-	 * invokes alloutatack function in player model
+	 * This function implements all out attack and invokes alloutatack function
+	 * in player model
 	 */
 
 	public void allOutAttack() {
@@ -476,8 +474,8 @@ public class GamePlay extends JPanel implements Observer {
 		objGameEngine.getGameState().allOutAttack(actionCountry.getCurrentPlayer(), attackCountry, actionCountry);
 		Player defender = actionCountry.getCurrentPlayer();
 		String message = activePlayer.allOutAttack(defender, attackCountry, actionCountry);
-		txtError.setText(message);
-		if (activePlayer.getCardsHeld().size()>=5){
+		//txtError.setText(message);
+		if (activePlayer.getCardsHeld().size() >= 5) {
 			showTradePanel();
 		}
 	}
@@ -512,7 +510,7 @@ public class GamePlay extends JPanel implements Observer {
 	 * the UI
 	 */
 	public void reinforceCountry() {
-		
+
 		int reinforcements = Integer.parseInt(txtReinforce.getText());
 		String selectedCountry = lstPlayerCountries.getSelectedValue().toString();
 
@@ -522,9 +520,9 @@ public class GamePlay extends JPanel implements Observer {
 		objTurnController.placeArmy(activePlayer, selectedCountry, reinforcements);
 	}
 
-	private void showTradePanel(){
+	private void showTradePanel() {
 		this.setVisible(false);
-		TradePanel tradePanel = new TradePanel(objGameEngine,this);
+		TradePanel tradePanel = new TradePanel(objGameEngine, this);
 		tradePanel.setVisible(true);
 		Container container = this.getParent();
 		activePlayer.addObserver(tradePanel);
@@ -536,8 +534,8 @@ public class GamePlay extends JPanel implements Observer {
 	 * Updates the panel for reinforcement phase of the intended player
 	 */
 	public void updateReinforcementPanel() {
-		
-		if (activePlayer.getCardsHeld().size()>=5){
+
+		if (activePlayer.getCardsHeld().size() >= 5) {
 			showTradePanel();
 		}
 		btnAdd.setText("Reinforce");
@@ -558,6 +556,7 @@ public class GamePlay extends JPanel implements Observer {
 		btnSwapcards.setVisible(true);
 		lblactionArmiesPresent.setVisible(false);
 		lblRemainingArmies.setVisible(true);
+		countryWon = false;
 	}
 
 	/**
@@ -579,7 +578,7 @@ public class GamePlay extends JPanel implements Observer {
 				.get(selectedActionCountry);
 		objGameEngine.getGameState().attack(actionCountry.getCurrentPlayer(), attackCountry, actionCountry,
 				Integer.parseInt(selectedRedDice), Integer.parseInt(selectedWhiteDice));
-		if (activePlayer.getCardsHeld().size()>=5){
+		if (activePlayer.getCardsHeld().size() >= 5) {
 			showTradePanel();
 		}
 	}
@@ -835,8 +834,7 @@ public class GamePlay extends JPanel implements Observer {
 				objGameEngine.setNextPlayer(activePlayer, false);
 				activePlayer = objGameEngine.getGameState().getActivePlayer();
 				updateReinforcementPanel();
-				if(activePlayer.isAllocationComplete())
-				{
+				if (activePlayer.isAllocationComplete()) {
 					txtError.setText("Max allocation reached. Reinforcement skipped");
 					updateAttackPanel();
 				}
@@ -857,15 +855,13 @@ public class GamePlay extends JPanel implements Observer {
 
 		case "attack":
 			displayActions(arg1.toString());
+			
 			updateAttackPanel();
-			String status = arg1.toString().split("|")[0];
-			if(status.equals("winner"))
-			{
-				JOptionPane.showMessageDialog(this,activePlayer.getName()+" won!");
+			String status = arg1.toString();
+			if (status.equals("winner")) {
+				JOptionPane.showMessageDialog(this, activePlayer.getName() + " won!");
 				System.exit(0);
-			}
-			else if(status.equals("success"))
-			{
+			} else if (status.equals("success")) {
 				countryWon = true;
 			}
 			break;
@@ -875,64 +871,66 @@ public class GamePlay extends JPanel implements Observer {
 			objGameEngine.setNextPlayer(activePlayer, false);
 			activePlayer = objGameEngine.getGameState().getActivePlayer();
 			updateReinforcementPanel();
+			if (activePlayer.isAllocationComplete()) {
+				txtError.setText("Max allocation reached. Reinforcement skipped");
+				updateAttackPanel();
+			} 
 			break;
 		}
 	}
 
-	public void displayActions(String messgae)
-	{
-		switch(phase)
-		{
+	public void displayActions(String message) {
+		switch (phase) {
 		case "initial":
-			txtError.setText(activePlayer.getName() + " allocated " +txtReinforce.getText() + "armies to " + lstPlayerCountries.getSelectedValue().toString() );
+			txtError.setText(activePlayer.getName() + " allocated " + txtReinforce.getText() + "armies to "
+					+ lstPlayerCountries.getSelectedValue().toString());
 			break;
 		case "reinforce":
-			txtError.setText(activePlayer.getName() + " reinforced "+lstPlayerCountries.getSelectedValue().toString()+ " with " +txtReinforce.getText() + "armies ");
-			//status update for RISK Cards
+			txtError.setText(activePlayer.getName() + " reinforced " + lstPlayerCountries.getSelectedValue().toString()
+					+ " with " + txtReinforce.getText() + "armies ");
+			// status update for RISK Cards
 			break;
 		case "attack":
-			//update for attacks based on status returned
+			// update for attacks based on status returned
 			String actions = "";
-			
-			if(chckbxAllOutAttack.isSelected())
-			{
-				actions = activePlayer.getName() + " attacked " + lstActionCountry.getSelectedValue().toString() + " from "+ lstPlayerCountries.getSelectedValue().toString() ;
+			System.out.println(chckbxAllOutAttack.isSelected());
+			if (chckbxAllOutAttack.isSelected()) {
+				
+				actions = activePlayer.getName() + " attacked " + lstActionCountry.getSelectedValue().toString()
+						+ " from " + lstPlayerCountries.getSelectedValue().toString();
 				actions = actions + "\n All out attack";
-				if(countryWon)
-				{
+				if (message.equals("success")) {
 					actions = actions + " successful";
-				}
-				else
-				{
+				} else {
 					actions = actions + " not successful";
 				}
+				txtError.setText("");
 				txtError.setText(actions);
-			}
-			else
-			{
-				if(messgae.equals("success"))
-				{
-					txtError.setText(activePlayer.getName()+ " attacked "+ lstActionCountry.getSelectedValue().toString() + " and WON ");
-					
+			} else {
+				if (message.equals("success")) {
+					txtError.setText(activePlayer.getName() + " attacked "
+							+ lstActionCountry.getSelectedValue().toString() + " and WON ");
+
 				}
-				if(messgae.equals("unsuccessful"))
-				{
-					txtError.setText(activePlayer.getName()+ " attacked "+ lstActionCountry.getSelectedValue().toString() + " and LOST ");
-					txtError.append("\n Remaining Armies : "+activePlayer.getPlayerArmies() );
+				if (message.equals("unsuccessful")) {
+					txtError.setText(activePlayer.getName() + " attacked "
+							+ lstActionCountry.getSelectedValue().toString() + " and LOST ");
+					txtError.append("\n Remaining Armies : " + activePlayer.getPlayerArmies());
 				}
-				if(messgae.equals("eliminated"))
-				{
-					txtError.setText(activePlayer.getName()+ " attacked "+ lstActionCountry.getSelectedValue().toString() + " and WON ");
-					txtError.append("\n "+lblDefender.getText() + "eliminated");
+				if (message.equals("eliminated")) {
+					txtError.setText(activePlayer.getName() + " attacked "
+							+ lstActionCountry.getSelectedValue().toString() + " and WON ");
+					txtError.append("\n " + lblDefender.getText() + "eliminated");
 				}
-				if(messgae.equals("winner"))
-				{
+				if (message.equals("winner")) {
 					txtError.setText(activePlayer.getName() + " won the game ");
 				}
 			}
 			break;
 		case "fortify":
-			txtError.setText(activePlayer.getName() + " fortified "+lstPlayerCountries.getSelectedValue().toString()+ " from "+ lstActionCountry.getSelectedValue().toString() +"with "+txtReinforce.getText() + "armies ");
+			txtError.setText(activePlayer.getName() + " fortified " + lstPlayerCountries.getSelectedValue().toString()
+					+ " from " + lstActionCountry.getSelectedValue().toString() + "with " + txtReinforce.getText()
+					+ "armies ");
 			break;
 		}
 
