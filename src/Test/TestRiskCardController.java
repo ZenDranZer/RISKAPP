@@ -1,6 +1,5 @@
 package Test;
 
-import utils.*;
 import controllers.*;
 import models.*;
 import org.junit.After;

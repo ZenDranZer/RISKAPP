@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-/**
- * @author Sarvesh Vora
- */
 public class WorldDominationView extends JPanel implements Observer {
 
     private int numberOfCountry;
