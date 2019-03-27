@@ -325,27 +325,27 @@ public class Player extends Observable {
 		int successfulDefend = 0;
 		String status = "";
 
-		//Validation of Dice
+		// Validation of Dice
 		if (attackingCountry.getArmiesStationed() < 2) {
 			status = "invalid";
 			System.out.println("number of armies should be more than 2 in attacking country");
 			return status;
 		}
-		if(redDice > attackingCountry.getArmiesStationed()){
+		if (redDice > attackingCountry.getArmiesStationed()) {
 			status = "invalid";
 			System.out.println("number of dice selected can not be more than armies in attacking country");
 			return status;
 		}
 
-		if (whiteDice > defendingCountry.getArmiesStationed()){
+		if (whiteDice > defendingCountry.getArmiesStationed()) {
 			status = "invalid";
 			System.out.println("number of dice selected should be more than armies in defending country");
 			return status;
 		}
 
-		if (redDice < 1 || whiteDice < 1 || redDice > 3 || whiteDice > 3){
+		if (redDice < 1 || whiteDice < 1 || redDice > 3 || whiteDice > 3) {
 			status = "invalid";
-			System.out.println("invalid dice number");
+			System.out.println("dice can not be more than 3");
 			return status;
 		}
 
@@ -379,26 +379,16 @@ public class Player extends Observable {
 			// country with no current armies.
 			defendingCountry.setArmies(attackingCountry.getArmiesStationed() - 1);
 			attackingCountry.removeArmies(attackingCountry.getArmiesStationed() - 1);
-			status = "success";
+			status = "success" ;
+		} else {
+			status = "unsuccessful";
 		}
-		// } else if (attackingCountry.getArmiesStationed() == 0) {
-		// // give country to defender
-		// this.removeCountry(defendingCountry);
-		// defender.setCountries(defendingCountry);
-		// // placeArmy()
-		// // following lines move the army from the country that won to the
-		// // country with no current armies.
-		// // country with no current armies.
-		// attackingCountry.setArmies(defendingCountry.getArmiesStationed() -
-		// 1);
-		// defendingCountry.removeArmies(defendingCountry.getArmiesStationed() -
-		// 1);
-		// }
 
 		// check player elimination logic
 		if (defender.countries.size() == 0) {
 			this.getCardsHeld().addAll(defender.getCardsHeld());
 			eliminate(defender);
+			status = "eliminated" ;
 			if (hasPlayerWon(this)) {
 				// Return somehow that the player has won
 				status = "winner";

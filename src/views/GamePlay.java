@@ -70,7 +70,7 @@ public class GamePlay extends JPanel implements Observer {
 	
 	private JButton btnSwapcards;
 	private JButton btnMapview;
-
+	private JButton btnEndgame;
 	private WorldDominationView worldDominationView;
 
 	private boolean countryWon;
@@ -89,7 +89,7 @@ public class GamePlay extends JPanel implements Observer {
 		add(worldDominationView);
 
 		setLayout(null);
-		this.setBounds(10, 10, 883, 556);
+		this.setBounds(10, 10, 972, 556);
 		lblPlayerName = new JLabel("Player Name :" + activePlayer.getName());
 		lblPlayerName.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblPlayerName.setBounds(10, 442, 267, 32);
@@ -343,6 +343,15 @@ public class GamePlay extends JPanel implements Observer {
         });
 		btnMapview.setBounds(313, 449, 176, 23);
 		add(btnMapview);
+		
+		btnEndgame = new JButton("End Game");
+		btnEndgame.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
+		btnEndgame.setBounds(313, 483, 176, 23);
+		add(btnEndgame);
 		btnMapview.setVisible(true);
 
 		btnSkip.setVisible(false);
@@ -466,7 +475,7 @@ public class GamePlay extends JPanel implements Observer {
 		String selectedCountry = lstPlayerCountries.getSelectedValue().toString();
 
 		btnAdd.setVisible(false);
-		displayActions();
+		displayActions(null);
 		objTurnController.placeArmy(activePlayer, selectedCountry, army);
 	}
 
@@ -487,9 +496,7 @@ public class GamePlay extends JPanel implements Observer {
 	 * the UI
 	 */
 	public void reinforceCountry() {
-		if (activePlayer.getCardsHeld().size()>=5){
-			showTradePanel();
-		}
+		
 		int reinforcements = Integer.parseInt(txtReinforce.getText());
 		String selectedCountry = lstPlayerCountries.getSelectedValue().toString();
 
@@ -513,7 +520,10 @@ public class GamePlay extends JPanel implements Observer {
 	 * Updates the panel for reinforcement phase of the intended player
 	 */
 	public void updateReinforcementPanel() {
-
+		
+		if (activePlayer.getCardsHeld().size()>=5){
+			showTradePanel();
+		}
 		btnAdd.setText("Reinforce");
 		btnSkip.setVisible(false);
 		scrollPane.setVisible(true);
@@ -803,12 +813,17 @@ public class GamePlay extends JPanel implements Observer {
 
 		switch (phase) {
 		case "initial":
-			displayActions();
+			displayActions(null);
 			if (objGameEngine.getGameState().isAllocationComplete()) {
 				phase = "reinforce";
 				objGameEngine.setNextPlayer(activePlayer, false);
 				activePlayer = objGameEngine.getGameState().getActivePlayer();
 				updateReinforcementPanel();
+				if(activePlayer.isAllocationComplete())
+				{
+					txtError.setText("Max allocation reached. Reinforcement skipped");
+					updateAttackPanel();
+				}
 			} else {
 				objGameEngine.setNextPlayer(activePlayer, true);
 				activePlayer = objGameEngine.getGameState().getActivePlayer();
@@ -817,6 +832,7 @@ public class GamePlay extends JPanel implements Observer {
 			break;
 
 		case "reinforce":
+			displayActions(null);
 			displayRemainingArmies();
 			if (activePlayer.getRemainingArmies() == 0 || activePlayer.isAllocationComplete()) {
 				updateAttackPanel();
@@ -824,8 +840,9 @@ public class GamePlay extends JPanel implements Observer {
 			break;
 
 		case "attack":
+			displayActions(arg1.toString());
 			updateAttackPanel();
-			String status = arg1.toString();
+			String status = arg1.toString().split("|")[0];
 			if(status.equals("winner"))
 			{
 				//TODO :display game win and UI cleared
@@ -836,6 +853,7 @@ public class GamePlay extends JPanel implements Observer {
 			}
 			break;
 		case "fortify":
+			displayActions(null);
 			phase = "reinforce";
 			objGameEngine.setNextPlayer(activePlayer, false);
 			activePlayer = objGameEngine.getGameState().getActivePlayer();
@@ -844,7 +862,7 @@ public class GamePlay extends JPanel implements Observer {
 		}
 	}
 
-	public void displayActions()
+	public void displayActions(String messgae)
 	{
 		switch(phase)
 		{
@@ -858,24 +876,42 @@ public class GamePlay extends JPanel implements Observer {
 		case "attack":
 			//update for attacks based on status returned
 			String actions = "";
-
+			
 			if(chckbxAllOutAttack.isSelected())
 			{
 				actions = activePlayer.getName() + " attacked " + lstActionCountry.getSelectedValue().toString() + " from "+ lstPlayerCountries.getSelectedValue().toString() ;
 				actions = actions + "\n All out attack";
 				if(countryWon)
 				{
-					actions = actions + "successful";
+					actions = actions + " successful";
 				}
 				else
 				{
-					actions = actions + "not successful";
+					actions = actions + " not successful";
 				}
-
+				txtError.setText(actions);
 			}
 			else
 			{
-
+				if(messgae.equals("success"))
+				{
+					txtError.setText(activePlayer.getName()+ " attacked "+ lstActionCountry.getSelectedValue().toString() + " and WON ");
+					
+				}
+				if(messgae.equals("unsuccessful"))
+				{
+					txtError.setText(activePlayer.getName()+ " attacked "+ lstActionCountry.getSelectedValue().toString() + " and LOST ");
+					txtError.append("\n Remaining Armies : "+activePlayer.getPlayerArmies() );
+				}
+				if(messgae.equals("eliminated"))
+				{
+					txtError.setText(activePlayer.getName()+ " attacked "+ lstActionCountry.getSelectedValue().toString() + " and WON ");
+					txtError.append("\n "+lblDefender.getText() + "eliminated");
+				}
+				if(messgae.equals("winner"))
+				{
+					txtError.setText(activePlayer.getName() + " won the game ");
+				}
 			}
 			break;
 		case "fortify":
