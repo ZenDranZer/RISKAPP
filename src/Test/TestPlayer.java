@@ -95,5 +95,11 @@ public class TestPlayer {
         assertEquals("Attack was Successful" , attacker.allOutAttack(defender , attackingCountry1 , defendingCountry1));
    }
 
+   @Test
+    public void TestNumberOfCountriesGettingEliminated() {
+       attacker.attack(defender , attackingCountry1 , defendingCountry1 , 2 , 1);
+       assertEquals( 0,defender.getCountries().size());
+   }
+
 
 }
