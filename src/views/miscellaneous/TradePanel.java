@@ -33,6 +33,8 @@ public class TradePanel extends JPanel implements Observer {
     private JLabel label5;
     private JLabel numberOfCardsLabel;
     private Player activePlayer;
+    private JScrollPane scrollPane1;
+    private JList cardList;
 
     public TradePanel(GameEngine gameEngine,JPanel panel) {
         initComponents();
@@ -45,6 +47,11 @@ public class TradePanel extends JPanel implements Observer {
         playerNameLabel.setText(activePlayer.getName());
         armyLabel.setText(Integer.toString(activePlayer.getRemainingArmies()));
         numberOfCardsLabel.setText(Integer.toString(activePlayer.getCardsHeld().size()));
+        ArrayList<String> cardToString = new ArrayList<>();
+        for (RiskCard r: activePlayer.getCardsHeld()) {
+            cardToString.add(r.getCountryName()+" " + r.getArmyType());
+        }
+        cardList.setListData(cardToString.toArray());
     }
 
     private void tradeButtonMouseClicked(MouseEvent e) {
@@ -90,13 +97,15 @@ public class TradePanel extends JPanel implements Observer {
         continueButton = new JButton();
         label5 = new JLabel();
         numberOfCardsLabel = new JLabel();
+        scrollPane1 = new JScrollPane();
+        cardList = new JList();
 
         //======== this ========
 
         setLayout(new GridBagLayout());
-        ((GridBagLayout)getLayout()).columnWidths = new int[] {112, 117, 100, 0};
+        ((GridBagLayout)getLayout()).columnWidths = new int[] {112, 117, 105, 149, 0};
         ((GridBagLayout)getLayout()).rowHeights = new int[] {30, 0, 0, 0, 0, 34, 0, 0};
-        ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
+        ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
         ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
         //---- label1 ----
@@ -114,6 +123,14 @@ public class TradePanel extends JPanel implements Observer {
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 5), 0, 0));
         add(cardLabel, new GridBagConstraints(2, 2, 1, 3, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 5), 0, 0));
+
+        //======== scrollPane1 ========
+        {
+            scrollPane1.setViewportView(cardList);
+        }
+        add(scrollPane1, new GridBagConstraints(3, 2, 1, 4, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 0), 0, 0));
 
@@ -183,5 +200,10 @@ public class TradePanel extends JPanel implements Observer {
         validSet = riskCardController.getPossibleSets(player);
         numberOfCardsLabel.setText(Integer.toString(player.getCardsHeld().size()));
         tradeSetList.setModel(new DefaultComboBoxModel<>(validSet.keySet().toArray()));
+        ArrayList<String> cardToString = new ArrayList<>();
+        for (RiskCard r: activePlayer.getCardsHeld()) {
+            cardToString.add(r.getCountryName()+" " + r.getArmyType());
+        }
+        cardList.setListData(cardToString.toArray());
     }
 }
