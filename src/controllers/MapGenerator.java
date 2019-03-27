@@ -51,7 +51,7 @@ public class  MapGenerator {
      * Passes game map
      * @return
      */
-    public GameMap getGameMap(){
+    public GameMap getGameMap() {
         return this.gameMap;
     }
 
@@ -65,7 +65,7 @@ public class  MapGenerator {
             String inputLine;
 
             inputLine = inputReader.readLine();
-            while(inputLine.equals("")){
+            while(inputLine.equals("")) {
                 inputLine = inputReader.readLine();
             }
             while (!inputLine.equals("[Territories]")) {
@@ -86,9 +86,9 @@ public class  MapGenerator {
                 inputLine = inputReader.readLine();
             }
             return "SUCCESS";
-        }catch (IOException e){
+        }catch (IOException e) {
             return null;
-        }catch (NullPointerException e){
+        }catch (NullPointerException e) {
             return null;
         }
     }
@@ -107,7 +107,7 @@ public class  MapGenerator {
 
                 String[] inpList = inputLine.split(",");
                 for(int i=0;i<inpList.length;i++) {
-                    if(inpList[i].equals("")){
+                    if(inpList[i].equals("")) {
                         return "ONE OR MORE VALUES ARE EMPTY";
                     }
                 }
@@ -305,7 +305,7 @@ public class  MapGenerator {
      *
      * @return GraphUtilObject for building graph for the map
      */
-    public GraphUtil getGraphUtilObject(){
+    public GraphUtil getGraphUtilObject() {
         return graphUtilObject;
     }
 
@@ -423,7 +423,7 @@ public class  MapGenerator {
      *
      * @return arraylist of objects of each continent
      */
-    public ArrayList<String> getListOfContinents(){
+    public ArrayList<String> getListOfContinents() {
         return  new ArrayList<>(gameMap.getContinentHashMap().keySet());
     }
 
