@@ -12,6 +12,9 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Tests to validate Maps
+ */
 public class TestValidMapFormat {
 
     MapGenerator mapGenerator;

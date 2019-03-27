@@ -12,9 +12,11 @@ import java.util.HashMap;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Test Class for Risk Cards
+ */
 public class TestRiskCardController {
 
-   // RiskCardController
     GameMap gameMap;
     Player p1;
     Player p2;
@@ -93,5 +95,4 @@ public class TestRiskCardController {
         totalCards = p1.getCardsHeld().size() + p2.getCardsHeld().size() + riskCardController.getCardDeck().size();
         assertEquals(8,totalCards);
     }
-
 }

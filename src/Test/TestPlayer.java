@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test Class for Player model
+ */
 public class TestPlayer {
     Player attacker ;
     Player defender;
@@ -18,6 +21,7 @@ public class TestPlayer {
     RiskCard riskCard;
     GameMap gameMap;
     GameContinent gameContinent;
+
     @Before
     public void setup(){
         gameMap = new GameMap();

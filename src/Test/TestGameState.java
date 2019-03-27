@@ -67,11 +67,6 @@ public class TestGameState {
         testCountryHashMap.get("Russia").setCurrentPlayer(objPlayer1);
 
         Player objPlayer2 = new Player("Player 2",2,gameMap);
-       /* objPlayer2.setCountries(testCountryHashMap.get("England"));
-        objPlayer2.setCountries(testCountryHashMap.get("Russia"));*/
-
-     /*   testCountryHashMap.get("England").setCurrentPlayer(objPlayer2);
-        testCountryHashMap.get("Russia").setCurrentPlayer(objPlayer2);*/
 
         lstPlayers.add(objPlayer1);
         lstPlayers.add(objPlayer2);
