@@ -131,6 +131,18 @@ public class GameState extends Observable {
 		setChanged();
 		notifyObservers();
 	}
+	
+	/**
+	 * Invokes the reinforcement for active player
+	 * @param activePlayer
+	 * @param country
+	 * @param armies
+	 */
+	public void reinforcement(Player activePlayer, String country, int armies)
+	{
+		activePlayer.reinforcement(country, armies);
+		notifyGameStateChange();
+	}
 
 	/**
 	 * Observer for viewing change in Game based on attack phase
