@@ -283,11 +283,8 @@ public class Player extends Observable {
 		GameCountry matchedCountry = lstPlayerCountries.stream()
 				.filter(cntry -> cntry.getCountryName().equals(countryName)).findFirst().get();
 		matchedCountry.setArmies(matchedCountry.getArmiesStationed() + armies);
-		// System.out.println("Reinforced Country : " +
-		// matchedCountry.getArmiesStationed());
 		this.addPlayerArmy(armies);
-		this.updateRemainingArmies(armies);
-		// this.availableArmies = this.availableArmies - armies;
+		this.updateRemainingArmies(armies);;
 	}
 
 	/**
@@ -360,7 +357,6 @@ public class Player extends Observable {
 		int successfulDefend = 0;
 		String status = "";
 
-		// Validation of Dice
 		if (attackingCountry.getArmiesStationed() < 2) {
 			status = "invalid";
 			System.out.println("number of armies should be more than 2 in attacking country");
@@ -384,7 +380,6 @@ public class Player extends Observable {
 			return status;
 		}
 
-		// dice logic - get dice sets
 		diceSets = Dice.getDiceSets(redDice, whiteDice);
 		for (Pair diceSet : diceSets) {
 			System.out.println(diceSet.getKey().toString() + "	" + diceSet.getValue().toString());
@@ -407,12 +402,9 @@ public class Player extends Observable {
 		}
 		if (defendingCountry.getArmiesStationed() == 0) {
 			System.out.println("Country captured by attacker : " + defendingCountry.getCountryName());
-			// give country to attacker
 			defender.removeCountry(defendingCountry);
 			this.setCountries(defendingCountry);
 			this.updateContinents();
-			// following lines move the army from the country that won to the
-			// country with no current armies.
 			defendingCountry.setArmies(attackingCountry.getArmiesStationed() - 1);
 			attackingCountry.removeArmies(attackingCountry.getArmiesStationed() - 1);
 			status = "success";
@@ -420,13 +412,12 @@ public class Player extends Observable {
 			status = "unsuccessful";
 		}
 
-		// check player elimination logic
+		// player elimination logic
 		if (defender.countries.size() == 0) {
 			this.getCardsHeld().addAll(defender.getCardsHeld());
 			eliminate(defender);
 			status = "eliminated";
 			if (hasPlayerWon(this)) {
-				// Return somehow that the player has won
 				status = "winner";
 			}
 		}
@@ -438,9 +429,9 @@ public class Player extends Observable {
 	/**
 	 * this function implements all out attack mode
 	 * 
-	 * @param defender
-	 * @param attackingCountry
-	 * @param defendingCountry
+	 * @param defender Player on who attack is done
+	 * @param attackingCountry Country of attacking player
+	 * @param defendingCountry Country of defending player
 	 * @return String message for status of attack
 	 */
 	public String allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry) {
@@ -450,10 +441,6 @@ public class Player extends Observable {
 		while (numberOfArmies_attacker > 1) {
 
 			int redDice = 0;
-			// get max red dice
-			// if (numberOfArmies_attacker == 1) {
-			// redDice = 1;
-			// } else
 			if (numberOfArmies_attacker == 2) {
 				redDice = 1;
 			} else if (numberOfArmies_attacker == 3) {
@@ -469,9 +456,6 @@ public class Player extends Observable {
 			} else if (numberOfArmies_defender >= 2) {
 				whiteDice = 2;
 			}
-			// else {
-			// whiteDice = 3;
-			// }
 			status = attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
 			numberOfArmies_attacker = attackingCountry.getArmiesStationed();
 			numberOfArmies_defender = defendingCountry.getArmiesStationed();
