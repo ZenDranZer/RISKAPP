@@ -7,5 +7,5 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         ModelsTestSuit.class,ControllersTestSuite.class
 })
-public class RiskTestSuite {
+public class RISKAPPTestSuite {
 }
