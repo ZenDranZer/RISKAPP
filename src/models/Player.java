@@ -463,11 +463,7 @@ public class Player extends Observable {
 			numberOfArmies_attacker = attackingCountry.getArmiesStationed();
 			numberOfArmies_defender = defendingCountry.getArmiesStationed();
 		}
-		if ( status.equals("eliminated") || defendingCountry.getCurrentPlayer().getId() == attackingCountry.getCurrentPlayer().getId()) {
-			return "Attack was Successful";
-		} else {
-			return "Attack was not Successful";
-		}
+		return status;
 	}
 
 	/**
