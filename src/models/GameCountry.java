@@ -92,6 +92,10 @@ public class GameCountry extends Observable {
         this.armiesStationed = armiesStationed;
     }
 
+    /**
+     * Remove armies from player armies
+     * @param armies no of armies to be removed
+     */
     public void removeArmies(int armies) {
         this.armiesStationed-=armies;
     }
