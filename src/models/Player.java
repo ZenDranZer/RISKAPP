@@ -142,6 +142,10 @@ public class Player extends Observable {
 		notifyObservers();
 	}
 
+	/**
+	 * Remove player armies from Player army list
+	 * @param player_armies No of armies to be removed
+	 */
 	public void removePlayerArmies(int player_armies) {
 		this.playerArmies -= player_armies;
 		setChanged();
@@ -412,7 +416,6 @@ public class Player extends Observable {
 			status = "unsuccessful";
 		}
 
-		// player elimination logic
 		if (defender.countries.size() == 0) {
 			this.getCardsHeld().addAll(defender.getCardsHeld());
 			eliminate(defender);
