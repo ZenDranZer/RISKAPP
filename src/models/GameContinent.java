@@ -1,14 +1,12 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Observable;
 
 /**
  * Represents the Continent Model in the game
  * Each country can only belong to one continent
  */
-public class GameContinent extends Observable {
+public class GameContinent {
 
     private String continentName;
     private int continentValue;

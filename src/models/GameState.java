@@ -15,6 +15,7 @@ public class GameState extends Observable {
 	private GameMap gameMap;
 	private Player activePlayer;
 	private RiskCardController riskController;
+	public int attacked = 0;
 
 	public GameState() {
 		players = new ArrayList<>();
@@ -142,6 +143,8 @@ public class GameState extends Observable {
 
 	public void attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
 		String status = activePlayer.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
+		if(status.equalsIgnoreCase("Success"))
+			attacked=1;
 		setChanged();
 		notifyObservers(status);
 	}

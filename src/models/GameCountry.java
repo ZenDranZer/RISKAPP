@@ -1,11 +1,10 @@
 package models;
 import java.util.HashMap;
-import java.util.Observable;
 
 /**
  * Represents the Country objects used in the Game
  */
-public class GameCountry extends Observable {
+public class GameCountry {
 
     private String countryName;
     private HashMap<String,GameCountry> neighbouringCountries;

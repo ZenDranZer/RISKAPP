@@ -8,7 +8,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        TestTurnController.class,TestValidMapFormat.class,TestRiskCardController.class,TestGameEngine.class,TestMapValidator.class
+        TestTurnController.class, TestMapGenerator.class,TestRiskCardController.class,TestGameEngine.class,TestMapValidator.class
 })
 public class ControllersTestSuite {
 }
