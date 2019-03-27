@@ -3,6 +3,7 @@ package Test;
 import models.*;
 import org.junit.Before;
 import org.junit.Test;
+import views.GamePlay;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,8 @@ public class TestPlayer {
     RiskCard riskCard;
     GameMap gameMap;
     GameContinent gameContinent;
+    GamePlay gamePlay ;
+    GameState gameState;
     @Before
     public void setup(){
         gameMap = new GameMap();
@@ -64,8 +67,14 @@ public class TestPlayer {
         attacker.addRiskCard(riskCard);
         defender.addRiskCard(riskCard);
         attacker.setCardsHeld(arrayList);
+        attacker.setPlayerArmies(1);
+        attacker.setPlayerArmies(2);
+        attacker.setPlayerArmies(3);
         defender.setCardsHeld(arrayList);
         attackingCountry1.setCurrentPlayer(attacker);
+        gameState = new GameState();
+        gameState.setActivePlayer(attacker);
+        defender.setPlayerArmies(1);
 
 
     }
@@ -92,13 +101,20 @@ public class TestPlayer {
    @Test
     public void TestAlloutAttack() {
 
-        assertEquals("Attack was Successful" , attacker.allOutAttack(defender , attackingCountry1 , defendingCountry1));
+        assertEquals("eliminated" , attacker.allOutAttack(defender , attackingCountry1 , defendingCountry1));
    }
 
    @Test
     public void TestNumberOfCountriesGettingEliminated() {
        attacker.attack(defender , attackingCountry1 , defendingCountry1 , 2 , 1);
        assertEquals( 0,defender.getCountries().size());
+   }
+
+   @Test
+    public void TestNumberOfArmiesAddedtoWinner() {
+       gameState.attack(defender , attackingCountry1 , defendingCountry1 , 1 , 1);
+
+       assertEquals( 2,gameState.getActivePlayer().getPlayerArmies());
    }
 
 
