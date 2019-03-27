@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestGameState {
     public ArrayList<Player> lstPlayers;
@@ -21,25 +22,25 @@ public class TestGameState {
     public static GameMap gameMap;
         @Before
         public void setUp() throws Exception {
-            gameMap = new GameMap();
-            mapGenerator = new MapGenerator(this.gameMap);
             lstPlayers = new ArrayList<Player>();
             testCountryHashMap = new HashMap<String,GameCountry>();
             testContinentHashMap = new HashMap<String,GameContinent>();
             gameMap = new GameMap();
-            mapGenerator = new MapGenerator(this.gameMap);
             lstPlayers = new ArrayList<Player>();
             testCountryHashMap = new HashMap<String,GameCountry>();
             testContinentHashMap = new HashMap<String,GameContinent>();
+            mapGenerator = new MapGenerator(this.gameMap);
             makeContinentList();
             makeCountryList();
             addCountriesToContinents();
             makePlayerList();
             updateGlobals();
+
+
         }
 
     @Test
-    public void TestFortification(){
+    public void testFortification(){
         GameState gameState= new GameState();
         gameState.setActivePlayer(lstPlayers.get(0));
         gameState.fortification(lstPlayers.get(0).getCountries().get(0).getCountryName(),lstPlayers.get(0).getCountries().get(1).getCountryName(),2);
@@ -47,22 +48,30 @@ public class TestGameState {
             assertEquals(7,lstPlayers.get(0).getCountries().get(0).getArmiesStationed());
             assertEquals(3,lstPlayers.get(0).getCountries().get(1).getArmiesStationed());
     }
+    @Test
+    public void testGameEnd(){
+        GameState gameState= new GameState();
+        System.out.println(hasPlayerWon(lstPlayers.get(0)));
+        assertTrue(hasPlayerWon(lstPlayers.get(0)));
+    }
 
     public void makePlayerList() {
         Player objPlayer1 = new Player("Player 1",1,gameMap);
         objPlayer1.setCountries(testCountryHashMap.get("India"));
         objPlayer1.setCountries(testCountryHashMap.get("China"));
-
+        objPlayer1.setCountries(testCountryHashMap.get("England"));
+        objPlayer1.setCountries(testCountryHashMap.get("Russia"));
         testCountryHashMap.get("India").setCurrentPlayer(objPlayer1);
         testCountryHashMap.get("China").setCurrentPlayer(objPlayer1);
-
+        testCountryHashMap.get("England").setCurrentPlayer(objPlayer1);
+        testCountryHashMap.get("Russia").setCurrentPlayer(objPlayer1);
 
         Player objPlayer2 = new Player("Player 2",2,gameMap);
-        objPlayer2.setCountries(testCountryHashMap.get("England"));
-        objPlayer2.setCountries(testCountryHashMap.get("Russia"));
+       /* objPlayer2.setCountries(testCountryHashMap.get("England"));
+        objPlayer2.setCountries(testCountryHashMap.get("Russia"));*/
 
-        testCountryHashMap.get("England").setCurrentPlayer(objPlayer2);
-        testCountryHashMap.get("Russia").setCurrentPlayer(objPlayer2);
+     /*   testCountryHashMap.get("England").setCurrentPlayer(objPlayer2);
+        testCountryHashMap.get("Russia").setCurrentPlayer(objPlayer2);*/
 
         lstPlayers.add(objPlayer1);
         lstPlayers.add(objPlayer2);
@@ -79,6 +88,7 @@ public class TestGameState {
 
         testContinentHashMap.put("Asia", continent1);
         testContinentHashMap.put("Europe", continent2);
+        gameMap.setContinentHashMap(testContinentHashMap);
     }
 
     public void makeCountryList() {
@@ -112,6 +122,7 @@ public class TestGameState {
         testCountryHashMap.put(country2.getCountryName(),country2);
         testCountryHashMap.put(country3.getCountryName(),country3);
         testCountryHashMap.put(country4.getCountryName(),country4);
+        gameMap.setCountryHashMap(testCountryHashMap);
     }
 
     public void addCountriesToContinents() {
@@ -134,5 +145,11 @@ public class TestGameState {
             mapGenerator.getGameMap().countryHashMap.put(cntry.getCountryName(), cntry);
         }
 
+    }
+    public boolean hasPlayerWon(Player player) {
+        if (player.getCountries().size() == this.testCountryHashMap.size()) {
+            return true;
+        }
+        return false;
     }
 }
