@@ -15,20 +15,22 @@ public class MapValidator {
     HashMap<String, GameContinent>continentHashMap;
     HashMap<String, String>guiHashMap;
     GameMap gameMap;
-	public MapValidator(GameMap map){
+
+    public MapValidator(GameMap map) {
         gameMap = map;
         countryHashMap = gameMap.getCountryHashMap();
         continentHashMap = gameMap.getContinentHashMap();
         guiHashMap = gameMap.getGuiHashMap();
     }
+
     /**
 	 * Check whether a country has duplicate neighbors
 	 * @param neighbours List of neighboring countries 
 	 * @return true 
 	 */
-    public boolean hasDuplicateNeighbours(ArrayList<String> neighbours){
+    public boolean hasDuplicateNeighbours(ArrayList<String> neighbours) {
         Set<String> tempSet = new HashSet<>(neighbours);
-        if(tempSet.size()==neighbours.size()){
+        if(tempSet.size()==neighbours.size()) {
             return false;
         }
         return true;
@@ -39,9 +41,9 @@ public class MapValidator {
      * @param continents List of GameContinents
      * @return true in only one country present 
      */
-    public boolean hasSingleCountryContinent(ArrayList<GameContinent> continents){
-        for(GameContinent continent : continents){
-            if(continent.getCountries().size()<=1){
+    public boolean hasSingleCountryContinent(ArrayList<GameContinent> continents) {
+        for(GameContinent continent : continents) {
+            if(continent.getCountries().size()<=1) {
                 return true;
             }
         }
@@ -53,9 +55,9 @@ public class MapValidator {
      * @param countries list Game countries
      * @return true is loop is present
      */
-    public boolean containsLoop(ArrayList<GameCountry> countries){
-        for(GameCountry country:countries){
-            if(country.getNeighbouringCountries().containsKey(country.getCountryName())){
+    public boolean containsLoop(ArrayList<GameCountry> countries) {
+        for(GameCountry country:countries) {
+            if(country.getNeighbouringCountries().containsKey(country.getCountryName())) {
                 return true;
             }
         }
@@ -67,8 +69,8 @@ public class MapValidator {
      * @param country GameCountry representing a country
      * @return true if neighbors are present
      */
-    public boolean hasNeighbor(GameCountry country){ // see if the neighbour list is initialized in the model constructor and if not, do it.
-        if(country.getNeighbouringCountries().isEmpty()){
+    public boolean hasNeighbor(GameCountry country) {
+        if(country.getNeighbouringCountries().isEmpty()) {
             return false;
         }
         return true;
@@ -79,8 +81,8 @@ public class MapValidator {
      * @param listOfContinents List of Game Continents
      * @return true if the continent count is valid
      */
-    public boolean hasValidNumberOfContinents(ArrayList<GameContinent> listOfContinents){
-        if(listOfContinents.size()>1 && listOfContinents.size()<=32 ){
+    public boolean hasValidNumberOfContinents(ArrayList<GameContinent> listOfContinents) {
+        if(listOfContinents.size()>1 && listOfContinents.size()<=32 ) {
             return true;
         }
         return false;
@@ -91,8 +93,8 @@ public class MapValidator {
      * @param country Game Country object
      * @return true is number of neighbors is valid
      */
-    public boolean hasValidNumberOfNeighbors(GameCountry country){
-        if (country.getNeighbouringCountries().size() > 10){
+    public boolean hasValidNumberOfNeighbors(GameCountry country) {
+        if (country.getNeighbouringCountries().size() > 10) {
             return false;
         }
         return true;
@@ -103,8 +105,8 @@ public class MapValidator {
      * @param countries List of GameCountry objects
      * @return true is number of countries is valid
      */
-    public boolean hasValidNumberOfCountries(ArrayList<GameCountry> countries){
-        if (countries.size() > 255){
+    public boolean hasValidNumberOfCountries(ArrayList<GameCountry> countries) {
+        if (countries.size() > 255) {
             return false;
         }
         return true;
@@ -115,20 +117,20 @@ public class MapValidator {
      * @return true is map is linked
      */
     public boolean isFullyLinked() {
-        for(String country : countryHashMap.keySet()){
-            for(String neighbor : countryHashMap.get(country).getNeighbouringCountries().keySet()){
-                if(!(countryHashMap.get(neighbor).getNeighbouringCountries().containsKey(country))){
+        for(String country : countryHashMap.keySet()) {
+            for(String neighbor : countryHashMap.get(country).getNeighbouringCountries().keySet()) {
+                if(!(countryHashMap.get(neighbor).getNeighbouringCountries().containsKey(country))) {
                     return false;
                 }
             }
         }
         return true;
     }
-    public boolean isContinentFullyLinked(GameContinent continent, GraphUtil graphUtilObject){
+    public boolean isContinentFullyLinked(GameContinent continent, GraphUtil graphUtilObject) {
         ArrayList<String> countries = new ArrayList<>();
-        for(GameCountry country : continent.getCountries().values()){
-            for(GameCountry neighbor : continent.getCountries().values()){
-                if(graphUtilObject.getCountryGraph().containsEdge(country,neighbor)){
+        for(GameCountry country : continent.getCountries().values()) {
+            for(GameCountry neighbor : continent.getCountries().values()) {
+                if(graphUtilObject.getCountryGraph().containsEdge(country,neighbor)) {
                     countries.add(neighbor.getCountryName());
                 }
             }
@@ -137,7 +139,7 @@ public class MapValidator {
         noDuplicates.addAll(countries);
         countries.clear();
         countries.addAll(noDuplicates);
-        if(countries.size()==continent.getCountries().size()){
+        if(countries.size()==continent.getCountries().size()) {
             return true;
         }
         return false;

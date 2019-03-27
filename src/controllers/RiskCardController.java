@@ -19,7 +19,6 @@ public class RiskCardController {
     /**Stores the Integer keys for different types of risk card.*/
     private final ArrayList<Integer> army;
 
-    //{"Infantry","Cavalry","Artillery"};
     /**A public constructor for initializing all the data structures.*/
     public RiskCardController() {
         armyType = new HashMap<>();
@@ -31,7 +30,8 @@ public class RiskCardController {
     }
 
     /**The method will generate the risk card deck.
-     * @param gamemap is used to get the country names.*/
+     * @param gamemap is used to get the country names.
+     * */
     public void initRiskCardDeck(GameMap gamemap) {
 
         ArrayList<String> countryList;
@@ -45,11 +45,6 @@ public class RiskCardController {
             card.setArmyType(army.get(i%3));
             cardDeck.add(card);
         }
-
-/*        for(int m=0;m<cardDeck.size();m++) {
-            System.out.println(cardDeck.get(m).getCountryName());
-        }*/
-
     }
 
     public ArrayList<RiskCard> getCardDeck() {
@@ -90,7 +85,8 @@ public class RiskCardController {
      * This method returns all the possible sets that a player can trade and get armies in exchange.
      * @param activeplayer specifies the active player who wish to get the possible sets from his cards.
      * @return The method returns a HashMap which has Set1,Set2,Set3, etc. as keys and values will be
-     * the list of country names(3 country names).*/
+     * the list of country names(3 country names).
+     * */
     public HashMap<String,ArrayList<RiskCard>> getPossibleSets(Player activeplayer) {
         ArrayList<RiskCard> playerCards;
         ArrayList<RiskCard> infantry;
@@ -107,7 +103,7 @@ public class RiskCardController {
         artillery = getCombinations(playerCards,30);
         allDifferent = getCombinations(playerCards,16);
 
-        if (infantry.size() > 0){
+        if (infantry.size() > 0) {
 
             for (int k=0;k<infantry.size()/3;k++) {
                 ArrayList<RiskCard> temp = new ArrayList<>();
@@ -178,12 +174,9 @@ public class RiskCardController {
     }
 
     public RiskCard allocateRiskCard() {
-
         RiskCard card;
         card = cardDeck.get(0);
         cardDeck.remove(0);
-
         return card;
     }
-
 }

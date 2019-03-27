@@ -86,11 +86,6 @@ public class TestRiskCardController {
     }
 
     @Test
-    public void testAfterAttackCardStatus() {
-
-    }
-
-    @Test
     public void testTotalCards() {
         int totalCards = 0;
         riskCardController.initRiskCardDeck(gameMap);

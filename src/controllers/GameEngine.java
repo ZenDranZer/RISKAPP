@@ -26,7 +26,7 @@ public class GameEngine {
 		mapGenerator = new MapGenerator(gameState.getGameMapObject());
 
 	}
-	public GameState getGameState(){
+	public GameState getGameState() {
 		return gameState;
 	}
 	/**
@@ -154,8 +154,7 @@ public class GameEngine {
 	/**
 	 * Resets the Game 
 	 */
-	public void resetGame()
-	{
+	public void resetGame() {
 		this.gameState = new GameState();
 		this.turn = new TurnController(this.gameState);
 	}

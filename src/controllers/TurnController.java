@@ -9,7 +9,6 @@ import static utils.Constants.ARMY_DISTRIBUTION.*;
  */
 public class TurnController {
 
-	// Player activePlayer;
 	private int availableArmies;
 	GameMap gameMap;
 	GameState gameState;
@@ -23,8 +22,7 @@ public class TurnController {
 	/**
 	 * Set available armies
 	 * 
-	 * @param armies
-	 *            amount of armies to allocate
+	 * @param armies amount of armies to allocate
 	 */
 	public void setAvailableArmies(int armies) {
 		this.availableArmies = armies;
@@ -38,24 +36,6 @@ public class TurnController {
 	public int getAvailableArmies() {
 		return this.availableArmies;
 	}
-
-	// /**
-	// * function to get the current player
-	// *
-	// * @return current player
-	// */
-	// public Player getActivePlayer() {
-	// return activePlayer;
-	// }
-
-	// /**
-	// * Function to allocate the active player for the next turn
-	// *
-	// * @param objPlayer
-	// */
-	// public void setActivePlayer(Player objPlayer) {
-	// activePlayer = objPlayer;
-	// }
 
 	/**
 	 * function to calculate the new army allocation for the player. Minimum 3
@@ -84,8 +64,7 @@ public class TurnController {
 				}
 			}
 		}
-		for(GameContinent continent : activePlayer.getContinents())
-		{
+		for(GameContinent continent : activePlayer.getContinents()) {
 			availableArmies += continent.getContinentValue();
 		}
 

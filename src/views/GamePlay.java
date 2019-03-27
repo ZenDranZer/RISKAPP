@@ -267,8 +267,7 @@ public class GamePlay extends JPanel implements Observer {
 					updateReinforcementPanel();
 					btnSkip.setVisible(false);
 				} else {
-					if(phase.equals("attack") && countryWon)
-					{
+					if(phase.equals("attack") && countryWon) {
 						//TODO
 						RiskCard card;
 						card = objGameEngine.getGameState().getRiskController().allocateRiskCard();
