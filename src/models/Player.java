@@ -1,6 +1,6 @@
 package models;
 
-//import javafx.util.Pair;
+import javafx.util.Pair;
 import utils.Dice;
 
 import java.util.ArrayList;
@@ -356,7 +356,7 @@ public class Player extends Observable {
 	 */
 	public String attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice,
 			int whiteDice) {
-		//ArrayList<Pair> diceSets;
+		ArrayList<Pair> diceSets;
 		int successfulAttack = 0;
 		int successfulDefend = 0;
 		String status = "";
@@ -384,15 +384,15 @@ public class Player extends Observable {
 			return status;
 		}
 
-//		diceSets = Dice.getDiceSets(redDice, whiteDice);
-//		for (Pair diceSet : diceSets) {
-//			System.out.println(diceSet.getKey().toString() + "	" + diceSet.getValue().toString());
-//			if (Integer.parseInt(diceSet.getKey().toString()) <= Integer.parseInt(diceSet.getValue().toString())) {
-//				successfulDefend++;
-//			} else {
-//				successfulAttack++;
-//			}
-//		}
+		diceSets = Dice.getDiceSets(redDice, whiteDice);
+		for (Pair diceSet : diceSets) {
+			System.out.println(diceSet.getKey().toString() + "	" + diceSet.getValue().toString());
+			if (Integer.parseInt(diceSet.getKey().toString()) <= Integer.parseInt(diceSet.getValue().toString())) {
+				successfulDefend++;
+			} else {
+				successfulAttack++;
+			}
+		}
 		if (successfulAttack != 0) {
 
 			System.out.println("Opponent armies eliminated: " + successfulAttack);
