@@ -189,4 +189,26 @@ public class GameMap extends Observable {
             return "EXCEPTION IN ACCESSING DATA";
         }
     }
+    /***
+     * This Method checks for all continents owned by a player
+     * @param playerID
+     * @return ArrayList<GameContinent> continentsOwnedByPlayer
+     */
+    public ArrayList<GameContinent> checkContinentsOwnedByOnePlayer(int playerID){
+        try {
+            ArrayList<GameContinent> continentsOwnedByPlayer = new ArrayList<>(this.getContinentHashMap().values());
+            for(String continentName : this.getContinentHashMap().keySet()){
+                for (GameCountry country: this.getContinentHashMap().get(continentName).getCountries().values() ) {
+                    if (country.getCurrentPlayer().getId()!=playerID){
+                        continentsOwnedByPlayer.remove(this.getContinentHashMap().get(continentName));
+                        break;
+                    }
+                }
+            }
+            return continentsOwnedByPlayer;
+        }catch (Exception e){
+            return null;
+        }
+
+    }
 }

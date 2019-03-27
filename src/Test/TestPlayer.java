@@ -17,7 +17,7 @@ public class TestPlayer {
     RiskCard riskCard;
 
     @Before
-    public void setup() throws Exception{
+    public void setup(){
         riskCard =new RiskCard();
         riskCard.setArmyType(2);
         riskCard.setCountryName("IRAN");
