@@ -446,6 +446,7 @@ public class Player extends Observable {
 	public String allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry) {
 		int numberOfArmies_attacker = attackingCountry.getArmiesStationed();
 		int numberOfArmies_defender = defendingCountry.getArmiesStationed();
+		String status = "";
 		while (numberOfArmies_attacker > 1) {
 
 			int redDice = 0;
@@ -471,12 +472,11 @@ public class Player extends Observable {
 			// else {
 			// whiteDice = 3;
 			// }
-			attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
+			status = attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
 			numberOfArmies_attacker = attackingCountry.getArmiesStationed();
 			numberOfArmies_defender = defendingCountry.getArmiesStationed();
 		}
-		System.out.println(defendingCountry.getCurrentPlayer().getName());
-		if (defendingCountry.getCurrentPlayer().getId() == attackingCountry.getCurrentPlayer().getId()) {
+		if ( status.equals("eliminated") || defendingCountry.getCurrentPlayer().getId() == attackingCountry.getCurrentPlayer().getId()) {
 			return "Attack was Successful";
 		} else {
 			return "Attack was not Successful";
