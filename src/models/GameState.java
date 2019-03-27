@@ -22,6 +22,9 @@ public class GameState extends Observable {
 		riskController = new RiskCardController();
 	}
 
+	/**
+	 * Returns riskCardController Object
+	 */
 	public RiskCardController getRiskController() {
 		return riskController;
 	}
@@ -35,6 +38,10 @@ public class GameState extends Observable {
 		return players;
 	}
 
+	/**
+	 * This function sets the players passed in arraylist
+	 * @param lstPlayers contains player data
+	 */
 	public void setPlayers(ArrayList<Player> lstPlayers) {
 		this.players = players;
 	}
@@ -51,16 +58,22 @@ public class GameState extends Observable {
 	/**
 	 * Function to allocate the active player for the next turn
 	 * 
-	 * @param objPlayer
+	 * @param objPlayer Player data
 	 */
 	public void setActivePlayer(Player objPlayer) {
 		activePlayer = objPlayer;
 	}
 
-	public GameMap getGameMapObject() {
-		return gameMap;
-	}
+	/**
+	 *Gets the GameMap object
+	 * @return GameMap object
+	 */
 
+	public GameMap getGameMapObject() { return gameMap; }
+
+	/**
+	 * Returns the next player from Player ArrayList
+	 */
 	public Player getNextPlayer(Player activePlayer, boolean checkInitialAllocation) {
 
 		int currentIndex = players.indexOf(activePlayer);
@@ -94,6 +107,11 @@ public class GameState extends Observable {
 		return players.get(currentIndex);
 	}
 
+	/**
+	 * Checks if army allocation is complete for all the Players in the game
+	 * @return True if allocation complete. False otherwise
+	 */
+
 	public boolean isAllocationComplete() {
 		boolean isAllocated = true;
 		for (Player pl : players) {
@@ -105,32 +123,49 @@ public class GameState extends Observable {
 		return isAllocated;
 	}
 
+	/**
+	 * Observer for viewing change in GameState
+	 */
 	public void notifyGameStateChange() {
 		setChanged();
 		notifyObservers();
 	}
 
-	//reinforce
-	//attack
+	/**
+	 * Observer for viewing change in Game based on attack phase
+	 * @param defender Defender
+	 * @param attackingCountry Country from which attacker is attacking
+	 * @param defendingCountry Country on which attacker is attacking
+	 * @param redDice Dice count
+	 * @param whiteDice Dice Count
+	 */
+
 	public void attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
 		String status = activePlayer.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
-
 		setChanged();
 		notifyObservers(status);
 	}
-	
-	public void allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry)
-	{
+
+	/**
+	 * Observer for viewing change in Game based on all-out attack phase
+	 * @param defender Defender
+	 * @param attackingCountry Country from which attacker is attacking
+	 * @param defendingCountry Country on which attacker is attacking
+	 */
+	public void allOutAttack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry) {
 		RiskCard card = new RiskCard();
 		String status = activePlayer.allOutAttack(defender, attackingCountry, defendingCountry);
-
 		setChanged();
 		notifyObservers("done!");
 	}
-	
-	//fortify
-	public void fortification(String countryToFortify, String fortifyFrom, int armies)
-	{
+
+	/**
+	 * Observer for viewing change in Game based on fortification Phase
+	 * @param countryToFortify Country to fortify
+	 * @param fortifyFrom Country from which attacker is fortifying the other country
+	 * @param armies Number of armies to be transferred
+	 */
+	public void fortification(String countryToFortify, String fortifyFrom, int armies) {
 		activePlayer.fortify(countryToFortify, fortifyFrom, armies);
 		notifyGameStateChange();
 	}

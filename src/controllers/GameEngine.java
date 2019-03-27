@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 /**
  * Controller class to maintain the game state and handle object allocation for the game
- * @author Sidhant Gupta
  *
  */
 public class GameEngine {

@@ -19,7 +19,7 @@ public class GameMap extends Observable {
      * It initializes the three hashmaps that will be stored in the class
      *
      */
-    public GameMap(){
+    public GameMap() {
         countryHashMap = new HashMap<>();
         continentHashMap = new HashMap<>();
         guiHashMap = new HashMap<>();
@@ -29,7 +29,7 @@ public class GameMap extends Observable {
      *
      * @return returns an arraylist of all the country objects form country hashmap
      */
-    public ArrayList<GameCountry> getAllCountries(){
+    public ArrayList<GameCountry> getAllCountries() {
         return new ArrayList<GameCountry>(this.countryHashMap.values());
     }
 
@@ -37,7 +37,7 @@ public class GameMap extends Observable {
      *
      * @return returns an arraylist of all the continent objects from the continent hashmap
      */
-    public ArrayList<GameContinent> getAllContinents(){
+    public ArrayList<GameContinent> getAllContinents() {
         return new ArrayList<GameContinent>(this.continentHashMap.values());
     }
 
@@ -62,7 +62,7 @@ public class GameMap extends Observable {
      *
      * @param newCountry The country object to be added to the country hashmap
      */
-    public void addCountry(GameCountry newCountry){
+    public void addCountry(GameCountry newCountry) {
         this.countryHashMap.put(newCountry.getCountryName(),newCountry);
         setChanged();
         notifyObservers();
@@ -72,7 +72,7 @@ public class GameMap extends Observable {
      *
      * @param newContinent The continent object to be added to the continent hashmap
      */
-    public void addContinent(GameContinent newContinent){
+    public void addContinent(GameContinent newContinent) {
         this.continentHashMap.put(newContinent.getContinentName(),newContinent);
         setChanged();
         notifyObservers();
@@ -82,7 +82,7 @@ public class GameMap extends Observable {
      *
      * @param countryName Name of the country object to be removed.
      */
-    public void removeCountry(String countryName){
+    public void removeCountry(String countryName) {
         this.countryHashMap.remove(countryName);
         setChanged();
         notifyObservers();
@@ -93,9 +93,9 @@ public class GameMap extends Observable {
      * @param continentName name of the continent to be safely removed
      * @return status of the method execcution
      */
-    public String removeContinent(String continentName){
-        for(String country: continentHashMap.get(continentName).getCountries().keySet()){
-            for(GameCountry neighbor: countryHashMap.get(country).getNeighbouringCountries().values()){
+    public String removeContinent(String continentName) {
+        for(String country: continentHashMap.get(continentName).getCountries().keySet()) {
+            for(GameCountry neighbor: countryHashMap.get(country).getNeighbouringCountries().values()) {
                 neighbor.getNeighbouringCountries().remove(country);
             }
             countryHashMap.remove(country);
@@ -119,8 +119,8 @@ public class GameMap extends Observable {
      * @param countryName Name of the country whose neighbours are needed
      * @return a set of neighbor country names
      */
-    public Set<String> getNeighbourList(String countryName){
-        if(countryHashMap.containsKey(countryName)){
+    public Set<String> getNeighbourList(String countryName) {
+        if(countryHashMap.containsKey(countryName)) {
             return countryHashMap.get(countryName).getNeighbouringCountries().keySet();
         }
         return null;
@@ -147,8 +147,8 @@ public class GameMap extends Observable {
      * @param key key to be searched in the hashmap
      * @return true if the key exists in the continent hashmap, false otherwise
      */
-    public boolean containsKey(String key){
-        if(continentHashMap.containsKey(key)){
+    public boolean containsKey(String key) {
+        if(continentHashMap.containsKey(key)) {
             return true;
         }
         return false;
@@ -172,8 +172,8 @@ public class GameMap extends Observable {
 
     /**This method removes a neighbour as per the player request.
      *
-     * @param countryName
-     * @param neighborName
+     * @param countryName Country whose neighbour is to be removed
+     * @param neighborName Name of country to be removed
      * @return status of the method execcution
      */
     public String removeNeighbor(String countryName , String neighborName) {
@@ -185,28 +185,29 @@ public class GameMap extends Observable {
                 }
             }
             return "SUCCESS";
-        }catch (NullPointerException e){
+        }catch (NullPointerException e) {
             return "EXCEPTION IN ACCESSING DATA";
         }
     }
+
     /***
      * This Method checks for all continents owned by a player
      * @param playerID
      * @return ArrayList<GameContinent> continentsOwnedByPlayer
      */
-    public ArrayList<GameContinent> checkContinentsOwnedByOnePlayer(int playerID){
+    public ArrayList<GameContinent> checkContinentsOwnedByOnePlayer(int playerID) {
         try {
             ArrayList<GameContinent> continentsOwnedByPlayer = new ArrayList<>(this.getContinentHashMap().values());
-            for(String continentName : this.getContinentHashMap().keySet()){
+            for(String continentName : this.getContinentHashMap().keySet()) {
                 for (GameCountry country: this.getContinentHashMap().get(continentName).getCountries().values() ) {
-                    if (country.getCurrentPlayer().getId()!=playerID){
+                    if (country.getCurrentPlayer().getId()!=playerID) {
                         continentsOwnedByPlayer.remove(this.getContinentHashMap().get(continentName));
                         break;
                     }
                 }
             }
             return continentsOwnedByPlayer;
-        }catch (Exception e){
+        }catch (Exception e) {
             return null;
         }
 
