@@ -173,6 +173,10 @@ public class RiskCardController {
         return "You got :"+ (noOfTrades*5) + " armies by trading your Risk Cards";
     }
 
+    /**
+     * Allocates risk card to the player from the card deck
+     * @return card to be allocated to the reader
+     */
     public RiskCard allocateRiskCard() {
         RiskCard card;
         card = cardDeck.get(0);
