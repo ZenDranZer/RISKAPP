@@ -375,6 +375,7 @@ public class Player extends Observable {
 			// give country to attacker
 			defender.removeCountry(defendingCountry);
 			this.setCountries(defendingCountry);
+			this.updateContinents();
 			// following lines move the army from the country that won to the
 			// country with no current armies.
 			defendingCountry.setArmies(attackingCountry.getArmiesStationed() - 1);
@@ -491,5 +492,21 @@ public class Player extends Observable {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * check and update player continent
+	 */
+	public void updateContinents()
+	{
+		ArrayList<GameContinent> lstContinents = gameMap.checkContinentsOwnedByOnePlayer(this.getId());
+		
+		if (lstContinents != null && lstContinents.size() > 0) {
+			for (GameContinent continent : lstContinents) {
+				if (!this.getContinents().contains(continent)) {
+					this.setContinents(continent);
+				}
+			}
+		}
 	}
 }

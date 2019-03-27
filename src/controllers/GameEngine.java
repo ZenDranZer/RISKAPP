@@ -150,4 +150,13 @@ public class GameEngine {
 	public int getNumberOfPlayers() {
 		return this.numberOfPlayers;
 	}
+	
+	/**
+	 * Resets the Game 
+	 */
+	public void resetGame()
+	{
+		this.gameState = new GameState();
+		this.turn = new TurnController(this.gameState);
+	}
 }
