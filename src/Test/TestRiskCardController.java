@@ -41,9 +41,6 @@ public class TestRiskCardController {
             gameMap.addCountry(country);
         }
 
-        //riskCardController.initRiskCardDeck(gameMap);
-
-
     }
 
     @After
@@ -65,13 +62,15 @@ public class TestRiskCardController {
 
         HashMap<String,ArrayList<RiskCard>> possibleset = new HashMap<>();
         ArrayList<RiskCard> chooseSet;
+        int initialArmies =0;
+        int armiesAfterTrade = 0;
+
 
         riskCardController.initRiskCardDeck(gameMap);
-        //System.out.println(gameMap.getAllCountries().size());
-        //System.out.println(riskCardController.getCardDeck().size());
-
         for(int i=0;i< 8;i++)
             p1.addRiskCard(riskCardController.allocateRiskCard());
+
+        initialArmies = p1.getRemainingArmies();
 
         while (p1.getCardsHeld().size() >= 5) {
             possibleset = riskCardController.getPossibleSets(p1);
@@ -80,7 +79,10 @@ public class TestRiskCardController {
             riskCardController.tradeCards(p1,chooseSet);
         }
 
+        armiesAfterTrade = p1.getRemainingArmies();
+
         assertTrue(p1.getCardsHeld().size()<5);
+        assertTrue(initialArmies < armiesAfterTrade);
     }
 
     @Test
