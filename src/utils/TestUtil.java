@@ -75,6 +75,9 @@ public class TestUtil {
         countries.add(country);
         country = new GameCountry("Japan");
         countries.add(country);
+        for(GameCountry country1:countries){
+        	country1.setArmies(5);
+		}
         return countries;
     }
     
