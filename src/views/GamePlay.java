@@ -397,7 +397,7 @@ public class GamePlay extends JPanel implements Observer {
 	}
 
 	/**This function ends the game and close the frame.*/
-	private void endGame(){
+	private void endGame() {
 		/*
 		 * this.setVisible(false); parent.getParentPanel().setVisible(true);
 		 * objGameEngine.getMapGenerator().reSetAllocations();
@@ -476,7 +476,6 @@ public class GamePlay extends JPanel implements Observer {
 		objGameEngine.getGameState().allOutAttack(actionCountry.getCurrentPlayer(), attackCountry, actionCountry);
 		Player defender = actionCountry.getCurrentPlayer();
 		String message = activePlayer.allOutAttack(defender, attackCountry, actionCountry);
-		//txtError.setText(message);
 		if (activePlayer.getCardsHeld().size() >= 5) {
 			showTradePanel();
 		}
@@ -519,7 +518,8 @@ public class GamePlay extends JPanel implements Observer {
 		lstPlayerCountries.setSelectedIndex(-1);
 		txtReinforce.setText("");
 
-		objTurnController.placeArmy(activePlayer, selectedCountry, reinforcements);
+		//objTurnController.placeArmy(activePlayer, selectedCountry, reinforcements);
+		objGameEngine.getGameState().reinforcement(activePlayer, selectedCountry, reinforcements);
 	}
 
 	/**This function is used to show the trade panel for risk card trading.*/
@@ -591,7 +591,6 @@ public class GamePlay extends JPanel implements Observer {
 	 */
 
 	public void updateAttackPanel() {
-		// flag = 1;
 		btnSwapcards.setVisible(false);
 		phase = "attack";
 		lblPhase.setText("Attack");
@@ -824,11 +823,6 @@ public class GamePlay extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-
-		// if (arg0 instanceof GameState) {
-		// System.out.println("Works!!");
-		// }
-
 		switch (phase) {
 		case "initial":
 			displayActions(null);
@@ -898,7 +892,6 @@ public class GamePlay extends JPanel implements Observer {
 			// status update for RISK Cards
 			break;
 		case "attack":
-			// update for attacks based on status returned
 			String actions = "";
 			System.out.println(chckbxAllOutAttack.isSelected());
 			if (chckbxAllOutAttack.isSelected()) {
