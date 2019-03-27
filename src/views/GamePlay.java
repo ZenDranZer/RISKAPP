@@ -518,7 +518,8 @@ public class GamePlay extends JPanel implements Observer {
 		lstPlayerCountries.setSelectedIndex(-1);
 		txtReinforce.setText("");
 
-		objTurnController.placeArmy(activePlayer, selectedCountry, reinforcements);
+		//objTurnController.placeArmy(activePlayer, selectedCountry, reinforcements);
+		objGameEngine.getGameState().reinforcement(activePlayer, selectedCountry, reinforcements);
 	}
 
 	/**This function is used to show the trade panel for risk card trading.*/
