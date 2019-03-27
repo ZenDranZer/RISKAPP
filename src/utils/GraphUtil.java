@@ -41,7 +41,7 @@ public class GraphUtil {
             countryGraph.addVertex(gameCountry);
         }
         for (GameCountry gameCountry : countryList.values()) {
-            for (GameCountry neighbour : gameCountry.getNeighbouringCountries().values()){
+            for (GameCountry neighbour : gameCountry.getNeighbouringCountries().values()) {
                 countryGraph.addEdge(gameCountry, countryList.get(neighbour.getCountryName()));
             }
         }
@@ -95,7 +95,7 @@ public class GraphUtil {
 
     /**This method will return whether the graph is connected or not.
      * @return true if graph is connected otherwise false.*/
-    public boolean isConnected(){
+    public boolean isConnected() {
         ConnectivityInspector<GameCountry,DefaultEdge> inspector = new ConnectivityInspector<>(countryGraph);
         return inspector.isConnected();
     }
