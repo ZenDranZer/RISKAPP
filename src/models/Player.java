@@ -536,4 +536,18 @@ public class Player extends Observable {
 			}
 		}
 	}
+	
+	/**
+	 * Validate whether player can carry out more attacks
+	 * @return true is player can carry out attacks
+	 */
+	public boolean isAttackPossible()
+	{
+		for (GameCountry country : countries) {
+			if (country.getArmiesStationed() >1) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
