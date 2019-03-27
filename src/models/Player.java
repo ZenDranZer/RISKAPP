@@ -475,6 +475,7 @@ public class Player extends Observable {
 			numberOfArmies_attacker = attackingCountry.getArmiesStationed();
 			numberOfArmies_defender = defendingCountry.getArmiesStationed();
 		}
+		System.out.println(defendingCountry.getCurrentPlayer().getName());
 		if (defendingCountry.getCurrentPlayer().getId() == attackingCountry.getCurrentPlayer().getId()) {
 			return "Attack was Successful";
 		} else {
@@ -520,7 +521,7 @@ public class Player extends Observable {
 	public void eliminate(Player eliminatedPlayer) {
 		eliminatedPlayer.setIsActive(false);
 		this.addRiskCards(eliminatedPlayer.getCardsHeld());
-		eliminatedPlayer.setCardsHeld(null);
+		eliminatedPlayer.setCardsHeld(new ArrayList<RiskCard>());
 	}
 
 	/**
