@@ -858,7 +858,6 @@ public class GamePlay extends JPanel implements Observer {
 
 		case "attack":
 			displayActions(arg1.toString());
-
 			updateAttackPanel();
 			String status = arg1.toString();
 			if (status.equals("winner")) {
@@ -866,6 +865,11 @@ public class GamePlay extends JPanel implements Observer {
 				System.exit(0);
 			} else if (status.equals("success")) {
 				countryWon = true;
+			}
+			if(!activePlayer.isAttackPossible())
+			{
+				phase = "fortify";
+				updateFortificationPanel();
 			}
 			break;
 		case "fortify":
