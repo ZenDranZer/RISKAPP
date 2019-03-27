@@ -267,6 +267,10 @@ public class GamePlay extends JPanel implements Observer {
 					activePlayer = objGameEngine.getGameState().getActivePlayer();
 					updateReinforcementPanel();
 					btnSkip.setVisible(false);
+					if (activePlayer.isAllocationComplete()) {
+						txtError.setText("Max allocation reached. Reinforcement skipped");
+						updateAttackPanel();
+					}
 				} else {
 					if (phase.equals("attack") && countryWon) {
 						RiskCard card;
