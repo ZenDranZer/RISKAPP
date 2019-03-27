@@ -113,8 +113,14 @@ public class TestPlayer {
    @Test
     public void TestNumberOfArmiesAddedtoWinner() {
        gameState.attack(defender , attackingCountry1 , defendingCountry1 , 1 , 1);
+       if(gameState.attacked==1){
+           assertEquals(3,gameState.getActivePlayer().getPlayerArmies());
+       }
+       else{
+           assertEquals(2,gameState.getActivePlayer().getPlayerArmies());
 
-       assertEquals( 2,gameState.getActivePlayer().getPlayerArmies());
+       }
+
    }
 
 

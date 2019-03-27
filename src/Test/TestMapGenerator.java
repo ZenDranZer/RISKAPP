@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNotEquals;
 /**
  * Tests to validate Maps
  */
-public class TestValidMapFormat {
+public class TestMapGenerator {
 
     MapGenerator mapGenerator;
     GameEngine gameEngine;

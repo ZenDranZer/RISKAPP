@@ -38,17 +38,7 @@ public class TestTurnController {
 	}
 
 
-	/**
-	 * Test the calculation on new armies to allocated at the beginning of each
-	 * turn
-	 */
-	@Test
-	public void testCalculateNewArmies() {
-		int expectedArmies = 8;
 
-		int actualArmies = objTurnController.calculateNewArmies(testData.lstPlayers.get(0),mapGenerator);
-		assertEquals(expectedArmies, actualArmies);
-	}
 
 	/**
 	 * Tests allocation of initial armies to each player

@@ -1,6 +1,7 @@
 package Test;
 
 import controllers.MapGenerator;
+import controllers.TurnController;
 import models.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,11 +19,16 @@ public class TestGameState {
     public HashMap<String, GameCountry> testCountryHashMap;
     public HashMap<String, GameContinent> testContinentHashMap;
     public MapGenerator mapGenerator;
+    GameState gameState;
+    TurnController objTurnController;
+
     TestUtil testUtil;
     public static GameMap gameMap;
         @Before
         public void setUp() throws Exception {
             lstPlayers = new ArrayList<Player>();
+            gameState = new GameState();
+
             testCountryHashMap = new HashMap<String,GameCountry>();
             testContinentHashMap = new HashMap<String,GameContinent>();
             gameMap = new GameMap();
@@ -35,6 +41,7 @@ public class TestGameState {
             addCountriesToContinents();
             makePlayerList();
             updateGlobals();
+            objTurnController = new TurnController(this.gameState);
 
 
         }
@@ -53,6 +60,17 @@ public class TestGameState {
         GameState gameState= new GameState();
         System.out.println(hasPlayerWon(lstPlayers.get(0)));
         assertTrue(hasPlayerWon(lstPlayers.get(0)));
+    }
+    /**
+     * Test the calculation on new armies to allocated at the beginning of each
+     * turn
+     */
+    @Test
+    public void testReinforcementArmies() {
+        int expectedArmies = 8+5;
+
+        int actualArmies = objTurnController.calculateNewArmies(lstPlayers.get(0),mapGenerator);
+        assertEquals(expectedArmies, actualArmies);
     }
 
     public void makePlayerList() {
