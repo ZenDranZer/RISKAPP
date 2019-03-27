@@ -157,7 +157,7 @@ public class RiskCardController {
      *            accordingly.
      * @return It returns whether the operation is sucessful or not. if not specify the error.
      * */
-    public String tradeCards(Player activePlayer,ArrayList<RiskCard> set){
+    public String tradeCards(Player activePlayer,ArrayList<RiskCard> set) {
 
         ArrayList<RiskCard> playerCards = activePlayer.getCardsHeld();
 
