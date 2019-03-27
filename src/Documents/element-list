@@ -6,4 +6,5 @@ utils
 views
 views.continentView
 views.countryView
+views.miscellaneous
 views.optionView

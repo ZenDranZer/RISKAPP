@@ -1,6 +1,6 @@
 package utils;
 
-import javafx.util.Pair;
+//import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +32,7 @@ public class Dice {
     /**
      * Returns the diceSet with dice values for both red and white dice
      */
-    public static ArrayList<Pair> getDiceSets(int redDice, int whiteDice) {
+    /*public static ArrayList<Pair> getDiceSets(int redDice, int whiteDice) {
         ArrayList<Pair> diceSets = new ArrayList<>();
         int setCount = redDice<=whiteDice?redDice:whiteDice;
        ArrayList<Integer> redRolls = new ArrayList<>();
@@ -52,5 +52,5 @@ public class Dice {
             diceSets.add(diceSet);
         }
         return diceSets;
-    }
+    }*/
 }
