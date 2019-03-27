@@ -156,7 +156,7 @@ public class GameState extends Observable {
 		RiskCard card = new RiskCard();
 		String status = activePlayer.allOutAttack(defender, attackingCountry, defendingCountry);
 		setChanged();
-		notifyObservers("done!");
+		notifyObservers(status);
 	}
 
 	/**
