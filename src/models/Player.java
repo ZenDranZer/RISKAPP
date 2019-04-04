@@ -11,15 +11,15 @@ import java.util.Observable;
  */
 public class Player extends Observable {
 
-	private String name;
-	private int id;
-	private int playerArmies;
-	private ArrayList<GameCountry> countries;
-	private ArrayList<GameContinent> continents;
-	private ArrayList<RiskCard> playerCards;
-	private int remainingArmies;
-	private boolean isActive;
-	private GameMap gameMap;
+	protected String name;
+	protected int id;
+	protected int playerArmies;
+	protected ArrayList<GameCountry> countries;
+	protected ArrayList<GameContinent> continents;
+	protected ArrayList<RiskCard> playerCards;
+	protected int remainingArmies;
+	protected boolean isActive;
+	protected GameMap gameMap;
 
 	/**
 	 * Initializes the Player
