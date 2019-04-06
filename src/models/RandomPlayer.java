@@ -13,8 +13,20 @@ public class RandomPlayer extends Player {
     @Override
     public String attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
         Random randomNumberGenerator = new Random();
-        int diceNumber = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size());
-        defendingCountry = attackingCountry.getNeighbouringCountries().get(diceNumber);
+        int counteryIndex = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size());
+        defendingCountry = attackingCountry.getNeighbouringCountries().get(counteryIndex);
+        //int numberOfAttacks =
         return super.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
+    }
+
+    public void fortify() {
+        Random randomNumberGenerator = new Random();
+        int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
+        int toCountryIndex = randomNumberGenerator.nextInt(this.countries.size());
+        int numberOfArmies = randomNumberGenerator.nextInt(this.countries.get(counteryIndex).getArmiesStationed());
+        int currentArmiesToCountry = this.countries.get(toCountryIndex).getArmiesStationed();
+        int currentArmiesCountry = this.countries.get(counteryIndex).getArmiesStationed();
+        this.countries.get(toCountryIndex).setArmies(currentArmiesToCountry + numberOfArmies);
+        this.countries.get(counteryIndex).setArmies(currentArmiesCountry - numberOfArmies);
     }
 }
