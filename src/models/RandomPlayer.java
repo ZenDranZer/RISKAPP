@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Random;
+
 public class RandomPlayer extends Player {
     RandomPlayer(){
         super();
@@ -10,8 +12,9 @@ public class RandomPlayer extends Player {
 
     @Override
     public String attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
-        int randomIndex = (int) Math.random();
-        
+        Random randomNumberGenerator = new Random();
+        int diceNumber = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size());
+        defendingCountry = attackingCountry.getNeighbouringCountries().get(diceNumber);
         return super.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
     }
 }
