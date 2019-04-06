@@ -9,7 +9,6 @@ public class BenevolentPlayer extends Player {
     }
 
     public GameCountry findWeekCountry(){
-
         GameCountry week = this.countries.get(0);
         int leastNumberOfArmies = this.countries.get(0).getArmiesStationed();
         for (GameCountry country: this.countries) {
