@@ -29,4 +29,12 @@ public class RandomPlayer extends Player {
         this.countries.get(toCountryIndex).setArmies(currentArmiesToCountry + numberOfArmies);
         this.countries.get(counteryIndex).setArmies(currentArmiesCountry - numberOfArmies);
     }
+
+    public void reinforcement(){
+        Random randomNumberGenerator = new Random();
+        int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
+        int armies = randomNumberGenerator.nextInt(12);
+        placeArmy(this.countries.get(counteryIndex).getCountryName() , armies);
+
+    }
 }
