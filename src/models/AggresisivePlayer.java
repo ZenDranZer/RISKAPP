@@ -27,10 +27,8 @@ public class AggresisivePlayer extends Player {
     @Override
     public String attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
         attackingCountry = this.findStrongestCountry();
-        while (attackingCountry.getArmiesStationed() >= 2) {
-            return super.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
-        }
 
-        return "attack is not possible";
+            return super.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
+
     }
 }
