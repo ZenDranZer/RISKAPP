@@ -75,6 +75,7 @@ public class GamePlay extends JPanel implements Observer {
 	private WorldDominationView worldDominationView;
 	private StartGamePanel parent;
 	private boolean countryWon;
+	JScrollPane scrollPane_2;
 
 	/**
 	 * Renders the initial view of the panel
@@ -106,6 +107,11 @@ public class GamePlay extends JPanel implements Observer {
 		lblactionArmiesPresent.setBounds(250, 182, 350, 32);
 		add(lblactionArmiesPresent);
 
+		scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(238, 249, 353, 108);
+		add(scrollPane_2);
+	
+		
 		txtError = new JTextArea();
 		txtError.setBackground(SystemColor.control);
 		txtError.setWrapStyleWord(true);
@@ -113,7 +119,8 @@ public class GamePlay extends JPanel implements Observer {
 		txtError.setBounds(238, 249, 353, 108);
 		txtError.setEditable(false);
 		txtError.setFocusable(false);
-		add(txtError);
+		//add(txtError);
+		scrollPane_2.setViewportView(txtError);
 
 		lblTurn = new JLabel("Turn");
 		lblTurn.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -137,7 +144,7 @@ public class GamePlay extends JPanel implements Observer {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 
-				txtError.setText("");
+				txtError.append("\n");
 
 				if (phase.equals("initial") || phase.equals("reinforce")) {
 					if (validateInput()) {
@@ -268,7 +275,7 @@ public class GamePlay extends JPanel implements Observer {
 					updateReinforcementPanel();
 					btnSkip.setVisible(false);
 					if (activePlayer.isAllocationComplete()) {
-						txtError.setText("Max allocation reached. Reinforcement skipped");
+						txtError.append("\nMax allocation reached. Reinforcement skipped");
 						updateAttackPanel();
 					}
 				} else {
@@ -361,6 +368,9 @@ public class GamePlay extends JPanel implements Observer {
 		});
 		btnEndgame.setBounds(313, 483, 176, 23);
 		add(btnEndgame);
+		
+		
+		
 		btnMapview.setVisible(true);
 
 		btnSkip.setVisible(false);
@@ -419,12 +429,12 @@ public class GamePlay extends JPanel implements Observer {
 	public boolean attackValidation() {
 
 		if (lstPlayerCountries.getSelectedIndex() == -1 || lstPlayerCountries.getSelectedValue() == null) {
-			txtError.setText("Please select a country");
+			txtError.append("\nPlease select a country");
 			return false;
 		}
 
 		if (lstActionCountry.getSelectedIndex() == -1 || lstActionCountry.getSelectedValue() == null) {
-			txtError.setText("Please select a country to attack");
+			txtError.append("\nPlease select a country to attack");
 			return false;
 		}
 
@@ -437,7 +447,7 @@ public class GamePlay extends JPanel implements Observer {
 				.get(selectedActionCountry);
 
 		if (attackCountry.getArmiesStationed() < 2) {
-			txtError.setText("Attacking country should have more than 1 army");
+			txtError.append("\nAttacking country should have more than 1 army");
 			return false;
 		}
 
@@ -449,17 +459,17 @@ public class GamePlay extends JPanel implements Observer {
 						.filter(a -> a.isSelected()).findFirst().get().getText();
 				if (Integer.parseInt(selectedRedDice) >= attackCountry.getArmiesStationed()
 						|| Integer.parseInt(selectedWhiteDice) > actionCountry.getArmiesStationed()) {
-					txtError.setText("Select Number of Dices should be less than armies in country");
+					txtError.append("\nSelect Number of Dices should be less than armies in country");
 					return false;
 				}
 			} else {
-				txtError.setText("Select Number of Red and White Dices");
+				txtError.append("\nSelect Number of Red and White Dices");
 				return false;
 			}
 		}
 
 		if (chckbxAllOutAttack.isSelected()) {
-			txtError.setText("All out attack");
+			txtError.append("\nAll out attack");
 		}
 		return true;
 	}
@@ -554,7 +564,7 @@ public class GamePlay extends JPanel implements Observer {
 		lblAction.setVisible(false);
 		lblPhase.setText("Reinforcement");
 		lblReinforce.setText("Select country to reinforce");
-		txtError.setText("");
+		txtError.append("\n");
 		objTurnController.calculateNewArmies(activePlayer, objGameEngine.getMapGenerator());
 		updateListElements();
 		lblPlayerName.setText("Player Name : " + activePlayer.getName());
@@ -635,12 +645,12 @@ public class GamePlay extends JPanel implements Observer {
 
 	public boolean validateFortification() {
 		if (lstPlayerCountries.getSelectedIndex() == -1 || lstPlayerCountries.getSelectedValue() == null) {
-			txtError.setText("Please select a country to fortify");
+			txtError.append("\nPlease select a country to fortify");
 			return false;
 		}
 
 		if (lstActionCountry.getSelectedIndex() == -1 || lstActionCountry.getSelectedValue() == null) {
-			txtError.setText("Please select a country to move armies from");
+			txtError.append("\nPlease select a country to move armies from");
 			return false;
 		}
 
@@ -653,17 +663,17 @@ public class GamePlay extends JPanel implements Observer {
 				.get(selectedActionCountry);
 
 		if (actionCountry.getArmiesStationed() < 2) {
-			txtError.setText("Fortifying country should have more than one army");
+			txtError.append("\nFortifying country should have more than one army");
 			return false;
 		}
 
 		if (txtReinforce.getText().isEmpty() || txtReinforce.getText() == null) {
-			txtError.setText("Please enter armies to move");
+			txtError.append("\nPlease enter armies to move");
 			return false;
 		}
 
 		if (Integer.parseInt(txtReinforce.getText()) > actionCountry.getArmiesStationed() - 1) {
-			txtError.setText("Fortifying country should have atleast 1 army left");
+			txtError.append("\nFortifying country should have atleast 1 army left");
 			return false;
 		}
 
@@ -698,7 +708,7 @@ public class GamePlay extends JPanel implements Observer {
 		rdbtnWhite2.setVisible(false);
 		chckbxAllOutAttack.setVisible(false);
 		txtReinforce.setVisible(true);
-		txtError.setText("");
+		txtError.append("\n");
 		lblactionArmiesPresent.setVisible(false);
 	}
 
@@ -778,25 +788,25 @@ public class GamePlay extends JPanel implements Observer {
 
 		if (txtReinforce.getText().isEmpty() || txtReinforce.getText().equals("0")) {
 			isValid = false;
-			txtError.setText(txtError.getText() + "\n" + "Enter some value");
+			txtError.append(txtError.getText() + "\n" + "Enter some value");
 		} else if (Integer.parseInt(txtReinforce.getText()) > activePlayer.getRemainingArmies()) {
 			isValid = false;
 			System.out.println("rem :: " + activePlayer.getRemainingArmies());
-			txtError.setText(txtError.getText() + "\n" + "select number less than or equal to remaining armies");
+			txtError.append(txtError.getText() + "\n" + "select number less than or equal to remaining armies");
 		}
 
 		if (!txtReinforce.getText().matches("[0-9]+")) {
 			isValid = false;
-			txtError.setText(txtError.getText() + "\n" + "Inavlid number");
+			txtError.append(txtError.getText() + "\n" + "Inavlid number");
 		}
 		if (lstPlayerCountries.getSelectedValue() == null) {
 			isValid = false;
-			txtError.setText(txtError.getText() + "\n" + "No country selected");
+			txtError.append(txtError.getText() + "\n" + "No country selected");
 		} else if (activePlayer.getCountries().get(lstPlayerCountries.getSelectedIndex()).getArmiesStationed()
 				+ Integer.parseInt(txtReinforce.getText()) > 12) {
 			isValid = false;
 			System.out.println("rem 2 :: " + activePlayer.getRemainingArmies());
-			txtError.setText(txtError.getText() + "\n" + "Max number of armies allocated to a country is 12");
+			txtError.append(txtError.getText() + "\n" + "Max number of armies allocated to a country is 12");
 		}
 		return isValid;
 	}
@@ -836,7 +846,7 @@ public class GamePlay extends JPanel implements Observer {
 				activePlayer = objGameEngine.getGameState().getActivePlayer();
 				updateReinforcementPanel();
 				if (activePlayer.isAllocationComplete()) {
-					txtError.setText("Max allocation reached. Reinforcement skipped");
+					txtError.append("\nMax allocation reached. Reinforcement skipped");
 					updateAttackPanel();
 				}
 			} else {
@@ -877,7 +887,7 @@ public class GamePlay extends JPanel implements Observer {
 			activePlayer = objGameEngine.getGameState().getActivePlayer();
 			updateReinforcementPanel();
 			if (activePlayer.isAllocationComplete()) {
-				txtError.setText("Max allocation reached. Reinforcement skipped");
+				txtError.append("\nMax allocation reached. Reinforcement skipped");
 				updateAttackPanel();
 			}
 			break;
@@ -887,11 +897,11 @@ public class GamePlay extends JPanel implements Observer {
 	public void displayActions(String message) {
 		switch (phase) {
 		case "initial":
-			txtError.setText(activePlayer.getName() + " allocated " + txtReinforce.getText() + "armies to "
+			txtError.append(activePlayer.getName() + " allocated " + txtReinforce.getText() + "armies to "
 					+ lstPlayerCountries.getSelectedValue().toString());
 			break;
 		case "reinforce":
-			txtError.setText(activePlayer.getName() + " reinforced " + lstPlayerCountries.getSelectedValue().toString()
+			txtError.append(activePlayer.getName() + " reinforced " + lstPlayerCountries.getSelectedValue().toString()
 					+ " with " + txtReinforce.getText() + "armies ");
 			// status update for RISK Cards
 			break;
@@ -908,31 +918,31 @@ public class GamePlay extends JPanel implements Observer {
 				} else {
 					actions = actions + " not successful";
 				}
-				txtError.setText("");
-				txtError.setText(actions);
+				txtError.append("\n");
+				txtError.append(actions);
 			} else {
 				if (message.equals("success")) {
-					txtError.setText(activePlayer.getName() + " attacked "
+					txtError.append(activePlayer.getName() + " attacked "
 							+ lstActionCountry.getSelectedValue().toString() + " and WON ");
 
 				}
 				if (message.equals("unsuccessful")) {
-					txtError.setText(activePlayer.getName() + " attacked "
+					txtError.append(activePlayer.getName() + " attacked "
 							+ lstActionCountry.getSelectedValue().toString() + " and LOST ");
-					txtError.append("\n Remaining Armies : " + activePlayer.getPlayerArmies());
+					txtError.append("\n\n Remaining Armies : " + activePlayer.getPlayerArmies());
 				}
 				if (message.equals("eliminated")) {
-					txtError.setText(activePlayer.getName() + " attacked "
+					txtError.append(activePlayer.getName() + " attacked "
 							+ lstActionCountry.getSelectedValue().toString() + " and WON ");
 					txtError.append("\n " + lblDefender.getText() + "eliminated");
 				}
 				if (message.equals("winner")) {
-					txtError.setText(activePlayer.getName() + " won the game ");
+					txtError.append(activePlayer.getName() + " won the game ");
 				}
 			}
 			break;
 		case "fortify":
-			txtError.setText(activePlayer.getName() + " fortified " + lstPlayerCountries.getSelectedValue().toString()
+			txtError.append(activePlayer.getName() + " fortified " + lstPlayerCountries.getSelectedValue().toString()
 					+ " from " + lstActionCountry.getSelectedValue().toString() + "with " + txtReinforce.getText()
 					+ "armies ");
 			break;
