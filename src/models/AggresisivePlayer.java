@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+
 public class AggresisivePlayer extends Player {
     AggresisivePlayer(){
         super();
@@ -23,7 +25,17 @@ public class AggresisivePlayer extends Player {
             return null;
         }
     }
-
+    public ArrayList<GameCountry> countriesThatCanAttack(Player player){
+        ArrayList<GameCountry> canAttack = new ArrayList<>();
+        for(GameCountry country : player.getCountries()){
+            for(GameCountry neighbour : country.getNeighbouringCountries().values()){
+                if(neighbour.getCurrentPlayer().getId()!=player.getId()){
+                    canAttack.add(neighbour);
+                }
+            }
+        }
+        return canAttack;
+    }
     @Override
     public String attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
         attackingCountry = this.findStrongestCountry();
