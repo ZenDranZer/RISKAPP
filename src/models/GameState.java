@@ -143,7 +143,6 @@ public class GameState extends Observable {
 		activePlayer.reinforcement(country, armies);
 		notifyGameStateChange();
 	}
-
 	/**
 	 * Observer for viewing change in Game based on attack phase
 	 * @param defender Defender

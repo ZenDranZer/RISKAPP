@@ -48,5 +48,29 @@ public class AggresisivePlayer extends Player {
             return super.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
 
     }
+    public void fortify(){
+        ArrayList<GameCountry> toFortify = bestCountryToFortify();
+        super.fortify(toFortify.get(0).getCountryName(),toFortify.get(1).getCountryName(),((toFortify.get(1).getArmiesStationed())-1));
+    }
+    public ArrayList<GameCountry> bestCountryToFortify(){
+        ArrayList<GameCountry> toFortify = new ArrayList<>();
+        GameCountry bestCountry = null;
+        GameCountry bestNeighbour = null;
+        int max = 0;
+        for(GameCountry country : this.getCountries()){
+            for(GameCountry neighbor : country.getNeighbouringCountries().values()){
+                if(neighbor.getCurrentPlayer().getId()==this.getId()){
+                    if(country.getArmiesStationed()+neighbor.getArmiesStationed()-1 > max){
+                        bestCountry = country;
+                        bestNeighbour = neighbor;
+                    }
+                }
+            }
+        }
+        toFortify.clear();
+        toFortify.add(bestCountry);
+        toFortify.add(bestNeighbour);
+        return toFortify;
+    }
 
 }
