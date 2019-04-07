@@ -8,15 +8,15 @@ public class BenevolentPlayer extends Player {
         super();
     }
 
-    public GameCountry findWeekCountry(){
-        GameCountry week = this.countries.get(0);
+    public GameCountry findWeakCountry(){
+        GameCountry weak = this.countries.get(0);
         int leastNumberOfArmies = this.countries.get(0).getArmiesStationed();
         for (GameCountry country: this.countries) {
             if (country.getArmiesStationed() < leastNumberOfArmies){
-                week =country;
+                weak =country;
             }
         }
 
-        return week;
+        return weak;
     }
 }
