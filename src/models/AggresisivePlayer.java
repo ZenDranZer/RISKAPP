@@ -11,11 +11,11 @@ public class AggresisivePlayer extends Player {
         super();
     }
 
-    public GameCountry findStrongestCountry(){
-        if (this.countries != null ) {
-            GameCountry strongest = this.countries.get(0);
-            int maxNumberOfArmies = this.countries.get(0).getArmiesStationed();
-            for (GameCountry country : this.countries) {
+    public GameCountry findStrongestCountry(ArrayList<GameCountry> countriesThatCanAttack){
+        if (countriesThatCanAttack != null ) {
+            GameCountry strongest = countriesThatCanAttack.get(0);
+            int maxNumberOfArmies = countriesThatCanAttack.get(0).getArmiesStationed();
+            for (GameCountry country : countriesThatCanAttack) {
                 if (country.getArmiesStationed() > maxNumberOfArmies) {
                     strongest = country;
                 }
@@ -38,7 +38,7 @@ public class AggresisivePlayer extends Player {
     }
     @Override
     public String attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
-        attackingCountry = this.findStrongestCountry();
+        //attackingCountry = this.findStrongestCountry();
 
             return super.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
 
