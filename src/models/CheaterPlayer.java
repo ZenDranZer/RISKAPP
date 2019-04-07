@@ -11,43 +11,40 @@ public class CheaterPlayer extends Player {
         super(name,id,gameMap);
     }
 
-    @Override
-    public void reinforcement(String countryName, int armies) {
+
+    public String reinforcement() {
         for (GameCountry country: this.countries) {
             country.setArmies(country.getArmiesStationed() * 2);
         }
-
+       return this.getName() + " doubled number of stationed armies";
     }
 
-    @Override
-    public String attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
+    public String attack() {
         String status = "";
-        defender.removeCountry(defendingCountry);
-        this.setCountries(defendingCountry);
+        for (GameCountry country: countriesThatCanAttack(this)) {
+
+        country.getCurrentPlayer().removeCountry(country);
+        this.setCountries(country);
+
         this.updateContinents();
-        defendingCountry.setArmies(attackingCountry.getArmiesStationed() - 1);
-        attackingCountry.removeArmies(attackingCountry.getArmiesStationed() - 1);
         status = "success";
-        if (defender.countries.size() == 0) {
-            this.getCardsHeld().addAll(defender.getCardsHeld());
-            eliminate(defender);
+        if (country.getCurrentPlayer().countries.size() == 0) {
+            this.getCardsHeld().addAll(country.getCurrentPlayer().getCardsHeld());
+            eliminate(country.getCurrentPlayer());
             status = "eliminated";
             if (hasPlayerWon(this)) {
                 status = "winner";
             }
         }
-        return status;
+        country.setCurrentPlayer(this);
+        }
+        return status ;
     }
 
-    @Override
-    public void fortify(String countryToFortify, String fortifyFrom, int armies) {
-
-        GameCountry toCountry = countries.stream().filter(cntry -> cntry.getCountryName().equals(countryToFortify))
-                .findFirst().get();
-        GameCountry fortifyingCountry = countries.stream().filter(cntry -> cntry.getCountryName().equals(fortifyFrom))
-                .findFirst().get();
-
-        toCountry.setArmies(toCountry.getArmiesStationed() + fortifyingCountry.getArmiesStationed()*2);
-        //fortifyingCountry.setArmies(fortifyingCountry.getArmiesStationed() - armies);
+    public String  fortify() {
+        for (GameCountry country: countriesThatCanAttack(this)) {
+            country.setArmies(country.getArmiesStationed() *2);
+        }
+        return this.getName() + " fortified all countries";
     }
 }
