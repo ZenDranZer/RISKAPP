@@ -20,7 +20,7 @@ public class BenevolentPlayer extends Player {
         }
 
         return weak;*/
-        ArrayList<GameCountry> canBeAttack;
+        ArrayList<GameCountry> canBeAttack ;
         int armies=0;
         GameCountry weak = new GameCountry();
         canBeAttack = super.countriesThatCanAttack(this);
@@ -38,7 +38,10 @@ public class BenevolentPlayer extends Player {
         }
         return weak;
     }
-    public void reinforcement(int armies){
+
+    public String reinforcement(int armies)
+    {
         super.reinforcement(this.findWeakCountry().getCountryName(),armies);
+        return this.getName() + " moved " + armies + " number of armies to " + findWeakCountry().getCountryName();
     }
 }

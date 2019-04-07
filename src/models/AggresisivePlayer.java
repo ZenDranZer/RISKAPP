@@ -36,9 +36,11 @@ public class AggresisivePlayer extends Player {
         }
         return canAttack;
     }*/
-    public void reinforcement(int armies)
+    public String reinforcement(int armies)
     {
         super.reinforcement(findStrongestCountry(super.countriesThatCanAttack(this)).getCountryName(),armies);
+        return this.getName() + " moved " + armies + " number of armies to " +
+                findStrongestCountry(countriesThatCanAttack(this)).getCountryName();
     }
 
     public GameCountry findWeakestNeighbor(){
@@ -56,13 +58,16 @@ public class AggresisivePlayer extends Player {
     public String attack() {
         GameCountry attackingCountry = this.findStrongestCountry(super.countriesThatCanAttack(this));
         GameCountry defendingCountry = this.findWeakestNeighbor();
+            String status = super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
+            return status + " attack by "+ this.getName()+" to " +  defendingCountry.getCurrentPlayer().getName();
 
-            return super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
 
     }
-    public void fortify(){
+    public String fortify(){
         ArrayList<GameCountry> toFortify = bestCountryToFortify();
         super.fortify(toFortify.get(0).getCountryName(),toFortify.get(1).getCountryName(),((toFortify.get(1).getArmiesStationed())-1));
+        return this.getName() + " fortified " + ((toFortify.get(1).getArmiesStationed())-1) + " armies from " + toFortify.get(0).getCountryName()
+                + " to "+ toFortify.get(1).getCountryName();
     }
     public ArrayList<GameCountry> bestCountryToFortify(){
         ArrayList<GameCountry> toFortify = new ArrayList<>();
