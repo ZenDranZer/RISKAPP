@@ -38,7 +38,7 @@ public class AggresisivePlayer extends Player {
     }
     public void reinforcement(int armies)
     {
-        placeArmy(findStrongestCountry(countriesThatCanAttack(this)).getCountryName(), armies);
+        super.reinforcement(findStrongestCountry(countriesThatCanAttack(this)).getCountryName(),armies);
     }
 
     public GameCountry findWeakestNeighbor(){
