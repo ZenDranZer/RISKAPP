@@ -30,11 +30,19 @@ public class RandomPlayer extends Player {
         this.countries.get(counteryIndex).setArmies(currentArmiesCountry - numberOfArmies);
     }
 
-    public void reinforcement(){
+    public void reinforcement(int armies){
         Random randomNumberGenerator = new Random();
+        while(armies!=0){
         int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
-        int armies = randomNumberGenerator.nextInt(12);
-        placeArmy(this.countries.get(counteryIndex).getCountryName() , armies);
+        int armiesStationed = this.getCountries().get(counteryIndex).getArmiesStationed();
+        if(armiesStationed<12){
+            int rein =  (12-armiesStationed)<armies?(12-armiesStationed):armies;
+            placeArmy(this.countries.get(counteryIndex).getCountryName() ,rein);
+            armies = armies-rein;
+
+        }
+        }
+
 
     }
 }
