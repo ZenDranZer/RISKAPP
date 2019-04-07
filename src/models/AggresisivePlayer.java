@@ -36,6 +36,11 @@ public class AggresisivePlayer extends Player {
         }
         return canAttack;
     }
+    public void reinforcement(int armies)
+    {
+        placeArmy(findStrongestCountry(countriesThatCanAttack(this)).getCountryName(), armies);
+    }
+
     @Override
     public String attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
         //attackingCountry = this.findStrongestCountry();
@@ -43,4 +48,5 @@ public class AggresisivePlayer extends Player {
             return super.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
 
     }
+
 }
