@@ -60,4 +60,13 @@ public class Tournament extends Observable {
         gamestate.add(gstate);
     }
 
+    public ArrayList<Player> getBots() {
+        return bots;
+    }
+
+    public void setBots(Player bot) {
+        bots.add(bot);
+    }
+
+
 }
