@@ -1,6 +1,8 @@
 package utils;
 
 
+import models.GameMap;
+
 import java.awt.*;
 
 import static java.awt.Color.*;
@@ -71,6 +73,25 @@ public class Constants {
          * @return integer which provides initial set of armies.*/
         public int getArmyStrength() {
             return armyStrength;
+        }
+    }
+
+    public enum MAP_FILES {
+
+        MAP1("/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map1.map"),
+        MAP2("/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map2.map"),
+        MAP3("/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map3.map"),
+        MAP4("/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map4.map"),
+        MAP5("/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map5.map");
+
+        private final String gmap;
+
+        MAP_FILES(String path) {
+            gmap = path;
+        }
+
+        public String getGmap() {
+            return gmap;
         }
     }
 
