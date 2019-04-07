@@ -25,7 +25,7 @@ public class AggresisivePlayer extends Player {
             return null;
         }
     }
-    public ArrayList<GameCountry> countriesThatCanAttack(Player player){
+   /* public ArrayList<GameCountry> countriesThatCanAttack(Player player){
         ArrayList<GameCountry> canAttack = new ArrayList<>();
         for(GameCountry country : player.getCountries()){
             for(GameCountry neighbour : country.getNeighbouringCountries().values()){
@@ -35,10 +35,10 @@ public class AggresisivePlayer extends Player {
             }
         }
         return canAttack;
-    }
+    }*/
     public void reinforcement(int armies)
     {
-        super.reinforcement(findStrongestCountry(countriesThatCanAttack(this)).getCountryName(),armies);
+        super.reinforcement(findStrongestCountry(super.countriesThatCanAttack(this)).getCountryName(),armies);
     }
 
     public GameCountry findWeakestNeighbor(){
@@ -54,7 +54,7 @@ public class AggresisivePlayer extends Player {
     }
 
     public String attack() {
-        GameCountry attackingCountry = this.findStrongestCountry(countriesThatCanAttack(this));
+        GameCountry attackingCountry = this.findStrongestCountry(super.countriesThatCanAttack(this));
         GameCountry defendingCountry = this.findWeakestNeighbor();
 
             return super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
