@@ -3,10 +3,10 @@ package models;
 import java.util.ArrayList;
 
 public class BenevolentPlayer extends Player {
-    BenevolentPlayer(){
+    public BenevolentPlayer(){
         super();
     }
-    BenevolentPlayer(String name, int id, GameMap gameMap){
+    public BenevolentPlayer(String name, int id, GameMap gameMap){
         super();
     }
 

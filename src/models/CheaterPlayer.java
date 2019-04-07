@@ -1,11 +1,12 @@
 package models;
 
 public class CheaterPlayer extends Player {
-    CheaterPlayer(){
+
+    public CheaterPlayer(){
         super();
 
     }
-    CheaterPlayer(String name, int id, GameMap gameMap){
+    public CheaterPlayer(String name, int id, GameMap gameMap){
         super(name,id,gameMap);
     }
 
