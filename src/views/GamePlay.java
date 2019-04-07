@@ -85,59 +85,12 @@ public class GamePlay extends JPanel implements Observer {
 		objGameEngine = engine;
 		objTurnController = objGameEngine.getTurmController();
 		activePlayer = objGameEngine.getGameState().getActivePlayer();
-		worldDominationView = new WorldDominationView(objGameEngine.getGameState());
-		worldDominationView.setVisible(true);
-		worldDominationView.setBounds(800, 60, 400, 200);
+
+		// TODO : separate out
 		objGameEngine.getGameState().getRiskController()
 				.initRiskCardDeck(objGameEngine.getGameState().getGameMapObject());
-		add(worldDominationView);
 
-		setLayout(null);
-		this.setBounds(10, 10, 972, 556);
-		lblPlayerName = new JLabel("Player Name :" + activePlayer.getName());
-		lblPlayerName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblPlayerName.setBounds(10, 442, 267, 32);
-		add(lblPlayerName);
-
-		lblArmiesPresent = new JLabel("");
-		lblArmiesPresent.setBounds(288, 139, 300, 32);
-		add(lblArmiesPresent);
-
-		lblactionArmiesPresent = new JLabel("");
-		lblactionArmiesPresent.setBounds(250, 182, 350, 32);
-		add(lblactionArmiesPresent);
-
-		scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(238, 249, 353, 108);
-		add(scrollPane_2);
-	
-		txtError = new JTextArea();
-		txtError.setBackground(SystemColor.control);
-		txtError.setWrapStyleWord(true);
-		txtError.setLineWrap(true);
-		txtError.setBounds(238, 249, 353, 108);
-		txtError.setEditable(false);
-		txtError.setFocusable(false);
-		//add(txtError);
-		scrollPane_2.setViewportView(txtError);
-
-		lblTurn = new JLabel("Turn");
-		lblTurn.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTurn.setBounds(10, 411, 92, 23);
-		add(lblTurn);
-
-		lblReinforce = new JLabel("Add army to country");
-		lblReinforce.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblReinforce.setBounds(64, 11, 211, 36);
-		add(lblReinforce);
-
-		txtReinforce = new JTextField();
-		txtReinforce.setBounds(268, 58, 113, 20);
-		add(txtReinforce);
-		txtReinforce.setColumns(10);
-		txtReinforce.setVisible(false);
-
-		btnAdd = new JButton("Add Army");
+		initComponents();
 
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
@@ -167,28 +120,10 @@ public class GamePlay extends JPanel implements Observer {
 			}
 		});
 
-		btnAdd.setBounds(391, 48, 104, 32);
-		btnAdd.setVisible(false);
-		add(btnAdd);
+		// TODO Separate out : phase label
 
-		dlstPlayerCountries = new DefaultListModel<String>();
-
-		lblRemainingArmies = new JLabel("Remaining Armies :");
-		lblRemainingArmies.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblRemainingArmies.setBounds(578, 411, 211, 23);
-		add(lblRemainingArmies);
-
-		lblPhase = new JLabel("Initial Allocation");
-		lblPhase.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblPhase.setBounds(254, 15, 267, 32);
-		add(lblPhase);
-
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(64, 58, 148, 299);
-		add(scrollPane);
-
+		// TODO : separate out
 		updateListElements();
-		lstPlayerCountries = new JList(dlstPlayerCountries);
 
 		lstPlayerCountries.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
@@ -209,25 +144,6 @@ public class GamePlay extends JPanel implements Observer {
 			}
 		});
 
-		scrollPane.setViewportView(lstPlayerCountries);
-
-		JLabel lblError = new JLabel("");
-		lblError.setBounds(243, 249, 246, 68);
-		add(lblError);
-
-		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(618, 61, 148, 296);
-		add(scrollPane_1);
-
-		lblDefender = new JLabel("Defender : ");
-		lblDefender.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDefender.setBounds(588, 442, 178, 25);
-		add(lblDefender);
-		lblDefender.setVisible(false);
-
-		dlstActionCountries = new DefaultListModel<String>();
-
-		lstActionCountry = new JList(dlstActionCountries);
 		lstActionCountry.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				lblactionArmiesPresent.setVisible(true);
@@ -254,16 +170,7 @@ public class GamePlay extends JPanel implements Observer {
 				}
 			}
 		});
-		lstActionCountry.setBounds(490, 59, 124, 258);
 
-		scrollPane_1.setViewportView(lstActionCountry);
-
-		lblAction = new JLabel("Action");
-		lblAction.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAction.setBounds(618, 23, 148, 24);
-		add(lblAction);
-
-		btnSkip = new JButton("Skip");
 		btnSkip.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -288,53 +195,6 @@ public class GamePlay extends JPanel implements Observer {
 				}
 			}
 		});
-		btnSkip.setBounds(505, 48, 89, 32);
-		add(btnSkip);
-
-		rdbtnRed1 = new JRadioButton("1");
-		rdbtnRed1.setBounds(218, 106, 43, 23);
-		add(rdbtnRed1);
-
-		rdbtnRed2 = new JRadioButton("2");
-		rdbtnRed2.setBounds(268, 106, 43, 23);
-		add(rdbtnRed2);
-
-		rdbtnRed3 = new JRadioButton("3");
-		rdbtnRed3.setBounds(313, 106, 43, 23);
-		add(rdbtnRed3);
-
-		grpRedDice = new ButtonGroup();
-		grpRedDice.add(rdbtnRed1);
-		grpRedDice.add(rdbtnRed2);
-		grpRedDice.add(rdbtnRed3);
-
-		rdbtnWhite2 = new JRadioButton("2");
-		rdbtnWhite2.setBounds(569, 106, 43, 23);
-		add(rdbtnWhite2);
-
-		rdbtnWhite1 = new JRadioButton("1");
-		rdbtnWhite1.setBounds(526, 106, 43, 23);
-		add(rdbtnWhite1);
-
-		grpWhiteDice = new ButtonGroup();
-		grpWhiteDice.add(rdbtnWhite1);
-		grpWhiteDice.add(rdbtnWhite2);
-
-		lblRedDice = new JLabel("Red Dice");
-		lblRedDice.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblRedDice.setBounds(222, 91, 67, 14);
-		add(lblRedDice);
-
-		lblWhiteDice = new JLabel("White Dice");
-		lblWhiteDice.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblWhiteDice.setBounds(526, 91, 82, 14);
-		add(lblWhiteDice);
-
-		chckbxAllOutAttack = new JCheckBox("All out attack");
-		chckbxAllOutAttack.setBounds(300, 87, 200, 23);
-		add(chckbxAllOutAttack);
-
-		btnSwapcards = new JButton("Trade Cards");
 
 		btnSwapcards.addMouseListener(new MouseAdapter() {
 			@Override
@@ -342,44 +202,22 @@ public class GamePlay extends JPanel implements Observer {
 				showTradePanel();
 			}
 		});
-		btnSwapcards.setBounds(64, 368, 148, 23);
-		add(btnSwapcards);
-		btnSwapcards.setVisible(true);
 
-		add(btnSwapcards);
-
-		btnMapview = new JButton("View Map");
 		btnMapview.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				btnMapviewMouseClicked(arg0);
 			}
 		});
-		btnMapview.setBounds(313, 449, 176, 23);
-		add(btnMapview);
 
-		btnEndgame = new JButton("End Game");
 		btnEndgame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				endGame();
 			}
 		});
-		btnEndgame.setBounds(313, 483, 176, 23);
-		add(btnEndgame);
-		
-		btnMapview.setVisible(true);
 
-		btnSkip.setVisible(false);
-		lblRedDice.setVisible(false);
-		lblWhiteDice.setVisible(false);
-		chckbxAllOutAttack.setVisible(false);
-
-		scrollPane_1.setVisible(false);
-		lstActionCountry.setVisible(false);
 		displayRemainingArmies();
-		lblAction.setVisible(false);
-		groupRadioSetVisibility(false);
 
 		ArrayList<Player> activePlayers = objGameEngine.getGameState().getPlayers();
 		for (Player p : activePlayers) {
@@ -387,12 +225,11 @@ public class GamePlay extends JPanel implements Observer {
 		}
 	}
 
-
-	/**This is an event function for graph view.*/
-    private void btnMapviewMouseClicked(MouseEvent e){
-        GraphView graphView = new GraphView(objGameEngine);
-        graphView.setVisible(true);
-    }
+	/** This is an event function for graph view. */
+	private void btnMapviewMouseClicked(MouseEvent e) {
+		GraphView graphView = new GraphView(objGameEngine);
+		graphView.setVisible(true);
+	}
 
 	/**
 	 *
@@ -407,7 +244,7 @@ public class GamePlay extends JPanel implements Observer {
 		rdbtnWhite2.setVisible(value);
 	}
 
-	/**This function ends the game and close the frame.*/
+	/** This function ends the game and close the frame. */
 	private void endGame() {
 		/*
 		 * this.setVisible(false); parent.getParentPanel().setVisible(true);
@@ -529,11 +366,12 @@ public class GamePlay extends JPanel implements Observer {
 		lstPlayerCountries.setSelectedIndex(-1);
 		txtReinforce.setText("");
 
-		//objTurnController.placeArmy(activePlayer, selectedCountry, reinforcements);
+		// objTurnController.placeArmy(activePlayer, selectedCountry,
+		// reinforcements);
 		objGameEngine.getGameState().reinforcement(activePlayer, selectedCountry, reinforcements);
 	}
 
-	/**This function is used to show the trade panel for risk card trading.*/
+	/** This function is used to show the trade panel for risk card trading. */
 	private void showTradePanel() {
 		this.setVisible(false);
 		TradePanel tradePanel = new TradePanel(objGameEngine, this);
@@ -871,8 +709,7 @@ public class GamePlay extends JPanel implements Observer {
 			} else if (status.equals("success")) {
 				countryWon = true;
 			}
-			if(!activePlayer.isAttackPossible())
-			{
+			if (!activePlayer.isAttackPossible()) {
 				phase = "fortify";
 				updateFortificationPanel();
 			}
@@ -947,15 +784,193 @@ public class GamePlay extends JPanel implements Observer {
 
 	}
 
-	public void save()
-	{
-		objGameEngine.saveGame(phase, txtError.getText(),"");
-		//serialize game state object and save to file 
+	public void save() {
+		objGameEngine.saveGame(phase, txtError.getText(), "");
+		// serialize game state object and save to file
 	}
-	
-	// TODO break down constructor to separate general initial allocation and game load scenarios
-	public void load()
-	{
+
+	// TODO break down constructor to separate general initial allocation and
+	// game load scenarios
+	public void load() {
 		// refresh UI according to game State
+
+		// refresh world domination view
 	}
+
+	public void initComponents() {
+		setLayout(null);
+		this.setBounds(10, 10, 972, 556);
+		lblPlayerName = new JLabel("Player Name :" + activePlayer.getName());
+		lblPlayerName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPlayerName.setBounds(10, 442, 267, 32);
+		add(lblPlayerName);
+
+		lblPhase = new JLabel("Initial Allocation");
+		lblPhase.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblPhase.setBounds(254, 15, 267, 32);
+		add(lblPhase);
+
+		lblArmiesPresent = new JLabel("");
+		lblArmiesPresent.setBounds(288, 139, 300, 32);
+		add(lblArmiesPresent);
+
+		lblactionArmiesPresent = new JLabel("");
+		lblactionArmiesPresent.setBounds(250, 182, 350, 32);
+		add(lblactionArmiesPresent);
+
+		scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(238, 249, 353, 108);
+		add(scrollPane_2);
+
+		txtError = new JTextArea();
+		txtError.setBackground(SystemColor.control);
+		txtError.setWrapStyleWord(true);
+		txtError.setLineWrap(true);
+		txtError.setBounds(238, 249, 353, 108);
+		txtError.setEditable(false);
+		txtError.setFocusable(false);
+		// add(txtError);
+		scrollPane_2.setViewportView(txtError);
+
+		lblTurn = new JLabel("Turn");
+		lblTurn.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTurn.setBounds(10, 411, 92, 23);
+		add(lblTurn);
+
+		lblReinforce = new JLabel("Add army to country");
+		lblReinforce.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblReinforce.setBounds(64, 11, 211, 36);
+		add(lblReinforce);
+
+		txtReinforce = new JTextField();
+		txtReinforce.setBounds(268, 58, 113, 20);
+		add(txtReinforce);
+		txtReinforce.setColumns(10);
+		txtReinforce.setVisible(false);
+
+		btnAdd = new JButton("Add Army");
+		btnAdd.setBounds(391, 48, 104, 32);
+		btnAdd.setVisible(false);
+		add(btnAdd);
+
+		dlstPlayerCountries = new DefaultListModel<String>();
+		lblRemainingArmies = new JLabel("Remaining Armies :");
+		lblRemainingArmies.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblRemainingArmies.setBounds(578, 411, 211, 23);
+		add(lblRemainingArmies);
+
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(64, 58, 148, 299);
+		add(scrollPane);
+
+		lstPlayerCountries = new JList(dlstPlayerCountries);
+		scrollPane.setViewportView(lstPlayerCountries);
+
+		JLabel lblError = new JLabel("");
+		lblError.setBounds(243, 249, 246, 68);
+		add(lblError);
+
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(618, 61, 148, 296);
+		add(scrollPane_1);
+
+		lblDefender = new JLabel("Defender : ");
+		lblDefender.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDefender.setBounds(588, 442, 178, 25);
+		add(lblDefender);
+		lblDefender.setVisible(false);
+
+		dlstActionCountries = new DefaultListModel<String>();
+		lstActionCountry = new JList(dlstActionCountries);
+
+		lstActionCountry.setBounds(490, 59, 124, 258);
+
+		scrollPane_1.setViewportView(lstActionCountry);
+
+		lblAction = new JLabel("Action");
+		lblAction.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAction.setBounds(618, 23, 148, 24);
+		add(lblAction);
+
+		btnSkip = new JButton("Skip");
+		btnSkip.setBounds(505, 48, 89, 32);
+		add(btnSkip);
+
+		rdbtnRed1 = new JRadioButton("1");
+		rdbtnRed1.setBounds(218, 106, 43, 23);
+		add(rdbtnRed1);
+
+		rdbtnRed2 = new JRadioButton("2");
+		rdbtnRed2.setBounds(268, 106, 43, 23);
+		add(rdbtnRed2);
+
+		rdbtnRed3 = new JRadioButton("3");
+		rdbtnRed3.setBounds(313, 106, 43, 23);
+		add(rdbtnRed3);
+
+		grpRedDice = new ButtonGroup();
+		grpRedDice.add(rdbtnRed1);
+		grpRedDice.add(rdbtnRed2);
+		grpRedDice.add(rdbtnRed3);
+
+		rdbtnWhite2 = new JRadioButton("2");
+		rdbtnWhite2.setBounds(569, 106, 43, 23);
+		add(rdbtnWhite2);
+
+		rdbtnWhite1 = new JRadioButton("1");
+		rdbtnWhite1.setBounds(526, 106, 43, 23);
+		add(rdbtnWhite1);
+
+		grpWhiteDice = new ButtonGroup();
+		grpWhiteDice.add(rdbtnWhite1);
+		grpWhiteDice.add(rdbtnWhite2);
+
+		lblRedDice = new JLabel("Red Dice");
+		lblRedDice.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRedDice.setBounds(222, 91, 67, 14);
+		add(lblRedDice);
+
+		lblWhiteDice = new JLabel("White Dice");
+		lblWhiteDice.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblWhiteDice.setBounds(526, 91, 82, 14);
+		add(lblWhiteDice);
+
+		chckbxAllOutAttack = new JCheckBox("All out attack");
+		chckbxAllOutAttack.setBounds(300, 87, 200, 23);
+		add(chckbxAllOutAttack);
+
+		btnSwapcards = new JButton("Trade Cards");
+		btnSwapcards.setBounds(64, 368, 148, 23);
+		add(btnSwapcards);
+		btnSwapcards.setVisible(true);
+		add(btnSwapcards);
+
+		btnMapview = new JButton("View Map");
+		btnMapview.setBounds(313, 449, 176, 23);
+		add(btnMapview);
+
+		btnEndgame = new JButton("End Game");
+
+		btnEndgame.setBounds(313, 483, 176, 23);
+		add(btnEndgame);
+
+		btnMapview.setVisible(true);
+
+		btnSkip.setVisible(false);
+		lblRedDice.setVisible(false);
+		lblWhiteDice.setVisible(false);
+		chckbxAllOutAttack.setVisible(false);
+
+		scrollPane_1.setVisible(false);
+		lstActionCountry.setVisible(false);
+
+		lblAction.setVisible(false);
+		groupRadioSetVisibility(false);
+
+		worldDominationView = new WorldDominationView(objGameEngine.getGameState());
+		worldDominationView.setVisible(true);
+		worldDominationView.setBounds(800, 60, 400, 200);
+		add(worldDominationView);
+	}
+
 }
