@@ -41,11 +41,23 @@ public class AggresisivePlayer extends Player {
         placeArmy(findStrongestCountry(countriesThatCanAttack(this)).getCountryName(), armies);
     }
 
-    @Override
-    public String attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
-        //attackingCountry = this.findStrongestCountry();
+    public GameCountry findWeakestNeighbor(){
+        GameCountry weakest = new ArrayList<GameCountry>(this.countries.get(0).getNeighbouringCountries().values()).get(0);
+        for (GameCountry playerCountries: this.countries) {
+            for (GameCountry neighbor : playerCountries.getNeighbouringCountries().values()) {
+                if (neighbor.getArmiesStationed() < weakest.getArmiesStationed()){
+                    weakest = neighbor;
+                }
+            }
+        }
+        return weakest;
+    }
 
-            return super.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
+    public String attack() {
+        GameCountry attackingCountry = this.findStrongestCountry(countriesThatCanAttack(this));
+        GameCountry defendingCountry = this.findWeakestNeighbor();
+
+            return super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
 
     }
 
