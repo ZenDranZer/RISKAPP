@@ -173,6 +173,12 @@ public class GameEngine {
 		this.turn = new TurnController(this.gameState);
 	}
 
+	/**
+	 * Save Game State to file
+	 * @param state game state
+	 * @param logs	action logs till save point
+	 * @param fileName saved file name
+	 */
 	public void saveGame(String state, String logs, String fileName) {
 		try {
 			FileOutputStream fileOut;
