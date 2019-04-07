@@ -41,15 +41,10 @@ public class CheaterPlayer extends Player {
         return status ;
     }
 
-    @Override
-    public void fortify(String countryToFortify, String fortifyFrom, int armies) {
-
-        GameCountry toCountry = countries.stream().filter(cntry -> cntry.getCountryName().equals(countryToFortify))
-                .findFirst().get();
-        GameCountry fortifyingCountry = countries.stream().filter(cntry -> cntry.getCountryName().equals(fortifyFrom))
-                .findFirst().get();
-
-        toCountry.setArmies(toCountry.getArmiesStationed() + fortifyingCountry.getArmiesStationed()*2);
-        //fortifyingCountry.setArmies(fortifyingCountry.getArmiesStationed() - armies);
+    public String  fortify() {
+        for (GameCountry country: countriesThatCanAttack(this)) {
+            country.setArmies(country.getArmiesStationed() *2);
+        }
+        return this.getName() + " fortified all countries";
     }
 }
