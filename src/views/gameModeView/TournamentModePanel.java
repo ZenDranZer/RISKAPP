@@ -1,28 +1,83 @@
 package views.gameModeView;
 
+import controllers.GameEngine;
+import controllers.TournamentController;
+import views.GamePlay;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class TournamentModePanel extends JPanel {
-    public TournamentModePanel() {
+
+    private TournamentController tournamentController;
+    private JPanel parent;
+
+    public TournamentModePanel(TournamentController gameEngine, JPanel parent) {
+        this.tournamentController = gameEngine;
+        this.parent = parent;
         initComponents();
     }
 
-    private void resetButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
-    }
-
     private void startButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        int numberOfMapsInt = (Integer)numberOfMaps.getValue();
+        ArrayList<String> playersNames = new ArrayList<>();
+        int numberOfPlayersInt = (Integer)numberOfPlayers.getValue();
+        playersNames.add((String)player1TypeCB.getSelectedItem());
+        playersNames.add((String)player1TypeCB.getSelectedItem());
+        switch (numberOfPlayersInt){
+            case 3:
+                playersNames.add((String)player3TypeCB.getSelectedItem());
+                break;
+            case 4:
+                playersNames.add((String)player3TypeCB.getSelectedItem());
+                playersNames.add((String)player4TypeCB.getSelectedItem());
+                break;
+        }
+        int numberOfTurnsInt = (Integer) maximumTerns.getValue();
+        int numberOfGamesInt = (Integer) numberOfGames.getValue();
+        tournamentController.setMaxNoOfTuruns(numberOfTurnsInt);
+        tournamentController.setNoOfGames(numberOfGamesInt);
+        tournamentController.setMaps(numberOfMapsInt);
+        tournamentController.setPlayer(playersNames);
+        tournamentController.startTournament();
+        Container container = this.getParent();
+        TournamentResultPanel tournamentResultPanel = new TournamentResultPanel(tournamentController,this);
+        tournamentController.getTournament().addObserver(tournamentResultPanel);
+        tournamentResultPanel.setVisible(true);
+        this.setVisible(false);
+        container.add(tournamentResultPanel);
+        container.revalidate();
+
     }
 
     private void numberOfPlayersMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        int value = (Integer) numberOfPlayers.getValue();
+        player1TypeCB.setEnabled(true);
+        player2TypeCB.setEnabled(true);
+        repaint();
+        switch (value) {
+            case 2:
+                player3TypeCB.setEnabled(false);
+                player4TypeCB.setEnabled(false);
+                break;
+            case 3:
+                player3TypeCB.setEnabled(true);
+                player4TypeCB.setEnabled(false);
+                break;
+            case 4:
+                player3TypeCB.setEnabled(true);
+                player4TypeCB.setEnabled(true);
+                break;
+        }
+        startButton.setEnabled(true);
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        Container container = this.getParent();
+        container.remove(this);
+        parent.setVisible(true);
     }
 
     private void initComponents() {
@@ -43,7 +98,6 @@ public class TournamentModePanel extends JPanel {
         numberOfGames = new JSpinner();
         label9 = new JLabel();
         maximumTerns = new JSpinner();
-        resetButton = new JButton();
         startButton = new JButton();
         backButton = new JButton();
 
@@ -184,20 +238,9 @@ public class TournamentModePanel extends JPanel {
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 5, 0), 0, 0));
 
-        //---- resetButton ----
-        resetButton.setText("Reset");
-        resetButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                resetButtonMouseClicked(e);
-            }
-        });
-        add(resetButton, new GridBagConstraints(0, 9, 1, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 5), 0, 0));
-
         //---- startButton ----
         startButton.setText("Start!");
+        startButton.setEnabled(false);
         startButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -238,7 +281,6 @@ public class TournamentModePanel extends JPanel {
     private JSpinner numberOfGames;
     private JLabel label9;
     private JSpinner maximumTerns;
-    private JButton resetButton;
     private JButton startButton;
     private JButton backButton;
 }
