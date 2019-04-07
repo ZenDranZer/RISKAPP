@@ -53,4 +53,9 @@ public class TournamentController {
             }
         }
     }
+
+    public void startTournament(){
+
+    }
+
 }
