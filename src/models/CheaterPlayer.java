@@ -14,7 +14,7 @@ public class CheaterPlayer extends Player {
         for (GameCountry country: this.countries) {
             country.setArmies(country.getArmiesStationed() * 2);
         }
-       return this.getName() + " doubled number of stationed armies";
+       return this.getName() + " doubled number of stationed armies in reinforcement phase";
     }
 
     public String attack() {
