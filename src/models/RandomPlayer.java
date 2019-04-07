@@ -32,12 +32,13 @@ public class RandomPlayer extends Player {
     public void fortify() {
         Random randomNumberGenerator = new Random();
         int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
-        int toCountryIndex = randomNumberGenerator.nextInt(this.countries.size());
+        int toCountryIndex = randomNumberGenerator.nextInt(this.countries.get(counteryIndex).getNeighbouringCountries().size());
         int numberOfArmies = randomNumberGenerator.nextInt(this.countries.get(counteryIndex).getArmiesStationed());
         int currentArmiesToCountry = this.countries.get(toCountryIndex).getArmiesStationed();
         int currentArmiesCountry = this.countries.get(counteryIndex).getArmiesStationed();
-        this.countries.get(toCountryIndex).setArmies(currentArmiesToCountry + numberOfArmies);
-        this.countries.get(counteryIndex).setArmies(currentArmiesCountry - numberOfArmies);
+        int ar = (currentArmiesToCountry + numberOfArmies <= 12) ? numberOfArmies-1 : currentArmiesToCountry+numberOfArmies-12;
+        this.countries.get(toCountryIndex).setArmies(currentArmiesToCountry + ar);
+        this.countries.get(counteryIndex).setArmies(currentArmiesCountry - ar);
     }
 
     public void reinforcement(int armies){
