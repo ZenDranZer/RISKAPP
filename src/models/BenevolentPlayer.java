@@ -44,4 +44,27 @@ public class BenevolentPlayer extends Player {
         super.reinforcement(this.findWeakCountry().getCountryName(),armies);
         return this.getName() + " moved " + armies + " number of armies to " + findWeakCountry().getCountryName();
     }
+    public void attack(){
+
+    }
+    public String fortify(){
+        ArrayList<GameCountry> canBeFortified = super.countriesThatCanBeFortified(this);
+        GameCountry countryToBeFortified = null;
+        GameCountry anotherCountry = null;
+        int min = 50;
+        for(GameCountry country1 : canBeFortified){
+            if(country1.getArmiesStationed()<=min){
+                countryToBeFortified = country1;
+                for(GameCountry c : countryToBeFortified.getNeighbouringCountries().values()){
+                    if(c.getArmiesStationed()>1){
+                        anotherCountry = c;
+                        break;
+                    }
+                }
+            }
+        }
+        super.fortify(countryToBeFortified.getCountryName(),anotherCountry.getCountryName(),anotherCountry.getArmiesStationed()-1);
+
+        return null;
+    }
 }

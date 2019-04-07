@@ -561,4 +561,16 @@ public class Player extends Observable {
 		}
 		return canAttack;
 	}
+	public ArrayList<GameCountry> countriesThatCanBeFortified(Player player){
+		ArrayList<GameCountry> canAttack = new ArrayList<>();
+		for(GameCountry country : player.getCountries()){
+			for(GameCountry neighbour : country.getNeighbouringCountries().values()){
+				if(neighbour.getCurrentPlayer().getId()==player.getId()&&neighbour.getArmiesStationed()>1){
+					canAttack.add(neighbour);
+					break;
+				}
+			}
+		}
+		return canAttack;
+	}
 }
