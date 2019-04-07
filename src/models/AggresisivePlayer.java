@@ -3,11 +3,11 @@ package models;
 import java.util.ArrayList;
 
 public class AggresisivePlayer extends Player {
-    AggresisivePlayer(){
+    public AggresisivePlayer(){
         super();
     }
 
-    AggresisivePlayer(String name, int id, GameMap gameMap){
+    public AggresisivePlayer(String name, int id, GameMap gameMap){
         super();
     }
 

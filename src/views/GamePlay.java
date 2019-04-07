@@ -7,6 +7,7 @@ import models.GameCountry;
 import models.GameState;
 import models.Player;
 import models.RiskCard;
+import views.gameModeView.SingleGameModePanel;
 import views.miscellaneous.GraphView;
 import views.miscellaneous.TradePanel;
 import views.miscellaneous.WorldDominationView;
@@ -73,22 +74,19 @@ public class GamePlay extends JPanel implements Observer {
 	private JButton btnMapview;
 	private JButton btnEndgame;
 	private WorldDominationView worldDominationView;
-	private StartGamePanel parent;
+	private JPanel parent;
 	private boolean countryWon;
 	JScrollPane scrollPane_2;
 
 	/**
 	 * Renders the initial view of the panel
 	 */
-	public GamePlay(GameEngine engine, StartGamePanel parent) {
+	public GamePlay(GameEngine engine, JPanel parent) {
 		this.parent = parent;
+
 		objGameEngine = engine;
 		objTurnController = objGameEngine.getTurmController();
 		activePlayer = objGameEngine.getGameState().getActivePlayer();
-
-		// TODO : separate out
-		objGameEngine.getGameState().getRiskController()
-				.initRiskCardDeck(objGameEngine.getGameState().getGameMapObject());
 
 		initComponents();
 
@@ -119,11 +117,6 @@ public class GamePlay extends JPanel implements Observer {
 				}
 			}
 		});
-
-		// TODO Separate out : phase label
-
-		// TODO : separate out
-		updateListElements();
 
 		lstPlayerCountries.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
@@ -217,11 +210,30 @@ public class GamePlay extends JPanel implements Observer {
 			}
 		});
 
-		displayRemainingArmies();
-
 		ArrayList<Player> activePlayers = objGameEngine.getGameState().getPlayers();
 		for (Player p : activePlayers) {
 			p.addObserver(worldDominationView);
+		}
+		
+		// new game scenario
+		if (parent instanceof SingleGameModePanel) {
+			objGameEngine.getGameState().getRiskController()
+					.initRiskCardDeck(objGameEngine.getGameState().getGameMapObject());
+			lblPhase.setText("Intial Allocation");
+			// TODO : separate out
+			updateListElements();
+			displayRemainingArmies();
+		}
+
+		// load game scenario
+		if (true) {
+			// get logs from read object
+			txtError.setText("");
+			
+			//phase label 
+			lblPhase.setText("");
+			phase = "";
+			//based on phase , call respective update phase function
 		}
 	}
 

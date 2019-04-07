@@ -90,6 +90,9 @@ public class GameCountry {
     public void setArmies(int armiesStationed) {
         this.armiesStationed = armiesStationed;
     }
+    public void addArmies(int armiesStationed) {
+        this.armiesStationed += armiesStationed;
+    }
 
     /**
      * Remove armies from player armies
