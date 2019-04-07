@@ -38,9 +38,17 @@ public class AggresisivePlayer extends Player {
     }*/
     public String reinforcement(int armies)
     {
-        super.reinforcement(findStrongestCountry(super.countriesThatCanAttack(this)).getCountryName(),armies);
-        return this.getName() + " moved " + armies + " number of armies to " +
-                findStrongestCountry(countriesThatCanAttack(this)).getCountryName();
+        String resultString="";
+        GameCountry country;
+       while(armies!=0){
+           int ar = findStrongestCountry(super.countriesThatCanAttack(this)).getArmiesStationed()+armies<=12?armies:12-findStrongestCountry(super.countriesThatCanAttack(this)).getArmiesStationed();
+           country =  findStrongestCountry(super.countriesThatCanAttack(this));
+           super.reinforcement(country.getCountryName(),ar);
+            armies-=ar;
+            resultString+=this.getName() + " moved " + armies + " number of armies to " + country.getCountryName();
+
+       }
+       return resultString;
     }
 
     public GameCountry findWeakestNeighbor(){
