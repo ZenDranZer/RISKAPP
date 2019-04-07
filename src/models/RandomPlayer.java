@@ -10,13 +10,23 @@ public class RandomPlayer extends Player {
         super();
     }
 
-    @Override
-    public String attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
+
+    public String attack() {
+        boolean flag = true;
+        GameCountry attackingCountry = new GameCountry();
+        GameCountry defendingCountry = new GameCountry();
         Random randomNumberGenerator = new Random();
-        int counteryIndex = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size());
-        defendingCountry = attackingCountry.getNeighbouringCountries().get(counteryIndex);
-        //int numberOfAttacks =
-        return super.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
+        while (flag) {
+            int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
+            attackingCountry = this.countries.get(counteryIndex);
+            int defendingIndex = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size());
+            defendingCountry = attackingCountry.getNeighbouringCountries().get(defendingIndex);
+            if (defendingCountry.getCurrentPlayer() != this) {
+                flag = false;
+                return super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
+            }
+        }
+       return "";
     }
 
     public void fortify() {
