@@ -20,8 +20,9 @@ public class BenevolentPlayer extends Player {
         return weak;
     }
 
-    public void reinforcement(int armies)
+    public String reinforcement(int armies)
     {
         super.reinforcement(findWeakCountry().getCountryName(),armies);
+        return this.getName() + " moved " + armies + " number of armies to " + findWeakCountry().getCountryName();
     }
 }
