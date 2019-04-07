@@ -43,10 +43,6 @@ public class StartGamePanel extends JPanel {
 		mapFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MAP file only", "map"));
 	}
 
-	public JPanel getParentPanel() {
-		return parent;
-	}
-
 	private void continueButtonMouseClicked(MouseEvent e) throws IOException {
 		if (continueButton.isEnabled() && (isSet||!mapFileChooser.getSelectedFile().getAbsolutePath().isEmpty())) {
 			ArrayList<String> playerName = new ArrayList<>();
