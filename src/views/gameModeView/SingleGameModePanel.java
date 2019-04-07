@@ -1,12 +1,22 @@
 package views.gameModeView;
 
+import controllers.GameEngine;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SingleGameModePanel extends JPanel {
-    public SingleGameModePanel() {
+
+    private GameEngine gameEngine;
+    private JPanel parent;
+
+    public SingleGameModePanel(GameEngine gameEngine, JPanel parent) {
+        this.gameEngine = gameEngine;
+        this.parent = parent;
         initComponents();
+        filePath.addChoosableFileFilter(new FileNameExtensionFilter("MAP file only", "map"));
     }
 
     private void numberOfPlayersMouseClicked(MouseEvent e) {
@@ -14,7 +24,11 @@ public class SingleGameModePanel extends JPanel {
     }
 
     private void resetButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        player1Name.setText("");
+        player2Name.setText("");
+        player3Name.setText("");
+        player4Name.setText("");
+        player5Name.setText("");
     }
 
     private void startButtonMouseClicked(MouseEvent e) {
@@ -22,47 +36,53 @@ public class SingleGameModePanel extends JPanel {
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
-    }
-
-    private void Player1TypeMouseClicked(MouseEvent e) {
-        // TODO add your code here
-    }
-
-    private void player1TypeCBMouseClicked(MouseEvent e) {
-        // TODO add your code here
-    }
-
-    private void player1TypeCB5MouseClicked(MouseEvent e) {
-        // TODO add your code here
-    }
-
-    private void player1TypeCB6MouseClicked(MouseEvent e) {
-        // TODO add your code here
-    }
-
-    private void player1TypeCB7MouseClicked(MouseEvent e) {
-        // TODO add your code here
+        Container container = this.getParent();
+        container.remove(this);
+        parent.setVisible(true);
     }
 
     private void player1TypeMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        setNameField(player1Type, player1Name);
     }
 
     private void player2TypeMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        setNameField(player2Type, player2Name);
     }
 
     private void player3TypeMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        setNameField(player3Type, player3Name);
     }
 
     private void player4TypeMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        setNameField(player4Type, player4Name);
     }
 
     private void player5TypeMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        setNameField(player5Type, player5Name);
+    }
+
+    private void setNameField(JComboBox<String> playerType, JTextField playerName) {
+        switch(playerType.getSelectedIndex()){
+            case 0:
+                playerName.setEnabled(true);
+                break;
+            case 1:
+                playerName.setEnabled(false);
+                playerName.setText("Aggressive");
+                break;
+            case 2:
+                playerName.setEnabled(false);
+                playerName.setText("Benevolent");
+                break;
+            case 3:
+                playerName.setEnabled(false);
+                playerName.setText("Random");
+                break;
+            case 4:
+                playerName.setEnabled(false);
+                playerName.setText("Cheater");
+                break;
+        }
     }
 
     private void initComponents() {
