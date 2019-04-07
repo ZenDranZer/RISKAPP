@@ -1,7 +1,5 @@
 package models;
 
-import java.util.Observable;
-
 public class CheaterPlayer extends Player {
     CheaterPlayer(){
         super();
@@ -43,7 +41,7 @@ public class CheaterPlayer extends Player {
 
     public String  fortify() {
         for (GameCountry country: countriesThatCanAttack(this)) {
-            country.setArmies(country.getArmiesStationed() *2);
+            country.setArmies(country.getArmiesStationed() *2<=12?country.getArmiesStationed() *2:12);
         }
         return this.getName() + " fortified all countries";
     }
