@@ -10,24 +10,35 @@ public class RandomPlayer extends Player {
         super();
     }
 
-    @Override
-    public String attack(Player defender, GameCountry attackingCountry, GameCountry defendingCountry, int redDice, int whiteDice) {
+
+    public String attack() {
+        boolean flag = true;
+        GameCountry attackingCountry = new GameCountry();
+        GameCountry defendingCountry = new GameCountry();
         Random randomNumberGenerator = new Random();
-        int counteryIndex = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size());
-        defendingCountry = attackingCountry.getNeighbouringCountries().get(counteryIndex);
-        //int numberOfAttacks =
-        return super.attack(defender, attackingCountry, defendingCountry, redDice, whiteDice);
+        while (flag) {
+            int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
+            attackingCountry = this.countries.get(counteryIndex);
+            int defendingIndex = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size());
+            defendingCountry = attackingCountry.getNeighbouringCountries().get(defendingIndex);
+            if (defendingCountry.getCurrentPlayer() != this) {
+                flag = false;
+                return super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
+            }
+        }
+       return "";
     }
 
     public void fortify() {
         Random randomNumberGenerator = new Random();
         int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
-        int toCountryIndex = randomNumberGenerator.nextInt(this.countries.size());
+        int toCountryIndex = randomNumberGenerator.nextInt(this.countries.get(counteryIndex).getNeighbouringCountries().size());
         int numberOfArmies = randomNumberGenerator.nextInt(this.countries.get(counteryIndex).getArmiesStationed());
         int currentArmiesToCountry = this.countries.get(toCountryIndex).getArmiesStationed();
         int currentArmiesCountry = this.countries.get(counteryIndex).getArmiesStationed();
-        this.countries.get(toCountryIndex).setArmies(currentArmiesToCountry + numberOfArmies);
-        this.countries.get(counteryIndex).setArmies(currentArmiesCountry - numberOfArmies);
+        int ar = (currentArmiesToCountry + numberOfArmies <= 12) ? numberOfArmies-1 : currentArmiesToCountry+numberOfArmies-12;
+        this.countries.get(toCountryIndex).setArmies(currentArmiesToCountry + ar);
+        this.countries.get(counteryIndex).setArmies(currentArmiesCountry - ar);
     }
 
     public void reinforcement(int armies){
