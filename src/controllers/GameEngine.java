@@ -4,15 +4,17 @@ import models.GameCountry;
 import models.GameState;
 import models.Player;
 
+import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Controller class to maintain the game state and handle object allocation for the game
+ * Controller class to maintain the game state and handle object allocation for
+ * the game
  *
  */
 public class GameEngine {
 
-	private  MapGenerator mapGenerator;
+	private MapGenerator mapGenerator;
 	private String mapPath;
 	private TurnController turn;
 	private int numberOfPlayers;
@@ -25,11 +27,14 @@ public class GameEngine {
 		mapGenerator = new MapGenerator(gameState.getGameMapObject());
 
 	}
+
 	public GameState getGameState() {
 		return gameState;
 	}
+
 	/**
 	 * Gets the TurnController object
+	 * 
 	 * @return TurnController object representing the current turn
 	 */
 	public TurnController getTurmController() {
@@ -41,6 +46,7 @@ public class GameEngine {
 
 	/**
 	 * Gets the Map Generator
+	 * 
 	 * @return MapGenerator object representing the Map Generator
 	 */
 	public MapGenerator getMapGenerator() {
@@ -49,16 +55,18 @@ public class GameEngine {
 
 	/**
 	 * Gets the file path of the current map
+	 * 
 	 * @return String absolute path of the map file
 	 */
 	public String getMapPath() {
 		return mapPath;
 	}
 
-
 	/**
 	 * Sets the current map path
-	 * @param mapPath String absolute path of the map file
+	 * 
+	 * @param mapPath
+	 *            String absolute path of the map file
 	 */
 	public void setMapPath(String mapPath) {
 		this.mapPath = mapPath;
@@ -73,20 +81,22 @@ public class GameEngine {
 	public void setListActivePlayers(ArrayList<String> listActivePlayers) {
 		int i = 1;
 		for (String name : listActivePlayers) {
-			Player player = new Player(name, i,gameState.getGameMapObject());
+			Player player = new Player(name, i, gameState.getGameMapObject());
 			gameState.getPlayers().add(player);
 			i++;
 		}
 	}
 
 	/**
-	 * Assigns List of players to Active players 
-	 * @param lstPlayers ArrayList of player objects
+	 * Assigns List of players to Active players
+	 * 
+	 * @param lstPlayers
+	 *            ArrayList of player objects
 	 */
 	public void setActivePlayers(ArrayList<Player> lstPlayers) {
 		gameState.setPlayers(lstPlayers);
 	}
-	
+
 	/**
 	 * Initialize the game engine with the initial set of players, randomly
 	 * allocate countries and assign initial set of armies
@@ -95,7 +105,7 @@ public class GameEngine {
 
 		try {
 			setNumberOfPlayers(gameState.getPlayers().size());
-			turn.allocateCountries(gameState.getPlayers(),getGameState().getGameMapObject().getAllCountries());
+			turn.allocateCountries(gameState.getPlayers(), getGameState().getGameMapObject().getAllCountries());
 			allocateInitialArmies();
 			gameState.setActivePlayer(gameState.getPlayers().get(0));
 		} catch (NullPointerException nullEx) {
@@ -127,16 +137,20 @@ public class GameEngine {
 	}
 
 	/**
-	 * function to change the current player to the next player 
-	 * @param activePlayer current player
+	 * function to change the current player to the next player
+	 * 
+	 * @param activePlayer
+	 *            current player
 	 */
-	public void setNextPlayer(Player activePlayer,boolean checkInitialAllocation) {		
-		gameState.setActivePlayer(gameState.getNextPlayer(activePlayer,checkInitialAllocation));
+	public void setNextPlayer(Player activePlayer, boolean checkInitialAllocation) {
+		gameState.setActivePlayer(gameState.getNextPlayer(activePlayer, checkInitialAllocation));
 	}
 
 	/**
 	 * Sets the number of players in the game
-	 * @param noOfPlayers integer number of players
+	 * 
+	 * @param noOfPlayers
+	 *            integer number of players
 	 */
 	public void setNumberOfPlayers(int noOfPlayers) {
 		this.numberOfPlayers = noOfPlayers;
@@ -144,17 +158,52 @@ public class GameEngine {
 
 	/**
 	 * Gets the number of players in the game
+	 * 
 	 * @return integer number of players
 	 */
 	public int getNumberOfPlayers() {
 		return this.numberOfPlayers;
 	}
-	
+
 	/**
-	 * Resets the Game 
+	 * Resets the Game
 	 */
 	public void resetGame() {
 		this.gameState = new GameState();
 		this.turn = new TurnController(this.gameState);
+	}
+
+	/**
+	 * Save Game State to file
+	 * @param state game state
+	 * @param logs	action logs till save point
+	 * @param fileName saved file name
+	 */
+	public void saveGame(String state, String logs, String fileName) {
+		try {
+			FileOutputStream fileOut;
+			ObjectOutputStream objectOut;
+			fileOut = new FileOutputStream(fileName);
+			objectOut = new ObjectOutputStream(fileOut);
+			objectOut.writeObject(gameState);
+			objectOut.close();
+		} catch (IOException e) {
+		}
+	}
+
+	public void loadGame(String saveFilePath) {
+
+		try {
+			// read saved file
+			FileInputStream fileIn = new FileInputStream(saveFilePath);
+			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+
+			// set Game State
+			this.gameState = (GameState) objectIn.readObject();
+
+			objectIn.close();
+		} catch (Exception ex) {
+
+		}
 	}
 }

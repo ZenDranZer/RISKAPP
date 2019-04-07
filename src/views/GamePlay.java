@@ -111,7 +111,6 @@ public class GamePlay extends JPanel implements Observer {
 		scrollPane_2.setBounds(238, 249, 353, 108);
 		add(scrollPane_2);
 	
-		
 		txtError = new JTextArea();
 		txtError.setBackground(SystemColor.control);
 		txtError.setWrapStyleWord(true);
@@ -368,8 +367,6 @@ public class GamePlay extends JPanel implements Observer {
 		});
 		btnEndgame.setBounds(313, 483, 176, 23);
 		add(btnEndgame);
-		
-		
 		
 		btnMapview.setVisible(true);
 
@@ -948,5 +945,17 @@ public class GamePlay extends JPanel implements Observer {
 			break;
 		}
 
+	}
+
+	public void save()
+	{
+		objGameEngine.saveGame(phase, txtError.getText(),"");
+		//serialize game state object and save to file 
+	}
+	
+	// TODO break down constructor to separate general initial allocation and game load scenarios
+	public void load()
+	{
+		// refresh UI according to game State
 	}
 }
