@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class TournamentModePanel extends JPanel {
 
@@ -19,6 +21,29 @@ public class TournamentModePanel extends JPanel {
         this.parent = parent;
         initComponents();
     }
+
+    private void numberOfPlayersActionListner(ChangeEvent propertyChangeEvent) {
+        int value = (Integer) numberOfPlayers.getValue();
+        player1TypeCB.setEnabled(true);
+        player2TypeCB.setEnabled(true);
+        repaint();
+        switch (value) {
+            case 2:
+                player3TypeCB.setEnabled(false);
+                player4TypeCB.setEnabled(false);
+                break;
+            case 3:
+                player3TypeCB.setEnabled(true);
+                player4TypeCB.setEnabled(false);
+                break;
+            case 4:
+                player3TypeCB.setEnabled(true);
+                player4TypeCB.setEnabled(true);
+                break;
+        }
+        startButton.setEnabled(true);
+    }
+
 
     private void startButtonMouseClicked(MouseEvent e) {
         int numberOfMapsInt = (Integer)numberOfMaps.getValue();
@@ -50,28 +75,6 @@ public class TournamentModePanel extends JPanel {
         container.add(tournamentResultPanel);
         container.revalidate();
 
-    }
-
-    private void numberOfPlayersMouseClicked(MouseEvent e) {
-        int value = (Integer) numberOfPlayers.getValue();
-        player1TypeCB.setEnabled(true);
-        player2TypeCB.setEnabled(true);
-        repaint();
-        switch (value) {
-            case 2:
-                player3TypeCB.setEnabled(false);
-                player4TypeCB.setEnabled(false);
-                break;
-            case 3:
-                player3TypeCB.setEnabled(true);
-                player4TypeCB.setEnabled(false);
-                break;
-            case 4:
-                player3TypeCB.setEnabled(true);
-                player4TypeCB.setEnabled(true);
-                break;
-        }
-        startButton.setEnabled(true);
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
@@ -136,11 +139,12 @@ public class TournamentModePanel extends JPanel {
 
         //---- numberOfPlayers ----
         numberOfPlayers.setModel(new SpinnerNumberModel(2, 2, 4, 1));
-        numberOfPlayers.addMouseListener(new MouseAdapter() {
+        numberOfPlayers.addChangeListener(new ChangeListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                numberOfPlayersMouseClicked(e);
+            public void stateChanged(ChangeEvent changeEvent) {
+                numberOfPlayersActionListner(changeEvent);
             }
+
         });
         add(numberOfPlayers, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
