@@ -198,13 +198,9 @@ public class GameEngine {
 	public void loadGame(String saveFilePath) {
 
 		try {
-			// read saved file
 			FileInputStream fileIn = new FileInputStream(saveFilePath);
 			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-
-			// set Game State
 			this.gameState = (GameState) objectIn.readObject();
-
 			objectIn.close();
 		} catch (Exception ex) {
 

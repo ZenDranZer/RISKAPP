@@ -40,6 +40,7 @@ public class  MapGenerator {
      *
      */
     public void setGuiHashMap() {
+
         gameMap.setGetGuiHashMapParameter("author","Default authorName");
         gameMap.setGetGuiHashMapParameter("warn","Default warning");
         gameMap.setGetGuiHashMapParameter("image","Default image");
