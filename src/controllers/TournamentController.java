@@ -1,7 +1,6 @@
 package controllers;
 
 import models.*;
-import utils.Constants;
 
 import java.util.ArrayList;
 
@@ -42,7 +41,7 @@ public class TournamentController {
                 CheaterPlayer cp = new CheaterPlayer();
                 tournament.setBots(cp);
             } else if(player.get(i).equals("Aggressive")) {
-                AggresisivePlayer ap = new AggresisivePlayer();
+                AggressivePlayer ap = new AggressivePlayer();
                 tournament.setBots(ap);
             } else if (player.get(i).equals("Benevolent")) {
                 BenevolentPlayer bp = new BenevolentPlayer();
@@ -65,6 +64,7 @@ public class TournamentController {
 
         int noOfCountries = 12;
         int noOfArmies = 60;
+        int maxNoOfTurns = tournament.getMaxNoOfTurns();
         int noOfArmiesToEachCountry =  noOfArmies/noOfCountries;
         ArrayList<Player> bots = tournament.getBots();
         int turns = 0;
@@ -80,17 +80,18 @@ public class TournamentController {
 
             int player_num=0;
             Player currentPlayer;
-            while (turns < tournament.getMaxNoOfTurns()) {
+
+            while (turns < maxNoOfTurns) {
                 if(player_num == bots.size()) {
                     player_num = 0;
                 }
 
                 currentPlayer = bots.get(player_num);
 
-                currentPlayer.reinforcement();
+                /*currentPlayer.reinforcement();
                 currentPlayer.attack();
-                currentPlayer.fortify();
-
+                currentPlayer.fortify();*/
+                player_num++;
             }
 
         }
