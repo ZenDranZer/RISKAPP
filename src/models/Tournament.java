@@ -12,6 +12,7 @@ public class Tournament extends Observable {
     private ArrayList<ArrayList<String>> result;
     private int noOfGames;
     private int maxNoOfTurns;
+    private int numberOfMaps;
     private HashMap<Integer,String> mapPaths = new HashMap<>();
 
     public Tournament() {
@@ -30,6 +31,14 @@ public class Tournament extends Observable {
         mapPaths.put(4,"/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map5.map");
     }
 
+
+    public int getNumberOfMaps() {
+        return numberOfMaps;
+    }
+
+    public void setNumberOfMaps(int numberOfMaps) {
+        this.numberOfMaps = numberOfMaps;
+    }
 
     public int getNoOfGames() {
         return noOfGames;
