@@ -13,11 +13,11 @@ public class RandomPlayer extends Player {
     public RandomPlayer(){
         super();
     }
-/*
+
     public RandomPlayer(String name, int id, GameMap gameMap){
-        super();
+        super(name,id,gameMap);
     }
-*/
+
 
     /**
      * This method implements the attack logic for a random player
