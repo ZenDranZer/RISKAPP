@@ -73,12 +73,6 @@ public class TournamentController {
                     tournament.getGamestate().get(i).getPlayers().get(k).getCountries().get(a).setArmies(noOfArmiesToEachCountry);
             }
 
-
-            for(int j=0;j<tournament.getBots().size();j++) {
-                tournament.getGamestate().get(i).getPlayers()
-                tournament.getBots().get(i).setPlayerArmies(noOfArmiesToEachCountry);
-            }
-
             int player_num=0;
             Player currentPlayer;
             while (turns < tournament.getMaxNoOfTurns()) {
