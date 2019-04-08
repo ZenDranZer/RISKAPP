@@ -2,12 +2,12 @@ package models;
 
 import java.util.ArrayList;
 
-public class AggresisivePlayer extends Player {
-    AggresisivePlayer(){
+public class AggressivePlayer extends Player {
+    public AggressivePlayer(){
         super();
     }
 
-    AggresisivePlayer(String name, int id, GameMap gameMap){
+    public AggressivePlayer(String name, int id, GameMap gameMap){
         super();
     }
 

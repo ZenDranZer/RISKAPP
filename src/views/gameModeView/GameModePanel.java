@@ -1,6 +1,8 @@
 package views.gameModeView;
 
 import controllers.GameEngine;
+import controllers.TournamentController;
+import models.Tournament;
 import views.countryView.EditCountryPanel;
 
 import java.awt.*;
@@ -10,11 +12,13 @@ import javax.swing.*;
 public class GameModePanel extends JPanel {
 
     private GameEngine gameEngine;
+    private TournamentController tournamentController;
     private JPanel parent;
 
     public GameModePanel(GameEngine gameEngine, JPanel parent) {
         this.gameEngine = gameEngine;
         this.parent = parent;
+        tournamentController = new TournamentController();
         initComponents();
     }
 
@@ -28,7 +32,7 @@ public class GameModePanel extends JPanel {
     }
 
     private void tournamentModeButtonMouseClicked(MouseEvent e) {
-        TournamentModePanel tournamentModePanel = new TournamentModePanel(gameEngine,parent);
+        TournamentModePanel tournamentModePanel = new TournamentModePanel(tournamentController,parent);
         tournamentModePanel.setVisible(true);
         setVisible(false);
         Container container = this.getParent();

@@ -1,6 +1,7 @@
 package views;
 
 import controllers.GameEngine;
+import views.gameModeView.GameModePanel;
 import views.optionView.MapOptionPanel;
 
 import java.awt.*;
@@ -35,7 +36,7 @@ public class RiskFrame extends JFrame {
      * @param e is a mouse event object for event details.*/
     private void startButtonMouseClicked(MouseEvent e) {
         Container container = getContentPane();
-        StartGamePanel gamePanel = new StartGamePanel(gameEngine,dialogPane,false);
+        GameModePanel gamePanel = new GameModePanel(gameEngine,dialogPane);
         gamePanel.setVisible(true);
         dialogPane.setVisible(false);
         container.add(gamePanel);

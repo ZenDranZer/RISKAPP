@@ -1,9 +1,11 @@
 package views.gameModeView;
 
 import controllers.GameEngine;
-
+import controllers.MapGenerator;
+import views.GamePlay;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -20,7 +22,33 @@ public class SingleGameModePanel extends JPanel {
     }
 
     private void numberOfPlayersMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        int value = (Integer) numberOfPlayers.getValue();
+        player1Type.setEditable(true);
+        player2Type.setEditable(true);
+        repaint();
+        switch (value) {
+            case 2:
+                player3Type.setEditable(false);
+                player4Type.setEditable(false);
+                player5Type.setEditable(false);
+                break;
+            case 3:
+                player3Type.setEditable(true);
+                player4Type.setEditable(false);
+                player5Type.setEditable(false);
+                break;
+            case 4:
+                player3Type.setEditable(true);
+                player4Type.setEditable(true);
+                player5Type.setEditable(false);
+                break;
+            case 5:
+                player3Type.setEditable(true);
+                player4Type.setEditable(true);
+                player5Type.setEditable(true);
+                break;
+        }
+        startButton.setEnabled(true);
     }
 
     private void resetButtonMouseClicked(MouseEvent e) {
@@ -32,9 +60,78 @@ public class SingleGameModePanel extends JPanel {
     }
 
     private void startButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        if(startButton.isEnabled() && !filePath.getSelectedFile().getAbsolutePath().isEmpty()){
+            ArrayList<String> playerNames = new ArrayList<>();
+            int value = (Integer) numberOfPlayers.getValue();
+            if(isValidNames()){
+                playerNames.add(player1Name.getText());
+                playerNames.add(player2Name.getText());
+                switch (value){
+                    case 3:
+                        playerNames.add(player3Name.getText());
+                        break;
+                    case 4:
+                        playerNames.add(player3Name.getText());
+                        playerNames.add(player4Name.getText());
+                        break;
+                    case 5:
+                        playerNames.add(player3Name.getText());
+                        playerNames.add(player4Name.getText());
+                        playerNames.add(player5Name.getText());
+                        break;
+                }
+                gameEngine.setListActivePlayers(playerNames);
+                gameEngine.setMapPath(filePath.getSelectedFile().getAbsolutePath());
+                MapGenerator mapGenerator = gameEngine.getMapGenerator();
+                String message = mapGenerator.readConquestFile(gameEngine.getMapPath());
+                if (message.equals("SUCCESS")) {
+                    message = mapGenerator.validateMap();
+                    if(message.equals("SUCCESS")&& gameEngine.getGameState().getGameMapObject().
+                            getCountryHashMap().values().size() < playerNames.size()) {
+                        message = "Number of countries in the map should be more than the players";
+                        JOptionPane.showMessageDialog(this, message);
+                    }
+                    if (message.equals("SUCCESS")) {
+                        gameEngine.initialiseEngine();
+                        JOptionPane.showMessageDialog(this, message);
+                        Container container = this.getParent();
+                        GamePlay gamePlay = new GamePlay(gameEngine,this);
+                        gameEngine.getGameState().addObserver(gamePlay);
+                        gamePlay.setVisible(true);
+                        this.setVisible(false);
+                        container.add(gamePlay);
+                        container.revalidate();
+                    } else {
+                        mapGenerator.reSetAllocations();
+                        JOptionPane.showMessageDialog(this, message);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, message);
+                    mapGenerator.reSetAllocations();
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(this,"Please select file !!");
+            }
+        }else{
+            JOptionPane.showMessageDialog(this,"Please select file !!");
+        }
     }
 
+    private boolean isValidNames(){
+        if(player1Name.isEnabled() && player1Name.getText().equals(""))
+            return false;
+        else if(player2Name.isEnabled() && player2Name.getText().equals(""))
+            return false;
+        else if(player3Name.isEnabled() && player3Name.getText().equals(""))
+            return false;
+        else if(player4Name.isEnabled() && player4Name.getText().equals(""))
+            return false;
+        else if(player5Name.isEnabled() && player5Name.getText().equals(""))
+            return false;
+
+        return true;
+    }
     private void backButtonMouseClicked(MouseEvent e) {
         Container container = this.getParent();
         container.remove(this);
@@ -67,19 +164,23 @@ public class SingleGameModePanel extends JPanel {
                 playerName.setEnabled(true);
                 break;
             case 1:
-                playerName.setEnabled(false);
+                playerName.setEditable(false);
+                playerName.setEnabled(true);
                 playerName.setText("Aggressive");
                 break;
             case 2:
-                playerName.setEnabled(false);
+                playerName.setEditable(false);
+                playerName.setEnabled(true);
                 playerName.setText("Benevolent");
                 break;
             case 3:
-                playerName.setEnabled(false);
+                playerName.setEditable(false);
+                playerName.setEnabled(true);
                 playerName.setText("Random");
                 break;
             case 4:
-                playerName.setEnabled(false);
+                playerName.setEditable(false);
+                playerName.setEnabled(true);
                 playerName.setText("Cheater");
                 break;
         }
@@ -319,6 +420,7 @@ public class SingleGameModePanel extends JPanel {
 
         //---- startButton ----
         startButton.setText("Start!");
+        startButton.setEnabled(false);
         startButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

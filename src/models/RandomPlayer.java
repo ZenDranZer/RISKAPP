@@ -3,10 +3,10 @@ package models;
 import java.util.Random;
 
 public class RandomPlayer extends Player {
-    RandomPlayer(){
+    public RandomPlayer(){
         super();
     }
-    RandomPlayer(String name, int id, GameMap gameMap){
+    public RandomPlayer(String name, int id, GameMap gameMap){
         super();
     }
 
