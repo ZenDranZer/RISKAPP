@@ -3,6 +3,8 @@ package views.gameModeView;
 import controllers.TournamentController;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -16,6 +18,10 @@ public class TournamentResultPanel extends JPanel implements Observer {
         this.tournamentController = tournamentController;
         this.parents = parents;
         initComponents();
+    }
+
+    private void backButtonMouseClicked(MouseEvent e) {
+        // TODO add your code here
     }
 
     private void initComponents() {
@@ -63,14 +69,14 @@ public class TournamentResultPanel extends JPanel implements Observer {
         map5Game3 = new JTextField();
         map5Game4 = new JTextField();
         map5Game5 = new JTextField();
-
+        backButton = new JButton();
         //======== this ========
 
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 127, 128, 134, 139, 136, 0};
-        ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0};
+        ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 0, 0};
         ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
-        ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+        ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
         //---- label1 ----
         label1.setText("Results:");
@@ -261,11 +267,20 @@ public class TournamentResultPanel extends JPanel implements Observer {
         add(map5Game5, new GridBagConstraints(5, 11, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
+
+        //---- backButton ----
+        backButton.setText("Back");
+        backButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                backButtonMouseClicked(e);
+            }
+        });
+        add(backButton, new GridBagConstraints(5, 13, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 0), 0, 0));
     }
 
-    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Jil Mehta
     private JLabel label1;
     private JLabel label2;
     private JLabel mapsField;
@@ -310,6 +325,7 @@ public class TournamentResultPanel extends JPanel implements Observer {
     private JTextField map5Game3;
     private JTextField map5Game4;
     private JTextField map5Game5;
+    private JButton backButton;
 
     @Override
     public void update(Observable observable, Object o) {
