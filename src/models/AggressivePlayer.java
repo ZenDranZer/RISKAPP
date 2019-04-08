@@ -71,7 +71,7 @@ public class AggressivePlayer extends Player {
 
 
     }
-    public String fortify(){
+    public String fortify() {
         ArrayList<GameCountry> toFortify = bestCountryToFortify();
         super.fortify(toFortify.get(0).getCountryName(),toFortify.get(1).getCountryName(),((toFortify.get(1).getArmiesStationed())-1));
         return this.getName() + " fortified " + ((toFortify.get(1).getArmiesStationed())-1) + " armies from " + toFortify.get(0).getCountryName()
