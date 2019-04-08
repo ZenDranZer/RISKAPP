@@ -9,7 +9,7 @@ public class Tournament extends Observable {
 
     private ArrayList<GameState> gamestate;
     private ArrayList<Player> bots;
-    private HashMap<String,ArrayList<String>> result;
+    private ArrayList<ArrayList<String>> result;
     private int noOfGames;
     private int maxNoOfTurns;
     private HashMap<Integer,String> mapPaths = new HashMap<>();
@@ -17,7 +17,10 @@ public class Tournament extends Observable {
     public Tournament() {
         bots = new ArrayList<>();
         gamestate = new ArrayList<>();
-        result = new HashMap<>();
+        result = new ArrayList<>();
+        for (ArrayList<String> list: result) {
+            list = new ArrayList<>();
+        }
         noOfGames = 1;
         maxNoOfTurns = 1;
         mapPaths.put(0,"/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map1.map");
@@ -66,6 +69,16 @@ public class Tournament extends Observable {
 
     public void setBots(Player bot) {
         bots.add(bot);
+    }
+
+    public ArrayList<ArrayList<String>> getResult() {
+        return result;
+    }
+
+    public void addResult(int map,int game,String winner){
+        result.get(map).add(game,winner);
+        setChanged();
+        notifyObservers();
     }
 
 
