@@ -188,8 +188,8 @@ public class GameEngine {
 	/**
 	 * Save Game State to file
 	 * 
-	 * @param state
-	 *            game state
+	 * @param phase
+	 *            game phase
 	 * @param logs
 	 *            action logs till save point
 	 * @param fileName
@@ -209,6 +209,10 @@ public class GameEngine {
 		}
 	}
 
+	/**
+	 *
+	 * @param saveFilePath
+	 */
 	public void loadGame(String saveFilePath) {
 
 		try {
