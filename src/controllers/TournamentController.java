@@ -3,6 +3,7 @@ package controllers;
 import models.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TournamentController {
 
@@ -60,6 +61,15 @@ public class TournamentController {
         }
     }
 
+    private void tradeRiskCard(Player currentPlayer,RiskCardController riskCardController){
+        if(currentPlayer.getCardsHeld().size()>=5) {
+            HashMap<String, ArrayList<RiskCard>> possibleSet = riskCardController.getPossibleSets(currentPlayer);
+            for (ArrayList<RiskCard> set:possibleSet.values()) {
+                riskCardController.tradeCards(currentPlayer,set);
+            }
+        }
+    }
+
     public void startTournament(){
 
         int noOfCountries = 12;
@@ -76,12 +86,13 @@ public class TournamentController {
 
             for (int i = 0; i < noOfGames; i++) {
 
-                tournament.getGamestate().get(i).setPlayers(bots);
-                TurnController turnController = new TurnController(tournament.getGamestate().get(i));
-                ArrayList<GameCountry> countries = tournament.getGamestate().get(i).getGameMapObject().getAllCountries();
+                tournament.getGamestate().get(j).setPlayers(bots);
+                TurnController turnController = new TurnController(tournament.getGamestate().get(j));
+                ArrayList<GameCountry> countries = tournament.getGamestate().get(j).getGameMapObject().getAllCountries();
                 turnController.allocateCountries(bots, countries);
                 allocateArmiesToEachPlayerCountry(i, noOfArmiesToEachCountry);
-
+                RiskCardController riskCardController = tournament.getGamestate().get(j).getRiskController();
+                riskCardController.initRiskCardDeck(tournament.getGamestate().get(j).getGameMapObject());
                 int player_num = 0;
                 Player currentPlayer;
 
@@ -91,16 +102,24 @@ public class TournamentController {
                     }
 
                     currentPlayer = bots.get(player_num);
-
-                    /*message = */currentPlayer.reinforcement();
+                    tradeRiskCard(currentPlayer,riskCardController);
+                    message = currentPlayer.reinforcement();
                     System.out.println(message);
                     message = currentPlayer.attack();
                     System.out.println(message);
+                    if(message.toLowerCase().contains("success")){
+                        RiskCard riskCard = riskCardController.allocateRiskCard();
+                        currentPlayer.addRiskCard(riskCard);
+                        tradeRiskCard(currentPlayer,riskCardController);
+                    }
+                    if(message.toLowerCase().contains("eliminated")){
+                        tradeRiskCard(currentPlayer,riskCardController);
+                    }
                     if (message.toLowerCase().contains("winner")){
                         tournament.addResult(j,i,currentPlayer.getName());
                         break;
                     }
-                    /*message = */currentPlayer.fortify();
+                    message = currentPlayer.fortify();
                     System.out.println(message);
                     player_num++;
                 }
