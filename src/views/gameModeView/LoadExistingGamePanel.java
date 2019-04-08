@@ -3,17 +3,11 @@ package views.gameModeView;
 import controllers.GameEngine;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-/*
- * Created by JFormDesigner on Mon Apr 08 16:23:28 EDT 2019
- */
 
-
-
-/**
- * @author Jil Mehta
- */
 public class LoadExistingGamePanel extends JPanel {
 
     private GameEngine gameEngine;
@@ -26,18 +20,28 @@ public class LoadExistingGamePanel extends JPanel {
         loadFilePath.addChoosableFileFilter(new FileNameExtensionFilter("MAP file only", "map"));
     }
 
+    private void backButtonMouseClicked(MouseEvent e) {
+        // TODO add your code here
+    }
+
+    private void loadButtonMouseClicked(MouseEvent e) {
+        // TODO add your code here
+    }
+
+
     private void initComponents() {
         label1 = new JLabel();
         label2 = new JLabel();
         loadFilePath = new JFileChooser();
         loadButton = new JButton();
+        backButton = new JButton();
 
         //======== this ========
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0};
-        ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0};
+        ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
         ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
-        ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
+        ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
         //---- label1 ----
         label1.setText("Load Existing Game");
@@ -61,12 +65,31 @@ public class LoadExistingGamePanel extends JPanel {
 
         //---- loadButton ----
         loadButton.setText("Load");
+        loadButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loadButtonMouseClicked(e);
+            }
+        });
         add(loadButton, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
+
+        //---- backButton ----
+        backButton.setText("Back");
+        backButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                backButtonMouseClicked(e);
+            }
+        });
+        add(backButton, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 0), 0, 0));
     }
     private JLabel label1;
     private JLabel label2;
     private JFileChooser loadFilePath;
     private JButton loadButton;
+    private JButton backButton;
 }
