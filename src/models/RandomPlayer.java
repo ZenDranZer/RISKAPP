@@ -29,7 +29,7 @@ public class RandomPlayer extends Player {
        return "";
     }
 
-    public void fortify() {
+    public String fortify() {
         Random randomNumberGenerator = new Random();
         int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
         int toCountryIndex = randomNumberGenerator.nextInt(this.countries.get(counteryIndex).getNeighbouringCountries().size());
@@ -39,9 +39,10 @@ public class RandomPlayer extends Player {
         int ar = (currentArmiesToCountry + numberOfArmies <= 12) ? numberOfArmies-1 : currentArmiesToCountry+numberOfArmies-12;
         this.countries.get(toCountryIndex).setArmies(currentArmiesToCountry + ar);
         this.countries.get(counteryIndex).setArmies(currentArmiesCountry - ar);
+        return null;
     }
 
-    public void reinforcement(int armies){
+    public String reinforcement(int armies){
         Random randomNumberGenerator = new Random();
         while(armies!=0){
         int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
@@ -53,7 +54,6 @@ public class RandomPlayer extends Player {
 
         }
         }
-
-
+        return null;
     }
 }
