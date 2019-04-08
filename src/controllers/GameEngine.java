@@ -26,7 +26,7 @@ public class GameEngine {
 		gameState = new GameState();
 		turn = new TurnController(gameState);
 		mapGenerator = new MapGenerator(gameState.getGameMapObject());
-
+		objBotController = new BotController(gameState);
 	}
 
 	public GameState getGameState() {
@@ -146,14 +146,15 @@ public class GameEngine {
 	public void setNextPlayer(Player activePlayer, boolean checkInitialAllocation) {
 
 		Player nextPlayer = gameState.getNextPlayer(activePlayer, checkInitialAllocation);
-
 		// check for bot
 		while (objBotController.isBot(nextPlayer)) {
+			System.out.println("no bot ???");
 			if (!checkInitialAllocation) {
 				objBotController.executeTurn(nextPlayer);
 			}
 			gameState.getNextPlayer(nextPlayer, checkInitialAllocation);
 		}
+
 		gameState.setActivePlayer(nextPlayer);
 
 	}
@@ -188,8 +189,8 @@ public class GameEngine {
 	/**
 	 * Save Game State to file
 	 * 
-	 * @param state
-	 *            game state
+	 * @param phase
+	 *            game phase
 	 * @param logs
 	 *            action logs till save point
 	 * @param fileName
@@ -209,6 +210,10 @@ public class GameEngine {
 		}
 	}
 
+	/**
+	 *
+	 * @param saveFilePath
+	 */
 	public void loadGame(String saveFilePath) {
 
 		try {

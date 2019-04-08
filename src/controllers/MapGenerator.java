@@ -50,7 +50,7 @@ public class  MapGenerator {
 
     /**
      * Passes game map
-     * @return
+     * @return game map
      */
     public GameMap getGameMap() {
         return this.gameMap;
