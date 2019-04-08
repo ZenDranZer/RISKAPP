@@ -56,6 +56,47 @@ public class TournamentController {
 
     public void startTournament(){
 
+        int noOfCountries = 12;
+        int noOfArmies = 60;
+        int noOfArmiesToEachCountry =  noOfArmies/noOfCountries;
+        ArrayList<Player> bots = tournament.getBots();
+        int turns = 0;
+
+        for(int i=0;i<tournament.getNoOfGames();i++) {
+
+            ArrayList<GameCountry> countries = tournament.getGamestate().get(i).getGameMapObject().getAllCountries();
+
+            tournament.getGamestate().get(i).setPlayers(bots);
+
+            for(int k =0; k<tournament.getGamestate().get(i).getPlayers().size();k++) {
+                for(int a =0;a<tournament.getGamestate().get(i).getPlayers().get(k).getCountries().size();a++)
+                    tournament.getGamestate().get(i).getPlayers().get(k).getCountries().get(a).setArmies(noOfArmiesToEachCountry);
+            }
+
+
+            for(int j=0;j<tournament.getBots().size();j++) {
+                tournament.getGamestate().get(i).getPlayers()
+                tournament.getBots().get(i).setPlayerArmies(noOfArmiesToEachCountry);
+            }
+
+            int player_num=0;
+            Player currentPlayer;
+            while (turns < tournament.getMaxNoOfTurns()) {
+                if(player_num == bots.size()) {
+                    player_num = 0;
+                }
+
+                currentPlayer = bots.get(player_num);
+
+                currentPlayer.reinforcement();
+                currentPlayer.attack();
+                currentPlayer.fortify();
+
+            }
+
+        }
+
+
     }
 
 }
