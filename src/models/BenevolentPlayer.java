@@ -52,8 +52,8 @@ public class BenevolentPlayer extends Player {
     }
         return returnString;
     }
-    public void attack(){
-
+    public String attack(){
+        return null;
     }
     public String fortify(){
         ArrayList<GameCountry> canBeFortified = super.countriesThatCanBeFortified(this);

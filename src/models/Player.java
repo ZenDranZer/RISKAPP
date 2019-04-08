@@ -303,8 +303,8 @@ public class Player extends Observable {
 	public void reinforcement(String countryName, int armies) {
 		placeArmy(countryName, armies);
 	}
-	public void reinforcement(){
-
+	public String reinforcement(){
+        return null;
     }
 
 	/**
@@ -327,8 +327,8 @@ public class Player extends Observable {
 		fortifyingCountry.setArmies(fortifyingCountry.getArmiesStationed() - armies);
 	}
 
-	public void fortify(){
-
+	public String fortify(){
+        return null;
     }
 
 	/**
