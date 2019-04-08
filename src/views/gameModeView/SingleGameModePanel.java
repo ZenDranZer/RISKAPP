@@ -5,8 +5,6 @@ import controllers.MapGenerator;
 import views.GamePlay;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -64,6 +62,7 @@ public class SingleGameModePanel extends JPanel {
     }
 
     private void startButtonMouseClicked(MouseEvent e) {
+        try{
         if(startButton.isEnabled() && !filePath.getSelectedFile().getAbsolutePath().isEmpty()){
             ArrayList<String> playerNames = new ArrayList<>();
             int value = (Integer) numberOfPlayers.getValue();
@@ -119,6 +118,9 @@ public class SingleGameModePanel extends JPanel {
             }
         }else{
             JOptionPane.showMessageDialog(this,"Please select file !!");
+        }
+        }catch(Exception a){
+
         }
     }
 
