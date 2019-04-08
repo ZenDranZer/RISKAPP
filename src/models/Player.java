@@ -466,6 +466,10 @@ public class Player extends Observable {
 		return status;
 	}
 
+	public String attack(){
+		return null;
+	}
+
 	/**
 	 * Checks if the player is active or dead
 	 *
