@@ -2,14 +2,25 @@ package models;
 
 import java.util.ArrayList;
 
+/**
+ * This class extends the Player class and implements the operation for the benevolent player
+ */
 public class BenevolentPlayer extends Player {
+    /**
+     * COnstructor for the class
+     */
     public BenevolentPlayer(){
         super();
     }
+    /*
     public BenevolentPlayer(String name, int id, GameMap gameMap){
         super();
-    }
+    }*/
 
+    /**
+     * Finds the weak country for the player to reinforce based on number of armies and if it can be attacked or not
+     * @return returns the weakest country
+     */
     public GameCountry findWeakCountry(){
         /*GameCountry weak = this.countries.get(0);
         int leastNumberOfArmies = this.countries.get(0).getArmiesStationed();
@@ -39,6 +50,11 @@ public class BenevolentPlayer extends Player {
         return weak;
     }
 
+    /**
+     * This method implements the reinforcement logic for Benevolent Player
+     * @param armies Total armies for the player to reinforce
+     * @return returns the status of the operation
+     */
     public String reinforcement(int armies)
     {
         String returnString = "";
@@ -52,9 +68,19 @@ public class BenevolentPlayer extends Player {
     }
         return returnString;
     }
+
+    /**
+     * The attack methodology for attack of Benevolent Player
+     * @return status of the operation
+     */
     public String attack(){
         return null;
     }
+
+    /**
+     * This method implements the fortification logic for Benevolent Player
+     * @return returns the status of the operation
+     */
     public String fortify(){
         ArrayList<GameCountry> canBeFortified = super.countriesThatCanBeFortified(this);
         GameCountry countryToBeFortified = null;
