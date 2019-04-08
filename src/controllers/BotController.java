@@ -23,6 +23,7 @@ public class BotController {
     }
     
 	public boolean isBot(Player pl) {
+		System.out.println("pl insatnce check " + (pl instanceof AggressivePlayer));
 		if (pl instanceof AggressivePlayer || pl instanceof RandomPlayer || pl instanceof BenevolentPlayer
 				|| pl instanceof CheaterPlayer) {
 			return true;
