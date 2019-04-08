@@ -1,11 +1,16 @@
 package controllers;
 
+import models.AggressivePlayer;
+import models.BenevolentPlayer;
+import models.CheaterPlayer;
 import models.GameCountry;
 import models.GameState;
 import models.Player;
+import models.RandomPlayer;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Controller class to maintain the game state and handle object allocation for
@@ -82,8 +87,30 @@ public class GameEngine {
 	public void setListActivePlayers(ArrayList<String> listActivePlayers) {
 		int i = 1;
 		for (String name : listActivePlayers) {
-			Player player = new Player(name, i, gameState.getGameMapObject());
-			gameState.getPlayers().add(player);
+			switch (name) {
+			case "Aggressive":
+				AggressivePlayer aggPlayer = new AggressivePlayer(name+"_"+i, i, gameState.getGameMapObject());
+				gameState.getPlayers().add(aggPlayer);
+				break;
+			case "Benevolent":
+				BenevolentPlayer benevolentPlayer = new BenevolentPlayer(name+"_"+i, i, gameState.getGameMapObject());
+				gameState.getPlayers().add(benevolentPlayer);
+				break;
+
+			case "Random":
+				RandomPlayer randomPlayer = new RandomPlayer(name+"_"+i, i, gameState.getGameMapObject());
+				gameState.getPlayers().add(randomPlayer);
+				break;
+			case "Cheater":
+				CheaterPlayer cheaterPlayer = new CheaterPlayer(name+"_"+i, i, gameState.getGameMapObject());
+				gameState.getPlayers().add(cheaterPlayer);
+				break;
+
+			default:
+				Player player = new Player(name, i, gameState.getGameMapObject());
+				gameState.getPlayers().add(player);
+				break;
+			}
 			i++;
 		}
 	}
@@ -189,8 +216,8 @@ public class GameEngine {
 	/**
 	 * Save Game State to file
 	 * 
-	 * @param phase
-	 *            game phase
+	 * @param state
+	 *            game state
 	 * @param logs
 	 *            action logs till save point
 	 * @param fileName
@@ -210,10 +237,6 @@ public class GameEngine {
 		}
 	}
 
-	/**
-	 *
-	 * @param saveFilePath
-	 */
 	public void loadGame(String saveFilePath) {
 
 		try {
