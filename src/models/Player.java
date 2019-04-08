@@ -303,6 +303,9 @@ public class Player extends Observable {
 	public void reinforcement(String countryName, int armies) {
 		placeArmy(countryName, armies);
 	}
+	public void reinforcement(){
+
+    }
 
 	/**
 	 * The method that contains the logic of fortification phase
@@ -323,6 +326,10 @@ public class Player extends Observable {
 		toCountry.setArmies(toCountry.getArmiesStationed() + armies);
 		fortifyingCountry.setArmies(fortifyingCountry.getArmiesStationed() - armies);
 	}
+
+	public void fortify(){
+
+    }
 
 	/**
 	 * Check if the countries have maximum number of armies possible
