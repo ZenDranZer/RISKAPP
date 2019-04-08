@@ -32,58 +32,116 @@ public class Tournament extends Observable {
     }
 
 
+    /**
+     * Gets the number of maps on which tournament is played
+     * @return number of maps
+     */
     public int getNumberOfMaps() {
         return numberOfMaps;
     }
 
+    /**
+     * Sets the number of maps on which the tournament is to be played
+     * @param numberOfMaps number of maps12q
+     */
     public void setNumberOfMaps(int numberOfMaps) {
         this.numberOfMaps = numberOfMaps;
     }
 
+    /**
+     * Gets the number of games to be played as a part of the tournament
+     * @return Number of games
+     */
     public int getNoOfGames() {
         return noOfGames;
     }
 
+    /**
+     * Sets the number of games to be played as a part of tournament
+     * @param noOfGames Number of games
+     */
     public void setNoOfGames(int noOfGames) {
         this.noOfGames = noOfGames;
     }
 
+    /**
+     * Gets the max number of turns
+     * @return maximum number of turns
+     */
     public int getMaxNoOfTurns() {
         return maxNoOfTurns;
     }
 
+    /**
+     * Sets the max number of turns
+     * @param maxNoOfTurns maximum number of turns
+     */
     public void setMaxNoOfTurns(int maxNoOfTurns) {
         this.maxNoOfTurns = maxNoOfTurns;
     }
 
+    /**
+     * Hashmap containing map paths
+     * @return map path list
+     */
     public HashMap<Integer, String> getMapPaths() {
         return mapPaths;
     }
 
+    /**
+     * Sets the map paths
+     * @param mapPaths sets map paths
+     */
     public void setMapPaths(HashMap<Integer, String> mapPaths) {
         this.mapPaths = mapPaths;
     }
 
+    /**
+     * Gets the current gamestate
+     * @return gamestate
+     */
     public ArrayList<GameState> getGamestate() {
         return gamestate;
     }
 
+    /**
+     * Sets the current gamestate
+     * @return gamestate
+     */
     public void setGamestate(GameState gstate) {
         gamestate.add(gstate);
     }
 
+    /**
+     * Gets the bots
+     * @return ArrayList of bots
+     */
     public ArrayList<Player> getBots() {
         return bots;
     }
 
+    /**
+     * Sets the bots
+     * @return Player object
+     */
     public void setBots(Player bot) {
         bots.add(bot);
     }
 
+    /**
+     *Gets the result of the tournament
+     * @return Result of the tournament
+     */
     public ArrayList<ArrayList<String>> getResult() {
         return result;
     }
 
+    /**
+     *Declares the result of the current tournament
+     * @param map The current map on which tournament is being played
+     * @param game Current game number
+     * @param winner Winner of the game
+     */
     public void addResult(int map,int game,String winner){
         result.get(map).add(game,winner);
         setChanged();

@@ -214,7 +214,7 @@ public class GamePlay extends JPanel implements Observer {
 		for (Player p : activePlayers) {
 			p.addObserver(worldDominationView);
 		}
-		
+
 		// new game scenario
 		if (parent instanceof SingleGameModePanel) {
 			objGameEngine.getGameState().getRiskController()
@@ -227,13 +227,7 @@ public class GamePlay extends JPanel implements Observer {
 
 		// load game scenario
 		if (true) {
-			// get logs from read object
-			txtError.setText("");
-			
-			//phase label 
-			lblPhase.setText("");
-			phase = "";
-			//based on phase , call respective update phase function
+			load();
 		}
 	}
 
@@ -263,6 +257,13 @@ public class GamePlay extends JPanel implements Observer {
 		 * objGameEngine.getMapGenerator().reSetAllocations();
 		 * objGameEngine.resetGame();
 		 */
+		int response = JOptionPane.showConfirmDialog(null, "Do you want to Save?", "Confirm", JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE);
+		if (response == JOptionPane.YES_OPTION) {
+			String input = JOptionPane.showInputDialog("Enter Input:");
+			input = input.isEmpty() || input == null ? "saveFile_" + System.nanoTime() : input;
+			objGameEngine.saveGame(phase, txtError.getText(), input);
+		}
 		System.exit(0);
 	}
 
@@ -804,9 +805,30 @@ public class GamePlay extends JPanel implements Observer {
 	// TODO break down constructor to separate general initial allocation and
 	// game load scenarios
 	public void load() {
-		// refresh UI according to game State
 
-		// refresh world domination view
+		txtError.setText(objGameEngine.getGameState().getLogs());
+		phase = objGameEngine.getGameState().getCurrentPhase();
+		// phase label
+		switch (phase) {
+		case "initial":
+			lblPhase.setText("Initial Allocation");
+			updateInitialPanel();
+			break;
+		case "reinforce":
+			lblPhase.setText("Reinforcemen");
+			updateReinforcementPanel();
+			break;
+
+		case "attack":
+			lblPhase.setText("Attack");
+			updateAttackPanel();
+			break;
+
+		case "fortify":
+			lblPhase.setText("Fortification");
+			updateFortificationPanel();
+			break;
+		}
 	}
 
 	public void initComponents() {
