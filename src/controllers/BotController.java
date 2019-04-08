@@ -4,23 +4,23 @@ import models.*;
 
 public class BotController {
     GameState gameState;
-    Player activePlayer;
+   // Player activePlayer;
     public BotController(GameState state) {
         gameState=state;
-        activePlayer = gameState.getActivePlayer();
+        //activePlayer = gameState.getActivePlayer();
     }
 
     //Before calling this method, method allocateInitialArmies of  the GameEngine must be called .
     public void assignRemainingArmies() {
-        while(activePlayer.getRemainingArmies()!=0 && !activePlayer.isAllocationComplete()) {
-            for(GameCountry country : activePlayer.getCountries()) {
+        while(gameState.getActivePlayer().getRemainingArmies()!=0 && !gameState.getActivePlayer().isAllocationComplete()) {
+            for(GameCountry country : gameState.getActivePlayer().getCountries()) {
                 country.addArmies(1);
-                activePlayer.updateRemainingArmies(1);
-                if(activePlayer.getRemainingArmies()==0)
+                gameState.getActivePlayer().updateRemainingArmies(1);
+                if(gameState.getActivePlayer().getRemainingArmies()==0)
                     return;
             }
         }
-        activePlayer.setRemainingArmies(0);
+        gameState.getActivePlayer().setRemainingArmies(0);
     }
     
     /**
@@ -39,7 +39,11 @@ public class BotController {
 
 	public void executeTurn(Player pl) {
 		pl.reinforcement();
-		pl.attack();
+		String message = pl.attack();
+		if(message.split(",")[0].equals("winner"))
+		{
+			System.out.println(message);
+		}
 		pl.fortify();
 	}
 }
