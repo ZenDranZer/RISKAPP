@@ -19,6 +19,7 @@ public class GameEngine {
 	private TurnController turn;
 	private int numberOfPlayers;
 	private GameState gameState;
+	private BotController objBotController;
 
 	public GameEngine() {
 
@@ -143,7 +144,18 @@ public class GameEngine {
 	 *            current player
 	 */
 	public void setNextPlayer(Player activePlayer, boolean checkInitialAllocation) {
-		gameState.setActivePlayer(gameState.getNextPlayer(activePlayer, checkInitialAllocation));
+
+		Player nextPlayer = gameState.getNextPlayer(activePlayer, checkInitialAllocation);
+
+		// check for bot
+		while (objBotController.isBot(nextPlayer)) {
+			if (!checkInitialAllocation) {
+				objBotController.executeTurn(nextPlayer);
+			}
+			gameState.getNextPlayer(nextPlayer, checkInitialAllocation);
+		}
+		gameState.setActivePlayer(nextPlayer);
+
 	}
 
 	/**

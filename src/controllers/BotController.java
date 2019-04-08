@@ -1,8 +1,6 @@
 package controllers;
 
-import models.GameCountry;
-import models.GameState;
-import models.Player;
+import models.*;
 
 public class BotController {
     GameState gameState;
@@ -23,4 +21,18 @@ public class BotController {
             }
         }
     }
+    
+	public boolean isBot(Player pl) {
+		if (pl instanceof AggressivePlayer || pl instanceof RandomPlayer || pl instanceof BenevolentPlayer
+				|| pl instanceof CheaterPlayer) {
+			return true;
+		}
+		return false;
+	}
+
+	public void executeTurn(Player pl) {
+		pl.reinforcement();
+		pl.attack();
+		pl.fortify();
+	}
 }
