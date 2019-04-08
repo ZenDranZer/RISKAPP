@@ -5,8 +5,12 @@ import controllers.MapGenerator;
 import views.GamePlay;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SingleGameModePanel extends JPanel {
@@ -21,31 +25,31 @@ public class SingleGameModePanel extends JPanel {
         filePath.addChoosableFileFilter(new FileNameExtensionFilter("MAP file only", "map"));
     }
 
-    private void numberOfPlayersMouseClicked(MouseEvent e) {
+    private void numberOfPlayersActionListner(ChangeEvent propertyChangeEvent) {
         int value = (Integer) numberOfPlayers.getValue();
-        player1Type.setEditable(true);
-        player2Type.setEditable(true);
+        player1Type.setEnabled(true);
+        player2Type.setEnabled(true);
         repaint();
         switch (value) {
             case 2:
-                player3Type.setEditable(false);
-                player4Type.setEditable(false);
-                player5Type.setEditable(false);
+                player3Type.setEnabled(false);
+                player4Type.setEnabled(false);
+                player5Type.setEnabled(false);
                 break;
             case 3:
-                player3Type.setEditable(true);
-                player4Type.setEditable(false);
-                player5Type.setEditable(false);
+                player3Type.setEnabled(true);
+                player4Type.setEnabled(false);
+                player5Type.setEnabled(false);
                 break;
             case 4:
-                player3Type.setEditable(true);
-                player4Type.setEditable(true);
-                player5Type.setEditable(false);
+                player3Type.setEnabled(true);
+                player4Type.setEnabled(true);
+                player5Type.setEnabled(false);
                 break;
             case 5:
-                player3Type.setEditable(true);
-                player4Type.setEditable(true);
-                player5Type.setEditable(true);
+                player3Type.setEnabled(true);
+                player4Type.setEnabled(true);
+                player5Type.setEnabled(true);
                 break;
         }
         startButton.setEnabled(true);
@@ -138,30 +142,32 @@ public class SingleGameModePanel extends JPanel {
         parent.setVisible(true);
     }
 
-    private void player1TypeMouseClicked(MouseEvent e) {
+    private void player1TypeMouseClicked(ActionEvent e) {
         setNameField(player1Type, player1Name);
     }
 
-    private void player2TypeMouseClicked(MouseEvent e) {
+    private void player2TypeMouseClicked(ActionEvent e) {
         setNameField(player2Type, player2Name);
     }
 
-    private void player3TypeMouseClicked(MouseEvent e) {
+    private void player3TypeMouseClicked(ActionEvent e) {
         setNameField(player3Type, player3Name);
     }
 
-    private void player4TypeMouseClicked(MouseEvent e) {
+    private void player4TypeMouseClicked(ActionEvent e) {
         setNameField(player4Type, player4Name);
     }
 
-    private void player5TypeMouseClicked(MouseEvent e) {
+    private void player5TypeMouseClicked(ActionEvent e) {
         setNameField(player5Type, player5Name);
     }
 
     private void setNameField(JComboBox<String> playerType, JTextField playerName) {
-        switch(playerType.getSelectedIndex()){
+        switch((Integer)playerType.getSelectedIndex()){
             case 0:
                 playerName.setEnabled(true);
+                playerName.setText("");
+                playerName.setEditable(true);
                 break;
             case 1:
                 playerName.setEditable(false);
@@ -233,11 +239,12 @@ public class SingleGameModePanel extends JPanel {
 
         //---- numberOfPlayers ----
         numberOfPlayers.setModel(new SpinnerNumberModel(2, 2, 5, 1));
-        numberOfPlayers.addMouseListener(new MouseAdapter() {
+        numberOfPlayers.addChangeListener(new ChangeListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                numberOfPlayersMouseClicked(e);
+            public void stateChanged(ChangeEvent changeEvent) {
+                numberOfPlayersActionListner(changeEvent);
             }
+
         });
         add(numberOfPlayers, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -258,10 +265,10 @@ public class SingleGameModePanel extends JPanel {
             "Cheater"
         }));
         player1Type.setEnabled(false);
-        player1Type.addMouseListener(new MouseAdapter() {
+        player1Type.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                player1TypeMouseClicked(e);
+            public void actionPerformed(ActionEvent actionEvent) {
+                player1TypeMouseClicked(actionEvent);
             }
         });
         add(player1Type, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
@@ -289,10 +296,10 @@ public class SingleGameModePanel extends JPanel {
             "Cheater"
         }));
         player2Type.setEnabled(false);
-        player2Type.addMouseListener(new MouseAdapter() {
+        player2Type.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                player2TypeMouseClicked(e);
+            public void actionPerformed(ActionEvent actionEvent) {
+                player2TypeMouseClicked(actionEvent);
             }
         });
         add(player2Type, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
@@ -320,10 +327,10 @@ public class SingleGameModePanel extends JPanel {
             "Cheater"
         }));
         player3Type.setEnabled(false);
-        player3Type.addMouseListener(new MouseAdapter() {
+        player3Type.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                player3TypeMouseClicked(e);
+            public void actionPerformed(ActionEvent actionEvent) {
+                player3TypeMouseClicked(actionEvent);
             }
         });
         add(player3Type, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
@@ -351,10 +358,10 @@ public class SingleGameModePanel extends JPanel {
             "Cheater"
         }));
         player4Type.setEnabled(false);
-        player4Type.addMouseListener(new MouseAdapter() {
+        player4Type.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                player4TypeMouseClicked(e);
+            public void actionPerformed(ActionEvent actionEvent) {
+                player4TypeMouseClicked(actionEvent);
             }
         });
         add(player4Type, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
@@ -382,10 +389,10 @@ public class SingleGameModePanel extends JPanel {
             "Cheater"
         }));
         player5Type.setEnabled(false);
-        player5Type.addMouseListener(new MouseAdapter() {
+        player5Type.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                player5TypeMouseClicked(e);
+            public void actionPerformed(ActionEvent actionEvent) {
+                player5TypeMouseClicked(actionEvent);
             }
         });
         add(player5Type, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
