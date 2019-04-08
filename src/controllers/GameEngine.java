@@ -195,8 +195,10 @@ public class GameEngine {
 	 * @param fileName
 	 *            saved file name
 	 */
-	public void saveGame(String state, String logs, String fileName) {
+	public void saveGame(String phase, String logs, String fileName) {
 		try {
+			gameState.setCurrentPhase(phase);
+			gameState.setLogs(logs);
 			FileOutputStream fileOut;
 			ObjectOutputStream objectOut;
 			fileOut = new FileOutputStream(fileName);

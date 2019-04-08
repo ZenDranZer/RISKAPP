@@ -16,6 +16,8 @@ public class GameState extends Observable {
 	private Player activePlayer;
 	private RiskCardController riskController;
 	public int attacked = 0;
+	public String phase;
+	public String logs;
 
 	public GameState() {
 		players = new ArrayList<>();
@@ -182,5 +184,28 @@ public class GameState extends Observable {
 	public void fortification(String countryToFortify, String fortifyFrom, int armies) {
 		activePlayer.fortify(countryToFortify, fortifyFrom, armies);
 		notifyGameStateChange();
+	}
+	
+	public void setCurrentPhase(String phase)
+	{
+		this.phase = phase;
+	}
+	
+	public String getCurrentPhase()
+	{
+		return this.phase;
+	}
+	
+	public void setLogs(String gamePlayLogs)
+	{
+		this.logs = gamePlayLogs;
+	}
+	public String getLogs()
+	{
+		return this.logs;
+	}
+	public void updateLogs(String message)
+	{
+		this.logs += message;
 	}
 }
