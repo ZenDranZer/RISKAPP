@@ -14,16 +14,20 @@ import javax.swing.*;
 public class TournamentResultPanel extends JPanel implements Observer {
 
     TournamentController tournamentController;
-    JPanel parents;
+    JPanel parent;
 
-    public TournamentResultPanel(TournamentController tournamentController,JPanel parents) {
+    public TournamentResultPanel(TournamentController tournamentController,JPanel parent) {
         this.tournamentController = tournamentController;
-        this.parents = parents;
+        this.parent = parent;
         initComponents();
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        Container container = this.getParent();
+        container.remove(this);
+        parent.setVisible(true);
+        Tournament tournament = tournamentController.getTournament();
+        tournament.deleteObserver(this);
     }
 
     private void initComponents() {
