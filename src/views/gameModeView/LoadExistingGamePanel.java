@@ -1,12 +1,14 @@
 package views.gameModeView;
 
 import controllers.GameEngine;
+import views.GamePlay;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 
 public class LoadExistingGamePanel extends JPanel {
 
@@ -17,15 +19,27 @@ public class LoadExistingGamePanel extends JPanel {
         this.gameEngine = gameEngine;
         this.parent = parent;
         initComponents();
-        loadFilePath.addChoosableFileFilter(new FileNameExtensionFilter("MAP file only", "map"));
+        loadFilePath.addChoosableFileFilter(new FileNameExtensionFilter("SAVE file only", "save"));
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        Container container = this.getParent();
+        container.remove(this);
+        parent.setVisible(true);
     }
 
     private void loadButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        if(!loadFilePath.getSelectedFile().getAbsolutePath().isEmpty()){
+            String filePath = loadFilePath.getSelectedFile().getAbsolutePath();
+            gameEngine.loadGame(filePath);
+            Container container = this.getParent();
+            GamePlay gamePlay = new GamePlay(gameEngine,this);
+            gameEngine.getGameState().addObserver(gamePlay);
+            gamePlay.setVisible(true);
+            this.setVisible(false);
+            container.add(gamePlay);
+            container.revalidate();
+        }
     }
 
 
