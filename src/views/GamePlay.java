@@ -223,10 +223,7 @@ public class GamePlay extends JPanel implements Observer {
 			// TODO : separate out
 			updateListElements();
 			displayRemainingArmies();
-		}
-
-		// load game scenario
-		if (true) {
+		}else {
 			load();
 		}
 	}
@@ -685,6 +682,7 @@ public class GamePlay extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		
 		switch (phase) {
 		case "initial":
 			displayActions(null);
