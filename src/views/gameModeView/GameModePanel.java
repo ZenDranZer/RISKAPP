@@ -113,7 +113,7 @@ public class GameModePanel extends JPanel {
                 backButtonMouseClicked(e);
             }
         });
-        add(backButton, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+        add(backButton, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 5), 0, 0));
     }
