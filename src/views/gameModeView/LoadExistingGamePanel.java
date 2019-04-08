@@ -29,6 +29,7 @@ public class LoadExistingGamePanel extends JPanel {
     }
 
     private void loadButtonMouseClicked(MouseEvent e) {
+        try{
         if(!loadFilePath.getSelectedFile().getAbsolutePath().isEmpty()){
             String filePath = loadFilePath.getSelectedFile().getAbsolutePath();
             gameEngine.loadGame(filePath);
@@ -40,6 +41,7 @@ public class LoadExistingGamePanel extends JPanel {
             container.add(gamePlay);
             container.revalidate();
         }
+        }catch(Exception f){}
     }
 
 
