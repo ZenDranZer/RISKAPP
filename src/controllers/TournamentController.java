@@ -13,18 +13,34 @@ public class TournamentController {
         tournament = new Tournament();
     }
 
+    /**
+     * Setting maximum number of players for the tournament
+     * @param maxTurns max num of turns
+     */
     public void setMaxNoOfTuruns(int maxTurns) {
         tournament.setMaxNoOfTurns(maxTurns);
     }
 
+    /**
+     * Setting maximum number of games for the tournament
+     * @param noOfGames max num of games
+     */
     public void setNoOfGames(int noOfGames) {
         tournament.setNoOfGames(noOfGames);
     }
 
+    /**
+     * Gets the tournament object
+     * @return tournament tournament object
+     */
     public Tournament getTournament() {
         return tournament;
     }
 
+    /**
+     * Sets the Maps for the tournament
+     * @param noOfMaps num of maps to be set
+     */
     public void setMaps(int noOfMaps) {
         tournament.setNumberOfMaps(noOfMaps);
         for(int i=0;i<noOfMaps;i++) {
@@ -35,6 +51,10 @@ public class TournamentController {
         }
     }
 
+    /**
+     * Sets the player profile in the bots
+     * @param player Player List containing various types of player objects
+     */
     public void setPlayer(ArrayList<String> player) {
 
         for(int i=0;i<player.size();i++) {
@@ -54,6 +74,11 @@ public class TournamentController {
         }
     }
 
+    /**
+     * Allocates armies to each country possessed by each player
+     * @param gameNum Num of the game being played currently
+     * @param noOfArmiesToEachCountry Num of armies allocated to each player
+     */
     public void allocateArmiesToEachPlayerCountry(int gameNum, int noOfArmiesToEachCountry) {
         for(int k =0; k<tournament.getGamestate().get(gameNum).getPlayers().size();k++) {
             for(int a =0;a<tournament.getGamestate().get(gameNum).getPlayers().get(k).getCountries().size();a++)
@@ -61,6 +86,11 @@ public class TournamentController {
         }
     }
 
+    /**
+     * Trading risk cards for armies
+     * @param currentPlayer Current player
+     * @param riskCardController Risk card controller object
+     */
     private void tradeRiskCard(Player currentPlayer,RiskCardController riskCardController){
         if(currentPlayer.getCardsHeld().size()>=5) {
             HashMap<String, ArrayList<RiskCard>> possibleSet = riskCardController.getPossibleSets(currentPlayer);
@@ -70,7 +100,10 @@ public class TournamentController {
         }
     }
 
-    public void startTournament(){
+    /**
+     * This function executes the whole tournament flow from allocating armies to declaring winners for each tournament
+     */
+    public void startTournament() {
 
         int noOfCountries = 12;
         int noOfArmies = 60;
