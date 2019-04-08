@@ -11,9 +11,9 @@ public class CheaterPlayer extends Player {
         super();
 
     }
-   /* public CheaterPlayer(String name, int id, GameMap gameMap){
+   public CheaterPlayer(String name, int id, GameMap gameMap){
         super(name,id,gameMap);
-    }*/
+    }
 
     /**
      * This method implements the reinforcement logic of cheater player

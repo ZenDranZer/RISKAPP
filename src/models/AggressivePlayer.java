@@ -10,16 +10,15 @@ public class AggressivePlayer extends Player {
     public AggressivePlayer(){
         super();
     }
-/*
-    *//**The parameterised constructor for aggressivePlayer class instantiation
+    /**The parameterised constructor for aggressivePlayer class instantiation
      *
      * @param name Name of aggressive player
      * @param id the Id of the player
      * @param gameMap
-     *//*
+     */
     public AggressivePlayer(String name, int id, GameMap gameMap){
-        super();
-    }*/
+        super(name,id,gameMap);
+    }
 
     /**
      * This country finds the strongest country from the list of countries passed to it based on number of armies and attack ability

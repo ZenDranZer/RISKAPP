@@ -12,10 +12,10 @@ public class BenevolentPlayer extends Player {
     public BenevolentPlayer(){
         super();
     }
-    /*
+
     public BenevolentPlayer(String name, int id, GameMap gameMap){
-        super();
-    }*/
+        super(name,id,gameMap);
+    }
 
     /**
      * Finds the weak country for the player to reinforce based on number of armies and if it can be attacked or not
