@@ -135,6 +135,7 @@ public class GameEngine {
 			setNumberOfPlayers(gameState.getPlayers().size());
 			turn.allocateCountries(gameState.getPlayers(), getGameState().getGameMapObject().getAllCountries());
 			allocateInitialArmies();
+	//		objBotController.assignRemainingArmies();
 			gameState.setActivePlayer(gameState.getPlayers().get(0));
 		} catch (NullPointerException nullEx) {
 			System.out.println(nullEx.toString());
@@ -173,13 +174,14 @@ public class GameEngine {
 	public void setNextPlayer(Player activePlayer, boolean checkInitialAllocation) {
 
 		Player nextPlayer = gameState.getNextPlayer(activePlayer, checkInitialAllocation);
+		System.out.println("pl check  : " + nextPlayer.getClass());
 		// check for bot
 		while (objBotController.isBot(nextPlayer)) {
 			System.out.println("no bot ???");
 			if (!checkInitialAllocation) {
 				objBotController.executeTurn(nextPlayer);
 			}
-			gameState.getNextPlayer(nextPlayer, checkInitialAllocation);
+			nextPlayer = gameState.getNextPlayer(nextPlayer, checkInitialAllocation);
 		}
 
 		gameState.setActivePlayer(nextPlayer);
@@ -245,7 +247,7 @@ public class GameEngine {
 			this.gameState = (GameState) objectIn.readObject();
 			objectIn.close();
 		} catch (Exception ex) {
-
+			ex.printStackTrace();
 		}
 	}
 }
