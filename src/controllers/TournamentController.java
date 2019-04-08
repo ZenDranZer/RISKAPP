@@ -25,7 +25,7 @@ public class TournamentController {
     }
 
     public void setMaps(int noOfMaps) {
-
+        tournament.setNumberOfMaps(noOfMaps);
         for(int i=0;i<noOfMaps;i++) {
             GameState g = new GameState();
             MapGenerator mapgen = new MapGenerator(g.getGameMapObject());
@@ -38,17 +38,17 @@ public class TournamentController {
 
         for(int i=0;i<player.size();i++) {
             if(player.get(i).equals("Cheater")) {
-                CheaterPlayer cp = new CheaterPlayer();
-                tournament.setBots(cp);
+                Player cheater = new CheaterPlayer();
+                tournament.setBots(cheater);
             } else if(player.get(i).equals("Aggressive")) {
-                AggressivePlayer ap = new AggressivePlayer();
-                tournament.setBots(ap);
+                Player aggressive = new AggressivePlayer();
+                tournament.setBots(aggressive);
             } else if (player.get(i).equals("Benevolent")) {
-                BenevolentPlayer bp = new BenevolentPlayer();
-                tournament.setBots(bp);
+                Player benevolet = new BenevolentPlayer();
+                tournament.setBots(benevolet);
             } else if (player.get(i).equals("Random")) {
-                RandomPlayer rp = new RandomPlayer();
-                tournament.setBots(rp);
+                Player random = new RandomPlayer();
+                tournament.setBots(random);
             }
         }
     }
@@ -64,38 +64,52 @@ public class TournamentController {
 
         int noOfCountries = 12;
         int noOfArmies = 60;
+        int maxNumberOfMaps = tournament.getNumberOfMaps();
         int maxNoOfTurns = tournament.getMaxNoOfTurns();
         int noOfArmiesToEachCountry =  noOfArmies/noOfCountries;
         ArrayList<Player> bots = tournament.getBots();
+        int noOfGames = tournament.getNoOfGames();
         int turns = 0;
+        String message = "";
+        for(int j = 0 ; j<maxNumberOfMaps;j++) {
 
-        for(int i=0;i<tournament.getNoOfGames();i++) {
 
-            tournament.getGamestate().get(i).setPlayers(bots);
-            TurnController turnController = new TurnController(tournament.getGamestate().get(i));
-            ArrayList<GameCountry> countries = tournament.getGamestate().get(i).getGameMapObject().getAllCountries();
-            turnController.allocateCountries(bots,countries);
+            for (int i = 0; i < noOfGames; i++) {
 
-            allocateArmiesToEachPlayerCountry(i,noOfArmiesToEachCountry);
+                tournament.getGamestate().get(i).setPlayers(bots);
+                TurnController turnController = new TurnController(tournament.getGamestate().get(i));
+                ArrayList<GameCountry> countries = tournament.getGamestate().get(i).getGameMapObject().getAllCountries();
+                turnController.allocateCountries(bots, countries);
+                allocateArmiesToEachPlayerCountry(i, noOfArmiesToEachCountry);
 
-            int player_num=0;
-            Player currentPlayer;
+                int player_num = 0;
+                Player currentPlayer;
 
-            while (turns < maxNoOfTurns) {
-                if(player_num == bots.size()) {
-                    player_num = 0;
+                while (turns < maxNoOfTurns) {
+                    if (player_num == bots.size()) {
+                        player_num = 0;
+                    }
+
+                    currentPlayer = bots.get(player_num);
+
+                    /*message = */currentPlayer.reinforcement();
+                    System.out.println(message);
+                    message = currentPlayer.attack();
+                    System.out.println(message);
+                    if (message.toLowerCase().contains("winner")){
+                        tournament.addResult(j,i,currentPlayer.getName());
+                        break;
+                    }
+                    /*message = */currentPlayer.fortify();
+                    System.out.println(message);
+                    player_num++;
                 }
-
-                currentPlayer = bots.get(player_num);
-
-                /*currentPlayer.reinforcement();
-                currentPlayer.attack();
-                currentPlayer.fortify();*/
-                player_num++;
+                if(turns == maxNoOfTurns){
+                    tournament.addResult(j,i,"draw");
+                    break;
+                }
             }
-
         }
-
 
     }
 
