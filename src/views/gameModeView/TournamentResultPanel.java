@@ -1,8 +1,10 @@
 package views.gameModeView;
 
 import controllers.TournamentController;
+import models.Tournament;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
@@ -279,6 +281,35 @@ public class TournamentResultPanel extends JPanel implements Observer {
         add(backButton, new GridBagConstraints(5, 13, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 0), 0, 0));
+        setTextNonEditableField();
+    }
+
+    private void setTextNonEditableField(){
+        map1Game1.setEditable(false);
+        map1Game2.setEditable(false);
+        map1Game3.setEditable(false);
+        map1Game4.setEditable(false);
+        map1Game5.setEditable(false);
+        map2Game1.setEditable(false);
+        map2Game2.setEditable(false);
+        map2Game3.setEditable(false);
+        map2Game4.setEditable(false);
+        map2Game5.setEditable(false);
+        map3Game1.setEditable(false);
+        map3Game2.setEditable(false);
+        map3Game3.setEditable(false);
+        map3Game4.setEditable(false);
+        map3Game5.setEditable(false);
+        map4Game1.setEditable(false);
+        map4Game2.setEditable(false);
+        map4Game3.setEditable(false);
+        map4Game4.setEditable(false);
+        map4Game5.setEditable(false);
+        map5Game1.setEditable(false);
+        map5Game2.setEditable(false);
+        map5Game3.setEditable(false);
+        map5Game4.setEditable(false);
+        map5Game5.setEditable(false);
     }
 
     private JLabel label1;
@@ -327,8 +358,63 @@ public class TournamentResultPanel extends JPanel implements Observer {
     private JTextField map5Game5;
     private JButton backButton;
 
+    private void displayResults(ArrayList<ArrayList<String>> result){
+        int map = 1;
+        for (ArrayList<String> gameResult: result) {
+            int game = 1;
+            for (String s: gameResult) {
+                setTextField(map,game,s);
+                game++;
+            }
+            map++;
+        }
+    }
+
+    private void setTextField(int map,int game,String s){
+        switch (map){
+            case 1:
+                setGameField(game, s, map1Game1, map1Game2, map1Game3, map1Game4, map1Game5);
+                break;
+            case 2:
+                setGameField(game, s, map2Game1, map2Game2, map2Game3, map2Game4, map2Game5);
+                break;
+            case 3:
+                setGameField(game, s, map3Game1, map3Game2, map3Game3, map3Game4, map3Game5);
+                break;
+            case 4:
+                setGameField(game, s, map4Game1, map4Game2, map4Game3, map4Game4, map4Game5);
+                break;
+            case 5:
+                setGameField(game, s, map5Game1, map5Game2, map5Game3, map5Game4, map5Game5);
+                break;
+        }
+
+    }
+
+    private void setGameField(int game, String s, JTextField mapGame1, JTextField mapGame2, JTextField mapGame3, JTextField mapGame4, JTextField mapGame5) {
+        switch (game) {
+            case 1:
+                mapGame1.setText(s);
+                break;
+            case 2:
+                mapGame2.setText(s);
+                break;
+            case 3:
+                mapGame3.setText(s);
+                break;
+            case 4:
+                mapGame4.setText(s);
+                break;
+            case 5:
+                mapGame5.setText(s);
+                break;
+        }
+    }
+
     @Override
     public void update(Observable observable, Object o) {
-
+        Tournament tournament = (Tournament) observable;
+        ArrayList<ArrayList<String>> result = tournament.getResult();
+        displayResults(result);
     }
 }
