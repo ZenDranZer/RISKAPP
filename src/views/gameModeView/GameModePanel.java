@@ -23,7 +23,7 @@ public class GameModePanel extends JPanel {
     }
 
     private void singleModeButtonMouseClicked(MouseEvent e) {
-        SingleGameModePanel singleGameModePanel = new SingleGameModePanel(gameEngine,parent);
+        SingleGameModePanel singleGameModePanel = new SingleGameModePanel(gameEngine,this);
         singleGameModePanel.setVisible(true);
         setVisible(false);
         Container container = this.getParent();
@@ -47,7 +47,12 @@ public class GameModePanel extends JPanel {
     }
 
     private void loadGameButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        LoadExistingGamePanel loadExistingGamePanel = new LoadExistingGamePanel(gameEngine,this);
+        loadExistingGamePanel.setVisible(true);
+        setVisible(false);
+        Container container = this.getParent();
+        container.add(loadExistingGamePanel);
+        container.revalidate();
     }
 
     private void initComponents() {
