@@ -12,7 +12,7 @@ public class BotController {
 
     //Before calling this method, method allocateInitialArmies of  the GameEngine must be called .
     public void assignRemainingArmies() {
-        while(activePlayer.getRemainingArmies()!=0) {
+        while(activePlayer.getRemainingArmies()!=0 && !activePlayer.isAllocationComplete()) {
             for(GameCountry country : activePlayer.getCountries()) {
                 country.addArmies(1);
                 activePlayer.updateRemainingArmies(1);
@@ -20,6 +20,7 @@ public class BotController {
                     return;
             }
         }
+        activePlayer.setRemainingArmies(0);
     }
     
     /**
