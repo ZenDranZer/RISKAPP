@@ -1,16 +1,24 @@
 package models;
 
+/**
+ * This class extends the Player class and represents the CheaterPlayer
+ */
 public class CheaterPlayer extends Player {
-
+    /**
+     * This is the constructor for CheaterPlayer
+     */
     public CheaterPlayer(){
         super();
 
     }
-    public CheaterPlayer(String name, int id, GameMap gameMap){
+   /* public CheaterPlayer(String name, int id, GameMap gameMap){
         super(name,id,gameMap);
-    }
+    }*/
 
-
+    /**
+     * This method implements the reinforcement logic of cheater player
+     * @return returns the status of the operation
+     */
     public String reinforcement() {
         for (GameCountry country: this.countries) {
             country.setArmies(country.getArmiesStationed() * 2);
@@ -18,6 +26,10 @@ public class CheaterPlayer extends Player {
        return this.getName() + " doubled number of stationed armies in reinforcement phase";
     }
 
+    /**
+     * This method implements the attack logic of cheater player
+     * @return returns the status of the operation
+     */
     public String attack() {
         String status = "";
         for (GameCountry country: countriesThatCanAttack(this)) {
@@ -40,6 +52,10 @@ public class CheaterPlayer extends Player {
         return status ;
     }
 
+    /**
+     * This method implements the fortification logic for cheater player
+     * @return returns the  status of the operation
+     */
     public String  fortify() {
         for (GameCountry country: countriesThatCanAttack(this)) {
             country.setArmies(country.getArmiesStationed() *2<=12?country.getArmiesStationed() *2:12);

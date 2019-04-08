@@ -2,15 +2,27 @@ package models;
 
 import java.util.Random;
 
+/**
+ * This class extends the player class and represents a random player
+ */
 public class RandomPlayer extends Player {
+
+    /**
+     * This is a constructor for the class
+     */
     public RandomPlayer(){
         super();
     }
+/*
     public RandomPlayer(String name, int id, GameMap gameMap){
         super();
     }
+*/
 
-
+    /**
+     * This method implements the attack logic for a random player
+     * @return returns the status of the operation
+     */
     public String attack() {
         boolean flag = true;
         GameCountry attackingCountry = new GameCountry();
@@ -29,6 +41,10 @@ public class RandomPlayer extends Player {
        return "";
     }
 
+    /**
+     * This method implements the fortification logic for the random player
+     * @return returns the status of the operation
+     */
     public String fortify() {
         Random randomNumberGenerator = new Random();
         int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
@@ -42,6 +58,11 @@ public class RandomPlayer extends Player {
         return null;
     }
 
+    /**
+     * This method implements the reinforcement logic for a random player
+     * @param armies total armies for player to fortify
+     * @return returns the status of the operation
+     */
     public String reinforcement(int armies){
         Random randomNumberGenerator = new Random();
         while(armies!=0){
