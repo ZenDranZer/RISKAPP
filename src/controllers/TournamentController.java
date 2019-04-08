@@ -54,8 +54,11 @@ public class TournamentController {
         }
     }
 
-    public void allocateArmiesToEachPlayerCountry() {
-
+    public void allocateArmiesToEachPlayerCountry(int gameNum, int noOfArmiesToEachCountry) {
+        for(int k =0; k<tournament.getGamestate().get(gameNum).getPlayers().size();k++) {
+            for(int a =0;a<tournament.getGamestate().get(gameNum).getPlayers().get(k).getCountries().size();a++)
+                tournament.getGamestate().get(gameNum).getPlayers().get(k).getCountries().get(a).setArmies(noOfArmiesToEachCountry);
+        }
     }
 
     public void startTournament(){
@@ -73,10 +76,7 @@ public class TournamentController {
             ArrayList<GameCountry> countries = tournament.getGamestate().get(i).getGameMapObject().getAllCountries();
             turnController.allocateCountries(bots,countries);
 
-            for(int k =0; k<tournament.getGamestate().get(i).getPlayers().size();k++) {
-                for(int a =0;a<tournament.getGamestate().get(i).getPlayers().get(k).getCountries().size();a++)
-                    tournament.getGamestate().get(i).getPlayers().get(k).getCountries().get(a).setArmies(noOfArmiesToEachCountry);
-            }
+            allocateArmiesToEachPlayerCountry(i,noOfArmiesToEachCountry);
 
             int player_num=0;
             Player currentPlayer;
