@@ -52,7 +52,7 @@ public class AggressivePlayer extends Player {
     }
 
     public GameCountry findWeakestNeighbor(){
-        GameCountry weakest = new ArrayList<GameCountry>(this.countries.get(0).getNeighbouringCountries().values()).get(0);
+        GameCountry weakest = new ArrayList<>(this.countries.get(0).getNeighbouringCountries().values()).get(0);
         for (GameCountry playerCountries: this.countries) {
             for (GameCountry neighbor : playerCountries.getNeighbouringCountries().values()) {
                 if (neighbor.getArmiesStationed() < weakest.getArmiesStationed()){
