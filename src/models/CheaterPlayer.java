@@ -21,9 +21,12 @@ public class CheaterPlayer extends Player {
      */
     public String reinforcement() {
         for (GameCountry country: this.countries) {
-            country.setArmies(country.getArmiesStationed() * 2);
+/*
+            country.setArmies((country.getArmiesStationed() * 2)<=12?(country.getArmiesStationed() * 2):12);
+*/
+            super.reinforcement(country.getCountryName(),(country.getArmiesStationed() * 2)<=12?(country.getArmiesStationed() * 2):12);
         }
-       return this.getName() + " doubled number of stationed armies in reinforcement phase";
+       return this.getName() + " Maxed the armies or doubled number of stationed armies on all it's countries in reinforcement phase";
     }
 
     /**
@@ -35,20 +38,27 @@ public class CheaterPlayer extends Player {
         for (GameCountry country: countriesThatCanAttack(this)) {
 
         country.getCurrentPlayer().removeCountry(country);
+            System.out.println("Country conquered: "+country.getCountryName());
         this.setCountries(country);
 
         this.updateContinents();
-        status = "success";
+        status = "success|";
+            System.out.println(status);
         if (country.getCurrentPlayer().countries.size() == 0) {
             this.getCardsHeld().addAll(country.getCurrentPlayer().getCardsHeld());
+            status += "Player: "+country.getCurrentPlayer().getId()+" eliminated\n";
             eliminate(country.getCurrentPlayer());
-            status = "eliminated";
+            country.setCurrentPlayer(this);
             if (hasPlayerWon(this)) {
-                status = "winner";
+                status += "winner";
+                System.out.println(status);
+                System.out.println(status);
+                return status;
             }
         }
         country.setCurrentPlayer(this);
         }
+        System.out.println(status);
         return status ;
     }
 
@@ -60,6 +70,6 @@ public class CheaterPlayer extends Player {
         for (GameCountry country: countriesThatCanAttack(this)) {
             country.setArmies(country.getArmiesStationed() *2<=12?country.getArmiesStationed() *2:12);
         }
-        return this.getName() + " fortified all countries";
+        return this.getName() + " fortified all countries that can be attacked";
     }
 }

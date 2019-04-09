@@ -64,7 +64,8 @@ public class BenevolentPlayer extends Player {
             int ar = country.getArmiesStationed()+armies<=12?armies:(12-country.getArmiesStationed());
             super.reinforcement(country.getCountryName(),ar);
             armies-=ar;
-            returnString+=this.getName() + " moved " + ar + " number of armies to " + country.getCountryName();
+            returnString+=this.getName() + " moved " + ar + " number of armies to " + country.getCountryName()+"\n";
+            System.out.println(returnString);
     }
         return returnString;
     }
@@ -74,7 +75,8 @@ public class BenevolentPlayer extends Player {
      * @return status of the operation
      */
     public String attack(){
-        return null;
+        System.out.println("This attack does nothing");
+        return "This attack does nothing";
     }
 
     /**
@@ -97,8 +99,10 @@ public class BenevolentPlayer extends Player {
                 }
             }
         }
-        super.fortify(countryToBeFortified.getCountryName(),anotherCountry.getCountryName(),anotherCountry.getArmiesStationed()-1);
-
-        return null;
+        int toAdd = 12-countryToBeFortified.getArmiesStationed();
+        toAdd = toAdd<=anotherCountry.getArmiesStationed()-1?toAdd:anotherCountry.getArmiesStationed()-1;
+        super.fortify(countryToBeFortified.getCountryName(),anotherCountry.getCountryName(),toAdd);
+        System.out.println(countryToBeFortified.getCountryName()+" gets "+toAdd+" armies from country: "+anotherCountry.getCountryName());
+        return countryToBeFortified.getCountryName()+" gets "+toAdd+" armies from country: "+anotherCountry.getCountryName();
     }
 }

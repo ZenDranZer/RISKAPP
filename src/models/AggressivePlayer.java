@@ -34,6 +34,7 @@ public class AggressivePlayer extends Player {
                     strongest = country;
                 }
             }
+            System.out.println("");
             return strongest;
         }else {
             return null;
@@ -60,12 +61,20 @@ public class AggressivePlayer extends Player {
     {
         String resultString="";
         GameCountry country;
+        country =  findStrongestCountry(super.countriesThatCanAttack(this));
        while(armies!=0){
-           int ar = findStrongestCountry(super.countriesThatCanAttack(this)).getArmiesStationed()+armies<=12?armies:12-findStrongestCountry(super.countriesThatCanAttack(this)).getArmiesStationed();
+           int ar = country.getArmiesStationed()+armies<=12?armies:12-country.getArmiesStationed();
            country =  findStrongestCountry(super.countriesThatCanAttack(this));
            super.reinforcement(country.getCountryName(),ar);
             armies-=ar;
-            resultString+=this.getName() + " moved " + armies + " number of armies to " + country.getCountryName();
+            resultString+=this.getName() + " moved " + armies + " number of armies to " + country.getCountryName()+"\n";
+           System.out.println(resultString);
+            int index = this.getCountries().indexOf(country);
+            index++;
+            if(index==this.getCountries().size()){
+                index=0;
+            }
+            country = this.getCountries().get(index);
 
        }
        return resultString;
@@ -95,6 +104,7 @@ public class AggressivePlayer extends Player {
         GameCountry attackingCountry = this.findStrongestCountry(super.countriesThatCanAttack(this));
         GameCountry defendingCountry = this.findWeakestNeighbor();
             String status = super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
+        System.out.println(status);
             return status + ", attack by "+ this.getName()+" to " +  defendingCountry.getCurrentPlayer().getName();
     }
 
@@ -104,7 +114,11 @@ public class AggressivePlayer extends Player {
      */
     public String fortify() {
         ArrayList<GameCountry> toFortify = bestCountryToFortify();
-        super.fortify(toFortify.get(0).getCountryName(),toFortify.get(1).getCountryName(),((toFortify.get(1).getArmiesStationed())-1));
+        int toAdd = 12-toFortify.get(0).getArmiesStationed();
+        toAdd = toAdd<=(toFortify.get(1).getArmiesStationed()-1)?toAdd:toFortify.get(1).getArmiesStationed()-1;
+        super.fortify(toFortify.get(0).getCountryName(),toFortify.get(1).getCountryName(),(toAdd));
+        System.out.println(this.getName() + " fortified " + ((toFortify.get(1).getArmiesStationed())-1) + " armies from " + toFortify.get(0).getCountryName()
+                + " to "+ toFortify.get(1).getCountryName());
         return this.getName() + " fortified " + ((toFortify.get(1).getArmiesStationed())-1) + " armies from " + toFortify.get(0).getCountryName()
                 + " to "+ toFortify.get(1).getCountryName();
     }
