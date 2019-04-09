@@ -69,7 +69,7 @@ public class AggressivePlayer extends Player {
            int ar = country.getArmiesStationed()+armies<=12?armies:12-country.getArmiesStationed();
            super.reinforcement(country.getCountryName(),ar);
             armies-=ar;
-            resultString+=this.getName() + " moved " + armies + " number of armies to " + country.getCountryName()+"\n";
+            resultString+=this.getName() + " moved " + ar + " number of armies to " + country.getCountryName()+"\n";
            System.out.println(resultString);
             int index = this.getCountries().indexOf(country);
             index++;
