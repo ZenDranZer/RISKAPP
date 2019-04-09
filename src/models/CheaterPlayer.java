@@ -66,7 +66,7 @@ public class CheaterPlayer extends Player {
      * This method implements the fortification logic for cheater player
      * @return returns the  status of the operation
      */
-    public String  fortify() {
+    public String fortify() {
         for (GameCountry country: countriesThatCanAttack(this)) {
             country.setArmies(country.getArmiesStationed() *2<=12?country.getArmiesStationed() *2:12);
         }

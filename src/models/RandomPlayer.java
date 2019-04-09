@@ -67,16 +67,18 @@ public class RandomPlayer extends Player {
      */
     public String reinforcement(int armies){
         Random randomNumberGenerator = new Random();
+        String returnString = "";
         while(armies!=0 && !this.isAllocationComplete()){
         int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
         int armiesStationed = this.getCountries().get(counteryIndex).getArmiesStationed();
         if(armiesStationed<12){
             int rein =  (12-armiesStationed)<armies?(12-armiesStationed):armies;
             super.reinforcement(this.countries.get(counteryIndex).getCountryName() ,rein);
+            returnString += this.getName() + " moved " + rein + " number of armies to " + this.countries.get(counteryIndex).getCountryName() + "\n";
             armies = armies-rein;
 
         }
         }
-        return null;
+        return returnString;
     }
 }

@@ -67,10 +67,12 @@ public class AggressivePlayer extends Player {
         }
        while(armies!=0 && !this.isAllocationComplete()){
            int ar = country.getArmiesStationed()+armies<=12?armies:12-country.getArmiesStationed();
+           if(ar!=0){
            super.reinforcement(country.getCountryName(),ar);
             armies-=ar;
             resultString+=this.getName() + " moved " + ar + " number of armies to " + country.getCountryName()+"\n";
-           System.out.println(resultString);
+           System.out.println(this.getName() + " moved " + ar + " number of armies to " + country.getCountryName());
+           }
             int index = this.getCountries().indexOf(country);
             index++;
             if(index==this.getCountries().size()){
@@ -123,9 +125,10 @@ public class AggressivePlayer extends Player {
         if(attackingCountry.getArmiesStationed()<=1)
             return "No country has more than one army to attack";
         GameCountry defendingCountry = this.findWeakestNeighbor(attackingCountry);
-            String status = super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
+        String defender = defendingCountry.getCurrentPlayer().getName();
+        String status = super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
         System.out.println(status);
-            return status + "| attack by "+ this.getName()+" to " +  defendingCountry.getCurrentPlayer().getName();
+            return status + "| attack by "+ this.getName()+" to " + defender;
     }
 
 

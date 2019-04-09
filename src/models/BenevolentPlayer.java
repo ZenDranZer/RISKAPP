@@ -64,10 +64,12 @@ public class BenevolentPlayer extends Player {
                 return "There is no weak country(got null from countries that can attack)(check if the player has won.)";
             }
             int ar = country.getArmiesStationed()+armies<=12?armies:(12-country.getArmiesStationed());
-            super.reinforcement(country.getCountryName(),ar);
-            armies-=ar;
-            returnString+=this.getName() + " moved " + ar + " number of armies to " + country.getCountryName()+"\n";
-            System.out.println(returnString);
+            if(ar!=0) {
+                super.reinforcement(country.getCountryName(), ar);
+                armies -= ar;
+                returnString += this.getName() + " moved " + ar + " number of armies to " + country.getCountryName() + "\n";
+                System.out.println(this.getName() + " moved " + ar + " number of armies to " + country.getCountryName());
+            }
     }
         return returnString;
     }
