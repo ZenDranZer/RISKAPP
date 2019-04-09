@@ -229,8 +229,14 @@ public class GamePlay extends JPanel implements Observer {
 		
 		if(objGameEngine.getGameState().isAllocationComplete())
 		{
-			System.out.println("bleh");
-			objGameEngine.setNextPlayer(activePlayer, false);
+			String message = objGameEngine.setNextPlayer(activePlayer, false); 
+			activePlayer = objGameEngine.getGameState().getActivePlayer();
+			txtError.append(objGameEngine.getBotController().getLogs());
+			if(message.equals("winner"))
+			{
+				JOptionPane.showMessageDialog(this, activePlayer.getName() + " won!");
+				System.exit(0);
+			}
 		}
 	}
 
@@ -696,6 +702,7 @@ public class GamePlay extends JPanel implements Observer {
 				phase = "reinforce";
 				objGameEngine.setNextPlayer(activePlayer, false);
 				activePlayer = objGameEngine.getGameState().getActivePlayer();
+				txtError.append(objGameEngine.getBotController().getLogs());
 				updateReinforcementPanel();
 				if (activePlayer.isAllocationComplete()) {
 					txtError.append("\nMax allocation reached. Reinforcement skipped");
@@ -704,6 +711,7 @@ public class GamePlay extends JPanel implements Observer {
 			} else {
 				objGameEngine.setNextPlayer(activePlayer, true);
 				activePlayer = objGameEngine.getGameState().getActivePlayer();
+				txtError.append(objGameEngine.getBotController().getLogs());
 				updateInitialPanel();
 			}
 			break;
@@ -734,8 +742,14 @@ public class GamePlay extends JPanel implements Observer {
 		case "fortify":
 			displayActions(null);
 			phase = "reinforce";
-			objGameEngine.setNextPlayer(activePlayer, false);
+			String message = objGameEngine.setNextPlayer(activePlayer, false);
 			activePlayer = objGameEngine.getGameState().getActivePlayer();
+			txtError.append(objGameEngine.getBotController().getLogs());
+			if(message.equals("winner"))
+			{
+				JOptionPane.showMessageDialog(this, activePlayer.getName() + " won!");
+				System.exit(0);
+			}
 			updateReinforcementPanel();
 			if (activePlayer.isAllocationComplete()) {
 				txtError.append("\nMax allocation reached. Reinforcement skipped");

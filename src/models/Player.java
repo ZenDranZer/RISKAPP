@@ -289,7 +289,7 @@ public class Player extends Observable implements Serializable {
 				.filter(cntry -> cntry.getCountryName().equals(countryName)).findFirst().get();
 		matchedCountry.setArmies(matchedCountry.getArmiesStationed() + armies);
 		this.addPlayerArmy(armies);
-		this.updateRemainingArmies(armies);;
+		this.updateRemainingArmies(armies);
 	}
 
 	/**
