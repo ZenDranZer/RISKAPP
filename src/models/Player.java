@@ -567,7 +567,7 @@ public class Player extends Observable implements Serializable {
 		for(GameCountry country : player.getCountries()){
 			for(GameCountry neighbour : country.getNeighbouringCountries().values()){
 				if(neighbour.getCurrentPlayer().getId()!=player.getId()){
-					canAttack.add(neighbour);
+					canAttack.add(country);
 				}
 			}
 		}
