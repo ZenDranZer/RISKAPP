@@ -49,8 +49,8 @@ public class BotController {
 			
 			logger += pl.reinforcement(pl.getRemainingArmies());
 			String message = pl.attack();
-			//System.out.println(message);
-			if (message.split("|")[0].equals("winner")) {
+			System.out.println(message);
+			if (message.split("\\|")[0].equals("winner")) {
 				System.out.println(message);
 				return "winner";
 			}

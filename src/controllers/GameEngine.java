@@ -182,7 +182,7 @@ public class GameEngine {
 	 * @param activePlayer
 	 *            current player
 	 */
-	public void setNextPlayer(Player activePlayer, boolean checkInitialAllocation) {
+	public String setNextPlayer(Player activePlayer, boolean checkInitialAllocation) {
 
 		Player nextPlayer = gameState.getNextPlayer(activePlayer, checkInitialAllocation);
 		gameState.setActivePlayer(nextPlayer);
@@ -192,7 +192,7 @@ public class GameEngine {
 		while (objBotController.isBot(nextPlayer) && message != "winner" ) {
 			if (!checkInitialAllocation) {
 				turn.calculateNewArmies(nextPlayer, mapGenerator);
-				objBotController.executeTurn(nextPlayer);
+				message = objBotController.executeTurn(nextPlayer);
 			} else {
 				objBotController.assignRemainingArmies();
 			}
@@ -200,6 +200,7 @@ public class GameEngine {
 			System.out.println("\n\n****next player : " + nextPlayer.getName() + "\n\n");
 			gameState.setActivePlayer(nextPlayer);
 		}
+		return message;
 	}
 
 	/**
