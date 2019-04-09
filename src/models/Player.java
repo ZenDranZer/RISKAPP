@@ -2,7 +2,7 @@ package models;
 
 import javafx.util.Pair;
 import utils.Dice;
-
+import java.io.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -429,6 +429,7 @@ public class Player extends Observable implements Serializable {
 			eliminate(defender);
 			status = "eliminated";
 			if (hasPlayerWon(this)) {
+				
 				status = "winner";
 			}
 		}
@@ -451,7 +452,7 @@ public class Player extends Observable implements Serializable {
 		String status = "";
 		System.out.println("CHeck attack :: " + attackingCountry.getCountryName() + "  "+ attackingCountry.getArmiesStationed() );
 		System.out.println("CHeck defence:: " + defendingCountry.getCountryName() + "  "+ defendingCountry.getArmiesStationed() );
-		while (numberOfArmies_attacker > 1) {
+		while (numberOfArmies_attacker > 1 && !status.equals("winner")) {
 
 			int redDice = 0;
 			if (numberOfArmies_attacker == 2) {
