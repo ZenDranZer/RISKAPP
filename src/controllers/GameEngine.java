@@ -201,7 +201,6 @@ public class GameEngine {
 				nextPlayer = gameState.getNextPlayer(nextPlayer, checkInitialAllocation);
 				gameState.setActivePlayer(nextPlayer);
 			}
-			System.out.println("\n\n****next player : " + nextPlayer.getName() + "\n\n");
 		}
 		return message;
 	}
