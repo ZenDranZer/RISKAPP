@@ -57,18 +57,18 @@ public class TournamentController {
      */
     public void setPlayer(ArrayList<String> player) {
 
-        for(int i=0;i<player.size();i++) {
-            if(player.get(i).equals("Cheater")) {
-                Player cheater = new CheaterPlayer();
+        for (String s : player) {
+            if (s.equals("Cheater")) {
+                Player cheater = new CheaterPlayer(s);
                 tournament.setBots(cheater);
-            } else if(player.get(i).equals("Aggressive")) {
-                Player aggressive = new AggressivePlayer();
+            } else if (s.equals("Aggressive")) {
+                Player aggressive = new AggressivePlayer(s);
                 tournament.setBots(aggressive);
-            } else if (player.get(i).equals("Benevolent")) {
-                Player benevolet = new BenevolentPlayer();
+            } else if (s.equals("Benevolent")) {
+                Player benevolet = new BenevolentPlayer(s);
                 tournament.setBots(benevolet);
-            } else if (player.get(i).equals("Random")) {
-                Player random = new RandomPlayer();
+            } else if (s.equals("Random")) {
+                Player random = new RandomPlayer(s);
                 tournament.setBots(random);
             }
         }
