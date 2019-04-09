@@ -53,13 +53,13 @@ public class BotController {
 	public String executeTurn(Player pl) {
 		try {
 			
-			logger += pl.reinforcement(pl.getRemainingArmies());
+			logger += "\n"+ pl.reinforcement(pl.getRemainingArmies());
 			String message = pl.attack();
-			logger += message;
+			logger += "\n"+message;
 			if (message.split("\\|")[0].equals("winner")) {
 				return "winner";
 			}
-			logger += pl.fortify();
+			logger += "\n"+pl.fortify();
 			return message;
 		} catch (Exception ex) {
 			ex.printStackTrace();
