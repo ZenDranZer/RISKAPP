@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestPlayer {
+public class TestCheaterPlayer {
     Player attacker ;
     Player defender;
     GameCountry attackingCountry1;
@@ -61,7 +61,7 @@ public class TestPlayer {
         gameMap.countryHashMap.put(defendingCountry1.getCountryName() , defendingCountry1);
         gameMap.countryHashMap.put(attackingCountry2.getCountryName() , attackingCountry2);
         gameMap.countryHashMap.put(defendingCountry2.getCountryName() , defendingCountry2);
-        attacker = new Player("Naghmeh" , 1 , gameMap);
+        attacker = new CheaterPlayer("Naghmeh" , 1 , gameMap);
         defender = new Player("Lin" , 2, gameMap);
 
         attacker.addRiskCard(riskCard);
@@ -76,53 +76,11 @@ public class TestPlayer {
         gameState.setActivePlayer(attacker);
         defender.setPlayerArmies(1);
 
-
     }
 
     @Test
     public void TestAttackFunctionRedDice() {
-         assertEquals( "invalid" , attacker.attack(defender , attackingCountry1 , defendingCountry1 , 4 , 1));
+        assertEquals( "Winner" , attacker.attack());
+
     }
-
-
-    @Test
-    public void TestAttackFunctionWhiteDice() {
-        assertEquals( "invalid" , attacker.attack(defender , attackingCountry1 , defendingCountry1 , 3 , 4));
-    }
-
-    @Test
-    public void TestNegativeDiceNumber() {
-        assertEquals( "invalid" , attacker.attack(defender , attackingCountry1 , defendingCountry1 , -6 , 1));
-    }
-   @Test
-    public void TestEliminatingPlayer() {
-        assertEquals( "eliminated" , attacker.attack(defender , attackingCountry1 , defendingCountry1 , 2 , 1));
-   }
-
-   @Test
-    public void TestAlloutAttack() {
-
-        assertEquals("eliminated" , attacker.allOutAttack(defender , attackingCountry1 , defendingCountry1));
-   }
-
-   @Test
-    public void TestNumberOfCountriesGettingEliminated() {
-       attacker.attack(defender , attackingCountry1 , defendingCountry1 , 2 , 1);
-       assertEquals( 0,defender.getCountries().size());
-   }
-
-   @Test
-    public void TestNumberOfArmiesAddedtoWinner() {
-       gameState.attack(defender , attackingCountry1 , defendingCountry1 , 1 , 1);
-       if(gameState.attacked==1){
-           assertEquals(3,gameState.getActivePlayer().getPlayerArmies());
-       }
-       else{
-           assertEquals(2,gameState.getActivePlayer().getPlayerArmies());
-
-       }
-
-   }
-
-
 }

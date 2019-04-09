@@ -77,4 +77,5 @@ public class CheaterPlayer extends Player {
         }
         return this.getName() + " fortified all countries that can be attacked";
     }
+
 }

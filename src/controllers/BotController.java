@@ -12,6 +12,12 @@ public class BotController {
 		// activePlayer = gameState.getActivePlayer();
 	}
 
+	public String getLogs()
+	{
+		String messages = this.logger;
+		this.logger = "";
+		return messages;
+	}
 	// Before calling this method, method allocateInitialArmies of the
 	// GameEngine must be called .
 	public void assignRemainingArmies() {
@@ -49,14 +55,11 @@ public class BotController {
 			
 			logger += pl.reinforcement(pl.getRemainingArmies());
 			String message = pl.attack();
-			System.out.println(message);
+			logger += message;
 			if (message.split("\\|")[0].equals("winner")) {
-				System.out.println(message);
 				return "winner";
 			}
 			logger += pl.fortify();
-			System.out.println("logs : " + logger);
-			logger = "";
 			return message;
 		} catch (Exception ex) {
 			ex.printStackTrace();

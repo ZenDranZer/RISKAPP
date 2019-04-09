@@ -231,6 +231,7 @@ public class GamePlay extends JPanel implements Observer {
 		{
 			String message = objGameEngine.setNextPlayer(activePlayer, false); 
 			activePlayer = objGameEngine.getGameState().getActivePlayer();
+			txtError.append(objGameEngine.getBotController().getLogs());
 			if(message.equals("winner"))
 			{
 				JOptionPane.showMessageDialog(this, activePlayer.getName() + " won!");
@@ -701,6 +702,7 @@ public class GamePlay extends JPanel implements Observer {
 				phase = "reinforce";
 				objGameEngine.setNextPlayer(activePlayer, false);
 				activePlayer = objGameEngine.getGameState().getActivePlayer();
+				txtError.append(objGameEngine.getBotController().getLogs());
 				updateReinforcementPanel();
 				if (activePlayer.isAllocationComplete()) {
 					txtError.append("\nMax allocation reached. Reinforcement skipped");
@@ -709,6 +711,7 @@ public class GamePlay extends JPanel implements Observer {
 			} else {
 				objGameEngine.setNextPlayer(activePlayer, true);
 				activePlayer = objGameEngine.getGameState().getActivePlayer();
+				txtError.append(objGameEngine.getBotController().getLogs());
 				updateInitialPanel();
 			}
 			break;
@@ -741,6 +744,7 @@ public class GamePlay extends JPanel implements Observer {
 			phase = "reinforce";
 			String message = objGameEngine.setNextPlayer(activePlayer, false);
 			activePlayer = objGameEngine.getGameState().getActivePlayer();
+			txtError.append(objGameEngine.getBotController().getLogs());
 			if(message.equals("winner"))
 			{
 				JOptionPane.showMessageDialog(this, activePlayer.getName() + " won!");
