@@ -84,6 +84,7 @@ public class TestPlayer {
          assertEquals( "invalid" , attacker.attack(defender , attackingCountry1 , defendingCountry1 , 4 , 1));
     }
 
+
     @Test
     public void TestAttackFunctionWhiteDice() {
         assertEquals( "invalid" , attacker.attack(defender , attackingCountry1 , defendingCountry1 , 3 , 4));

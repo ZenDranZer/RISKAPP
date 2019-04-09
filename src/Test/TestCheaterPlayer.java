@@ -81,5 +81,6 @@ public class TestCheaterPlayer {
     @Test
     public void TestAttackFunctionRedDice() {
         assertEquals( "Winner" , attacker.attack());
+
     }
 }
