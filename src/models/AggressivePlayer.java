@@ -62,9 +62,11 @@ public class AggressivePlayer extends Player {
         String resultString="";
         GameCountry country;
         country =  findStrongestCountry(super.countriesThatCanAttack(this));
+        if(country==null){
+            return "The player might have won";
+        }
        while(armies!=0){
            int ar = country.getArmiesStationed()+armies<=12?armies:12-country.getArmiesStationed();
-           country =  findStrongestCountry(super.countriesThatCanAttack(this));
            super.reinforcement(country.getCountryName(),ar);
             armies-=ar;
             resultString+=this.getName() + " moved " + armies + " number of armies to " + country.getCountryName()+"\n";
@@ -84,12 +86,14 @@ public class AggressivePlayer extends Player {
      * This method finds the weakest neighbour to be attacked by the Aggressive player
      * @return The weakest neighboring country
      */
-    public GameCountry findWeakestNeighbor(){
-        GameCountry weakest = new ArrayList<>(this.countries.get(0).getNeighbouringCountries().values()).get(0);
-        for (GameCountry playerCountries: this.countries) {
-            for (GameCountry neighbor : playerCountries.getNeighbouringCountries().values()) {
-                if (neighbor.getArmiesStationed() < weakest.getArmiesStationed()){
-                    weakest = neighbor;
+    public GameCountry findWeakestNeighbor(GameCountry attackingCountry){
+        GameCountry weakest = new GameCountry();
+        int ar = 12;
+        for(GameCountry neig:attackingCountry.getNeighbouringCountries().values()){
+            if(neig.getCurrentPlayer().getId()!=this.getId()){
+                if(neig.getArmiesStationed()<=ar){
+                    ar = neig.getArmiesStationed();
+                    weakest = neig;
                 }
             }
         }
@@ -102,7 +106,11 @@ public class AggressivePlayer extends Player {
      */
     public String attack() {
         GameCountry attackingCountry = this.findStrongestCountry(super.countriesThatCanAttack(this));
-        GameCountry defendingCountry = this.findWeakestNeighbor();
+        if(attackingCountry==null)
+            return "No country to attack(The player might have won)";
+        if(attackingCountry.getArmiesStationed()<=1)
+            return "No country has more than one army to attack";
+        GameCountry defendingCountry = this.findWeakestNeighbor(attackingCountry);
             String status = super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
         System.out.println(status);
             return status + ", attack by "+ this.getName()+" to " +  defendingCountry.getCurrentPlayer().getName();
@@ -114,6 +122,8 @@ public class AggressivePlayer extends Player {
      */
     public String fortify() {
         ArrayList<GameCountry> toFortify = bestCountryToFortify();
+        if(toFortify==null)
+            return "All the armies are already placed optimally according to the player's strategic behaviour";
         int toAdd = 12-toFortify.get(0).getArmiesStationed();
         toAdd = toAdd<=(toFortify.get(1).getArmiesStationed()-1)?toAdd:toFortify.get(1).getArmiesStationed()-1;
         super.fortify(toFortify.get(0).getCountryName(),toFortify.get(1).getCountryName(),(toAdd));
@@ -126,11 +136,23 @@ public class AggressivePlayer extends Player {
         ArrayList<GameCountry> toFortify = new ArrayList<>();
         GameCountry bestCountry = null;
         GameCountry bestNeighbour = null;
+        ArrayList<GameCountry> playerCountries = new ArrayList<>();
+        for(GameCountry country:this.getCountries()){
+            for(GameCountry neig : country.getNeighbouringCountries().values()){
+                if(neig.getArmiesStationed()>1 && neig.getCurrentPlayer().getId()==this.getId()){
+                    playerCountries.add(country);
+                }
+            }
+        }
+        if(playerCountries.size()==0){
+            return null;
+        }
         int max = 0;
-        for(GameCountry country : this.getCountries()){
+        for(GameCountry country : playerCountries){
             for(GameCountry neighbor : country.getNeighbouringCountries().values()){
                 if(neighbor.getCurrentPlayer().getId()==this.getId()){
-                    if(country.getArmiesStationed()+neighbor.getArmiesStationed()-1 > max){
+                    if(country.getArmiesStationed()+neighbor.getArmiesStationed()-1 >= max){
+                        max = country.getArmiesStationed()+neighbor.getArmiesStationed();
                         bestCountry = country;
                         bestNeighbour = neighbor;
                     }
