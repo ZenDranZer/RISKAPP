@@ -26,7 +26,7 @@ public class AggressivePlayer extends Player {
      * @return Returns the strongest country
      */
     public GameCountry findStrongestCountry(ArrayList<GameCountry> countriesThatCanAttack){
-        if (countriesThatCanAttack != null ) {
+        if (countriesThatCanAttack != null && countriesThatCanAttack.size()>0 ) {
             GameCountry strongest = countriesThatCanAttack.get(0);
             int maxNumberOfArmies = countriesThatCanAttack.get(0).getArmiesStationed();
             for (GameCountry country : countriesThatCanAttack) {
