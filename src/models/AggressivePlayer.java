@@ -65,7 +65,7 @@ public class AggressivePlayer extends Player {
         if(country==null){
             return "The player might have won";
         }
-       while(armies!=0){
+       while(armies!=0 && !this.isAllocationComplete()){
            int ar = country.getArmiesStationed()+armies<=12?armies:12-country.getArmiesStationed();
            super.reinforcement(country.getCountryName(),ar);
             armies-=ar;
@@ -77,6 +77,7 @@ public class AggressivePlayer extends Player {
                 index=0;
             }
             country = this.getCountries().get(index);
+
 
        }
        return resultString;

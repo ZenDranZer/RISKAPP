@@ -136,7 +136,7 @@ public class TournamentController {
 
                     currentPlayer = bots.get(player_num);
                     tradeRiskCard(currentPlayer,riskCardController);
-                    message = currentPlayer.reinforcement();
+                    message = currentPlayer.reinforcement(1);
                     System.out.println(message);
                     message = currentPlayer.attack();
                     System.out.println(message);

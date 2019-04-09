@@ -57,7 +57,7 @@ public class BenevolentPlayer extends Player {
     {
         String returnString = "";
         GameCountry country;
-        while(armies!=0){
+        while(armies!=0&&!this.isAllocationComplete()){
             country = this.findWeakCountry();
             if(country==null){
                 System.out.println("There is no weak country(got null from countries that can attack)(check if the player has won.)");
