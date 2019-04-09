@@ -87,7 +87,7 @@ public class BenevolentPlayer extends Player {
      */
     public String fortify(){
         ArrayList<GameCountry> canBeFortified = super.countriesThatCanBeFortified(this);
-        if(canBeFortified==null){
+        if(canBeFortified.size()==0){
             System.out.println("No country have any friendly neighbor to help in fortification");
             return "No country have any friendly neighbor to help in fortification";
         }
@@ -104,6 +104,9 @@ public class BenevolentPlayer extends Player {
                     }
                 }
             }
+        }
+        if(countryToBeFortified==null){
+            return "No country can be fortified";
         }
         int toAdd = 12-countryToBeFortified.getArmiesStationed();
         toAdd = toAdd<=anotherCountry.getArmiesStationed()-1?toAdd:anotherCountry.getArmiesStationed()-1;

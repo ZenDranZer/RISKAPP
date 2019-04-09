@@ -61,7 +61,7 @@ public class AggressivePlayer extends Player {
     {
         String resultString="";
         GameCountry country;
-        country =  findStrongestCountry(super.countriesThatCanAttack(this));
+        country =  findStrongestCountry(this.countriesThatCanAttack());
         if(country==null){
             return "The player might have won";
         }
@@ -99,13 +99,24 @@ public class AggressivePlayer extends Player {
         }
         return weakest;
     }
+    public ArrayList<GameCountry> countriesThatCanAttack(){
+        ArrayList<GameCountry> canAttack = new ArrayList<>();
+        for(GameCountry country : this.getCountries()){
+            for(GameCountry neighbour : country.getNeighbouringCountries().values()){
+                if(neighbour.getCurrentPlayer().getId()!=this.getId()){
+                    canAttack.add(country);
+                }
+            }
+        }
+        return canAttack;
+    }
 
     /**
      * This method implements attack functionality for the Aggressive Player
      * @return Returns the status of the operation
      */
     public String attack() {
-        GameCountry attackingCountry = this.findStrongestCountry(super.countriesThatCanAttack(this));
+        GameCountry attackingCountry = this.findStrongestCountry(this.countriesThatCanAttack());
         if(attackingCountry==null)
             return "No country to attack(The player might have won)";
         if(attackingCountry.getArmiesStationed()<=1)
@@ -115,6 +126,8 @@ public class AggressivePlayer extends Player {
         System.out.println(status);
             return status + "| attack by "+ this.getName()+" to " +  defendingCountry.getCurrentPlayer().getName();
     }
+
+
 
     /**
      * This method implements fortify functionality for the aggressive player
