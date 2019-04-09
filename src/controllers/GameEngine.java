@@ -43,11 +43,20 @@ public class GameEngine {
 	 * 
 	 * @return TurnController object representing the current turn
 	 */
-	public TurnController getTurmController() {
+	public TurnController getTurnController() {
 		if (turn == null) {
 			turn = new TurnController(gameState);
 		}
 		return turn;
+	}
+	
+	public BotController getBotController()
+	{
+		if(this.objBotController == null)
+		{
+			this.objBotController = new BotController(gameState);
+		}
+		return this.objBotController;
 	}
 
 	/**
@@ -138,6 +147,7 @@ public class GameEngine {
 			allocateInitialArmies();
 			gameState.setActivePlayer(gameState.getPlayers().get(0));
 			allocateBots();
+			System.out.println("bots done ");
 		} catch (NullPointerException nullEx) {
 			System.out.println(nullEx.toString());
 			System.out.println("\n\n");
@@ -178,13 +188,16 @@ public class GameEngine {
 		gameState.setActivePlayer(nextPlayer);
 		System.out.println("pl check  : " + nextPlayer.getClass());
 		// check for bot
-		while (objBotController.isBot(nextPlayer)) {
+		String message = "";
+		while (objBotController.isBot(nextPlayer) && message != "winner" ) {
 			if (!checkInitialAllocation) {
+				turn.calculateNewArmies(nextPlayer, mapGenerator);
 				objBotController.executeTurn(nextPlayer);
 			} else {
 				objBotController.assignRemainingArmies();
 			}
 			nextPlayer = gameState.getNextPlayer(nextPlayer, checkInitialAllocation);
+			System.out.println("\n\n****next player : " + nextPlayer.getName() + "\n\n");
 			gameState.setActivePlayer(nextPlayer);
 		}
 	}

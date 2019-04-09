@@ -304,7 +304,7 @@ public class Player extends Observable implements Serializable {
 	public void reinforcement(String countryName, int armies) {
 		placeArmy(countryName, armies);
 	}
-	public String reinforcement(){
+	public String reinforcement(int armies){
         return null;
     }
 
@@ -449,6 +449,8 @@ public class Player extends Observable implements Serializable {
 		int numberOfArmies_attacker = attackingCountry.getArmiesStationed();
 		int numberOfArmies_defender = defendingCountry.getArmiesStationed();
 		String status = "";
+		System.out.println("CHeck attack :: " + attackingCountry.getCountryName() + "  "+ attackingCountry.getArmiesStationed() );
+		System.out.println("CHeck defence:: " + defendingCountry.getCountryName() + "  "+ defendingCountry.getArmiesStationed() );
 		while (numberOfArmies_attacker > 1) {
 
 			int redDice = 0;

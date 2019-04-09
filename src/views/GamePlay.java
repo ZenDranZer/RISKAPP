@@ -85,7 +85,7 @@ public class GamePlay extends JPanel implements Observer {
 		this.parent = parent;
 
 		objGameEngine = engine;
-		objTurnController = objGameEngine.getTurmController();
+		objTurnController = objGameEngine.getTurnController();
 		activePlayer = objGameEngine.getGameState().getActivePlayer();
 
 		initComponents();
@@ -229,7 +229,7 @@ public class GamePlay extends JPanel implements Observer {
 		
 		if(objGameEngine.getGameState().isAllocationComplete())
 		{
-		
+			System.out.println("bleh");
 			objGameEngine.setNextPlayer(activePlayer, false);
 		}
 	}

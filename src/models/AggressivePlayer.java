@@ -113,7 +113,7 @@ public class AggressivePlayer extends Player {
         GameCountry defendingCountry = this.findWeakestNeighbor(attackingCountry);
             String status = super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
         System.out.println(status);
-            return status + ", attack by "+ this.getName()+" to " +  defendingCountry.getCurrentPlayer().getName();
+            return status + "| attack by "+ this.getName()+" to " +  defendingCountry.getCurrentPlayer().getName();
     }
 
     /**
