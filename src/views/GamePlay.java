@@ -220,15 +220,20 @@ public class GamePlay extends JPanel implements Observer {
 			objGameEngine.getGameState().getRiskController()
 					.initRiskCardDeck(objGameEngine.getGameState().getGameMapObject());
 			lblPhase.setText("Intial Allocation");
-			// TODO : separate out
 			updateListElements();
 			displayRemainingArmies();
 		}else {
 			load();
 		}
 		
+		
+	}
+	
+	public void updateBotPanel()
+	{
 		if(objGameEngine.getGameState().isAllocationComplete())
 		{
+			lblPhase.setText("Only bots playing");
 			String message = objGameEngine.setNextPlayer(activePlayer, false); 
 			activePlayer = objGameEngine.getGameState().getActivePlayer();
 			txtError.append(objGameEngine.getBotController().getLogs());
@@ -360,7 +365,7 @@ public class GamePlay extends JPanel implements Observer {
 		String selectedCountry = lstPlayerCountries.getSelectedValue().toString();
 
 		btnAdd.setVisible(false);
-		displayActions(null);
+		//displayActions(null);
 		objTurnController.placeArmy(activePlayer, selectedCountry, army);
 	}
 
@@ -762,7 +767,8 @@ public class GamePlay extends JPanel implements Observer {
 	public void displayActions(String message) {
 		switch (phase) {
 		case "initial":
-			txtError.append(activePlayer.getName() + " allocated " + txtReinforce.getText() + "armies to "
+			System.out.println("*******");
+			txtError.append("\n"+activePlayer.getName() + " allocated " + txtReinforce.getText() + "armies to "
 					+ lstPlayerCountries.getSelectedValue().toString());
 			break;
 		case "reinforce":
