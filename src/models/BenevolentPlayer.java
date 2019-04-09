@@ -87,6 +87,10 @@ public class BenevolentPlayer extends Player {
      */
     public String fortify(){
         ArrayList<GameCountry> canBeFortified = super.countriesThatCanBeFortified(this);
+        if(canBeFortified==null){
+            System.out.println("No country have any friendly neighbor to help in fortification");
+            return "No country have any friendly neighbor to help in fortification";
+        }
         GameCountry countryToBeFortified = null;
         GameCountry anotherCountry = null;
         int min = 12;
