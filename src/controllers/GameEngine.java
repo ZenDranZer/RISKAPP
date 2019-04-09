@@ -196,9 +196,12 @@ public class GameEngine {
 			} else {
 				objBotController.assignRemainingArmies();
 			}
-			nextPlayer = gameState.getNextPlayer(nextPlayer, checkInitialAllocation);
+			if(message != "winner")
+			{
+				nextPlayer = gameState.getNextPlayer(nextPlayer, checkInitialAllocation);
+				gameState.setActivePlayer(nextPlayer);
+			}
 			System.out.println("\n\n****next player : " + nextPlayer.getName() + "\n\n");
-			gameState.setActivePlayer(nextPlayer);
 		}
 		return message;
 	}
