@@ -83,7 +83,8 @@ public class BotController {
 			HashMap<String, ArrayList<RiskCard>> possibleSet = riskCardController.getPossibleSets(currentPlayer);
 			for (ArrayList<RiskCard> set:possibleSet.values()) {
 				riskCardController.tradeCards(currentPlayer,set);
-				logger+="Trade"
+				System.out.println("Traded "+ set.toString());
+				logger+="Traded "+ set.toString();
 			}
 		}
 	}
