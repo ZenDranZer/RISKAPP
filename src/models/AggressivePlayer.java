@@ -10,6 +10,11 @@ public class AggressivePlayer extends Player {
     public AggressivePlayer(){
         super();
     }
+
+    public AggressivePlayer(String name) {
+        super();
+        this.setName(name);
+    }
     /**The parameterised constructor for aggressivePlayer class instantiation
      *
      * @param name Name of aggressive player
