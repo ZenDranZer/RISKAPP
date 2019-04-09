@@ -32,19 +32,17 @@ public class BenevolentPlayer extends Player {
 
         return weak;*/
         ArrayList<GameCountry> canBeAttack ;
-        int armies=0;
+        int armies=12;
         GameCountry weak = new GameCountry();
         canBeAttack = super.countriesThatCanAttack(this);
+        if(canBeAttack.size()==0){
+            System.out.println("No country has any neighbour owned by opposition(player might have won)");
+            return null;
+        }
         for(GameCountry country : canBeAttack){
-            for(GameCountry neighbor : country.getNeighbouringCountries().values()){
-                if(neighbor.getCurrentPlayer().getId()!=this.getId()&&neighbor.getArmiesStationed()>1){
-                    if(country.getArmiesStationed()<armies) {
-                        armies = country.getArmiesStationed();
-                        weak = country;
-                    }
-                }
-                if(weak.getCountryName().equals(country.getCountryName()))
-                    break;
+            if(country.getArmiesStationed()<=armies){
+                armies = country.getArmiesStationed();
+                weak = country;
             }
         }
         return weak;
@@ -61,6 +59,10 @@ public class BenevolentPlayer extends Player {
         GameCountry country;
         while(armies!=0){
             country = this.findWeakCountry();
+            if(country==null){
+                System.out.println("There is no weak country(got null from countries that can attack)(check if the player has won.)");
+                return "There is no weak country(got null from countries that can attack)(check if the player has won.)";
+            }
             int ar = country.getArmiesStationed()+armies<=12?armies:(12-country.getArmiesStationed());
             super.reinforcement(country.getCountryName(),ar);
             armies-=ar;
@@ -87,12 +89,12 @@ public class BenevolentPlayer extends Player {
         ArrayList<GameCountry> canBeFortified = super.countriesThatCanBeFortified(this);
         GameCountry countryToBeFortified = null;
         GameCountry anotherCountry = null;
-        int min = 50;
+        int min = 12;
         for(GameCountry country1 : canBeFortified){
             if(country1.getArmiesStationed()<=min){
                 countryToBeFortified = country1;
                 for(GameCountry c : countryToBeFortified.getNeighbouringCountries().values()){
-                    if(c.getArmiesStationed()>1){
+                    if(c.getCurrentPlayer().getId()==this.getId()&&c.getArmiesStationed()>1){
                         anotherCountry = c;
                         break;
                     }
