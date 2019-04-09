@@ -10,6 +10,11 @@ public class AggressivePlayer extends Player {
     public AggressivePlayer(){
         super();
     }
+
+    public AggressivePlayer(String name) {
+        super();
+        this.setName(name);
+    }
     /**The parameterised constructor for aggressivePlayer class instantiation
      *
      * @param name Name of aggressive player
@@ -149,6 +154,13 @@ public class AggressivePlayer extends Player {
         return this.getName() + " fortified " + ((toFortify.get(1).getArmiesStationed())-1) + " armies from " + toFortify.get(0).getCountryName()
                 + " to "+ toFortify.get(1).getCountryName();
     }
+
+    /**
+     * this method find the best country that aggressive player can attack
+     *
+     *
+     * @return
+     */
     public ArrayList<GameCountry> bestCountryToFortify(){
         ArrayList<GameCountry> toFortify = new ArrayList<>();
         GameCountry bestCountry = null;

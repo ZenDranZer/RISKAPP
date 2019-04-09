@@ -9,8 +9,13 @@ public class CheaterPlayer extends Player {
      */
     public CheaterPlayer(){
         super();
-
     }
+
+    public CheaterPlayer(String name) {
+        super();
+        this.setName(name);
+    }
+
    public CheaterPlayer(String name, int id, GameMap gameMap){
         super(name,id,gameMap);
     }
@@ -72,4 +77,5 @@ public class CheaterPlayer extends Player {
         }
         return this.getName() + " fortified all countries that can be attacked";
     }
+
 }

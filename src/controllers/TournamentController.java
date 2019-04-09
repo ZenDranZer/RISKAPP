@@ -128,18 +128,19 @@ public class TournamentController {
                 riskCardController.initRiskCardDeck(tournament.getGamestate().get(j).getGameMapObject());
                 int player_num = 0;
                 Player currentPlayer;
-
+                MapGenerator mapGenerator = new MapGenerator(tournament.getGamestate().get(j).getGameMapObject());
+                turns = 0;
                 while (turns < maxNoOfTurns) {
                     if (player_num == bots.size()) {
                         player_num = 0;
                     }
-
                     currentPlayer = bots.get(player_num);
+                    turnController.calculateNewArmies(currentPlayer,mapGenerator);
                     tradeRiskCard(currentPlayer,riskCardController);
-                    message = currentPlayer.reinforcement(1);
-                    System.out.println(message);
+                    message = currentPlayer.reinforcement(currentPlayer.getRemainingArmies());
+                    System.out.println("Reinforcement by : "+currentPlayer.getName()+" : " + message);
                     message = currentPlayer.attack();
-                    System.out.println(message);
+                    System.out.println("Attack by : "+currentPlayer.getName()+" : " + message);
                     if(message.toLowerCase().contains("success")){
                         RiskCard riskCard = riskCardController.allocateRiskCard();
                         currentPlayer.addRiskCard(riskCard);
@@ -153,8 +154,9 @@ public class TournamentController {
                         break;
                     }
                     message = currentPlayer.fortify();
-                    System.out.println(message);
+                    System.out.println("Fortify by : "+currentPlayer.getName()+" : " + message);
                     player_num++;
+                    turns++;
                 }
                 if(turns == maxNoOfTurns){
                     tournament.addResult(j,i,"draw");

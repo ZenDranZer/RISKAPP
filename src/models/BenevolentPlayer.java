@@ -13,6 +13,11 @@ public class BenevolentPlayer extends Player {
         super();
     }
 
+    public BenevolentPlayer(String name) {
+        super();
+        this.setName(name);
+    }
+
     public BenevolentPlayer(String name, int id, GameMap gameMap){
         super(name,id,gameMap);
     }
