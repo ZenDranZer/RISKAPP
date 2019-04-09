@@ -1,10 +1,11 @@
 package models;
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Represents the Country objects used in the Game
  */
-public class GameCountry {
+public class GameCountry implements Serializable{
 
     private String countryName;
     private HashMap<String,GameCountry> neighbouringCountries;

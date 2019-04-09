@@ -2,13 +2,14 @@ package models;
 
 import controllers.RiskCardController;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Class that represents and holds the data for the GamePlay Contains all the
  * players and the map
  */
-public class GameState extends Observable {
+public class GameState extends Observable implements Serializable {
 
 	private ArrayList<Player> players;
 

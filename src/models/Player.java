@@ -3,13 +3,14 @@ package models;
 import javafx.util.Pair;
 import utils.Dice;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
 /**
  * The Player class is a model which contains player related data.
  */
-public class Player extends Observable {
+public class Player extends Observable implements Serializable {
 
 	protected String name;
 	protected int id;

@@ -226,6 +226,12 @@ public class GamePlay extends JPanel implements Observer {
 		}else {
 			load();
 		}
+		
+		if(objGameEngine.getGameState().isAllocationComplete())
+		{
+		
+			objGameEngine.setNextPlayer(activePlayer, false);
+		}
 	}
 
 	/** This is an event function for graph view. */

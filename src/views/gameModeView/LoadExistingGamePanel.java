@@ -41,7 +41,9 @@ public class LoadExistingGamePanel extends JPanel {
             container.add(gamePlay);
             container.revalidate();
         }
-        }catch(Exception f){}
+        }catch(Exception f){
+            f.printStackTrace();
+        }
     }
 
 

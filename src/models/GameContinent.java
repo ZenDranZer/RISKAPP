@@ -1,12 +1,13 @@
 package models;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Represents the Continent Model in the game
  * Each country can only belong to one continent
  */
-public class GameContinent {
+public class GameContinent implements Serializable{
 
     private String continentName;
     private int continentValue;

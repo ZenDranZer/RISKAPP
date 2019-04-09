@@ -21,6 +21,7 @@ public class SingleGameModePanel extends JPanel {
         this.parent = parent;
         initComponents();
         filePath.addChoosableFileFilter(new FileNameExtensionFilter("MAP file only", "map"));
+        numberOfPlayers.setValue(2);
     }
 
     private void numberOfPlayersActionListner(ChangeEvent propertyChangeEvent) {
@@ -30,16 +31,22 @@ public class SingleGameModePanel extends JPanel {
         repaint();
         switch (value) {
             case 2:
+                player3Name.setText("");
+                player4Name.setText("");
+                player5Name.setText("");
                 player3Type.setEnabled(false);
                 player4Type.setEnabled(false);
                 player5Type.setEnabled(false);
                 break;
             case 3:
+                player4Name.setText("");
+                player5Name.setText("");
                 player3Type.setEnabled(true);
                 player4Type.setEnabled(false);
                 player5Type.setEnabled(false);
                 break;
             case 4:
+                player5Name.setText("");
                 player3Type.setEnabled(true);
                 player4Type.setEnabled(true);
                 player5Type.setEnabled(false);

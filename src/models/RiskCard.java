@@ -1,11 +1,12 @@
 package models;
 
+import java.io.Serializable;
 import java.util.Observable;
 
 /**
  * Class that represents a Risk Card
  */
-public class RiskCard extends Observable {
+public class RiskCard extends Observable implements Serializable {
 
 	/**Specifies the unique country name per card.*/
 	private String countryName;

@@ -89,20 +89,21 @@ public class GameEngine {
 		for (String name : listActivePlayers) {
 			switch (name) {
 			case "Aggressive":
-				AggressivePlayer aggPlayer = new AggressivePlayer(name+"_"+i, i, gameState.getGameMapObject());
+				AggressivePlayer aggPlayer = new AggressivePlayer(name + "_" + i, i, gameState.getGameMapObject());
 				gameState.getPlayers().add(aggPlayer);
 				break;
 			case "Benevolent":
-				BenevolentPlayer benevolentPlayer = new BenevolentPlayer(name+"_"+i, i, gameState.getGameMapObject());
+				BenevolentPlayer benevolentPlayer = new BenevolentPlayer(name + "_" + i, i,
+						gameState.getGameMapObject());
 				gameState.getPlayers().add(benevolentPlayer);
 				break;
 
 			case "Random":
-				RandomPlayer randomPlayer = new RandomPlayer(name+"_"+i, i, gameState.getGameMapObject());
+				RandomPlayer randomPlayer = new RandomPlayer(name + "_" + i, i, gameState.getGameMapObject());
 				gameState.getPlayers().add(randomPlayer);
 				break;
 			case "Cheater":
-				CheaterPlayer cheaterPlayer = new CheaterPlayer(name+"_"+i, i, gameState.getGameMapObject());
+				CheaterPlayer cheaterPlayer = new CheaterPlayer(name + "_" + i, i, gameState.getGameMapObject());
 				gameState.getPlayers().add(cheaterPlayer);
 				break;
 
@@ -136,6 +137,7 @@ public class GameEngine {
 			turn.allocateCountries(gameState.getPlayers(), getGameState().getGameMapObject().getAllCountries());
 			allocateInitialArmies();
 			gameState.setActivePlayer(gameState.getPlayers().get(0));
+			allocateBots();
 		} catch (NullPointerException nullEx) {
 			System.out.println(nullEx.toString());
 			System.out.println("\n\n");
@@ -173,17 +175,18 @@ public class GameEngine {
 	public void setNextPlayer(Player activePlayer, boolean checkInitialAllocation) {
 
 		Player nextPlayer = gameState.getNextPlayer(activePlayer, checkInitialAllocation);
+		gameState.setActivePlayer(nextPlayer);
+		System.out.println("pl check  : " + nextPlayer.getClass());
 		// check for bot
 		while (objBotController.isBot(nextPlayer)) {
-			System.out.println("no bot ???");
 			if (!checkInitialAllocation) {
 				objBotController.executeTurn(nextPlayer);
+			} else {
+				objBotController.assignRemainingArmies();
 			}
-			gameState.getNextPlayer(nextPlayer, checkInitialAllocation);
+			nextPlayer = gameState.getNextPlayer(nextPlayer, checkInitialAllocation);
+			gameState.setActivePlayer(nextPlayer);
 		}
-
-		gameState.setActivePlayer(nextPlayer);
-
 	}
 
 	/**
@@ -245,7 +248,17 @@ public class GameEngine {
 			this.gameState = (GameState) objectIn.readObject();
 			objectIn.close();
 		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 
+	public void allocateBots() {
+		Player activePlayer = gameState.getActivePlayer();
+		while(objBotController.isBot(activePlayer) && !activePlayer.isAllocationComplete() && activePlayer.getRemainingArmies() >0)
+		{
+			objBotController.assignRemainingArmies();
+			activePlayer = gameState.getNextPlayer(activePlayer, true);
+			gameState.setActivePlayer(activePlayer);
 		}
 	}
 }

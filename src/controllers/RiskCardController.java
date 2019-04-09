@@ -3,10 +3,12 @@ package controllers;
 import models.GameMap;
 import models.Player;
 import models.RiskCard;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RiskCardController {
+public class RiskCardController implements Serializable {
 
     /**A list of all cards which are not owned by any player.*/
     private ArrayList<RiskCard> cardDeck;
