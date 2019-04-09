@@ -67,7 +67,7 @@ public class RandomPlayer extends Player {
      */
     public String reinforcement(int armies){
         Random randomNumberGenerator = new Random();
-        while(armies!=0){
+        while(armies!=0 && !this.isAllocationComplete()){
         int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
         int armiesStationed = this.getCountries().get(counteryIndex).getArmiesStationed();
         if(armiesStationed<12){
