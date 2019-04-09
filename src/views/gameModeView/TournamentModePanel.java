@@ -50,7 +50,7 @@ public class TournamentModePanel extends JPanel {
         ArrayList<String> playersNames = new ArrayList<>();
         int numberOfPlayersInt = (Integer)numberOfPlayers.getValue();
         playersNames.add((String)player1TypeCB.getSelectedItem());
-        playersNames.add((String)player1TypeCB.getSelectedItem());
+        playersNames.add((String)player2TypeCB.getSelectedItem());
         switch (numberOfPlayersInt){
             case 3:
                 playersNames.add((String)player3TypeCB.getSelectedItem());
