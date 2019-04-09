@@ -14,6 +14,11 @@ public class RandomPlayer extends Player {
         super();
     }
 
+    public RandomPlayer(String name){
+        super();
+        this.name = name;
+    }
+
     public RandomPlayer(String name, int id, GameMap gameMap){
         super(name,id,gameMap);
     }

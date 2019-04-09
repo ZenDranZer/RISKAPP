@@ -365,7 +365,7 @@ public class GamePlay extends JPanel implements Observer {
 		String selectedCountry = lstPlayerCountries.getSelectedValue().toString();
 
 		btnAdd.setVisible(false);
-		displayActions(null);
+		//displayActions(null);
 		objTurnController.placeArmy(activePlayer, selectedCountry, army);
 	}
 
@@ -767,7 +767,8 @@ public class GamePlay extends JPanel implements Observer {
 	public void displayActions(String message) {
 		switch (phase) {
 		case "initial":
-			txtError.append(activePlayer.getName() + " allocated " + txtReinforce.getText() + "armies to "
+			System.out.println("*******");
+			txtError.append("\n"+activePlayer.getName() + " allocated " + txtReinforce.getText() + "armies to "
 					+ lstPlayerCountries.getSelectedValue().toString());
 			break;
 		case "reinforce":
