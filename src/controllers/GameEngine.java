@@ -146,7 +146,7 @@ public class GameEngine {
 			turn.allocateCountries(gameState.getPlayers(), getGameState().getGameMapObject().getAllCountries());
 			allocateInitialArmies();
 			gameState.setActivePlayer(gameState.getPlayers().get(0));
-			allocateBots();
+			//allocateBots();
 			System.out.println("bots done ");
 		} catch (NullPointerException nullEx) {
 			System.out.println(nullEx.toString());
@@ -276,5 +276,21 @@ public class GameEngine {
 			activePlayer = gameState.getNextPlayer(activePlayer, true);
 			gameState.setActivePlayer(activePlayer);
 		}
+	}
+	
+	/**
+	 * check if all players are bots
+	 * @return
+	 */
+	public boolean areAllBots()
+	{
+		for(Player pl : gameState.getPlayers())
+		{
+			if(!objBotController.isBot(pl))
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 }

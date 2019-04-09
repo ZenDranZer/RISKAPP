@@ -220,15 +220,20 @@ public class GamePlay extends JPanel implements Observer {
 			objGameEngine.getGameState().getRiskController()
 					.initRiskCardDeck(objGameEngine.getGameState().getGameMapObject());
 			lblPhase.setText("Intial Allocation");
-			// TODO : separate out
 			updateListElements();
 			displayRemainingArmies();
 		}else {
 			load();
 		}
 		
+		
+	}
+	
+	public void updateBotPanel()
+	{
 		if(objGameEngine.getGameState().isAllocationComplete())
 		{
+			lblPhase.setText("Only bots playing");
 			String message = objGameEngine.setNextPlayer(activePlayer, false); 
 			activePlayer = objGameEngine.getGameState().getActivePlayer();
 			txtError.append(objGameEngine.getBotController().getLogs());

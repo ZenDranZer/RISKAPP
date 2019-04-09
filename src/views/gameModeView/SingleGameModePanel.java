@@ -111,6 +111,11 @@ public class SingleGameModePanel extends JPanel {
                         this.setVisible(false);
                         container.add(gamePlay);
                         container.revalidate();
+                        gameEngine.allocateBots();
+                        if(gameEngine.areAllBots())
+                        {
+                        	gamePlay.updateBotPanel();
+                        }
                     } else {
                         mapGenerator.reSetAllocations();
                         JOptionPane.showMessageDialog(this, message);
