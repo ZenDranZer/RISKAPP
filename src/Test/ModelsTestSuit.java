@@ -8,7 +8,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        TestPlayer.class,TestGameState.class
+        TestPlayer.class,TestGameState.class,TestCheaterPlayer.class,TestAggressivePlayer.class,TestRandomPlayer.class,TestBenevolentPlayer.class
 })
 public class ModelsTestSuit {
 }
