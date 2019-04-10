@@ -537,6 +537,9 @@ public class Player extends Observable implements Serializable {
 		return false;
 	}
 
+	public String reinforcement() {
+		return null;
+	}
 	/**
 	 * check and update player continent
 	 */

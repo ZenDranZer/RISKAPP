@@ -39,7 +39,7 @@ public class RandomPlayer extends Player {
             int defendingIndex = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size());
             defendingCountry = attackingCountry.getNeighbouringCountries().get(defendingIndex);
             System.out.println(attackingCountry.getNeighbouringCountries().size() + " !!!! " + defendingIndex);
-            if (defendingCountry.getCurrentPlayer() != this) {
+            if (!defendingCountry.getCurrentPlayer().getName().equals(this.getName()) ) {
                 flag = false;
                 return super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
             }

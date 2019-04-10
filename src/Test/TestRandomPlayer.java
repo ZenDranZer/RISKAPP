@@ -1,5 +1,6 @@
-package models;
+package Test;
 
+import models.*;
 import org.junit.Before;
 import org.junit.Test;
 import views.GamePlay;
