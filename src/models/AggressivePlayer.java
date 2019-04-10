@@ -133,9 +133,11 @@
          */
         public String fortify() {
             ArrayList<GameCountry> toFortify = bestCountryToFortify();
-            if(toFortify==null)
+            if(toFortify==null||toFortify.size()==0)
                 return "All the armies are already placed optimally according to the player's strategic behaviour";
             int toAdd = 12-toFortify.get(0).getArmiesStationed();
+            if(toAdd==0)
+                return "The strongest country is already fortified completely";
             toAdd = toAdd<=(toFortify.get(1).getArmiesStationed()-1)?toAdd:toFortify.get(1).getArmiesStationed()-1;
             super.fortify(toFortify.get(0).getCountryName(),toFortify.get(1).getCountryName(),(toAdd));
             System.out.println(this.getName() + " fortified " + ((toFortify.get(1).getArmiesStationed())-1) + " armies from " + toFortify.get(0).getCountryName()

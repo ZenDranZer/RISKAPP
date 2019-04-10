@@ -159,6 +159,7 @@ public class TournamentController {
                         tradeRiskCard(currentPlayer,riskCardController);
                     }
                     if (message.toLowerCase().contains("winner")){
+                        System.out.println("RESULT : WINNER : " + currentPlayer.getName());
                         tournament.addResult(j,i,currentPlayer.getName());
                         break;
                     }
@@ -169,6 +170,7 @@ public class TournamentController {
                 }
                 if(turns == maxNoOfTurns){
                     tournament.addResult(j,i,"draw");
+                    System.out.println("RESULT : DRAW ");
                 }
             }
         }

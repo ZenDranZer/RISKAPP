@@ -3,7 +3,6 @@ package models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
-import java.util.Set;
 
 /**
  * this class implements Tournament mode
@@ -25,11 +24,11 @@ public class Tournament extends Observable {
         result = new HashMap<>();
         noOfGames = 1;
         maxNoOfTurns = 1;
-        mapPaths.put(0,"/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map1.map");
-        mapPaths.put(1,"/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map2.map");
-        mapPaths.put(2,"/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map3.map");
-        mapPaths.put(3,"/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map4.map");
-        mapPaths.put(4,"/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map5.map");
+        mapPaths.put(0,"C:\\Users\\shiva\\RISKAPP\\src\\mapFiles\\map1.map");
+        mapPaths.put(1,"C:\\Users\\shiva\\RISKAPP\\src\\mapFiles\\map2.map");
+        mapPaths.put(2,"C:\\Users\\shiva\\RISKAPP\\src\\mapFiles\\map3.map");
+        mapPaths.put(3,"C:\\Users\\shiva\\RISKAPP\\src\\mapFiles\\map4.map");
+        mapPaths.put(4,"C:\\Users\\shiva\\RISKAPP\\src\\mapFiles\\map5.map");
     }
 
 

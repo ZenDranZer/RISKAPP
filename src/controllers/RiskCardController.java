@@ -181,8 +181,12 @@ public class RiskCardController implements Serializable {
      */
     public RiskCard allocateRiskCard() {
         RiskCard card;
-        card = cardDeck.get(0);
-        cardDeck.remove(0);
-        return card;
+        try {
+            card = cardDeck.get(0);
+            cardDeck.remove(0);
+            return card;
+        }catch(Exception e
+        ){return null;}
+
     }
 }

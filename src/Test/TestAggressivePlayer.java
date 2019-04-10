@@ -105,19 +105,19 @@ public class TestAggressivePlayer {
 
 
     @Test
-    public void TestAttackFunctionRedDice() {
+    public void testAttackFunctionRedDice() {
         assertEquals( "eliminated| attack by Naghmeh to Lin" , attacker.attack());
 
 
     }
 
     @Test
-    public void TestReinforcement() {
+    public void testReinforcement() {
         assertEquals( "Naghmeh moved 4 number of armies to IRAN\n" , attacker.reinforcement(4));
     }
 
     @Test
-    public void TestFortify() {
+    public void testFortify() {
         assertEquals( "All the armies are already placed optimally according to the player's strategic behaviour" , attacker.fortify());
     }
 }

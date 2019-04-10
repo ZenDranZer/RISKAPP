@@ -11,7 +11,7 @@ public class BotController {
 	RiskCardController riskCardController;
 	public BotController(GameState state) {
 		gameState = state;
-		logger = "";
+		logger = "\n";
 		riskCardController = gameState.getRiskController();
 		riskCardController.initRiskCardDeck(gameState.getGameMapObject());
 	}
@@ -19,7 +19,7 @@ public class BotController {
 	public String getLogs()
 	{
 		String messages = this.logger;
-		this.logger = "";
+		this.logger = "\n";
 		return messages;
 	}
 
