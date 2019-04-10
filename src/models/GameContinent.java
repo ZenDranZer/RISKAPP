@@ -29,6 +29,7 @@ public class GameContinent implements Serializable {
 
     /**
      * Sets the continent name
+     *
      * @param continentName string that represents the name of the continent
      */
     public void setContinentName(String continentName) {
