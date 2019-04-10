@@ -52,8 +52,7 @@ public class GameEngine {
 	
 	public BotController getBotController()
 	{
-		if(this.objBotController == null)
-		{
+		if(this.objBotController == null) {
 			this.objBotController = new BotController(gameState);
 		}
 		return this.objBotController;
@@ -187,7 +186,6 @@ public class GameEngine {
 		Player nextPlayer = gameState.getNextPlayer(activePlayer, checkInitialAllocation);
 		gameState.setActivePlayer(nextPlayer);
 		System.out.println("pl check  : " + nextPlayer.getClass());
-		// check for bot
 		String message = "";
 		while (objBotController.isBot(nextPlayer) && message != "winner" ) {
 			if (!checkInitialAllocation) {
@@ -196,8 +194,7 @@ public class GameEngine {
 			} else {
 				objBotController.assignRemainingArmies();
 			}
-			if(message != "winner")
-			{
+			if(message != "winner") {
 				nextPlayer = gameState.getNextPlayer(nextPlayer, checkInitialAllocation);
 				gameState.setActivePlayer(nextPlayer);
 			}
@@ -270,8 +267,7 @@ public class GameEngine {
 
 	public void allocateBots() {
 		Player activePlayer = gameState.getActivePlayer();
-		while(objBotController.isBot(activePlayer) && !activePlayer.isAllocationComplete() && activePlayer.getRemainingArmies() >0)
-		{
+		while(objBotController.isBot(activePlayer) && !activePlayer.isAllocationComplete() && activePlayer.getRemainingArmies() >0) {
 			objBotController.assignRemainingArmies();
 			activePlayer = gameState.getNextPlayer(activePlayer, true);
 			gameState.setActivePlayer(activePlayer);
@@ -282,12 +278,9 @@ public class GameEngine {
 	 * check if all players are bots
 	 * @return
 	 */
-	public boolean areAllBots()
-	{
-		for(Player pl : gameState.getPlayers())
-		{
-			if(!objBotController.isBot(pl))
-			{
+	public boolean areAllBots() {
+		for(Player pl : gameState.getPlayers()) {
+			if(!objBotController.isBot(pl)) {
 				return false;
 			}
 		}
