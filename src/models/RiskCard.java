@@ -28,7 +28,7 @@ public class RiskCard extends Observable implements Serializable {
 	public void setArmyType(int armyType) {
 		this.armyType = armyType;
 	}
-	public String toString(){
+	public String toString() {
 		System.out.println("Card: "+countryName+": "+armyType);
 		return "Card: "+countryName+": "+armyType;
 	}
