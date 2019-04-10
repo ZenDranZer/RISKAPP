@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -37,7 +38,10 @@ public class RandomPlayer extends Player {
             int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
             attackingCountry = this.countries.get(counteryIndex);
             int defendingIndex = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size()-1);
+            defendingCountry = (GameCountry) (new ArrayList(attackingCountry.getNeighbouringCountries().values()).get(defendingIndex));
+/*
             defendingCountry = attackingCountry.getNeighbouringCountries().get(defendingIndex);
+*/
             if(attackingCountry.getNeighbouringCountries().size()==0)
                 return "No country to attack";
             if(defendingCountry==null)
