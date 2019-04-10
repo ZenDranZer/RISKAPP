@@ -161,7 +161,7 @@ public class AggressivePlayer extends Player {
      *
      * @return
      */
-    public ArrayList<GameCountry> bestCountryToFortify(){
+    public ArrayList<GameCountry> bestCountryToFortify() {
         ArrayList<GameCountry> toFortify = new ArrayList<>();
         GameCountry bestCountry = null;
         GameCountry bestNeighbour = null;
@@ -173,13 +173,13 @@ public class AggressivePlayer extends Player {
                 }
             }
         }
-        if(playerCountries.size()==0){
+        if(playerCountries.size()==0) {
             return null;
         }
         int max = 0;
-        for(GameCountry country : playerCountries){
-            for(GameCountry neighbor : country.getNeighbouringCountries().values()){
-                if(neighbor.getCurrentPlayer().getId()==this.getId()){
+        for(GameCountry country : playerCountries) {
+            for(GameCountry neighbor : country.getNeighbouringCountries().values()) {
+                if(neighbor.getCurrentPlayer().getId()==this.getId()) {
                     if(country.getArmiesStationed()+neighbor.getArmiesStationed()-1 >= max){
                         max = country.getArmiesStationed()+neighbor.getArmiesStationed();
                         bestCountry = country;
