@@ -1,6 +1,7 @@
 package views.gameModeView;
 
 import controllers.TournamentController;
+import models.Player;
 import models.Tournament;
 
 import java.awt.*;
@@ -424,8 +425,17 @@ public class TournamentResultPanel extends JPanel implements Observer {
     public void update(Observable observable, Object o) {
         Tournament tournament = (Tournament) observable;
         //ArrayList<ArrayList<String>> result = tournament.getResult();
-        mapsField.setText(Integer.toString(tournament.getNumberOfMaps()));
-        playersField.setText(Integer.toString(tournament.getBots().size()));
+        String maps = "";
+        for (int i = 1 ; i <= tournament.getNumberOfMaps() ; i++){
+            maps += "Map_" + i + ", ";
+        }
+        String playerNames = "";
+        for (Player p: tournament.getBots()) {
+            playerNames += p.getName() + ", ";
+        }
+
+        mapsField.setText(maps);
+        playersField.setText(playerNames);
         numberOfGames.setText(Integer.toString(tournament.getNoOfGames()));
         numberOfTurns.setText(Integer.toString(tournament.getMaxNoOfTurns()));
         HashMap<Integer,ArrayList<String>> result = tournament.getResult();
