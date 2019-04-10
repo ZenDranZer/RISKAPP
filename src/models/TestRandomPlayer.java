@@ -1,6 +1,5 @@
-package Test;
+package models;
 
-import models.*;
 import org.junit.Before;
 import org.junit.Test;
 import views.GamePlay;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestBenevolentPlayer {
+public class TestRandomPlayer {
     Player attacker ;
     Player defender;
     GameCountry attackingCountry1;
@@ -84,7 +83,7 @@ public class TestBenevolentPlayer {
         gameMap.addCountry(attackingCountry2);
         gameMap.addCountry(defendingCountry1);
         gameMap.addCountry(defendingCountry2);
-        attacker = new BenevolentPlayer("Naghmeh" , 1 , gameMap);
+        attacker = new RandomPlayer("Naghmeh" , 1 , gameMap);
         defender = new Player("Lin" , 2, gameMap);
         defender.setContinents(gameContinent);
         attacker.setCountries(attackingCountry1);
@@ -106,13 +105,9 @@ public class TestBenevolentPlayer {
 
     @Test
     public void TestAttackFunctionRedDice() {
-        assertEquals( "This attack does nothing" , attacker.attack());
+        assertEquals( "eliminated| attack by Naghmeh to Lin" , attacker.attack());
 
 
     }
 
-    @Test
-    public void TestFindWeakestCountry() {
-        assertEquals( "No country have any friendly neighbor to help in fortification" , attacker.fortify());
-    }
 }
