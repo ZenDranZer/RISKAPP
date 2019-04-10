@@ -34,6 +34,10 @@ public class GameEngine {
 		objBotController = new BotController(gameState);
 	}
 
+	/**
+	 * Gets the game state for current game
+	 * @return gamestate
+	 */
 	public GameState getGameState() {
 		return gameState;
 	}
@@ -49,9 +53,12 @@ public class GameEngine {
 		}
 		return turn;
 	}
-	
-	public BotController getBotController()
-	{
+
+	/**
+	 * Gets the bots for current game
+	 * @return
+	 */
+	public BotController getBotController() {
 		if(this.objBotController == null) {
 			this.objBotController = new BotController(gameState);
 		}

@@ -5,6 +5,9 @@ import models.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Controls the tournament play
+ */
 public class TournamentController {
 
     Tournament tournament;
@@ -96,6 +99,12 @@ public class TournamentController {
         }
     }
 
+    /**
+     * Allocates the initial number of armies to each player in the tournament
+     * @param turn turn controller
+     * @param gameState game state for getting map object
+     * @param countries countries in the maps
+     */
     public void allocateInitialArmies(TurnController turn,GameState gameState, ArrayList<GameCountry> countries) {
         int initialArmies = turn.getEachPlayerArmy(gameState.getPlayers());
 

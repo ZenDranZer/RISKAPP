@@ -15,11 +15,17 @@ public class RandomPlayer extends Player {
         super();
     }
 
+    /**
+     * This is a constructor for the class with name param
+     */
     public RandomPlayer(String name) {
         super();
         this.name = name;
     }
 
+    /**
+     * This is a constructor for the class with name,id, map param
+     */
     public RandomPlayer(String name, int id, GameMap gameMap){
         super(name,id,gameMap);
     }

@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"controllers"},{"l":"models"},{"l":"Test"},{"l":"utils"},{"l":"views"},{"l":"views.continentView"},{"l":"views.countryView"},{"l":"views.miscellaneous"},{"l":"views.optionView"}]
+packageSearchIndex = [{"l":"controllers"},{"l":"models"},{"l":"Test"},{"l":"utils"},{"l":"views"},{"l":"views.continentView"},{"l":"views.countryView"},{"l":"views.gameModeView"},{"l":"views.miscellaneous"},{"l":"views.optionView"}]

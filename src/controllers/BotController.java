@@ -5,6 +5,9 @@ import models.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Controls the bots for tournaments
+ */
 public class BotController {
 	GameState gameState;
 	String logger;
@@ -16,8 +19,11 @@ public class BotController {
 		riskCardController.initRiskCardDeck(gameState.getGameMapObject());
 	}
 
-	public String getLogs()
-	{
+	/**
+	 * Gets the logs
+	 * @return logs
+	 */
+	public String getLogs() {
 		String messages = this.logger;
 		this.logger = "\n";
 		return messages;

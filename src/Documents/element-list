@@ -6,5 +6,6 @@ utils
 views
 views.continentView
 views.countryView
+views.gameModeView
 views.miscellaneous
 views.optionView

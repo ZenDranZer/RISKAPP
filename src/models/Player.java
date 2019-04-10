@@ -342,6 +342,10 @@ public class Player extends Observable implements Serializable {
 		fortifyingCountry.setArmies(fortifyingCountry.getArmiesStationed() - armies);
 	}
 
+	/**
+	 * Fortify method
+	 * @return null
+	 */
 	public String fortify(){
         return null;
     }

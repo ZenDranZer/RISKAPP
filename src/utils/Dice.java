@@ -29,6 +29,7 @@ public class Dice {
         return diceNumber;
     }
 
+
     /**
      * Returns the diceSet with dice values for both red and white dice
      */

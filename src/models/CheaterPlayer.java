@@ -11,11 +11,17 @@ public class CheaterPlayer extends Player {
         super();
     }
 
+    /**
+     * This is the constructor for CheaterPlayer with name
+     */
     public CheaterPlayer(String name) {
         super();
         this.setName(name);
     }
 
+    /**
+     * This is the constructor for CheaterPlayer with name , id and map
+     */
    public CheaterPlayer(String name, int id, GameMap gameMap){
         super(name,id,gameMap);
     }

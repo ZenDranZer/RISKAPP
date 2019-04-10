@@ -7,17 +7,23 @@ import java.util.ArrayList;
  */
 public class BenevolentPlayer extends Player {
     /**
-     * COnstructor for the class
+     * Constructor for the class
      */
     public BenevolentPlayer(){
         super();
     }
 
+    /**
+     * Constructor for the class with name param
+     */
     public BenevolentPlayer(String name) {
         super();
         this.setName(name);
     }
 
+    /**
+     * Constructor for the class with name,id, and game map param
+     */
     public BenevolentPlayer(String name, int id, GameMap gameMap){
         super(name,id,gameMap);
     }

@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Controls the Risk Card allocations
+ */
 public class RiskCardController implements Serializable {
 
     /**A list of all cards which are not owned by any player.*/
@@ -49,6 +52,10 @@ public class RiskCardController implements Serializable {
         }
     }
 
+    /**
+     * Returns card deck
+     * @return carddeck object
+     */
     public ArrayList<RiskCard> getCardDeck() {
         return cardDeck;
     }

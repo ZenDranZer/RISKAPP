@@ -2,6 +2,9 @@
 
     import java.util.ArrayList;
 
+    /**
+     * This class extends the Player class and implements the operation for the Aggressive player
+     */
     public class AggressivePlayer extends Player {
         /**
          * This is a constructor without any parameters for creating object of aggressive Player
@@ -11,6 +14,10 @@
             super();
         }
 
+        /**
+         * This is a constructor with name parameters for creating object of aggressive Player
+         *
+         */
         public AggressivePlayer(String name) {
             super();
             this.setName(name);

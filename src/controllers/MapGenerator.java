@@ -15,10 +15,6 @@ import java.util.HashMap;
  */
 public class  MapGenerator {
 
-    /**
-     * Making a temporary GameEngine object to access the GameState object that contains the GameMap object which
-     * contains the required hashmaps.
-     */
     GraphUtil graphUtilObject ;
     BufferedReader inputReader;
     boolean firstCountryFlag;
