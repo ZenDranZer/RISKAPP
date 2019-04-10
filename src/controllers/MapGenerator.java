@@ -537,7 +537,7 @@ public class  MapGenerator {
                 return "EMPTY";
             }
             return "ALL GOOD";
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             return "EXCEPTION IN ACCESSING CONTINENT DATA";
         }
     }
@@ -600,7 +600,7 @@ public class  MapGenerator {
                 }
             }
             return continentsOwnedByPlayer;
-        }catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
 
@@ -616,8 +616,7 @@ public class  MapGenerator {
             gameMap.getContinentHashMap().clear();
             gameMap.guiHashMap.clear();
             return "SUCCESS";
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return "SOME ERROR IN RESETTING ALLOCATIONS";
         }
     }
