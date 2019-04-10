@@ -89,6 +89,10 @@ public class Tournament extends Observable {
         return mapPaths;
     }
 
+    /**
+     * Sets game maps for all bots
+     * @param gameMapForPlayers
+     */
     public void setGameMapForPlayers(GameMap gameMapForPlayers){
         for (Player p:bots) {
             p.setGameMap(gameMapForPlayers);
@@ -150,6 +154,7 @@ public class Tournament extends Observable {
      * @param winner Winner of the game
      */
     public void addResult(int map,int game,String winner){
+
         ArrayList<String> winners = new ArrayList<>();
         if(result.containsKey(map)) {
             result.get(map).add(game,winner);
@@ -160,7 +165,4 @@ public class Tournament extends Observable {
         setChanged();
         notifyObservers();
     }
-
-
-
 }
