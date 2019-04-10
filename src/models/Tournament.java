@@ -9,7 +9,7 @@ public class Tournament extends Observable {
 
     private ArrayList<GameState> gamestate;
     private ArrayList<Player> bots;
-    private ArrayList<ArrayList<String>> result;
+    private HashMap<Integer,ArrayList<String>> result;
     private int noOfGames;
     private int maxNoOfTurns;
     private int numberOfMaps;
@@ -18,14 +18,14 @@ public class Tournament extends Observable {
     public Tournament() {
         bots = new ArrayList<>();
         gamestate = new ArrayList<>();
-        result = new ArrayList<>();
+        result = new HashMap<>();
         noOfGames = 1;
         maxNoOfTurns = 1;
-        mapPaths.put(0,"/home/sarvesh/APP_RISK_6441/src/mapFiles/map1.map");
-        mapPaths.put(1,"/home/sarvesh/APP_RISK_6441/src/mapFiles/map2.map");
-        mapPaths.put(2,"/home/sarvesh/APP_RISK_6441/src/mapFiles/map3.map");
-        mapPaths.put(3,"/home/sarvesh/APP_RISK_6441/src/mapFiles/map4.map");
-        mapPaths.put(4,"/home/sarvesh/APP_RISK_6441/src/mapFiles/map5.map");
+        mapPaths.put(0,"/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map1.map");
+        mapPaths.put(1,"/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map2.map");
+        mapPaths.put(2,"/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map3.map");
+        mapPaths.put(3,"/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map4.map");
+        mapPaths.put(4,"/home/jil/IdeaProjects/RISKAPP/src/mapFiles/map5.map");
     }
 
 
@@ -85,6 +85,12 @@ public class Tournament extends Observable {
         return mapPaths;
     }
 
+    public void setGameMapForPlayers(GameMap gameMapForPlayers){
+        for (Player p:bots) {
+            p.setGameMap(gameMapForPlayers);
+        }
+    }
+
     /**
      * Sets the map paths
      * @param mapPaths sets map paths
@@ -129,7 +135,7 @@ public class Tournament extends Observable {
      *Gets the result of the tournament
      * @return Result of the tournament
      */
-    public ArrayList<ArrayList<String>> getResult() {
+    public HashMap<Integer,ArrayList<String>> getResult() {
         return result;
     }
 
@@ -140,19 +146,29 @@ public class Tournament extends Observable {
      * @param winner Winner of the game
      */
     public void addResult(int map,int game,String winner){
-        if(result.isEmpty()){
+/*        if(result.isEmpty()){
             ArrayList<String> winners = new ArrayList<>();
             winners.add(winner);
             result.add(winners);
         }
-        if(result.get(map) == null){
-            ArrayList<String> winners = new ArrayList<>();
+        if(result.get(map).isEmpty()) {
+             ArrayList<String> winners = new ArrayList<>();
             winners.add(winner);
             result.add(map,winners);
         }else{
             result.get(map).add(game,winner);
+        }*/
+        ArrayList<String> winners = new ArrayList<>();
+        if(result.containsKey(map)) {
+            result.get(map).add(game,winner);
+        } else {
+            winners.add(game,winner);
+            result.put(map,winners);
         }
+        setChanged();
+        notifyObservers();
     }
+
 
 
 }

@@ -63,14 +63,16 @@ public class TournamentModePanel extends JPanel {
         System.out.println(playersNames);
         int numberOfTurnsInt = (Integer) maximumTerns.getValue();
         int numberOfGamesInt = (Integer) numberOfGames.getValue();
-        tournamentController.setPlayer(playersNames);
+        System.out.println(numberOfGamesInt);
         tournamentController.setMaxNoOfTuruns(numberOfTurnsInt);
-        tournamentController.setNoOfGames(numberOfGamesInt);
+        tournamentController.getTournament().setNoOfGames(numberOfGamesInt);
         tournamentController.setMaps(numberOfMapsInt);
+        tournamentController.setPlayer(playersNames);
         Container container = this.getParent();
         TournamentResultPanel tournamentResultPanel = new TournamentResultPanel(tournamentController,this);
         tournamentController.getTournament().addObserver(tournamentResultPanel);
         tournamentResultPanel.setVisible(true);
+        tournamentResultPanel.playTournament();
         this.setVisible(false);
         container.add(tournamentResultPanel);
         container.revalidate();

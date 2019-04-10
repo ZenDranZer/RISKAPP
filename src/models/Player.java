@@ -49,6 +49,10 @@ public class Player extends Observable implements Serializable {
 		playerCards = new ArrayList<>();
 	}
 
+	public void setGameMap(GameMap gameMap) {
+		this.gameMap = gameMap;
+	}
+
 	/**
 	 * Gets the number of unallocated armies
 	 * 
