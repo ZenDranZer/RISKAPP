@@ -56,35 +56,32 @@ public class TournamentController {
      * @param player Player List containing various types of player objects
      */
     public void setPlayer(ArrayList<String> player) {
-
+        int id = 0 ;
         for (String s : player) {
+
             if (s.equals("Cheater")) {
-                Player cheater = new CheaterPlayer(s);
+                Player cheater = new CheaterPlayer(s + "_" + id);
+                cheater.setId(id);
                 tournament.setBots(cheater);
             } else if (s.equals("Aggressive")) {
-                Player aggressive = new AggressivePlayer(s);
+                Player aggressive = new AggressivePlayer(s+ "_" + id);
+                aggressive.setId(id);
                 tournament.setBots(aggressive);
             } else if (s.equals("Benevolent")) {
-                Player benevolet = new BenevolentPlayer(s);
-                tournament.setBots(benevolet);
+                Player benevolent = new BenevolentPlayer(s+ "_" + id);
+                benevolent.setId(id);
+                tournament.setBots(benevolent);
             } else if (s.equals("Random")) {
-                Player random = new RandomPlayer(s);
+                Player random = new RandomPlayer(s+ "_" + id);
+                random.setId(id);
                 tournament.setBots(random);
             }
+
+            id++;
         }
+
     }
 
-    /**
-     * Allocates armies to each country possessed by each player
-     * @param gameNum Num of the game being played currently
-     * @param noOfArmiesToEachCountry Num of armies allocated to each player
-     */
-    public void allocateArmiesToEachPlayerCountry(int gameNum, int noOfArmiesToEachCountry) {
-        for(int k =0; k<tournament.getGamestate().get(gameNum).getPlayers().size();k++) {
-            for(int a =0;a<tournament.getGamestate().get(gameNum).getPlayers().get(k).getCountries().size();a++)
-                tournament.getGamestate().get(gameNum).getPlayers().get(k).getCountries().get(a).setArmies(noOfArmiesToEachCountry);
-        }
-    }
 
     /**
      * Trading risk cards for armies
@@ -100,6 +97,19 @@ public class TournamentController {
         }
     }
 
+    public void allocateInitialArmies(TurnController turn,GameState gameState, ArrayList<GameCountry> countries) {
+        int initialArmies = turn.getEachPlayerArmy(gameState.getPlayers());
+
+        for (GameCountry country : countries) {
+            country.setArmies(1);
+        }
+        for (Player player : gameState.getPlayers()) {
+            int countryCount = player.getCountries().size();
+            player.setPlayerArmies(countryCount);
+            player.setRemainingArmies(initialArmies - countryCount);
+        }
+    }
+
     /**
      * This function executes the whole tournament flow from allocating armies to declaring winners for each tournament
      */
@@ -109,24 +119,24 @@ public class TournamentController {
         int noOfArmies = 60;
         int maxNumberOfMaps = tournament.getNumberOfMaps();
         int maxNoOfTurns = tournament.getMaxNoOfTurns();
-        int noOfArmiesToEachCountry =  noOfArmies/noOfCountries;
         ArrayList<Player> bots = tournament.getBots();
         int noOfGames = tournament.getNoOfGames();
+
         int turns = 0;
         String message = "";
         for(int j = 0 ; j<maxNumberOfMaps;j++) {
-
-
             for (int i = 0; i < noOfGames; i++) {
-
+                System.out.println("MAP :" + j);
+                System.out.println("GAME :" + i);
                 tournament.getGamestate().get(j).setPlayers(bots);
                 TurnController turnController = new TurnController(tournament.getGamestate().get(j));
                 ArrayList<GameCountry> countries = tournament.getGamestate().get(j).getGameMapObject().getAllCountries();
                 turnController.allocateCountries(bots, countries);
-                allocateArmiesToEachPlayerCountry(i, noOfArmiesToEachCountry);
+                allocateInitialArmies(turnController,tournament.getGamestate().get(j),countries);
                 RiskCardController riskCardController = tournament.getGamestate().get(j).getRiskController();
                 riskCardController.initRiskCardDeck(tournament.getGamestate().get(j).getGameMapObject());
                 int player_num = 0;
+                tournament.setGameMapForPlayers(tournament.getGamestate().get(j).getGameMapObject());
                 Player currentPlayer;
                 MapGenerator mapGenerator = new MapGenerator(tournament.getGamestate().get(j).getGameMapObject());
                 turns = 0;
@@ -160,7 +170,6 @@ public class TournamentController {
                 }
                 if(turns == maxNoOfTurns){
                     tournament.addResult(j,i,"draw");
-                    break;
                 }
             }
         }

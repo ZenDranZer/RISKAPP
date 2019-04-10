@@ -8,14 +8,12 @@ import java.util.HashMap;
 public class BotController {
 	GameState gameState;
 	String logger;
-	// Player activePlayer;
 	RiskCardController riskCardController;
 	public BotController(GameState state) {
 		gameState = state;
 		logger = "\n";
 		riskCardController = gameState.getRiskController();
 		riskCardController.initRiskCardDeck(gameState.getGameMapObject());
-		// activePlayer = gameState.getActivePlayer();
 	}
 
 	public String getLogs()
@@ -24,8 +22,10 @@ public class BotController {
 		this.logger = "\n";
 		return messages;
 	}
-	// Before calling this method, method allocateInitialArmies of the
-	// GameEngine must be called .
+
+	/**
+	 * Assigns remaining armies to players
+	 */
 	public void assignRemainingArmies() {
 		while (gameState.getActivePlayer().getRemainingArmies() != 0
 				&& !gameState.getActivePlayer().isAllocationComplete()) {
@@ -56,6 +56,11 @@ public class BotController {
 		return false;
 	}
 
+	/**
+	 * Executes each turn for the player
+	 * @param pl Player object
+	 * @return Success or error message
+	 */
 	public String executeTurn(Player pl) {
 		try {
 			tradeRiskCard(pl,riskCardController);
@@ -78,6 +83,12 @@ public class BotController {
 			throw ex;
 		}
 	}
+
+	/**
+	 * Trades Risk Cards for armies
+	 * @param currentPlayer Current player
+	 * @param riskCardController Controller for risk cards
+	 */
 	private void tradeRiskCard(Player currentPlayer,RiskCardController riskCardController){
 		if(currentPlayer.getCardsHeld().size()>=5) {
 			HashMap<String, ArrayList<RiskCard>> possibleSet = riskCardController.getPossibleSets(currentPlayer);

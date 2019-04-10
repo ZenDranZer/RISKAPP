@@ -26,7 +26,7 @@ public class BenevolentPlayer extends Player {
      * Finds the weak country for the player to reinforce based on number of armies and if it can be attacked or not
      * @return returns the weakest country
      */
-    public GameCountry findWeakCountry(){
+    public GameCountry findWeakCountry() {
         /*GameCountry weak = this.countries.get(0);
         int leastNumberOfArmies = this.countries.get(0).getArmiesStationed();
         for (GameCountry country: this.countries) {
@@ -44,8 +44,8 @@ public class BenevolentPlayer extends Player {
             System.out.println("No country has any neighbour owned by opposition(player might have won)");
             return null;
         }
-        for(GameCountry country : canBeAttack){
-            if(country.getArmiesStationed()<=armies){
+        for(GameCountry country : canBeAttack) {
+            if(country.getArmiesStationed()<=armies) {
                 armies = country.getArmiesStationed();
                 weak = country;
             }
@@ -58,8 +58,7 @@ public class BenevolentPlayer extends Player {
      * @param armies Total armies for the player to reinforce
      * @return returns the status of the operation
      */
-    public String reinforcement(int armies)
-    {
+    public String reinforcement(int armies) {
         String returnString = "";
         GameCountry country;
         while(armies!=0&&!this.isAllocationComplete()){
@@ -83,7 +82,7 @@ public class BenevolentPlayer extends Player {
      * The attack methodology for attack of Benevolent Player
      * @return status of the operation
      */
-    public String attack(){
+    public String attack() {
         System.out.println("This attack does nothing");
         return "This attack does nothing";
     }
@@ -92,7 +91,7 @@ public class BenevolentPlayer extends Player {
      * This method implements the fortification logic for Benevolent Player
      * @return returns the status of the operation
      */
-    public String fortify(){
+    public String fortify() {
         ArrayList<GameCountry> canBeFortified = super.countriesThatCanBeFortified(this);
         if(canBeFortified.size()==0){
             System.out.println("No country have any friendly neighbor to help in fortification");
@@ -101,18 +100,18 @@ public class BenevolentPlayer extends Player {
         GameCountry countryToBeFortified = null;
         GameCountry anotherCountry = null;
         int min = 12;
-        for(GameCountry country1 : canBeFortified){
-            if(country1.getArmiesStationed()<=min){
+        for(GameCountry country1 : canBeFortified) {
+            if(country1.getArmiesStationed()<=min) {
                 countryToBeFortified = country1;
-                for(GameCountry c : countryToBeFortified.getNeighbouringCountries().values()){
-                    if(c.getCurrentPlayer().getId()==this.getId()&&c.getArmiesStationed()>1){
+                for(GameCountry c : countryToBeFortified.getNeighbouringCountries().values()) {
+                    if(c.getCurrentPlayer().getId()==this.getId()&&c.getArmiesStationed()>1) {
                         anotherCountry = c;
                         break;
                     }
                 }
             }
         }
-        if(countryToBeFortified==null){
+        if(countryToBeFortified==null) {
             return "No country can be fortified";
         }
         int toAdd = 12-countryToBeFortified.getArmiesStationed();

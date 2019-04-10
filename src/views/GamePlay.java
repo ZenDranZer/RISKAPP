@@ -228,7 +228,10 @@ public class GamePlay extends JPanel implements Observer {
 		
 		
 	}
-	
+
+	/**
+	 * render view for player behavior modes
+	 */
 	public void updateBotPanel()
 	{
 		if(objGameEngine.getGameState().isAllocationComplete())
@@ -697,6 +700,11 @@ public class GamePlay extends JPanel implements Observer {
 		return "";
 	}
 
+	/**
+	 * update observables
+	 * @param arg0
+	 * @param arg1
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		
@@ -764,6 +772,11 @@ public class GamePlay extends JPanel implements Observer {
 		}
 	}
 
+	/**
+	 * shows action logs in view
+	 * @param message
+	 */
+
 	public void displayActions(String message) {
 		switch (phase) {
 		case "initial":
@@ -821,6 +834,9 @@ public class GamePlay extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * calls save method of game Engine
+	 */
 	public void save() {
 		objGameEngine.saveGame(phase, txtError.getText(), "");
 		// serialize game state object and save to file
@@ -828,6 +844,10 @@ public class GamePlay extends JPanel implements Observer {
 
 	// TODO break down constructor to separate general initial allocation and
 	// game load scenarios
+
+	/**
+	 * Load game from a saved point
+	 */
 	public void load() {
 
 		txtError.setText(objGameEngine.getGameState().getLogs());
@@ -855,6 +875,9 @@ public class GamePlay extends JPanel implements Observer {
 		}
 	}
 
+	/**
+	 * initial view components
+	 */
 	public void initComponents() {
 		setLayout(null);
 		this.setBounds(10, 10, 972, 556);

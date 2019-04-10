@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -20,6 +21,9 @@ public class TournamentResultPanel extends JPanel implements Observer {
         this.tournamentController = tournamentController;
         this.parent = parent;
         initComponents();
+    }
+
+    public void playTournament(){
         this.tournamentController.startTournament();
     }
 
@@ -363,12 +367,12 @@ public class TournamentResultPanel extends JPanel implements Observer {
     private JTextField map5Game5;
     private JButton backButton;
 
-    private void displayResults(ArrayList<ArrayList<String>> result){
+    private void displayResults(HashMap<Integer,ArrayList<String>> result){
         int map = 1;
-        for (ArrayList<String> gameResult: result) {
+        for (ArrayList<String> gameResult: result.values()) {
             int game = 1;
-            for (String s: gameResult) {
-                setTextField(map,game,s);
+            for (String s : gameResult) {
+                setTextField(map, game, s);
                 game++;
             }
             map++;
@@ -419,7 +423,12 @@ public class TournamentResultPanel extends JPanel implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         Tournament tournament = (Tournament) observable;
-        ArrayList<ArrayList<String>> result = tournament.getResult();
+        //ArrayList<ArrayList<String>> result = tournament.getResult();
+        mapsField.setText(Integer.toString(tournament.getNumberOfMaps()));
+        playersField.setText(Integer.toString(tournament.getBots().size()));
+        numberOfGames.setText(Integer.toString(tournament.getNoOfGames()));
+        numberOfTurns.setText(Integer.toString(tournament.getMaxNoOfTurns()));
+        HashMap<Integer,ArrayList<String>> result = tournament.getResult();
         displayResults(result);
     }
 }

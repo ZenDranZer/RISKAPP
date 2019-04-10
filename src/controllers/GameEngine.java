@@ -52,8 +52,7 @@ public class GameEngine {
 	
 	public BotController getBotController()
 	{
-		if(this.objBotController == null)
-		{
+		if(this.objBotController == null) {
 			this.objBotController = new BotController(gameState);
 		}
 		return this.objBotController;
@@ -140,7 +139,6 @@ public class GameEngine {
 	 * allocate countries and assign initial set of armies
 	 */
 	public void initialiseEngine() {
-
 		try {
 			setNumberOfPlayers(gameState.getPlayers().size());
 			turn.allocateCountries(gameState.getPlayers(), getGameState().getGameMapObject().getAllCountries());
@@ -187,7 +185,6 @@ public class GameEngine {
 		Player nextPlayer = gameState.getNextPlayer(activePlayer, checkInitialAllocation);
 		gameState.setActivePlayer(nextPlayer);
 		System.out.println("pl check  : " + nextPlayer.getClass());
-		// check for bot
 		String message = "";
 		while (objBotController.isBot(nextPlayer) && message != "winner" ) {
 			if (!checkInitialAllocation) {
@@ -196,8 +193,7 @@ public class GameEngine {
 			} else {
 				objBotController.assignRemainingArmies();
 			}
-			if(message != "winner")
-			{
+			if(message != "winner") {
 				nextPlayer = gameState.getNextPlayer(nextPlayer, checkInitialAllocation);
 				gameState.setActivePlayer(nextPlayer);
 			}
@@ -235,7 +231,7 @@ public class GameEngine {
 	/**
 	 * Save Game State to file
 	 * 
-	 * @param state
+	 * @param phase
 	 *            game state
 	 * @param logs
 	 *            action logs till save point
@@ -256,8 +252,11 @@ public class GameEngine {
 		}
 	}
 
+	/**
+	 * Loads the game back to resume game play
+	 * @param saveFilePath File where game is saved
+	 */
 	public void loadGame(String saveFilePath) {
-
 		try {
 			FileInputStream fileIn = new FileInputStream(saveFilePath);
 			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
@@ -268,10 +267,12 @@ public class GameEngine {
 		}
 	}
 
+	/**
+	 * Allocates bots to the Player objects
+	 */
 	public void allocateBots() {
 		Player activePlayer = gameState.getActivePlayer();
-		while(objBotController.isBot(activePlayer) && !activePlayer.isAllocationComplete() && activePlayer.getRemainingArmies() >0)
-		{
+		while(objBotController.isBot(activePlayer) && !activePlayer.isAllocationComplete() && activePlayer.getRemainingArmies() >0) {
 			objBotController.assignRemainingArmies();
 			activePlayer = gameState.getNextPlayer(activePlayer, true);
 			gameState.setActivePlayer(activePlayer);
@@ -280,14 +281,11 @@ public class GameEngine {
 	
 	/**
 	 * check if all players are bots
-	 * @return
+	 * @return True if all players are bots, False otherwise
 	 */
-	public boolean areAllBots()
-	{
-		for(Player pl : gameState.getPlayers())
-		{
-			if(!objBotController.isBot(pl))
-			{
+	public boolean areAllBots() {
+		for(Player pl : gameState.getPlayers()) {
+			if(!objBotController.isBot(pl)) {
 				return false;
 			}
 		}

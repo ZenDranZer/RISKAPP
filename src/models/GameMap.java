@@ -11,7 +11,7 @@ import java.util.Set;
  * This class also houses the methods used to manipulate above mentioned data
  *
  */
-public class GameMap extends Observable implements Serializable{
+public class GameMap extends Observable implements Serializable {
     public  HashMap<String,GameCountry> countryHashMap;
     public  HashMap<String,GameContinent> continentHashMap;
     public HashMap <String,String>guiHashMap;

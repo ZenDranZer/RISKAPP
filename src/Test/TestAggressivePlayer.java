@@ -110,4 +110,14 @@ public class TestAggressivePlayer {
 
 
     }
+
+    @Test
+    public void TestReinforcement() {
+        assertEquals( "Naghmeh moved 4 number of armies to IRAN\n" , attacker.reinforcement(4));
+    }
+
+    @Test
+    public void TestFortify() {
+        assertEquals( "All the armies are already placed optimally according to the player's strategic behaviour" , attacker.fortify());
+    }
 }

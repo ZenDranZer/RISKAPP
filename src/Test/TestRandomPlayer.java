@@ -1,5 +1,6 @@
-package models;
+package Test;
 
+import models.*;
 import org.junit.Before;
 import org.junit.Test;
 import views.GamePlay;
@@ -108,6 +109,16 @@ public class TestRandomPlayer {
         assertEquals( "eliminated| attack by Naghmeh to Lin" , attacker.attack());
 
 
+    }
+
+    @Test
+    public void TestFortify() {
+        assertEquals( "IRAN gets 1 armies." , attacker.fortify());
+    }
+
+    @Test
+    public void TestReinforcement() {
+        assertEquals( "Naghmeh moved 4 number of armies to IRAN\n" , attacker.reinforcement(4));
     }
 
 }

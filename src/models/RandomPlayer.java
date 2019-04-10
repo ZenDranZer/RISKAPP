@@ -1,6 +1,5 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -38,9 +37,8 @@ public class RandomPlayer extends Player {
             int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
             attackingCountry = this.countries.get(counteryIndex);
             int defendingIndex = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size());
-            defendingCountry = (GameCountry)(new ArrayList(attackingCountry.getNeighbouringCountries().values())).get(defendingIndex);
-            System.out.println(attackingCountry.getNeighbouringCountries().size() + " !!!! " + defendingIndex);
-            if (defendingCountry.getCurrentPlayer() != this) {
+            defendingCountry = attackingCountry.getNeighbouringCountries().get(defendingIndex);
+            if (!defendingCountry.getCurrentPlayer().getName().equals(this.getName()) ) {
                 flag = false;
                 return super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
             }
@@ -60,9 +58,6 @@ public class RandomPlayer extends Player {
         int currentArmiesToCountry = this.countries.get(toCountryIndex).getArmiesStationed();
         int currentArmiesCountry = this.countries.get(counteryIndex).getArmiesStationed();
         int ar = (currentArmiesToCountry + numberOfArmies <= 12) ? numberOfArmies-1 : currentArmiesToCountry+numberOfArmies-12;
-        if (ar <= 0 || !this.countries.get(toCountryIndex).getNeighbouringCountries().values().contains(this.countries.get(counteryIndex))){
-            return "\nPlayer chooses to avoid fortification.\n";
-        }
         /*this.countries.get(toCountryIndex).setArmies(currentArmiesToCountry + ar);
         this.countries.get(counteryIndex).setArmies(currentArmiesCountry - ar);*/
         super.fortify(this.getCountries().get(toCountryIndex).getCountryName(),this.getCountries().get(counteryIndex).getCountryName(),ar);
@@ -75,13 +70,13 @@ public class RandomPlayer extends Player {
      * @param armies total armies for player to fortify
      * @return returns the status of the operation
      */
-    public String reinforcement(int armies){
+    public String reinforcement(int armies) {
         Random randomNumberGenerator = new Random();
         String returnString = "";
-        while(armies!=0 && !this.isAllocationComplete()){
+        while(armies!=0 && !this.isAllocationComplete()) {
         int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
         int armiesStationed = this.getCountries().get(counteryIndex).getArmiesStationed();
-        if(armiesStationed<12){
+        if(armiesStationed<12) {
             int rein =  (12-armiesStationed)<armies?(12-armiesStationed):armies;
             super.reinforcement(this.countries.get(counteryIndex).getCountryName() ,rein);
             returnString += this.getName() + " moved " + rein + " number of armies to " + this.countries.get(counteryIndex).getCountryName() + "\n";

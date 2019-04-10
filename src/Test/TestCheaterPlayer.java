@@ -114,4 +114,9 @@ public class TestCheaterPlayer {
     public void TestFortify() {
         assertEquals( "Naghmeh fortified all countries that can be attacked" , attacker.fortify());
     }
+
+    @Test
+    public void TestReinforcement() {
+        assertEquals( "Naghmeh Maxed the armies or doubled number of stationed armies on all it's countries in reinforcement phase" , attacker.reinforcement());
+    }
 }
