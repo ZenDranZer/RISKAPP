@@ -82,7 +82,6 @@ public class TournamentController {
 
     }
 
-
     /**
      * Trading risk cards for armies
      * @param currentPlayer Current player

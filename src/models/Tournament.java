@@ -163,5 +163,4 @@ public class Tournament extends Observable {
         }
         setChanged();
         notifyObservers();
-    }
-}
+    }}
