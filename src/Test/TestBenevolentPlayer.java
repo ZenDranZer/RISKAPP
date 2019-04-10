@@ -115,4 +115,9 @@ public class TestBenevolentPlayer {
     public void TestFindWeakestCountry() {
         assertEquals( "No country have any friendly neighbor to help in fortification" , attacker.fortify());
     }
+
+    @Test
+    public void TestReinforcment(){
+        assertEquals( "Naghmeh moved 4 number of armies to IRAN\n" , attacker.reinforcement(4));
+    }
 }
