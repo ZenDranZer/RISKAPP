@@ -110,4 +110,9 @@ public class TestAggressivePlayer {
 
 
     }
+
+    @Test
+    public void TestReinforcement() {
+        assertEquals( "Naghmeh moved 4 number of armies to IRAN\n" , attacker.reinforcement(4));
+    }
 }
