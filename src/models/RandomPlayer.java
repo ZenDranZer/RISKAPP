@@ -14,7 +14,7 @@ public class RandomPlayer extends Player {
         super();
     }
 
-    public RandomPlayer(String name){
+    public RandomPlayer(String name) {
         super();
         this.name = name;
     }
@@ -58,8 +58,6 @@ public class RandomPlayer extends Player {
         int currentArmiesToCountry = this.countries.get(toCountryIndex).getArmiesStationed();
         int currentArmiesCountry = this.countries.get(counteryIndex).getArmiesStationed();
         int ar = (currentArmiesToCountry + numberOfArmies <= 12) ? numberOfArmies-1 : currentArmiesToCountry+numberOfArmies-12;
-        /*this.countries.get(toCountryIndex).setArmies(currentArmiesToCountry + ar);
-        this.countries.get(counteryIndex).setArmies(currentArmiesCountry - ar);*/
         super.fortify(this.getCountries().get(toCountryIndex).getCountryName(),this.getCountries().get(counteryIndex).getCountryName(),ar);
         System.out.println(this.getCountries().get(toCountryIndex).getCountryName()+" gets "+ar+" armies.");
         return this.getCountries().get(toCountryIndex).getCountryName()+" gets "+ar+" armies.";

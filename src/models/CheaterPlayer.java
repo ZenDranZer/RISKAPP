@@ -7,7 +7,7 @@ public class CheaterPlayer extends Player {
     /**
      * This is the constructor for CheaterPlayer
      */
-    public CheaterPlayer(){
+    public CheaterPlayer() {
         super();
     }
 
@@ -26,9 +26,6 @@ public class CheaterPlayer extends Player {
      */
     public String reinforcement() {
         for (GameCountry country: this.countries) {
-/*
-            country.setArmies((country.getArmiesStationed() * 2)<=12?(country.getArmiesStationed() * 2):12);
-*/
             super.reinforcement(country.getCountryName(),(country.getArmiesStationed() * 2)<=12?(country.getArmiesStationed() * 2):12);
         }
        return this.getName() + " Maxed the armies or doubled number of stationed armies on all it's countries in reinforcement phase";

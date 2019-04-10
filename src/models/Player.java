@@ -239,6 +239,10 @@ public class Player extends Observable implements Serializable {
 		notifyObservers();
 	}
 
+	/**
+	 * Adds the given Risk Card to the card deck
+	 * @param riskCard Risk card to be added to the deck
+	 */
 	public void addRiskCard(RiskCard riskCard) {
 		playerCards.add(riskCard);
 		setChanged();
@@ -308,6 +312,12 @@ public class Player extends Observable implements Serializable {
 	public void reinforcement(String countryName, int armies) {
 		placeArmy(countryName, armies);
 	}
+
+	/**
+	 * Reinforcement function
+	 * @param armies Armies to be reinforced
+	 * @return null
+	 */
 	public String reinforcement(int armies){
         return null;
     }
@@ -438,7 +448,6 @@ public class Player extends Observable implements Serializable {
 			}
 		}
 
-		// check if attacker has enough armies for next attack
 		return status;
 	}
 
@@ -468,7 +477,6 @@ public class Player extends Observable implements Serializable {
 			}
 
 			int whiteDice = 0;
-			// get max white dice
 			if (numberOfArmies_defender == 1) {
 				whiteDice = 1;
 			} else if (numberOfArmies_defender >= 2) {
@@ -563,8 +571,7 @@ public class Player extends Observable implements Serializable {
 	 * Validate whether player can carry out more attacks
 	 * @return true is player can carry out attacks
 	 */
-	public boolean isAttackPossible()
-	{
+	public boolean isAttackPossible() {
 		for (GameCountry country : countries) {
 			if (country.getArmiesStationed() >1) {
 				return true;

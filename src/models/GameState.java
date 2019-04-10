@@ -141,8 +141,7 @@ public class GameState extends Observable implements Serializable {
 	 * @param country
 	 * @param armies
 	 */
-	public void reinforcement(Player activePlayer, String country, int armies)
-	{
+	public void reinforcement(Player activePlayer, String country, int armies) {
 		activePlayer.reinforcement(country, armies);
 		notifyGameStateChange();
 	}
@@ -186,27 +185,44 @@ public class GameState extends Observable implements Serializable {
 		activePlayer.fortify(countryToFortify, fortifyFrom, armies);
 		notifyGameStateChange();
 	}
-	
-	public void setCurrentPhase(String phase)
-	{
+
+	/**
+	 * Sets current phase
+	 * @param phase phase to be set as current
+	 */
+	public void setCurrentPhase(String phase) {
 		this.phase = phase;
 	}
-	
-	public String getCurrentPhase()
-	{
+
+	/**
+	 * Gets current phase
+	 * @return curretn phase
+	 */
+	public String getCurrentPhase() {
 		return this.phase;
 	}
-	
-	public void setLogs(String gamePlayLogs)
-	{
+
+	/**
+	 * Sets logs for given players
+	 * @param gamePlayLogs logs
+	 */
+	public void setLogs(String gamePlayLogs) {
 		this.logs = gamePlayLogs;
 	}
-	public String getLogs()
-	{
+
+	/**
+	 * Gets logs for the given phase
+	 * @return logs
+	 */
+	public String getLogs() {
 		return this.logs;
 	}
-	public void updateLogs(String message)
-	{
+
+	/**
+	 * Updates the logs
+	 * @param message message to be displayed
+	 */
+	public void updateLogs(String message) {
 		this.logs += message;
 	}
 }

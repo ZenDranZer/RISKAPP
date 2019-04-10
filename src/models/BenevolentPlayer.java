@@ -27,20 +27,12 @@ public class BenevolentPlayer extends Player {
      * @return returns the weakest country
      */
     public GameCountry findWeakCountry() {
-        /*GameCountry weak = this.countries.get(0);
-        int leastNumberOfArmies = this.countries.get(0).getArmiesStationed();
-        for (GameCountry country: this.countries) {
-            if (country.getArmiesStationed() < leastNumberOfArmies){
-                weak =country;
-            }
-        }
 
-        return weak;*/
         ArrayList<GameCountry> canBeAttack ;
         int armies=12;
         GameCountry weak = new GameCountry();
         canBeAttack = super.countriesThatCanAttack(this);
-        if(canBeAttack.size()==0){
+        if(canBeAttack.size()==0) {
             System.out.println("No country has any neighbour owned by opposition(player might have won)");
             return null;
         }
@@ -61,7 +53,7 @@ public class BenevolentPlayer extends Player {
     public String reinforcement(int armies) {
         String returnString = "";
         GameCountry country;
-        while(armies!=0&&!this.isAllocationComplete()){
+        while(armies!=0&&!this.isAllocationComplete()) {
             country = this.findWeakCountry();
             if(country==null){
                 System.out.println("There is no weak country(got null from countries that can attack)(check if the player has won.)");
@@ -74,7 +66,7 @@ public class BenevolentPlayer extends Player {
                 returnString += this.getName() + " moved " + ar + " number of armies to " + country.getCountryName() + "\n";
                 System.out.println(this.getName() + " moved " + ar + " number of armies to " + country.getCountryName());
             }
-    }
+        }
         return returnString;
     }
 
@@ -93,7 +85,7 @@ public class BenevolentPlayer extends Player {
      */
     public String fortify() {
         ArrayList<GameCountry> canBeFortified = super.countriesThatCanBeFortified(this);
-        if(canBeFortified.size()==0){
+        if(canBeFortified.size()==0) {
             System.out.println("No country have any friendly neighbor to help in fortification");
             return "No country have any friendly neighbor to help in fortification";
         }

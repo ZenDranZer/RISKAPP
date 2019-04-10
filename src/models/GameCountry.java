@@ -91,6 +91,11 @@ public class GameCountry implements Serializable{
     public void setArmies(int armiesStationed) {
         this.armiesStationed = armiesStationed;
     }
+
+    /**
+     * Adds given armies to player armies
+     * @param armiesStationed No of armies to be added
+     */
     public void addArmies(int armiesStationed) {
         this.armiesStationed += armiesStationed;
     }

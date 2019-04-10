@@ -179,14 +179,13 @@ public class GameMap extends Observable implements Serializable {
      */
     public String removeNeighbor(String countryName , String neighborName) {
         try {
-
             for (GameCountry neighbor :  countryHashMap.get(countryName).getNeighbouringCountries().values()) {
                 if (neighbor.getCountryName().equals(neighborName)) {
                     countryHashMap.get(countryName).getNeighbouringCountries().remove(neighborName);
                 }
             }
             return "SUCCESS";
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             return "EXCEPTION IN ACCESSING DATA";
         }
     }
@@ -208,9 +207,8 @@ public class GameMap extends Observable implements Serializable {
                 }
             }
             return continentsOwnedByPlayer;
-        }catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
-
     }
 }
