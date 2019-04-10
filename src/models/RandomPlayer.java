@@ -36,9 +36,11 @@ public class RandomPlayer extends Player {
         while (flag) {
             int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
             attackingCountry = this.countries.get(counteryIndex);
-            int defendingIndex = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size());
+            int defendingIndex = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size()-1);
             defendingCountry = attackingCountry.getNeighbouringCountries().get(defendingIndex);
-            if (!defendingCountry.getCurrentPlayer().getName().equals(this.getName()) ) {
+            if(attackingCountry.getNeighbouringCountries().size()==0)
+                return "No country to attack";
+            if (!(defendingCountry.getCurrentPlayer().getId()==this.getId())) {
                 flag = false;
                 return super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
             }
