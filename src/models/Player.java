@@ -530,6 +530,7 @@ public class Player extends Observable implements Serializable {
 	 * @return True if player won, false otherwise
 	 */
 	public boolean hasPlayerWon(Player player) {
+        System.out.println(gameMap.getCountryHashMap().size() + "!!!!!");
 		if (player.getCountries().size() == gameMap.getCountryHashMap().size()) {
 			return true;
 		}
