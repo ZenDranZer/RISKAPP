@@ -125,6 +125,11 @@ public class RemoveContinentPanel extends JPanel implements Observer {
                 new Insets(0, 0, 0, 0), 0, 0));
        }
 
+    /**
+     * updade observable modules
+     * @param observable
+     * @param o
+     */
     @Override
     public void update(Observable observable, Object o) {
         continentList.setListData(((GameMap) observable).getContinentHashMap().keySet().toArray());
