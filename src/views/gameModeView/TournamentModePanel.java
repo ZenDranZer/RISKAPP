@@ -63,7 +63,6 @@ public class TournamentModePanel extends JPanel {
         System.out.println(playersNames);
         int numberOfTurnsInt = (Integer) maximumTerns.getValue();
         int numberOfGamesInt = (Integer) numberOfGames.getValue();
-        System.out.println(numberOfGamesInt);
         tournamentController.setMaxNoOfTuruns(numberOfTurnsInt);
         tournamentController.getTournament().setNoOfGames(numberOfGamesInt);
         tournamentController.setMaps(numberOfMapsInt);
