@@ -105,19 +105,19 @@ public class TestRandomPlayer {
 
 
     @Test
-    public void TestAttackFunctionRedDice() {
+    public void testAttackFunctionRedDice() {
         assertEquals( "eliminated| attack by Naghmeh to Lin" , attacker.attack());
 
 
     }
 
     @Test
-    public void TestFortify() {
+    public void testFortify() {
         assertEquals( "IRAN gets 1 armies." , attacker.fortify());
     }
 
     @Test
-    public void TestReinforcement() {
+    public void testReinforcement() {
         assertEquals( "Naghmeh moved 4 number of armies to IRAN\n" , attacker.reinforcement(4));
     }
 

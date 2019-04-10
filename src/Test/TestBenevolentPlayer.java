@@ -105,19 +105,19 @@ public class TestBenevolentPlayer {
 
 
     @Test
-    public void TestAttackFunctionRedDice() {
+    public void testAttackFunctionRedDice() {
         assertEquals( "This attack does nothing" , attacker.attack());
 
 
     }
 
     @Test
-    public void TestFindWeakestCountry() {
+    public void testFindWeakestCountry() {
         assertEquals( "No country have any friendly neighbor to help in fortification" , attacker.fortify());
     }
 
     @Test
-    public void TestReinforcment(){
+    public void testReinforcment(){
         assertEquals( "Naghmeh moved 4 number of armies to IRAN\n" , attacker.reinforcement(4));
     }
 }
