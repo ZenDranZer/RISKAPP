@@ -40,6 +40,8 @@ public class RandomPlayer extends Player {
             defendingCountry = attackingCountry.getNeighbouringCountries().get(defendingIndex);
             if(attackingCountry.getNeighbouringCountries().size()==0)
                 return "No country to attack";
+            if(defendingCountry==null)
+                return "No attack for this random player";
             if (!(defendingCountry.getCurrentPlayer().getId()==this.getId())) {
                 flag = false;
                 return super.allOutAttack(defendingCountry.getCurrentPlayer(), attackingCountry, defendingCountry);
