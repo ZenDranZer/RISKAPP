@@ -105,13 +105,14 @@ public class SingleGameModePanel extends JPanel {
                         gameEngine.initialiseEngine();
                         JOptionPane.showMessageDialog(this, message);
                         Container container = this.getParent();
+                        gameEngine.allocateBots();
                         GamePlay gamePlay = new GamePlay(gameEngine,this);
                         gameEngine.getGameState().addObserver(gamePlay);
                         gamePlay.setVisible(true);
                         this.setVisible(false);
                         container.add(gamePlay);
                         container.revalidate();
-                        gameEngine.allocateBots();
+                       
                         if(gameEngine.areAllBots())
                         {
                         	gamePlay.updateBotPanel();
