@@ -45,17 +45,7 @@ public class AggressivePlayer extends Player {
             return null;
         }
     }
-   /* public ArrayList<GameCountry> countriesThatCanAttack(Player player){
-        ArrayList<GameCountry> canAttack = new ArrayList<>();
-        for(GameCountry country : player.getCountries()){
-            for(GameCountry neighbour : country.getNeighbouringCountries().values()){
-                if(neighbour.getCurrentPlayer().getId()!=player.getId()){
-                    canAttack.add(neighbour);
-                }
-            }
-        }
-        return canAttack;
-    }*/
+
 
     /**
      * This method performs reinforcement for Aggressive player
