@@ -111,4 +111,9 @@ public class TestRandomPlayer {
 
     }
 
+    @Test
+    public void TestFortify() {
+        assertEquals( "IRAN gets 1 armies." , attacker.fortify());
+    }
+
 }

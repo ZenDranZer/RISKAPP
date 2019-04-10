@@ -54,7 +54,7 @@ public class RandomPlayer extends Player {
     public String fortify() {
         Random randomNumberGenerator = new Random();
         int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
-        int toCountryIndex = randomNumberGenerator.nextInt(this.countries.get(counteryIndex).getNeighbouringCountries().size());
+        int toCountryIndex = randomNumberGenerator.nextInt(this.countries.get(counteryIndex).getNeighbouringCountries().size()-1);
         int numberOfArmies = randomNumberGenerator.nextInt(this.countries.get(counteryIndex).getArmiesStationed());
         int currentArmiesToCountry = this.countries.get(toCountryIndex).getArmiesStationed();
         int currentArmiesCountry = this.countries.get(counteryIndex).getArmiesStationed();
