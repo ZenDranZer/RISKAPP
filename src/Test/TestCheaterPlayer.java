@@ -105,18 +105,18 @@ public class TestCheaterPlayer {
     }
 
     @Test
-    public void TestAttackFunctionRedDice() {
+    public void testAttackFunctionRedDice() {
         assertEquals( "success|" , attacker.attack());
 
     }
 
     @Test
-    public void TestFortify() {
+    public void testFortify() {
         assertEquals( "Naghmeh fortified all countries that can be attacked" , attacker.fortify());
     }
 
     @Test
-    public void TestReinforcement() {
+    public void testReinforcement() {
         assertEquals( "Naghmeh Maxed the armies or doubled number of stationed armies on all it's countries in reinforcement phase" , attacker.reinforcement());
     }
 }
