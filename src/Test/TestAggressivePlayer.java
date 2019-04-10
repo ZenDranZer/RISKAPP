@@ -108,5 +108,6 @@ public class TestAggressivePlayer {
     public void TestAttackFunctionRedDice() {
         assertEquals( "eliminated| attack by Naghmeh to Lin" , attacker.attack());
 
+
     }
 }
