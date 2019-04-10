@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Set;
 
+/**
+ * this class implements Tournament mode
+ */
+
 public class Tournament extends Observable {
 
     private ArrayList<GameState> gamestate;

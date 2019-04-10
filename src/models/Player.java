@@ -573,22 +573,33 @@ public class Player extends Observable implements Serializable {
 		return false;
 	}
 
-	public ArrayList<GameCountry> countriesThatCanAttack(Player player){
+	/**
+	 * This function returns all the neighbouring countries that can be attacked by player
+	 * @param player
+	 * @return list of GameCountry of neighbors that can be attacked
+	 */
+	public ArrayList<GameCountry> countriesThatCanAttack(Player player) {
 		ArrayList<GameCountry> canAttack = new ArrayList<>();
-		for(GameCountry country : player.getCountries()){
-			for(GameCountry neighbour : country.getNeighbouringCountries().values()){
-				if(neighbour.getCurrentPlayer().getId()!=player.getId()){
+		for(GameCountry country : player.getCountries()) {
+			for(GameCountry neighbour : country.getNeighbouringCountries().values()) {
+				if(neighbour.getCurrentPlayer().getId()!=player.getId()) {
 					canAttack.add(country);
 				}
 			}
 		}
 		return canAttack;
 	}
-	public ArrayList<GameCountry> countriesThatCanBeFortified(Player player){
+
+	/**
+	 * This function will return a list of countries that can be fortified by player
+	 * @param player
+	 * @return list GameCountry that can be fortified
+	 */
+	public ArrayList<GameCountry> countriesThatCanBeFortified(Player player) {
 		ArrayList<GameCountry> canBeFortified = new ArrayList<>();
-		for(GameCountry country : player.getCountries()){
-			for(GameCountry neighbour : country.getNeighbouringCountries().values()){
-				if(neighbour.getCurrentPlayer().getId()==player.getId()&&neighbour.getArmiesStationed()>1){
+		for(GameCountry country : player.getCountries()) {
+			for(GameCountry neighbour : country.getNeighbouringCountries().values()) {
+				if(neighbour.getCurrentPlayer().getId()==player.getId()&&neighbour.getArmiesStationed()>1) {
 					canBeFortified.add(country);
 					break;
 				}

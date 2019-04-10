@@ -7,7 +7,7 @@ import java.util.HashMap;
  * Represents the Continent Model in the game
  * Each country can only belong to one continent
  */
-public class GameContinent implements Serializable{
+public class GameContinent implements Serializable {
 
     private String continentName;
     private int continentValue;
@@ -29,6 +29,7 @@ public class GameContinent implements Serializable{
 
     /**
      * Sets the continent name
+     *
      * @param continentName string that represents the name of the continent
      */
     public void setContinentName(String continentName) {
