@@ -2,13 +2,19 @@ package controllers;
 
 import models.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class BotController {
 	GameState gameState;
 	String logger;
 	// Player activePlayer;
+	RiskCardController riskCardController;
 	public BotController(GameState state) {
 		gameState = state;
 		logger = "";
+		riskCardController = gameState.getRiskController();
+		riskCardController.initRiskCardDeck(gameState.getGameMapObject());
 		// activePlayer = gameState.getActivePlayer();
 	}
 
@@ -52,18 +58,34 @@ public class BotController {
 
 	public String executeTurn(Player pl) {
 		try {
-			
-			logger += "\n"+ pl.reinforcement(pl.getRemainingArmies());
+			tradeRiskCard(pl,riskCardController);
+			logger += pl.reinforcement(pl.getRemainingArmies());
 			String message = pl.attack();
-			logger += "\n"+message;
+			logger += message;
 			if (message.split("\\|")[0].equals("winner")) {
 				return "winner";
 			}
-			logger += "\n"+pl.fortify();
+			else if(message.contains("success")){
+				tradeRiskCard(pl,riskCardController);
+				RiskCard riskCard = riskCardController.allocateRiskCard();
+				pl.addRiskCard(riskCard);
+				tradeRiskCard(pl,riskCardController);
+			}
+			logger += pl.fortify();
 			return message;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw ex;
+		}
+	}
+	private void tradeRiskCard(Player currentPlayer,RiskCardController riskCardController){
+		if(currentPlayer.getCardsHeld().size()>=5) {
+			HashMap<String, ArrayList<RiskCard>> possibleSet = riskCardController.getPossibleSets(currentPlayer);
+			for (ArrayList<RiskCard> set:possibleSet.values()) {
+				riskCardController.tradeCards(currentPlayer,set);
+				System.out.println("Traded "+ set.toString());
+				logger+="Traded "+ set.toString();
+			}
 		}
 	}
 }

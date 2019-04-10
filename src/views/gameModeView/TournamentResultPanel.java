@@ -20,6 +20,7 @@ public class TournamentResultPanel extends JPanel implements Observer {
         this.tournamentController = tournamentController;
         this.parent = parent;
         initComponents();
+        this.tournamentController.startTournament();
     }
 
     private void backButtonMouseClicked(MouseEvent e) {
