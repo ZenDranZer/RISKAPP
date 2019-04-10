@@ -225,23 +225,18 @@ public class GamePlay extends JPanel implements Observer {
 		}else {
 			load();
 		}
-		
-		
 	}
 
 	/**
 	 * render view for player behavior modes
 	 */
-	public void updateBotPanel()
-	{
-		if(objGameEngine.getGameState().isAllocationComplete())
-		{
+	public void updateBotPanel() {
+		if(objGameEngine.getGameState().isAllocationComplete()) {
 			lblPhase.setText("Only bots playing");
 			String message = objGameEngine.setNextPlayer(activePlayer, false); 
 			activePlayer = objGameEngine.getGameState().getActivePlayer();
 			txtError.append(objGameEngine.getBotController().getLogs());
-			if(message.equals("winner"))
-			{
+			if(message.equals("winner")) {
 				JOptionPane.showMessageDialog(this, activePlayer.getName() + " won!");
 				System.exit(0);
 			}
@@ -269,11 +264,6 @@ public class GamePlay extends JPanel implements Observer {
 
 	/** This function ends the game and close the frame. */
 	private void endGame() {
-		/*
-		 * this.setVisible(false); parent.getParentPanel().setVisible(true);
-		 * objGameEngine.getMapGenerator().reSetAllocations();
-		 * objGameEngine.resetGame();
-		 */
 		int response = JOptionPane.showConfirmDialog(null, "Do you want to Save?", "Confirm", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
 		if (response == JOptionPane.YES_OPTION) {
@@ -368,7 +358,6 @@ public class GamePlay extends JPanel implements Observer {
 		String selectedCountry = lstPlayerCountries.getSelectedValue().toString();
 
 		btnAdd.setVisible(false);
-		//displayActions(null);
 		objTurnController.placeArmy(activePlayer, selectedCountry, army);
 	}
 
@@ -395,9 +384,6 @@ public class GamePlay extends JPanel implements Observer {
 
 		lstPlayerCountries.setSelectedIndex(-1);
 		txtReinforce.setText("");
-
-		// objTurnController.placeArmy(activePlayer, selectedCountry,
-		// reinforcements);
 		objGameEngine.getGameState().reinforcement(activePlayer, selectedCountry, reinforcements);
 	}
 
@@ -758,8 +744,7 @@ public class GamePlay extends JPanel implements Observer {
 			String message = objGameEngine.setNextPlayer(activePlayer, false);
 			activePlayer = objGameEngine.getGameState().getActivePlayer();
 			txtError.append(objGameEngine.getBotController().getLogs());
-			if(message.equals("winner"))
-			{
+			if(message.equals("winner")) {
 				JOptionPane.showMessageDialog(this, activePlayer.getName() + " won!");
 				System.exit(0);
 			}
