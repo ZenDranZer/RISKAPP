@@ -12,7 +12,7 @@ public class BotController {
 	RiskCardController riskCardController;
 	public BotController(GameState state) {
 		gameState = state;
-		logger = "";
+		logger = "\n";
 		riskCardController = gameState.getRiskController();
 		riskCardController.initRiskCardDeck(gameState.getGameMapObject());
 		// activePlayer = gameState.getActivePlayer();
@@ -21,7 +21,7 @@ public class BotController {
 	public String getLogs()
 	{
 		String messages = this.logger;
-		this.logger = "";
+		this.logger = "\n";
 		return messages;
 	}
 	// Before calling this method, method allocateInitialArmies of the

@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -37,7 +38,7 @@ public class RandomPlayer extends Player {
             int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
             attackingCountry = this.countries.get(counteryIndex);
             int defendingIndex = randomNumberGenerator.nextInt(attackingCountry.getNeighbouringCountries().size());
-            defendingCountry = attackingCountry.getNeighbouringCountries().get(defendingIndex);
+            defendingCountry = (GameCountry)(new ArrayList(attackingCountry.getNeighbouringCountries().values())).get(defendingIndex);
             System.out.println(attackingCountry.getNeighbouringCountries().size() + " !!!! " + defendingIndex);
             if (defendingCountry.getCurrentPlayer() != this) {
                 flag = false;
@@ -54,11 +55,14 @@ public class RandomPlayer extends Player {
     public String fortify() {
         Random randomNumberGenerator = new Random();
         int counteryIndex = randomNumberGenerator.nextInt(this.countries.size());
-        int toCountryIndex = randomNumberGenerator.nextInt(this.countries.get(counteryIndex).getNeighbouringCountries().size());
+        int toCountryIndex = randomNumberGenerator.nextInt(this.countries.get(counteryIndex).getNeighbouringCountries().size()-1);
         int numberOfArmies = randomNumberGenerator.nextInt(this.countries.get(counteryIndex).getArmiesStationed());
         int currentArmiesToCountry = this.countries.get(toCountryIndex).getArmiesStationed();
         int currentArmiesCountry = this.countries.get(counteryIndex).getArmiesStationed();
         int ar = (currentArmiesToCountry + numberOfArmies <= 12) ? numberOfArmies-1 : currentArmiesToCountry+numberOfArmies-12;
+        if (ar <= 0 || !this.countries.get(toCountryIndex).getNeighbouringCountries().values().contains(this.countries.get(counteryIndex))){
+            return "\nPlayer chooses to avoid fortification.\n";
+        }
         /*this.countries.get(toCountryIndex).setArmies(currentArmiesToCountry + ar);
         this.countries.get(counteryIndex).setArmies(currentArmiesCountry - ar);*/
         super.fortify(this.getCountries().get(toCountryIndex).getCountryName(),this.getCountries().get(counteryIndex).getCountryName(),ar);

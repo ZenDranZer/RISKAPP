@@ -24,7 +24,7 @@ public class CheaterPlayer extends Player {
      * This method implements the reinforcement logic of cheater player
      * @return returns the status of the operation
      */
-    public String reinforcement() {
+    public String reinforcement(int armies) {
         for (GameCountry country: this.countries) {
 /*
             country.setArmies((country.getArmiesStationed() * 2)<=12?(country.getArmiesStationed() * 2):12);
@@ -40,14 +40,18 @@ public class CheaterPlayer extends Player {
      */
     public String attack() {
         String status = "";
-        for (GameCountry country: countriesThatCanAttack(this)) {
-
+        for (GameCountry country1: countriesThatCanAttack(this)) {
+            for(GameCountry country:country1.getNeighbouringCountries().values()){
+                if(country.getCurrentPlayer().getId()==this.getId())
+                    continue;
+            status = "success|";
         country.getCurrentPlayer().removeCountry(country);
             System.out.println("Country conquered: "+country.getCountryName());
+            status+="Country conquered: "+country.getCountryName();
         this.setCountries(country);
 
         this.updateContinents();
-        status = "success|";
+
             System.out.println(status);
         if (country.getCurrentPlayer().countries.size() == 0) {
             this.getCardsHeld().addAll(country.getCurrentPlayer().getCardsHeld());
@@ -55,13 +59,14 @@ public class CheaterPlayer extends Player {
             eliminate(country.getCurrentPlayer());
             country.setCurrentPlayer(this);
             if (hasPlayerWon(this)) {
-                status += "winner";
+                String status1 = "winner"+status;
                 System.out.println(status);
                 System.out.println(status);
                 return status;
             }
         }
         country.setCurrentPlayer(this);
+        }
         }
         System.out.println(status);
         return status ;
