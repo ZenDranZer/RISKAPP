@@ -109,4 +109,9 @@ public class TestCheaterPlayer {
         assertEquals( "success|" , attacker.attack());
 
     }
+
+    @Test
+    public void TestFortify() {
+        assertEquals( "Naghmeh fortified all countries that can be attacked" , attacker.fortify());
+    }
 }
