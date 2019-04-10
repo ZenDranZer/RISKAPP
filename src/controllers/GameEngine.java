@@ -139,7 +139,6 @@ public class GameEngine {
 	 * allocate countries and assign initial set of armies
 	 */
 	public void initialiseEngine() {
-
 		try {
 			setNumberOfPlayers(gameState.getPlayers().size());
 			turn.allocateCountries(gameState.getPlayers(), getGameState().getGameMapObject().getAllCountries());
@@ -232,7 +231,7 @@ public class GameEngine {
 	/**
 	 * Save Game State to file
 	 * 
-	 * @param state
+	 * @param phase
 	 *            game state
 	 * @param logs
 	 *            action logs till save point
@@ -253,8 +252,11 @@ public class GameEngine {
 		}
 	}
 
+	/**
+	 * Loads the game back to resume game play
+	 * @param saveFilePath File where game is saved
+	 */
 	public void loadGame(String saveFilePath) {
-
 		try {
 			FileInputStream fileIn = new FileInputStream(saveFilePath);
 			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
@@ -265,6 +267,9 @@ public class GameEngine {
 		}
 	}
 
+	/**
+	 * Allocates bots to the Player objects
+	 */
 	public void allocateBots() {
 		Player activePlayer = gameState.getActivePlayer();
 		while(objBotController.isBot(activePlayer) && !activePlayer.isAllocationComplete() && activePlayer.getRemainingArmies() >0) {
@@ -276,7 +281,7 @@ public class GameEngine {
 	
 	/**
 	 * check if all players are bots
-	 * @return
+	 * @return True if all players are bots, False otherwise
 	 */
 	public boolean areAllBots() {
 		for(Player pl : gameState.getPlayers()) {
